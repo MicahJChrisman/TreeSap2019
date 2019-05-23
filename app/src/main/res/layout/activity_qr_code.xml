@@ -33,6 +33,13 @@
         android:text="Please focus camera on QR Code"
         tools:layout_editor_absoluteX="-93dp" />
 
+    <Button
+        android:id="@+id/sub_coord_but2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@+id/txtResult" />
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
