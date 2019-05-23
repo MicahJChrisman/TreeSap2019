@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.treesapv2new.control.PrefManager;
+import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.model.Tree;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -77,9 +79,8 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_pie_chart);
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-
-
-
+        ImageButton button = (ImageButton) findViewById(R.id.add2);
+        button.setOnClickListener(new AddNotesEvent());
 
 
 
@@ -233,6 +234,14 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                 startActivity(intent2);
             }
             return true;
+        }
+    }
+
+    private class AddNotesEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Pie_Chart_Activity.this, AddNotesActivity.class);
+            startActivity(intentA);
         }
     }
 }
