@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+        <TextView
+            android:id="@+id/addTreeIdentifier"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Tree Identifier"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+
+        <RadioGroup
+            android:id="@+id/add_tree_id_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/add_method_list_margin"
+            android:layout_marginRight="@dimen/add_method_list_margin"
+            />
+
+        <TextView
+            android:id="@+id/add_tree_id_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+    <TextView
+        android:id="@+id/addDataSourceIdentifier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Data Source"
+        android:layout_marginStart="8dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"/>
+
+        <LinearLayout
+            android:id="@+id/add_data_source_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/add_method_list_margin"
+            android:layout_marginRight="@dimen/add_method_list_margin"
+            >
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/add_data_source_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/addTreeDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tree Display"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:textColor="@android:color/black"/>
+
+        <RadioGroup
+            android:id="@+id/add_tree_display_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/add_method_list_margin"
+            android:layout_marginRight="@dimen/add_method_list_margin"
+            >
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/add_tree_display_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+
+    <LinearLayout
+        android:id="@+id/new_tree_id_button_container"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="10dp"
+        android:gravity="right"
+        >
+        <Button
+            android:id="@+id/add_method_cancel_button"
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </Button>
+        <Button
+            android:id="@+id/add_method_choose_button"
+            android:text="Choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>
+
+

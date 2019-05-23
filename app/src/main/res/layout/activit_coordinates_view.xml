@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <Button
+        android:id="@+id/sub_coord_but"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Submit"
+        app:layout_constraintTop_toBottomOf="@+id/long_edit" />
+
+    <TextView
+        android:id="@+id/latitude_coord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Latitude:"
+        app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
+
+    <TextView
+        android:id="@+id/longitude_coord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Longitude:"
+        app:layout_constraintTop_toBottomOf="@+id/lat_edit"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/coordinates_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/coordinates_title"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
+        android:id="@+id/coordinates_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Enter GPS Coordinates"
+        android:textSize="36sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <EditText
+        android:id="@+id/lat_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/latitude_coord"
+        app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
+
+    <EditText
+        android:id="@+id/long_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/longitude_coord"
+        app:layout_constraintTop_toTopOf="@+id/longitude_coord" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+
+</android.support.constraint.ConstraintLayout>

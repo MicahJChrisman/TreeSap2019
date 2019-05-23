@@ -1,0 +1,16 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="actionBarHeight">40dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="box_item_margin">12dp</dimen>
+    <dimen name="bullet_list_view_bullet_size">10dp</dimen>
+    <dimen name="bullet_list_view_text_size">22sp</dimen>
+    <dimen name="add_tree_method_spinner_text_size">20dp</dimen>
+    <dimen name="dialogTextSize">14dp</dimen>
+    <dimen name="add_method_list_margin">16dp</dimen>
+    <dimen name="cereal_box_title_size">25dp</dimen>
+</resources>

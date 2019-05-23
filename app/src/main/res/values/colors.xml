@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="appBackground">#C4EABF </color>
+    <color name="appToolbarBackground">#7D869C</color>
+    <color name="fabColor">#FF0000</color>
+    <color name="colorPrimary">#10AA00</color>
+    <color name="colorPrimaryDark">#003300</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="boxBackground">#10AA00</color>
+    <color name="boxTextColor">#FFF</color>
+    <color name="bullet_color">#FF0000</color>
+    <color name="altColorPrimaryDark">#000694</color>
+    <color name="altColorPrimary">#2e77ff</color>
+    <color name="altColorAccent">#fcfd17</color>
+    <color name="altAppBackground">#c0d5fc</color>
+</resources>
