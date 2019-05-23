@@ -17,11 +17,14 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.display.DisplayMethod;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
@@ -54,6 +57,10 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         eventer2.setText(String.valueOf(MainActivity.banana.getLocation().getLongitude()));
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+
+        ImageButton button = (ImageButton) findViewById(R.id.add);
+        button.setOnClickListener(new AddNotesEvent());
     }
 
 
@@ -78,6 +85,13 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                 startActivity(intent2);
             }
             return true;
+        }
+    }
+    private class AddNotesEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
+            startActivity(intentA);
         }
     }
 }
