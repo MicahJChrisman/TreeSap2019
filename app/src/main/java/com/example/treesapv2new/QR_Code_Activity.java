@@ -182,10 +182,11 @@ public class QR_Code_Activity extends AppCompatActivity {
                                 String longit = listBuffer.get(1);
                                 latD = Double.parseDouble(lat);
                                 longD = Double.parseDouble(longit);
+                                longD = -longD;
                                 if((Math.abs(latD) >90)|| (Math.abs(longD)>180)){
                                     txtResult.setText("Invalid QR code for this app.");
                                 }else {
-                                    txtResult.setText("Location: " + lat + ", " + longit);
+                                    txtResult.setText("Location: " + lat + ", -" + longit);
                                     b.setVisibility(View.VISIBLE);
                                 }
                             }else{
@@ -205,7 +206,6 @@ public class QR_Code_Activity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             TreeLocation testing = new TreeLocation(latD,longD);
-
 
             HopeCollegeDataSource ds = new HopeCollegeDataSource();
             ds.initialize(QR_Code_Activity.this,null);
