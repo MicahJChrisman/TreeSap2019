@@ -6,6 +6,10 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+
+import com.example.treesapv2new.display.AddNotesActivity;
 
 public class Tree_Info_First extends AppCompatActivity {
 
@@ -16,6 +20,17 @@ public class Tree_Info_First extends AppCompatActivity {
         setContentView(R.layout.activity_tree_info_first);
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+        ImageButton button = (ImageButton) findViewById(R.id.add3);
+        button.setOnClickListener(new AddNotesEvent());
+    }
+
+    private class AddNotesEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Tree_Info_First.this, AddNotesActivity.class);
+            startActivity(intentA);
+        }
     }
 
     @Override
