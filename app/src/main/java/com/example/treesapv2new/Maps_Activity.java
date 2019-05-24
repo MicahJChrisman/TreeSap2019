@@ -75,6 +75,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(null);
         setContentView(R.layout.activity_map_new);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(PERMS, REQUEST_ID);
+        }
+
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
