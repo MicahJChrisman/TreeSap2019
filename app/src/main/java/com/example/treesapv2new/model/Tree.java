@@ -103,7 +103,7 @@ public class Tree {
         String out = "";
 
         for (String key : otherInfo.keySet()) {
-            out += key + ": " + otherInfo.get(key).toString() + "\n";
+            out += "\t" + key + ": " + otherInfo.get(key).toString() + "\n";
         }
 
         if (out.length() > 0) out = out.substring(0, out.length()-1);

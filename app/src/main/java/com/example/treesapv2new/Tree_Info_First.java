@@ -8,6 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.treesapv2new.display.AddNotesActivity;
 
@@ -18,6 +19,70 @@ public class Tree_Info_First extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_tree_info_first);
+
+        String commonName = MainActivity.banana.getCommonName();
+        TextView commonNameText = (TextView) findViewById(R.id.CommonName);
+        if(commonName != null) {
+            commonNameText.setText("Common name: " + commonName);
+        }else{
+            //commonNameText.setText("Common name: " + "Unavailable");
+            commonNameText.setVisibility(View.GONE);
+        }
+
+        String scientificName = MainActivity.banana.getScientificName();
+        TextView scientificNameText = (TextView) findViewById(R.id.scientificName);
+        if(scientificName != null) {
+            scientificNameText.setText("Scientific name: " + MainActivity.banana.getScientificName());
+        }else{
+            // scientificNameText.setText("Scientific name: " + "Unavailable");
+            scientificNameText.setVisibility(View.GONE);
+        }
+
+        String treeID = MainActivity.banana.getID();
+        TextView treeIdText = (TextView) findViewById(R.id.treeid);
+        if(treeID != null) {
+            treeIdText.setText("Tree ID: " + treeID);
+        }else{
+            //treeIdText.setText("Tree ID: " + "Unavailable");
+            treeIdText.setVisibility(View.GONE);
+        }
+
+        Double dbh = MainActivity.banana.getCurrentDBH();
+        TextView dbhText = (TextView) findViewById(R.id.dbh);
+        if(dbh != null) {
+            dbhText.setText("DBH: " + dbh);
+        }else{
+            //dbhText.setText("DBH: " + "Unavailable");
+            dbhText.setVisibility(View.GONE);
+        }
+
+        String gpsLocation = MainActivity.banana.getLocation().getLatitude() + ", " + MainActivity.banana.getLocation().getLongitude();
+        TextView gpsLocationText = (TextView) findViewById(R.id.gpsLocation);
+        if(gpsLocation != null) {
+            gpsLocationText.setText("GPS location: " + gpsLocation);
+        }else{
+            //gpsLocationText.setText("GPS location: " + "Unavailable");
+            gpsLocationText.setVisibility(View.GONE);
+        }
+
+        Object assetValue = MainActivity.banana.getInfo("Tree asset value");
+        TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
+        if(assetValue != null) {
+            assetValueText.setText("Asset value: " + assetValue);
+        }else{
+            //assetValueText.setText("Asset value: " + "Unavailable");
+            assetValueText.setVisibility(View.GONE);
+        }
+
+        String otherInfo = MainActivity.banana.getAllInfo();
+        TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
+        if(otherInfo != null) {
+            otherInfoText.setVisibility(0);
+            otherInfoText.setText("Other info: \n" + otherInfo);
+        }else{
+            //otherInfoText.setText("Other info: \n" + "\tNo other information");
+            otherInfoText.setVisibility(View.GONE);
+        }
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
