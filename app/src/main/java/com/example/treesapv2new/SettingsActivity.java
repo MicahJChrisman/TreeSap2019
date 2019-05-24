@@ -33,7 +33,7 @@ public class SettingsActivity extends PreferenceActivity {
 //                showLocationMarker.setChecked(stateShowLocationMarker);
 //            }
 //        });
-
+//  Thing to test thing
     }
 
 }
