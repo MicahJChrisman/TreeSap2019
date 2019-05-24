@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/treesap_logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

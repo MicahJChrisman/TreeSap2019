@@ -16,14 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <SurfaceView
-        android:id="@+id/cameraPreview"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="480dp" />
-
     <TextView
         android:id="@+id/txtResult"
         android:layout_width="match_parent"
@@ -32,13 +24,37 @@
         app:layout_constraintTop_toBottomOf="@+id/cameraPreview"
         android:text="Please focus camera on QR Code"
         tools:layout_editor_absoluteX="-93dp" />
-
     <Button
         android:id="@+id/sub_coord_but2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
         app:layout_constraintTop_toBottomOf="@+id/txtResult" />
+
+    <SurfaceView
+        android:id="@+id/cameraPreview"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:layout_alignTop="@+id/txtResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/qr_square"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="0200dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/qr_code_overlay" />
+    </RelativeLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"

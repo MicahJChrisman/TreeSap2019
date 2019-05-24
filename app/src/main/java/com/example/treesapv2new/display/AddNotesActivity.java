@@ -24,8 +24,7 @@ public class AddNotesActivity extends AppCompatActivity {
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(AddNotesActivity.this, AddNotesActivity.class);
-//            startActivity(intentA);
+            //This is where we put the code to save it to the database when people add a note
             finish();
         }
     }
