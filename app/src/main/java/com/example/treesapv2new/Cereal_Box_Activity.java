@@ -1,10 +1,13 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ import java.util.List;
 public class Cereal_Box_Activity extends AppCompatActivity {
 //    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
     String sentString;
+    Dialog myDialog;
 
 //    public Cereal_Box_Activity(String sentString){
 //        this.sentString = sentString;
@@ -58,6 +63,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
+        myDialog = new Dialog(this);
 
         ImageButton button = (ImageButton) findViewById(R.id.add);
         button.setOnClickListener(new AddNotesEvent());
@@ -90,8 +96,31 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
+//            startActivity(intentA);
+            ShowPopup(v);
         }
+    }
+
+    public void ShowPopup(View v){
+        TextView txtclose;
+        Button buttonSubmit;
+        myDialog.setContentView(R.layout.add_notes_display);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        buttonSubmit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 }

@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:background="@color/colorPrimaryDark"
+    android:padding="5dp"
+    android:layout_gravity="center">
+    <TextView
+        android:id="@+id/txtclose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="X"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:background="@drawable/cerclebackground"/>
 
 
-        <TextView
-            android:id="@+id/addNotesAboutATree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="8dp"
-            android:text="Add Notes About a Tree"
-            app:layout_constraintBottom_toTopOf="@+id/add_notes_editText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/addTreeNotesText"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Add Notes About This Tree"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/add_notes_editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="2dp"
-            android:ems="10"
-            android:hint="aaaaaaaa"
-            android:inputType="textPersonName"
-            android:text=""
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addNotesAboutATree" />
+    <EditText
+        android:id="@+id/add_notes_box_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Notes"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:inputType="text"/>
 
-        <Button
-            android:id="@+id/add_notes_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Submit"
-            app:layout_constraintTop_toBottomOf="@+id/add_notes_editText"
-            tools:layout_editor_absoluteX="94dp" />
+    <Button
+        android:id="@+id/add_notes_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/button_style"
+        android:textColor="@color/white"/>
+
+</LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>

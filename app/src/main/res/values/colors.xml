@@ -13,4 +13,5 @@
     <color name="altColorPrimary">#2e77ff</color>
     <color name="altColorAccent">#fcfd17</color>
     <color name="altAppBackground">#c0d5fc</color>
+    <color name="white">#fff</color>
 </resources>
