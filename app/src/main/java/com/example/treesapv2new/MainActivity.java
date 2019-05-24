@@ -130,8 +130,11 @@ public class MainActivity extends AppCompatActivity {
     };
     private static final int REQUEST_ID = 6;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 882510d2175fba92d258f476ffa6c515d83a4d1b
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
@@ -149,10 +152,13 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(PERMS, REQUEST_ID);
         }
 
+<<<<<<< HEAD
         ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
         settingsButton.setOnClickListener(new NextEvent());
 
 
+=======
+>>>>>>> 882510d2175fba92d258f476ffa6c515d83a4d1b
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

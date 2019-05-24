@@ -87,7 +87,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         setContentView(R.layout.big_red_button_page);
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-        requestPermissions(PERMS, REQUEST_ID);
+
 
         ImageButton button = (ImageButton) findViewById(R.id.bigredbutton);
         button.setOnClickListener(new AddEventAction());
