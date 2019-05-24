@@ -16,11 +16,14 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
@@ -74,6 +77,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_map_new);
+
+//        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
+//        pageRight.setOnTouchListener(new pageRight.);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
@@ -392,4 +398,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     public void onProviderDisabled(String s) {
 
     }
+
+//    private class AddEventAction implements View.OnClickListener{
+//        @Override
+//        public void onClick(View v){
+//
+//
+//            HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//            ds.initialize(Big_Red_Button.this,null);
+//            MainActivity.banana = ds.search(testing);
+//
+//            Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
+////            intentA.putExtra("treeClass", MainActivity.banana);
+//            startActivity(intentA);
+//
+////            startActivity(new Intent(Big_Red_Button.this, Cereal_Box_Activity.class));
+//        }
+//    }
 }
+
