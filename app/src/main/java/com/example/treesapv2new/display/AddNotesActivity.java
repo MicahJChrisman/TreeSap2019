@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 import com.example.treesapv2new.R;
@@ -15,10 +16,16 @@ public class AddNotesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
+
+//        TextView prevNotes = (TextView) findViewById(R.id.previousNotesText);
+//        prevNotes.setVisibility(View.INVISIBLE);
+
         setContentView(R.layout.add_notes_display);
 
         Button button = (Button) findViewById(R.id.add_notes_button);
         button.setOnClickListener(new AddNotesEvent());
+
+
     }
 
     private class AddNotesEvent implements View.OnClickListener{

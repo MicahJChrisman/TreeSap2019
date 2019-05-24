@@ -20,13 +20,14 @@
 
     <TextView
         android:id="@+id/addTreeNotesText"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:text="Add Notes About This Tree"
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="30dp" />
+
 
     <EditText
         android:id="@+id/add_notes_box_1"
@@ -35,9 +36,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Notes"
+        android:hint="Add Note"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/appToolbarBackground"
         android:inputType="text"/>
 
     <Button
@@ -49,6 +50,29 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/button_style"
         android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/previousNotesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="Previous Notes About This Tree:"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:paddingTop="50dp"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/noPreviousNotesText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="There are no previous notes about this tree."
+        android:textColor="@color/white"
+        android:paddingTop="50dp"
+        android:textSize="24sp" />
 
 </LinearLayout>
 
