@@ -2,21 +2,26 @@ package com.example.treesapv2new;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 
-public class SettingsActivity extends AppCompatActivity {
-
-    SwitchCompat showLocationMarker;
-    boolean stateShowLocationMarker;
+public class SettingsActivity extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
-
-        getSupportFragmentManager().beginTransaction().replace(0, new MainSettingsFragment()).commit();
+        addPreferencesFromResource(R.xml.preferences);
+//        FragmentTransaction fragmentTransaction;
+//        FragmentManager fragmentManager;
+//        Fragment fragment = new MainSettingsFragment();
+//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.commit();
+//        getSupportFragmentManager().beginTransaction().replace(findViewById(R.id.fragment), new MainSettingsFragment()).commit();
 //        setContentView(R.layout.activity_settings);
 //
 //        showLocationMarker = (SwitchCompat) findViewById(R.id.showLocationSwitch);
@@ -29,13 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
 //            }
 //        });
 
-
     }
 
-    public static class MainSettingsFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.preferences, rootKey);
-        }
-    }
 }

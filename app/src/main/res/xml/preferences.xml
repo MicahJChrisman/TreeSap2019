@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Basic Settings">
-        <CheckBoxPreference
-            android:key="checkbox"
-            android:summary="Tap to check if on or off"
-            android:title="Checkbox Preference" />
-    </PreferenceCategory>
-
-
-    <PreferenceCategory android:title="Basic Settings">
-        <RingtonePreference
-            android:key="ringtone"
-            android:showDefault="true"
-            android:showSilent="true"
-            android:summary="Pick a ringtone you like"
-            android:title="Ringtone Preference" />
+    <PreferenceCategory android:title="Settings">
         <EditTextPreference
-            android:dialogTitle="Enter a text"
-            android:key="text"
-            android:summary="Click to show a text entry dialog"
-            android:title="EditText Preference" />
-        <ListPreference
-            android:dialogTitle="Select duration"
+            android:dialogTitle="Enter a distance (meters)"
+            android:key="distanceFromTreePref"
+            android:summary="Change max distance away to get tree results."
+            android:numeric="decimal"
+            android:title="Maximum Distance From Tree" />
+        <MultiSelectListPreference
+            android:dialogTitle="Choose databases"
             android:entries="@array/settings_list_preference_titles"
             android:entryValues="@array/settings_list_preference_values"
-            android:key="list"
-            android:summary="Click to show a list to choose from"
-            android:title="List Preference" />
+            android:key="databasesUsedSelector"
+            android:summary="Select which tree databases to use"
+            android:title="Databases" />
         <SwitchPreference
-            android:key="switch"
-            android:title="Switch Preference"
-            android:summary="Click to switch on or off"
+            android:key="locationMarkerSwitch"
+            android:title="Location Marker"
+            android:summary="See your marker on the map"
             android:defaultValue="true"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Acknowledgements">
+        <Preference
+            android:selectable="false"
+            android:enabled="true"
+            android:key="itree_ack"
+            android:title="iTree Web Tools"
+            android:summary="" />
+        <Preference
+            android:selectable="false"
+            android:enabled="true"
+            android:key="benefit_calc_ack"
+            android:title="National Tree Benefit Calculator"
+            android:summary="" />
+        <Preference
+            android:selectable="false"
+            android:enabled="true"
+            android:key="iNaturalist_ack"
+            android:title="iNaturalist"
+            android:summary="" />
+        <Preference
+            android:selectable="false"
+            android:enabled="true"
+            android:key="creators_ack"
+            android:title="Copyright of Hope College"
+            android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane." />
+    </PreferenceCategory>
+
 
 </PreferenceScreen>
