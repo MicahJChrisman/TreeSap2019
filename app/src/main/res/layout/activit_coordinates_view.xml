@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/finalLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <Button
@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Submit"
+        android:textColor="@color/accent_gray"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/longitude_coord"
         app:layout_constraintTop_toBottomOf="@+id/long_edit" />
 
     <TextView
@@ -21,6 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Latitude:"
+        android:textColor="@color/accent_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/coordinates_instructions"
         app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
 
     <TextView
@@ -29,46 +35,69 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Longitude:"
-        app:layout_constraintTop_toBottomOf="@+id/lat_edit"
-        tools:layout_editor_absoluteX="16dp" />
+        android:textColor="@color/accent_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/latitude_coord"
+        app:layout_constraintTop_toBottomOf="@+id/lat_edit" />
 
     <TextView
         android:id="@+id/coordinates_instructions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="401dp"
+        android:layout_height="41dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
         android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/coordinates_title"
-        tools:layout_editor_absoluteX="8dp" />
+        android:textAlignment="textStart"
+        android:textColor="@color/accent_gray"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/latitude_coord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/coordinates_title"
+        app:layout_constraintTop_toBottomOf="@+id/coordinates_title" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintRight_toRightOf="@id/finalLayout"
+        app:layout_constraintStart_toStartOf="@id/finalLayout"
+        app:layout_constraintTop_toTopOf="@id/finalLayout"></LinearLayout>
 
     <TextView
         android:id="@+id/coordinates_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
         android:text="Enter GPS Coordinates"
+        android:textColor="@color/accent_gray"
         android:textSize="36sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/lat_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/latitude_coord"
+        android:textColor="@color/accent_gray"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/long_edit"
         app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
 
     <EditText
         android:id="@+id/long_edit"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:textColor="@color/accent_gray"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/longitude_coord"
         app:layout_constraintTop_toTopOf="@+id/longitude_coord" />
 
