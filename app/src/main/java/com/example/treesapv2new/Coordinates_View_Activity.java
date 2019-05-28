@@ -159,9 +159,14 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                 HopeCollegeDataSource ds = new HopeCollegeDataSource();
                 ds.initialize(Coordinates_View_Activity.this,null);
                 MainActivity.banana = ds.search(testing);
-                Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);
-//              intentA.putExtra("treeClass", MainActivity.banana);
-                startActivity(intentA);
+
+                if(MainActivity.banana != null) {
+                    Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);
+                    //              intentA.putExtra("treeClass", MainActivity.banana);
+                    startActivity(intentA);
+                }else{
+                    Toast.makeText(getBaseContext(), "There are no trees near enough!", Toast.LENGTH_LONG).show();
+                }
             }catch(java.lang.NumberFormatException e){
                 Toast toast = Toast.makeText(Coordinates_View_Activity.this, "Please enter a numeric value", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
