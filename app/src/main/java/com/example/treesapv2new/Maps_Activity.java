@@ -303,17 +303,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //            String location = "";
 
             if (ds instanceof CityOfHollandDataSource) {
-                stuff = ((CityOfHollandDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/COHTreeData.csv");
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/COHTreeData.csv");
                 treeField = 1;
                 location = "blah blah blah";
                 whichSource = false;
             } else if (ds instanceof HopeCollegeDataSource) {
-                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/HCTreeData.csv");
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
                 treeField = 2;
                 location = "Hope College Pine Grove";
                 whichSource = true;
             } else if (ds instanceof ITreeDataSource) {
-                stuff = ((ITreeDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/iTreeTreeData.csv");
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/iTreeTreeData.csv");
                 treeField = 2;
                 location = "Hope College Pine Grove";
                 whichSource = true;
