@@ -95,6 +95,7 @@ public class SettingsActivity extends PreferenceActivity {
                 int index = multiSelectListPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index>= 0 ? multiSelectListPreference.getEntries()[index] : null);
 
+//thing thing
 
 //                // For list preferences, look up the correct display value in
 //                // the preference's 'entries' list.
