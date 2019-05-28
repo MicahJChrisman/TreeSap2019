@@ -1,7 +1,9 @@
 package com.example.treesapv2new.datasource;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.apache.commons.csv.CSVFormat;
@@ -122,7 +124,10 @@ public class CityOfHollandDataSource extends DataSource {
     public Tree search(TreeLocation location) {
         float[] results = new float[1];
         float closestDistance;
-        float cap = PrefManager.getFloat("tree result", 10f);
+//        float cap = PrefManager.getFloat("tree result", 10f);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+        float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
+
         int entry, closestEntry;
 
         readData();

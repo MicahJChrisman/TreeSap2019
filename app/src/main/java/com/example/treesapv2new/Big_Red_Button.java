@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -38,8 +40,10 @@ import android.widget.Toast;
 import com.example.treesapv2new.control.IntentIntegrator;
 import com.example.treesapv2new.control.IntentResult;
 import com.example.treesapv2new.control.PrefManager;
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.display.CerealBoxDisplay;
 import com.example.treesapv2new.display.DisplayMethod;
 import com.example.treesapv2new.identify.Barcode_Identifier;
@@ -59,7 +63,10 @@ import com.example.treesapv2new.view.UserViewAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Big_Red_Button extends AppCompatActivity implements LocationListener {
 
@@ -246,10 +253,31 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             getLocation();
             TreeLocation testing = new TreeLocation(latitude,longitude);
 
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
-            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-            ds.initialize(Big_Red_Button.this,null);
-            MainActivity.banana = ds.search(testing);
+            for (String source : sources) {
+                Log.d("MainActivity", "Searching.  Trying: "+source);
+                DataSource ds;
+                if(source.equals("HopeCollegeDataSource")){
+                    ds = new HopeCollegeDataSource();
+                }else if(source.equals("CityOfHollandDataSource")){
+                    ds = new CityOfHollandDataSource();
+                }else{
+                    ds = new ITreeDataSource();
+                }
+
+                ds.initialize(Big_Red_Button.this,null);
+                MainActivity.banana = ds.search(testing);
+                if (MainActivity.banana != null) {
+                    if (MainActivity.banana.isFound()) break;  // and NOT just the closest
+                }
+            }
+
+
+//            HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//            ds.initialize(Big_Red_Button.this,null);
+//            MainActivity.banana = ds.search(testing);
 
             if(MainActivity.banana != null){
                 Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
