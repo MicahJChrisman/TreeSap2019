@@ -16,7 +16,7 @@
             android:summary="Select which tree databases to use"
             android:title="Databases" />
         <SwitchPreference
-            android:key="locationMarkerSwitch"
+            android:key="@string/locationMarkerSwitch"
             android:title="Location Marker"
             android:summary="See your marker on the map"
             android:defaultValue="true"/>

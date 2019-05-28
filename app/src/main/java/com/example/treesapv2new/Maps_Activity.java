@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -11,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
@@ -177,6 +179,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
+
         mMap = googleMap;
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -249,10 +254,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         HopeCollegeDataSource ds = new HopeCollegeDataSource();
 
-            ds.initialize(Maps_Activity.this, null);
-            Iterable<CSVRecord> stuff = null;
-            int treeField = 0;
-            String location = "";
+        ds.initialize(Maps_Activity.this, null);
+        Iterable<CSVRecord> stuff = null;
+        int treeField = 0;
+        String location = "";
         stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
         treeField = 2;
         location = "Hope College Pine Grove";
@@ -352,11 +357,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             double latitude = location1.getLatitude();
             double longitude = location1.getLongitude();
             LatLng currentLocation = new LatLng(latitude, longitude);
-//            if (PrefManager.getBoolean("marker", true)) {
+            if (locMarker == true) {
                 mMap.addMarker(new MarkerOptions().position(currentLocation)
                         .title("My Position").snippet("You are here.")
                         .icon(BitmapDescriptorFactory.defaultMarker(personalMarker)));
-//            }
+            }
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
         }
 
@@ -365,6 +370,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onLocationChanged(Location location)
     {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -372,13 +379,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//        if(PrefManager.getBoolean("marker", false)) {
+        if(locMarker == true) {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
             markerOptions.title("Current Position");
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(personalMarker));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
-//        }
+        }
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
