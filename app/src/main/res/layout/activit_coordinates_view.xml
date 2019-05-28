@@ -6,112 +6,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true">
 
-    <Button
-        android:id="@+id/sub_coord_but"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Submit"
-        android:textColor="@color/accent_gray"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/longitude_coord"
-        app:layout_constraintTop_toBottomOf="@+id/long_edit" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
-    <TextView
-        android:id="@+id/latitude_coord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Latitude:"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/coordinates_instructions"
-        app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
+            <TextView
+                android:id="@+id/coordinates_instructions"
+                android:layout_width="325dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
+                android:textAlignment="center"
+                android:textColor="@color/accent_gray"
+                android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/longitude_coord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Longitude:"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/latitude_coord"
-        app:layout_constraintTop_toBottomOf="@+id/lat_edit" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
-    <TextView
-        android:id="@+id/coordinates_instructions"
-        android:layout_width="401dp"
-        android:layout_height="41dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginBottom="8dp"
-        android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
-        android:textAlignment="textStart"
-        android:textColor="@color/accent_gray"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/latitude_coord"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/coordinates_title"
-        app:layout_constraintTop_toBottomOf="@+id/coordinates_title" />
+                <TextView
+                    android:id="@+id/latitude_coord"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Latitude: "
+                    android:textColor="@color/accent_gray"
+                    android:textSize="20sp" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintRight_toRightOf="@id/finalLayout"
-        app:layout_constraintStart_toStartOf="@id/finalLayout"
-        app:layout_constraintTop_toTopOf="@id/finalLayout"></LinearLayout>
+                <EditText
+                    android:id="@+id/lat_edit"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_border"
+                    android:textColor="@color/accent_gray"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/coordinates_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
-        android:text="Enter GPS Coordinates"
-        android:textColor="@color/accent_gray"
-        android:textSize="36sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/lat_edit"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/long_edit"
-        app:layout_constraintTop_toBottomOf="@+id/coordinates_instructions" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/long_edit"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/longitude_coord"
-        app:layout_constraintTop_toTopOf="@+id/longitude_coord" />
+                <TextView
+                    android:id="@+id/longitude_coord"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Longitude: "
+                    android:textColor="@color/accent_gray"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/long_edit"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_border"
+                    android:textColor="@color/accent_gray"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/sub_coord_but"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:textColor="@color/accent_gray"
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu" />/>
+
 
 
 </android.support.constraint.ConstraintLayout>
