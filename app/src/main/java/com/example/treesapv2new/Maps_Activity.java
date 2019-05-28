@@ -272,39 +272,55 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
 
-
-
-//        for (DataSource ds : MainActivity.getSelectedDataSources()) {
-
-        HopeCollegeDataSource ds = new HopeCollegeDataSource();
-
-        ds.initialize(Maps_Activity.this, null);
-        Iterable<CSVRecord> stuff = null;
-        int treeField = 0;
         String location = "";
-        stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
-        treeField = 2;
-        location = "Hope College Pine Grove";
-        whichSource = true;
 
-//            if (ds instanceof CityOfHollandDataSource) {
-//                stuff = ((CityOfHollandDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/COHTreeData.csv");
-//                treeField = 1;
-//                whichSource = false;
-//            } else if (ds instanceof HopeCollegeDataSource) {
-//                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/HCTreeData.csv");
-//                treeField = 2;
-//                location = "Hope College Pine Grove";
-//                whichSource = true;
-//            } else if (ds instanceof ITreeDataSource) {
-//                stuff = ((ITreeDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/iTreeTreeData.csv");
-//                treeField = 2;
-//                location = "Hope College Pine Grove";
-//                whichSource = true;
-//            }
-//            if (stuff == null) {
-//                continue;
-//            }
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        for (String source : sources) {
+
+            DataSource ds;
+            if(source.equals("HopeCollegeDataSource")){
+                ds = new HopeCollegeDataSource();
+            }else if(source.equals("CityOfHollandDataSource")){
+                ds = new CityOfHollandDataSource();
+            }else{
+                ds = new ITreeDataSource();
+            }
+
+
+//        HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//        ds.initialize(Maps_Activity.this, null);
+//        Iterable<CSVRecord> stuff = null;
+//        int treeField = 0;
+
+//        stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
+//        treeField = 2;
+//        location = "Hope College Pine Grove";
+//        whichSource = true;
+
+            ds.initialize(Maps_Activity.this, null);
+            Iterable<CSVRecord> stuff = null;
+            int treeField = 0;
+//            String location = "";
+
+            if (ds instanceof CityOfHollandDataSource) {
+                stuff = ((CityOfHollandDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/COHTreeData.csv");
+                treeField = 1;
+                location = "blah blah blah";
+                whichSource = false;
+            } else if (ds instanceof HopeCollegeDataSource) {
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/HCTreeData.csv");
+                treeField = 2;
+                location = "Hope College Pine Grove";
+                whichSource = true;
+            } else if (ds instanceof ITreeDataSource) {
+                stuff = ((ITreeDataSource) ds).getCoordinates(Maps_Activity.this, "/data/user/0/edu.hope.cs.treesap2/files/iTreeTreeData.csv");
+                treeField = 2;
+                location = "Hope College Pine Grove";
+                whichSource = true;
+            }
+            if (stuff == null) {
+                continue;
+            }
             int count =-1;
             for (CSVRecord record : stuff) {
                 count++;
@@ -343,7 +359,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }
                 }
-//            }
+            }
         }
 
         LatLng hope = new LatLng(42.788002, -86.105971);
