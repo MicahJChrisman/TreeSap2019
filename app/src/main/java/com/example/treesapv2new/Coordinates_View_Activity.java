@@ -1,6 +1,8 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,21 +16,27 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
+import com.google.android.gms.common.util.NumberUtils;
 
 import java.util.List;
 
@@ -55,7 +63,9 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-        requestPermissions(PERMS, REQUEST_ID);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(PERMS, REQUEST_ID);
+        }
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
@@ -137,28 +147,30 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             EditText lat_val = (EditText) findViewById(R.id.lat_edit);
-//            String x = lat_val.toString();
-//            Log.i( "message given",  x);
-//            Double y = Double.parseDouble(x);
-            latitude = Double.parseDouble(lat_val.getText().toString());
-//            latitude = y;
-
             EditText long_val = (EditText) findViewById(R.id.long_edit);
-            longitude = Double.parseDouble(long_val.getText().toString());
+//            Log.i( "message given",  x);
+            try{
+                latitude = Double.parseDouble(lat_val.getText().toString());
+                longitude = Double.parseDouble(long_val.getText().toString());
 
-            TreeLocation testing = new TreeLocation(latitude,longitude);
+                TreeLocation testing = new TreeLocation(latitude,longitude);
 
 
-            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-            ds.initialize(Coordinates_View_Activity.this,null);
-            MainActivity.banana = ds.search(testing);
-
-            Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);
-//            intentA.putExtra("treeClass", MainActivity.banana);
-            startActivity(intentA);
+                HopeCollegeDataSource ds = new HopeCollegeDataSource();
+                ds.initialize(Coordinates_View_Activity.this,null);
+                MainActivity.banana = ds.search(testing);
+                Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);
+//              intentA.putExtra("treeClass", MainActivity.banana);
+                startActivity(intentA);
+            }catch(java.lang.NumberFormatException e){
+                Toast toast = Toast.makeText(Coordinates_View_Activity.this, "Please enter a numeric value", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
         }
     }
-
-
+//    public static boolean isNumeric(String str) {
+//        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal. DOES NOT WORK ATM
+//    }
 
 }
