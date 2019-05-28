@@ -124,7 +124,6 @@ public class CityOfHollandDataSource extends DataSource {
     public Tree search(TreeLocation location) {
         float[] results = new float[1];
         float closestDistance;
-//        float cap = PrefManager.getFloat("tree result", 10f);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
         float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
 
