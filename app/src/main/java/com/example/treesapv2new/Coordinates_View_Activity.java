@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
@@ -34,11 +36,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
+import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.common.util.NumberUtils;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Coordinates_View_Activity extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
@@ -155,10 +162,30 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 
                 TreeLocation testing = new TreeLocation(latitude,longitude);
 
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
-                HopeCollegeDataSource ds = new HopeCollegeDataSource();
-                ds.initialize(Coordinates_View_Activity.this,null);
-                MainActivity.banana = ds.search(testing);
+                for (String source : sources) {
+                    Log.d("MainActivity", "Searching.  Trying: "+source);
+                    DataSource ds;
+                    if(source.equals("HopeCollegeDataSource")){
+                        ds = new HopeCollegeDataSource();
+                    }else if(source.equals("CityOfHollandDataSource")){
+                        ds = new CityOfHollandDataSource();
+                    }else{
+                        ds = new ITreeDataSource();
+                    }
+
+                    ds.initialize(Coordinates_View_Activity.this,null);
+                    MainActivity.banana = ds.search(testing);
+                    if (MainActivity.banana != null) {
+                        if (MainActivity.banana.isFound()) break;  // and NOT just the closest
+                    }
+                }
+
+//                HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//                ds.initialize(Coordinates_View_Activity.this,null);
+//                MainActivity.banana = ds.search(testing);
 
                 if(MainActivity.banana != null) {
                     Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);

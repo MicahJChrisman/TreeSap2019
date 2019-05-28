@@ -20,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +50,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.commons.csv.CSVRecord;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
 
@@ -199,10 +202,31 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                     TreeLocation testing = new TreeLocation(latitude,longitude);
 
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                    Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
-                    HopeCollegeDataSource ds = new HopeCollegeDataSource();
-                    ds.initialize(Maps_Activity.this,null);
-                    MainActivity.banana = ds.search(testing);
+                    for (String source : sources) {
+                        Log.d("MainActivity", "Searching.  Trying: "+source);
+                        DataSource ds;
+                        if(source.equals("HopeCollegeDataSource")){
+                            ds = new HopeCollegeDataSource();
+                        }else if(source.equals("CityOfHollandDataSource")){
+                            ds = new CityOfHollandDataSource();
+                        }else{
+                            ds = new ITreeDataSource();
+                        }
+
+                        ds.initialize(Maps_Activity.this,null);
+                        MainActivity.banana = ds.search(testing);
+                        if (MainActivity.banana != null) {
+                            if (MainActivity.banana.isFound()) break;  // and NOT just the closest
+                        }
+                    }
+
+
+//                    HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//                    ds.initialize(Maps_Activity.this,null);
+//                    MainActivity.banana = ds.search(testing);
 
                     Intent intentA = new Intent(Maps_Activity.this, Cereal_Box_Activity.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
