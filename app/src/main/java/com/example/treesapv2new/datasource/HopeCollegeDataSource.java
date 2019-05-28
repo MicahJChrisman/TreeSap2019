@@ -136,8 +136,9 @@ public class HopeCollegeDataSource extends DataSource {
         float[] results = new float[1];
         float closestDistance;
 //        float close = PrefManager.getFloat("tree result", 10f);
-        float close = 999999999;
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        float close = 999999999;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+        float close = prefs.getFloat("distanceFromTreePref",100);
 //        float close =
 
         readData();
