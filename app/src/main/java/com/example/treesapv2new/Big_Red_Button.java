@@ -29,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -250,9 +251,30 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             ds.initialize(Big_Red_Button.this,null);
             MainActivity.banana = ds.search(testing);
 
-            Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
+            if(MainActivity.banana != null){
+                Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
-            startActivity(intentA);
+                startActivity(intentA);
+            }else{
+//                AlertDialog.Builder builder;
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    builder = new AlertDialog.Builder(getBaseContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+//                } else {
+//                    builder = new AlertDialog.Builder(getBaseContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+//                }
+//                builder.setTitle("No Tree was Found!")
+//                        .setMessage("No tree was found at the GPS coordinates that you gave using the data sources that you specified.")
+//                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                            }
+//                        })
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+//                        .show();
+                Toast.makeText(getBaseContext(), "There are no trees near enough!", Toast.LENGTH_LONG).show();
+            }
+
+
+
 
 //            startActivity(new Intent(Big_Red_Button.this, Cereal_Box_Activity.class));
         }
