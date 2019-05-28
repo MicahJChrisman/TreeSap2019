@@ -12,6 +12,9 @@
     <string name="title_activity_big_red_button_identifier">BigRedButtonIdentifier</string>
     <string name="add_method_dialog_title">Choose your method</string>
     <string name="title_activity_maps">Map</string>
+    <string name="distanceFromTreePref">distanceFromTreePref</string>
+    <string name="databasesUsedSelector">databasesUsedSelector</string>
+    <string name="key_send_feedback">key_send_feedback</string>
     <string-array name="zoom_array">
         <item>Very Close</item>
         <item>Close</item>

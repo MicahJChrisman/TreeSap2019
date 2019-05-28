@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="Settings">
         <EditTextPreference
             android:dialogTitle="Enter a distance (meters)"
-            android:key="distanceFromTreePref"
+            android:key="@string/distanceFromTreePref"
             android:summary="Change max distance away to get tree results."
             android:numeric="decimal"
             android:title="Maximum Distance From Tree" />
@@ -12,7 +12,7 @@
             android:dialogTitle="Choose databases"
             android:entries="@array/settings_list_preference_titles"
             android:entryValues="@array/settings_list_preference_values"
-            android:key="databasesUsedSelector"
+            android:key="@string/databasesUsedSelector"
             android:summary="Select which tree databases to use"
             android:title="Databases" />
         <SwitchPreference

@@ -1,6 +1,7 @@
 package com.example.treesapv2new.datasource;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.util.Log;
 
@@ -24,6 +25,8 @@ import java.net.URL;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
+import android.preference.PreferenceManager;
+
 
 public class HopeCollegeDataSource extends DataSource {
 
@@ -36,6 +39,8 @@ public class HopeCollegeDataSource extends DataSource {
 
     private Context parent;
     private boolean downloaded, alreadyRead;
+
+
 
     public HopeCollegeDataSource() {
     }
@@ -132,6 +137,8 @@ public class HopeCollegeDataSource extends DataSource {
         float closestDistance;
 //        float close = PrefManager.getFloat("tree result", 10f);
         float close = 999999999;
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        float close =
 
         readData();
         closestDistance = 99999;
