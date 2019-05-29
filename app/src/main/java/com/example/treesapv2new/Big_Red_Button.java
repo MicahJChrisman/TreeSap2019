@@ -100,6 +100,12 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         ImageButton button = (ImageButton) findViewById(R.id.bigredbutton);
         button.setOnClickListener(new AddEventAction());
 
+        ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_1);
+        addTreeButton.setOnClickListener(new AddTreeEvent());
+
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.setting_button_1);
+        settingsButton.setOnClickListener(new AddSettingsEvent());
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
         Menu menu = bottomNavigationView.getMenu();
@@ -219,6 +225,22 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    private class AddTreeEvent implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentA = new Intent(Big_Red_Button.this, Add_Tree_Activity.class);
+            startActivity(intentA);
+        }
+    }
+
+    private class AddSettingsEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Big_Red_Button.this, SettingsActivity.class);
+            startActivity(intentA);
+        }
     }
 
 

@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new NextEvent());
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
-        settingsButton.setOnClickListener(new AddTreeEvent());
+        addTreeButton.setOnClickListener(new AddTreeEvent());
 
 
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

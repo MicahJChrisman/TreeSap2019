@@ -32,6 +32,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,6 +74,12 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
         }
+
+        ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
+        addTreeButton.setOnClickListener(new Coordinates_View_Activity.AddTreeEvent());
+
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.setting_button);
+        settingsButton.setOnClickListener(new Coordinates_View_Activity.AddSettingsEvent());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
@@ -124,6 +131,22 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+    }
+
+    private class AddTreeEvent implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentA = new Intent(Coordinates_View_Activity.this, Add_Tree_Activity.class);
+            startActivity(intentA);
+        }
+    }
+
+    private class AddSettingsEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Coordinates_View_Activity.this, SettingsActivity.class);
+            startActivity(intentA);
+        }
     }
 
     @Override
