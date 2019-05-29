@@ -217,6 +217,8 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //        }
 
 
+        setContentView(customView);
+        gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
 //        if(!hasValues){
 //            pieChart.setVisibility(View.GONE);
 //            noData.setVisibility(View.VISIBLE);
@@ -224,25 +226,33 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //        }
         //customView/setContentView();
 
-        if (popupWindow != null) {
-            popupWindow.dismiss();
-        }
-        popupWindow = new PopupWindow(
-                customView,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            popupWindow.setElevation(5.0f);
-        }
-        final View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-            }
-        });
+
+
+
+
+
+
+//        if (popupWindow != null) {
+//            popupWindow.dismiss();
+//        }
+//        popupWindow = new PopupWindow(
+//                customView,
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.MATCH_PARENT
+//        );
+//
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            popupWindow.setElevation(5.0f);
+//        }
+//        final View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
+//        rootView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+//
+//            }
+//        });
 
     }
 
