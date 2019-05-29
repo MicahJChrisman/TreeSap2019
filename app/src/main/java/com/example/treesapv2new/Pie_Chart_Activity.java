@@ -18,7 +18,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.treesapv2new.control.PrefManager;
+import com.example.treesapv2new.control.Transform;
 import com.example.treesapv2new.display.AddNotesActivity;
+import com.example.treesapv2new.display.PieChartDisplay;
 import com.example.treesapv2new.model.Tree;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -31,7 +33,12 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -55,8 +62,8 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private PieData data;
     private double total;
     private boolean hasValues = false;
-    private  TextView noData;
-    private Tree trees;
+    private TextView noData;
+    private Tree tree;
 
 
 
@@ -89,14 +96,14 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
 
 
-        trees = MainActivity.banana;
-//        try {
-//            findInfo(tree);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        tree = MainActivity.banana;
+        try {
+            findInfo(tree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View customView = inflater.inflate(R.layout.piechart_display, null);
+        View customView = inflater.inflate(R.layout.activity_pie_chart, null);
         TextView okay = (TextView) customView.findViewById(R.id.okay_pie);
         okay.bringToFront();
         okay.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +114,10 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             }
         });
         pieChart = (PieChart) customView.findViewById(R.id.chart);
-        noData = (TextView) customView.findViewById(R.id.no_data);
-        noData.setVisibility(View.GONE);
+        //PieChartDisplay pieChartDisplay = new PieChartDisplay(getApplicationContext());
+        //pieChartDisplay.display(tree);
+        //noData = (TextView) customView.findViewById(R.id.no_data);
+        //noData.setVisibility(View.GONE);
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
@@ -152,12 +161,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             total+=pieEntry.getValue();
         }
         DecimalFormat df = new DecimalFormat("0.00");
-        String enrty = "$"+df.format(total);
+        String entry = "$"+df.format(total);
         data.setValueFormatter(iValueFormatter);
         data.setValueTextSize(20);
         pieChart.setData(data);
         pieChart.invalidate();
-        pieChart.setCenterText(commonName +" Annual Benefits equals "+ enrty);
+        pieChart.setCenterText(commonName +" Annual Benefits equals "+ entry);
         pieChart.setCenterTextSize(20);
         Description description = new Description();
         description.setText("");
@@ -177,7 +186,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //            noData.setVisibility(View.VISIBLE);
 //            noData.setText("There is no data to display on this "+ commonName);
 //        }
-
+        //customView/setContentView();
 
         if (popupWindow != null) {
             popupWindow.dismiss();
@@ -191,8 +200,9 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             popupWindow.setElevation(5.0f);
         }
-//        View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
+//        View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
 //        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+        //popupWindow.show
 
 
 
@@ -242,6 +252,38 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         public void onClick(View v){
             Intent intentA = new Intent(Pie_Chart_Activity.this, AddNotesActivity.class);
             startActivity(intentA);
+        }
+    }
+    private void findInfo(Tree tree) throws IOException {
+        total = 0.0;
+        hasValues = false;
+        //InputStream inputStream = parent.getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
+        InputStream input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+        String line;
+        commonName = Transform.ChangeName(tree.getCommonName());
+        allInfo = "";
+        hasValues = false;
+        double treeDbh = tree.getCurrentDBH();
+        BigDecimal bd = new BigDecimal(treeDbh);
+        bd = bd.setScale(0, RoundingMode.DOWN);
+        while ((line = reader.readLine()) != null) {
+            String treeName = line.split(",")[1];
+            if (treeName.equals(commonName)) {
+                String dbh = line.split(",")[2];
+                Double diameter = Double.parseDouble(dbh);
+                BigDecimal bd1 = new BigDecimal(diameter);
+                bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
+                if (bd1.doubleValue() == bd.doubleValue()) {
+                    allInfo = line;
+                    hasValues = true;
+                    break;
+                }
+            }
+        }
+        if (allInfo.equals("")) {
+            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
         }
     }
 }
