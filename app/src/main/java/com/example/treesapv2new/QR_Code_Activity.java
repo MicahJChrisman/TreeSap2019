@@ -24,6 +24,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,12 @@ public class QR_Code_Activity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
         }
+
+        ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_3);
+        addTreeButton.setOnClickListener(new QR_Code_Activity.AddTreeEvent());
+
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.setting_button_3);
+        settingsButton.setOnClickListener(new QR_Code_Activity.AddSettingsEvent());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
@@ -204,6 +211,23 @@ public class QR_Code_Activity extends AppCompatActivity {
             }
         });
     }
+
+    private class AddTreeEvent implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentA = new Intent(QR_Code_Activity.this, Add_Tree_Activity.class);
+            startActivity(intentA);
+        }
+    }
+
+    private class AddSettingsEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(QR_Code_Activity.this, SettingsActivity.class);
+            startActivity(intentA);
+        }
+    }
+
 
     private class NextEvent implements View.OnClickListener {
         @Override

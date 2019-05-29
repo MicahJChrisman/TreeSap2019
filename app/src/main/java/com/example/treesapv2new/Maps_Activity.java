@@ -92,6 +92,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
+        ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_2);
+        addTreeButton.setOnClickListener(new Maps_Activity.AddTreeEvent());
+
+        ImageButton settingsButton = (ImageButton) findViewById(R.id.setting_button_2);
+        settingsButton.setOnClickListener(new Maps_Activity.AddSettingsEvent());
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
         Menu menu = bottomNavigationView.getMenu();
@@ -444,6 +450,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    private class AddTreeEvent implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Intent intentA = new Intent(Maps_Activity.this, Add_Tree_Activity.class);
+            startActivity(intentA);
+        }
+    }
+
+    private class AddSettingsEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(Maps_Activity.this, SettingsActivity.class);
+            startActivity(intentA);
+        }
     }
 
 //    private class AddEventAction implements View.OnClickListener{
