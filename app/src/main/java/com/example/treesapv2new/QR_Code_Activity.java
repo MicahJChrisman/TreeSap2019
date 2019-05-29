@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.service.autofill.FieldClassification;
@@ -40,6 +42,7 @@ import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
@@ -173,10 +176,12 @@ public class QR_Code_Activity extends AppCompatActivity {
             }
         });
 
+        //final SparseArray<Barcode> qrCodes = barcodeDetector.getDetectedItems();
+//        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+//        final SparseArray<Barcode> qrCodes = barcodeDetector.detect(frame);
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-
             }
 
             @Override
@@ -196,7 +201,6 @@ public class QR_Code_Activity extends AppCompatActivity {
                             while(matcher.find()){
                                 listBuffer.add(matcher.group());
                             }
-
                             if(listBuffer.size() == 2){
                                 String lat = listBuffer.get(0);
                                 String longit = listBuffer.get(1);
@@ -212,11 +216,20 @@ public class QR_Code_Activity extends AppCompatActivity {
                                     builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    Handler handler = new Handler(Looper.getMainLooper());
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            cameraSource.release();
                                         }
                                     });
                                     builder.show();
+
                                 }else {
+
                                     txtResult.setText("Location: " + lat + ", -" + longit);
                                     //b.setVisibility(View.VISIBLE);
                                     AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
@@ -237,33 +250,43 @@ public class QR_Code_Activity extends AppCompatActivity {
                                             Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
                                             for (String source : sources) {
-                                                Log.d("MainActivity", "Searching.  Trying: " + source);
+                                                Log.d("MainActivity", "Searching.  Trying: "+source);
                                                 DataSource ds;
-                                                if (source.equals("HopeCollegeDataSource")) {
+                                                if(source.equals("HopeCollegeDataSource")){
                                                     ds = new HopeCollegeDataSource();
-                                                } else if (source.equals("CityOfHollandDataSource")) {
+                                                }else if(source.equals("CityOfHollandDataSource")) {
                                                     ds = new CityOfHollandDataSource();
                                                 }else if(source.equals("ExtendedCoHDataSource")){
                                                     ds = new ExtendedCoHDataSource();
-                                                } else {
+                                                }else{
                                                     ds = new ITreeDataSource();
                                                 }
 
-                                                ds.initialize(QR_Code_Activity.this, null);
+                                                ds.initialize(QR_Code_Activity.this,null);
                                                 MainActivity.banana = ds.search(testing);
                                                 if (MainActivity.banana != null) {
-                                                    if (MainActivity.banana.isFound())
-                                                        break;  // and NOT just the closest
+                                                    if (MainActivity.banana.isFound()) break;  // and NOT just the closest
                                                 }
+
 
 
 //                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //                                            ds.initialize(QR_Code_Activity.this,null);
 //                                            MainActivity.banana = ds.search(testing);
 //
-//                                            Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
-//                                            startActivity(intentA);
+
                                             }
+                                            if(MainActivity.banana != null) {
+                                                Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
+                                                startActivity(intentA);
+                                            }
+                                        }
+                                    });
+                                    Handler handler = new Handler(Looper.getMainLooper());
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            barcodeDetector.release();
                                         }
                                     });
                                     builder.show();
@@ -278,6 +301,13 @@ public class QR_Code_Activity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.cancel();
+                                    }
+                                });
+                                Handler handler = new Handler(Looper.getMainLooper());
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        barcodeDetector.release();
                                     }
                                 });
                                 builder.show();
