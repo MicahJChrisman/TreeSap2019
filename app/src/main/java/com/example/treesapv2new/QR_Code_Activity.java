@@ -279,7 +279,20 @@ public class QR_Code_Activity extends AppCompatActivity {
                                             if(MainActivity.banana != null) {
                                                 Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
                                                 startActivity(intentA);
+                                            }else{
+                                                txtResult.setText("Invalid QR code for this app.");
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                                builder.setCancelable(true);
+                                                builder.setTitle("Location is not in any database");
+                                                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.cancel();
+                                                    }
+                                                });
+                                                builder.show();
                                             }
+
                                         }
                                     });
                                     Handler handler = new Handler(Looper.getMainLooper());
