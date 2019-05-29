@@ -4,11 +4,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -30,7 +32,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
+import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -41,7 +46,9 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -225,12 +232,35 @@ public class QR_Code_Activity extends AppCompatActivity {
                                         public void onClick(DialogInterface dialog, int which) {
                                             TreeLocation testing = new TreeLocation(latD,longD);
 
-                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-                                            ds.initialize(QR_Code_Activity.this,null);
-                                            MainActivity.banana = ds.search(testing);
+                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
-                                            Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
-                                            startActivity(intentA);
+                                            for (String source : sources) {
+                                                Log.d("MainActivity", "Searching.  Trying: " + source);
+                                                DataSource ds;
+                                                if (source.equals("HopeCollegeDataSource")) {
+                                                    ds = new HopeCollegeDataSource();
+                                                } else if (source.equals("CityOfHollandDataSource")) {
+                                                    ds = new CityOfHollandDataSource();
+                                                } else {
+                                                    ds = new ITreeDataSource();
+                                                }
+
+                                                ds.initialize(QR_Code_Activity.this, null);
+                                                MainActivity.banana = ds.search(testing);
+                                                if (MainActivity.banana != null) {
+                                                    if (MainActivity.banana.isFound())
+                                                        break;  // and NOT just the closest
+                                                }
+
+
+//                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//                                            ds.initialize(QR_Code_Activity.this,null);
+//                                            MainActivity.banana = ds.search(testing);
+//
+//                                            Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
+//                                            startActivity(intentA);
+                                            }
                                         }
                                     });
                                     builder.show();

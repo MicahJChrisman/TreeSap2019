@@ -10,6 +10,7 @@ public class DataSourceList {
         dataSourceClasses.add(CityOfHollandDataSource.class);
         dataSourceClasses.add(HopeCollegeDataSource.class);
         dataSourceClasses.add(ITreeDataSource.class);
+        dataSourceClasses.add(ExtendedCoHDataSource.class);
     }
 
     public static ArrayList<Class> getList() {
