@@ -2,6 +2,7 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
@@ -195,12 +197,59 @@ public class QR_Code_Activity extends AppCompatActivity {
                                 longD = -longD;
                                 if((Math.abs(latD) >90)|| (Math.abs(longD)>180)){
                                     txtResult.setText("Invalid QR code for this app.");
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Invalid QR Code for this app.");
+                                    builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.show();
                                 }else {
                                     txtResult.setText("Location: " + lat + ", -" + longit);
-                                    b.setVisibility(View.VISIBLE);
+                                    //b.setVisibility(View.VISIBLE);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                    builder.setCancelable(true);
+                                    builder.setTitle("Location: " + lat + ", -" + longit);
+                                    builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    builder.setPositiveButton("Get Info", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            TreeLocation testing = new TreeLocation(latD,longD);
+
+                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
+                                            ds.initialize(QR_Code_Activity.this,null);
+                                            MainActivity.banana = ds.search(testing);
+
+                                            Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
+                                            startActivity(intentA);
+                                        }
+                                    });
+                                    builder.show();
                                 }
                             }else{
                                 txtResult.setText("Invalid QR code for this app.");
+
+                                AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                builder.setCancelable(true);
+                                builder.setTitle("Invalid QR Code for this app.");
+                                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                                builder.show();
+
+
                             }
 
 
