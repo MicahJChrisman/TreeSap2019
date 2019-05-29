@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
         ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
         settingsButton.setOnClickListener(new NextEvent());
 
+        ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
+        settingsButton.setOnClickListener(new AddTreeEvent());
+
 
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -193,6 +196,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentA = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intentA);
+        }
+    }
+
+    private class AddTreeEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            Intent intentA = new Intent(MainActivity.this, Add_Tree_Activity.class);
             startActivity(intentA);
         }
     }
