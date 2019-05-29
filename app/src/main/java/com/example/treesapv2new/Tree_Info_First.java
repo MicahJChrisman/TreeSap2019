@@ -1,24 +1,30 @@
 package com.example.treesapv2new;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.treesapv2new.display.AddNotesActivity;
 
 public class Tree_Info_First extends AppCompatActivity {
-
+    Dialog myDialog;
     private GestureDetectorCompat gestureObject;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_tree_info_first);
+
+        myDialog = new Dialog(this);
 
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
@@ -93,9 +99,32 @@ public class Tree_Info_First extends AppCompatActivity {
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            Intent intentA = new Intent(Tree_Info_First.this, AddNotesActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
+//            startActivity(intentA);
+            ShowPopup(v);
         }
+    }
+
+    public void ShowPopup(View v){
+        TextView txtclose;
+        Button buttonSubmit;
+        myDialog.setContentView(R.layout.add_notes_display);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        buttonSubmit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 
     @Override

@@ -123,15 +123,6 @@ public class PieChartDisplay extends DisplayMethod implements OnChartValueSelect
         }
         LayoutInflater inflater = (LayoutInflater) parent.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.piechart_display, null);
-        TextView okay = (TextView) customView.findViewById(R.id.okay_pie);
-        okay.bringToFront();
-        okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                popupWindow = null;
-            }
-        });
         pieChart = (PieChart) customView.findViewById(R.id.chart);
         noData = (TextView) customView.findViewById(R.id.no_data);
         noData.setVisibility(View.GONE);
@@ -191,27 +182,6 @@ public class PieChartDisplay extends DisplayMethod implements OnChartValueSelect
             noData.setVisibility(View.VISIBLE);
             noData.setText("There is no data to display on this "+ commonName);
         }
-
-        TextView benefit = (TextView) customView.findViewById(R.id.goto_ben);
-        benefit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                CerealBoxDisplay cerealBoxDisplay = new CerealBoxDisplay(parent);
-                cerealBoxDisplay.display(trees);
-            }
-        });
-
-        TextView notes1 = (TextView) customView.findViewById(R.id.add_notes1);
-        notes1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                AddNotesDisplay addNotesDisplay1 = new AddNotesDisplay(parent);
-                addNotesDisplay1.display(trees);
-                //startActivity(new Intent(CerealBoxDisplay.this, AddNotesActivity.class));
-            }
-        });
 
         if (popupWindow != null) {
             popupWindow.dismiss();

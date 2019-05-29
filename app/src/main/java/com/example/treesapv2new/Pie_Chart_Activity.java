@@ -1,18 +1,25 @@
 package com.example.treesapv2new;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -42,10 +49,13 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import static android.graphics.Paint.Align.CENTER;
+
 public class Pie_Chart_Activity extends AppCompatActivity {
 
     private GestureDetectorCompat gestureObject;
 
+    Dialog myDialog;
 
 
 
@@ -84,17 +94,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_pie_chart);
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-        ImageButton button = (ImageButton) findViewById(R.id.add2);
-        button.setOnClickListener(new AddNotesEvent());
+//        ImageButton button = (ImageButton) findViewById(R.id.add2);
+//        button.setOnClickListener(new AddNotesEvent());
 
-
-
-
-
-
-
+        myDialog = new Dialog(this);
 
         tree = MainActivity.banana;
         try {
@@ -104,15 +109,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         }
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.activity_pie_chart, null);
-        TextView okay = (TextView) customView.findViewById(R.id.okay_pie);
-        okay.bringToFront();
-        okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                popupWindow = null;
-            }
-        });
+
+        gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
+
+        ImageButton button = (ImageButton) customView.findViewById(R.id.add2);
+        button.setOnClickListener(new AddNotesEvent());
+
         pieChart = (PieChart) customView.findViewById(R.id.chart);
         //PieChartDisplay pieChartDisplay = new PieChartDisplay(getApplicationContext());
         //pieChartDisplay.display(tree);
@@ -121,7 +123,44 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
-
+                Description description = new Description();
+                description.setTextSize(12);
+                PieEntry selected = (PieEntry) e.copy();
+                String category = selected.getLabel();
+                Log.i("thing", "description set: " + description.getPosition());
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                int height = size.y;
+                description.setPosition(width/2, height /4*3);
+                description.setTextAlign(CENTER);
+                switch (category){
+                    case("Storm Water"):
+                        description.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
+                        pieChart.setDescription(description);
+                        break;
+                    case("Energy"):
+                        description.setText("Strategically placed trees can increase home energy efficiency.");
+                        pieChart.setDescription(description);
+                        break;
+                    case("Air Quality"):
+                        description.setText("Urban forest can mitigate the health effects of pollution.");
+                        pieChart.setDescription(description);
+                        break;
+                    case("Property Value"):
+                        description.setText("");
+                        pieChart.setDescription(description);
+                        break;
+                    case("Natural Gas"):
+                        description.setText("");
+                        pieChart.setDescription(description);
+                        break;
+                    case("CO2"):
+                        description.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
+                        pieChart.setDescription(description);
+                        break;
+                }
             }
 
             @Override
@@ -177,7 +216,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //
 //        }
 //        else {
-            pieChart.animateY(5000);
+            pieChart.animateY(2000);
 //        }
 
 
@@ -200,25 +239,13 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             popupWindow.setElevation(5.0f);
         }
-//        View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
-//        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-        //popupWindow.show
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        final View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+            }
+        });
 
     }
 
@@ -250,10 +277,34 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            Intent intentA = new Intent(Pie_Chart_Activity.this, AddNotesActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
+//            startActivity(intentA);
+            ShowPopup(v);
         }
     }
+
+    public void ShowPopup(View v){
+        TextView txtclose;
+        Button buttonSubmit;
+        myDialog.setContentView(R.layout.add_notes_display);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        buttonSubmit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
     private void findInfo(Tree tree) throws IOException {
         total = 0.0;
         hasValues = false;
