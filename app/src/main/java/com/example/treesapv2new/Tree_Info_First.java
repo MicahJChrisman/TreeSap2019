@@ -29,7 +29,7 @@ public class Tree_Info_First extends AppCompatActivity {
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
         if(commonName != null) {
-            commonNameText.setText("Common name: " + commonName);
+            commonNameText.setText(commonName);
         }else{
             //commonNameText.setText("Common name: " + "Unavailable");
             commonNameText.setVisibility(View.GONE);
@@ -38,7 +38,7 @@ public class Tree_Info_First extends AppCompatActivity {
         String scientificName = MainActivity.banana.getScientificName();
         TextView scientificNameText = (TextView) findViewById(R.id.scientificName);
         if(scientificName != null) {
-            scientificNameText.setText("Scientific name: " + MainActivity.banana.getScientificName());
+            scientificNameText.setText(MainActivity.banana.getScientificName());
         }else{
             // scientificNameText.setText("Scientific name: " + "Unavailable");
             scientificNameText.setVisibility(View.GONE);
@@ -47,47 +47,63 @@ public class Tree_Info_First extends AppCompatActivity {
         String treeID = MainActivity.banana.getID();
         TextView treeIdText = (TextView) findViewById(R.id.treeid);
         if(treeID != null) {
-            treeIdText.setText("Tree ID: " + treeID);
+            treeIdText.setText(treeID);
         }else{
             //treeIdText.setText("Tree ID: " + "Unavailable");
+            findViewById(R.id.idTitle).setVisibility(View.GONE);
             treeIdText.setVisibility(View.GONE);
         }
 
         Double dbh = MainActivity.banana.getCurrentDBH();
         TextView dbhText = (TextView) findViewById(R.id.dbh);
         if(dbh != null) {
-            dbhText.setText("DBH: " + dbh);
+            dbhText.setText(dbh+"");
         }else{
             //dbhText.setText("DBH: " + "Unavailable");
+            findViewById(R.id.dbhTitle).setVisibility(View.GONE);
             dbhText.setVisibility(View.GONE);
         }
 
-        String gpsLocation = MainActivity.banana.getLocation().getLatitude() + ", " + MainActivity.banana.getLocation().getLongitude();
-        TextView gpsLocationText = (TextView) findViewById(R.id.gpsLocation);
-        if(gpsLocation != null) {
-            gpsLocationText.setText("GPS location: " + gpsLocation);
+        String latitude = MainActivity.banana.getLocation().getLatitude()+"";
+        TextView latitudeText = (TextView) findViewById(R.id.latitude);
+        if(latitude != null) {
+            latitudeText.setText(latitude);
         }else{
             //gpsLocationText.setText("GPS location: " + "Unavailable");
-            gpsLocationText.setVisibility(View.GONE);
+            findViewById(R.id.latitudeTitle).setVisibility(View.GONE);
+            latitudeText.setVisibility(View.GONE);
+        }
+
+        String longitude = MainActivity.banana.getLocation().getLongitude() + "";
+        TextView longitudeText = (TextView) findViewById(R.id.longitude);
+        if(latitude != null) {
+            longitudeText.setText(longitude);
+        }else{
+            //gpsLocationText.setText("GPS location: " + "Unavailable");
+            findViewById(R.id.longitudeTitle).setVisibility(View.GONE);
+            longitudeText.setVisibility(View.GONE);
         }
 
         Object assetValue = MainActivity.banana.getInfo("Tree asset value");
         TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
         if(assetValue != null) {
-            assetValueText.setText("Asset value: " + assetValue);
+            assetValueText.setText(assetValue+"");
         }else{
             //assetValueText.setText("Asset value: " + "Unavailable");
+            findViewById(R.id.assetTitle).setVisibility(View.GONE);
             assetValueText.setVisibility(View.GONE);
         }
 
         String otherInfo = MainActivity.banana.getAllInfo();
         TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
         if(otherInfo != null) {
-            otherInfoText.setVisibility(0);
-            otherInfoText.setText("Other info: \n" + otherInfo);
+            otherInfoText.setVisibility(View.VISIBLE);
+            otherInfoText.setText(otherInfo);
         }else{
             //otherInfoText.setText("Other info: \n" + "\tNo other information");
+            findViewById(R.id.otherTitle).setVisibility(View.GONE);
             otherInfoText.setVisibility(View.GONE);
+
         }
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());

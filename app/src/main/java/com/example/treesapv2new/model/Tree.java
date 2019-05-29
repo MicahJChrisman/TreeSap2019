@@ -48,6 +48,7 @@ public class Tree {
         return location;
     }
 
+
     public void setLocation(TreeLocation location) {
         this.location = location;
     }
