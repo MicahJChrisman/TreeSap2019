@@ -91,7 +91,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //        TextView eventer2= (TextView) findViewById(R.id.longitudetree);
 //        eventer2.setText(String.valueOf(MainActivity.banana.getLocation().getLongitude()));
 
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
         myDialog = new Dialog(this);
 
@@ -504,6 +503,10 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
         View customView = inflater.inflate(R.layout.activity_cereal_box, null);
+
+
+        ImageButton button = (ImageButton) customView.findViewById(R.id.add_notes);
+        button.setOnClickListener(new AddNotesEvent());
 //        TextView okay = (TextView) customView.findViewById(R.id.okay_cereal);
 //        okay.bringToFront();
 //        okay.setOnClickListener(new View.OnClickListener() {
@@ -526,28 +529,33 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             noData.setText("There is no data to display on this "+ commonName);
         }
 
-        if (popupWindow != null) {
-            popupWindow.dismiss();
-        }
-        popupWindow = new PopupWindow(
-                customView,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            popupWindow.setElevation(5.0f);
-        }
-//        View rootView = ((Activity)getParent()).getWindow().getDecorView().findViewById(R.id.drawer_layout);
-//        View rootView = findViewById(R.layout.activity_cereal_box)
-//        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-        final View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-            }
-        });
+        setContentView(customView);
+        gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
+//        if (popupWindow != null) {
+//            popupWindow.dismiss();
+//        }
+//        popupWindow = new PopupWindow(
+//                customView,
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.MATCH_PARENT
+//        );
+//
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            popupWindow.setElevation(5.0f);
+//        }
+////        View rootView = ((Activity)getParent()).getWindow().getDecorView().findViewById(R.id.drawer_layout);
+////        View rootView = findViewById(R.layout.activity_cereal_box)
+////        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+//        final View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
+//        gestureObject = new GestureDetectorCompat(rootView.getContext(), new LearnGesture());
+//        rootView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+//
+//            }
+//        });
 
     }
 
