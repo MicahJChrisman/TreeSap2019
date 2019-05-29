@@ -32,6 +32,7 @@ import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.Tree;
@@ -323,6 +324,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 treeField = 2;
                 location = "Hope College Pine Grove";
                 whichSource = true;
+            } else if (ds instanceof ExtendedCoHDataSource){
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv");
+                treeField = 1;
+                location= "xxxxx";
+                whichSource = false;
             }
             if (stuff == null) {
                 continue;

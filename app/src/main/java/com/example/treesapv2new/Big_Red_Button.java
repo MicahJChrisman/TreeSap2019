@@ -42,6 +42,7 @@ import com.example.treesapv2new.control.IntentResult;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.display.CerealBoxDisplay;
@@ -283,8 +284,10 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 DataSource ds;
                 if(source.equals("HopeCollegeDataSource")){
                     ds = new HopeCollegeDataSource();
-                }else if(source.equals("CityOfHollandDataSource")){
+                }else if(source.equals("CityOfHollandDataSource")) {
                     ds = new CityOfHollandDataSource();
+                }else if(source.equals("ExtendedCoHDataSource")){
+                    ds = new ExtendedCoHDataSource();
                 }else{
                     ds = new ITreeDataSource();
                 }

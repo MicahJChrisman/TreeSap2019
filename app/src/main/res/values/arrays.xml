@@ -4,10 +4,12 @@
         <item>Hope College Tree Data</item>
         <item>Hope College Tree Data from iTree</item>
         <item>City of Holland Tree Data</item>
+        <item>Extended City of Holland Tree Data</item>
     </string-array>
     <string-array name="settings_list_preference_values">
         <item>HopeCollegeDataSource</item>
         <item>ITreeDataSource</item>
         <item>CityOfHollandDataSource</item>
+        <item>ExtendedCoHDataSource</item>
     </string-array>
 </resources>

@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
@@ -242,6 +243,8 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                     ds = new HopeCollegeDataSource();
                                                 } else if (source.equals("CityOfHollandDataSource")) {
                                                     ds = new CityOfHollandDataSource();
+                                                }else if(source.equals("ExtendedCoHDataSource")){
+                                                    ds = new ExtendedCoHDataSource();
                                                 } else {
                                                     ds = new ITreeDataSource();
                                                 }
