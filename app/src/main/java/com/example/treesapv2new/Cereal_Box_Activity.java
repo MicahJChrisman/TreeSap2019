@@ -82,14 +82,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.activity_cereal_box);
 
-        TextView eventer = (TextView) findViewById(R.id.treeNamePlease);
-        eventer.setText(MainActivity.banana.getCommonName());
-
-        TextView eventer1 = (TextView) findViewById(R.id.latitudetree);
-        eventer1.setText(String.valueOf(MainActivity.banana.getLocation().getLatitude()));
-
-        TextView eventer2= (TextView) findViewById(R.id.longitudetree);
-        eventer2.setText(String.valueOf(MainActivity.banana.getLocation().getLongitude()));
+//        TextView eventer = (TextView) findViewById(R.id.treeNamePlease);
+//        eventer.setText(MainActivity.banana.getCommonName());
+//
+//        TextView eventer1 = (TextView) findViewById(R.id.latitudetree);
+//        eventer1.setText(String.valueOf(MainActivity.banana.getLocation().getLatitude()));
+//
+//        TextView eventer2= (TextView) findViewById(R.id.longitudetree);
+//        eventer2.setText(String.valueOf(MainActivity.banana.getLocation().getLongitude()));
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
@@ -97,8 +97,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         display(MainActivity.banana);
 
-        ImageButton button = (ImageButton) findViewById(R.id.add);
-        button.setOnClickListener(new AddNotesEvent());
+//        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
+//        button.setOnClickListener(new AddNotesEvent());
     }
 
 
@@ -503,16 +503,16 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         canvas.drawText( "<0.1"+ " oz", right, y, rightPaint);*/
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View customView = inflater.inflate(R.layout.cereal_box, null);
-        TextView okay = (TextView) customView.findViewById(R.id.okay_cereal);
-        okay.bringToFront();
-        okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                popupWindow = null;
-            }
-        });
+        View customView = inflater.inflate(R.layout.activity_cereal_box, null);
+//        TextView okay = (TextView) customView.findViewById(R.id.okay_cereal);
+//        okay.bringToFront();
+//        okay.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popupWindow.dismiss();
+//                popupWindow = null;
+//            }
+//        });
 
 
 
@@ -541,6 +541,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //        View rootView = ((Activity)getParent()).getWindow().getDecorView().findViewById(R.id.drawer_layout);
 //        View rootView = findViewById(R.layout.activity_cereal_box)
 //        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+        final View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+            }
+        });
+
     }
 
 
@@ -558,37 +566,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //        preferences = new HashMap<>();
 //        return preferences;
 //    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
@@ -614,6 +591,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             return true;
         }
     }
+
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
@@ -624,6 +602,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     }
 
     public void ShowPopup(View v){
+        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         TextView txtclose;
         Button buttonSubmit;
         myDialog.setContentView(R.layout.add_notes_display);

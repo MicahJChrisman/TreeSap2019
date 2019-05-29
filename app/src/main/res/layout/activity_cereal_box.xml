@@ -3,12 +3,52 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+    <TextView
+        android:id="@+id/cereal_chart_benefits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Tree Benefits"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/accent_gray"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:id="@+id/cereal_image"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
+
+
+    <TextView
+        android:id="@+id/no_ben"
+        android:layout_width="266dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:text="There is no data to display"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageButton
-        android:id="@+id/add"
+        android:id="@+id/add_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,44 +57,70 @@
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="?android:attr/colorBackground"
+        android:background="#FFF"
         android:src="@drawable/add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/treeNamePlease"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/add"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:background="?android:attr/colorBackground"-->
+        <!--android:src="@drawable/add"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/latitudetree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/treeNamePlease" />
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/cereal_image"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginStart="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="8dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textAlignment="center"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:srcCompat="@drawable/common_full_open_on_phone" />&ndash;&gt;-->
 
-    <TextView
-        android:id="@+id/longitudetree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textColor="@color/accent_gray"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/latitudetree" />
+    <!--<TextView-->
+        <!--android:id="@+id/treeNamePlease"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="TextView"-->
+        <!--android:textColor="@color/accent_gray"-->
+        <!--android:textSize="20sp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/add" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/latitudetree"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="TextView"-->
+        <!--android:textColor="@color/accent_gray"-->
+        <!--android:textSize="20sp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/treeNamePlease" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/longitudetree"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:text="TextView"-->
+        <!--android:textColor="@color/accent_gray"-->
+        <!--android:textSize="20sp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/latitudetree" />-->
 </android.support.constraint.ConstraintLayout>
