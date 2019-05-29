@@ -48,6 +48,12 @@
         </activity>
 
         <activity
+            android:name=".Add_Tree_Activity"
+            android:label="TreeSapV2New">
+        </activity>
+
+
+        <activity
             android:name=".Maps_Activity"
             android:label="TreeSapV2New">
         </activity>
