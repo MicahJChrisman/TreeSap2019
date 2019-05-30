@@ -50,6 +50,7 @@ public abstract class DataSource {
 
     public HashMap<String, SettingsOption> getPreferences(){return preferences;}
 
+    public void patchData(Tree tree){}
 
     // Flexible field name assignment
     public enum FieldID {

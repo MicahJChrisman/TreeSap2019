@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.example.treesapv2new.MainActivity;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
@@ -198,6 +199,35 @@ public class HopeCollegeDataSource extends DataSource {
             return tree;
         }
 
+    }
+
+    public void patchData(Tree tree){
+        if (MainActivity.banana.getCommonName() == (null)) {
+            MainActivity.banana.setCommonName(tree.getCommonName());
+        }
+        if (MainActivity.banana.getLocation() == (null)) {
+            MainActivity.banana.setLocation(tree.getLocation());
+        }
+        if (MainActivity.banana.getID() == (null)) {
+            MainActivity.banana.setID(tree.getID());
+        }
+        if (MainActivity.banana.getCurrentDBH() == (null)) {
+            MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
+        }
+        if(MainActivity.banana.getInfo("Age class") == (null)){
+            MainActivity.banana.addInfo("Age class", tree.getInfo("Age class"));
+        }
+        if(MainActivity.banana.getInfo("Condition") == (null)){
+            MainActivity.banana.addInfo("Condition", tree.getInfo("Condition"));
+        }
+        if(MainActivity.banana.getInfo("Tree asset value") == (null)){
+//            MainActivity.banana.addInfo("Tree asset value", closestRecord.get(Tree.TREE_ASSET_VALUE));
+            MainActivity.banana.addInfo("Tree asset value", tree.getInfo("Tree asset value"));
+        }
+        if(MainActivity.banana.getInfo("Root infringement") == (null)){
+//            MainActivity.banana.addInfo("Root infringement", closestRecord.get(Tree.ROOT_INFRINGEMENT));
+            MainActivity.banana.addInfo("Root infringement", tree.getInfo("Root infringement"));
+        }
     }
 
     @Override

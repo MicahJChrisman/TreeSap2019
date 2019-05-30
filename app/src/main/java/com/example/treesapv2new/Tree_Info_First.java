@@ -2,11 +2,14 @@ package com.example.treesapv2new;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +17,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
+import com.example.treesapv2new.datasource.DataSource;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
+import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.display.AddNotesActivity;
+import com.example.treesapv2new.model.Tree;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Tree_Info_First extends AppCompatActivity {
     Dialog myDialog;
@@ -25,6 +37,8 @@ public class Tree_Info_First extends AppCompatActivity {
         setContentView(R.layout.activity_tree_info_first);
 
         myDialog = new Dialog(this);
+
+        patchTreeData();
 
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
@@ -112,6 +126,31 @@ public class Tree_Info_First extends AppCompatActivity {
         button.setOnClickListener(new AddNotesEvent());
     }
 
+    public void patchTreeData(){
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+       // sources.remove(MainActivity.banana.getDataSource());
+        for (String source : sources) {
+            Log.d("MainActivity", "Searching.  Trying: "+source);
+            DataSource ds;
+            if(source.equals("HopeCollegeDataSource")){
+                ds = new HopeCollegeDataSource();
+            }else if(source.equals("CityOfHollandDataSource")) {
+                ds = new CityOfHollandDataSource();
+            }else if(source.equals("ExtendedCoHDataSource")){
+                ds = new ExtendedCoHDataSource();
+            }else{
+                ds = new ITreeDataSource();
+            }
+            ds.initialize(Tree_Info_First.this,null);
+            Tree tree = ds.search(MainActivity.banana.getLocation());
+
+            if(tree != null && tree.isFound()){
+                ds.patchData(tree);
+            }
+        }
+    }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
