@@ -162,13 +162,13 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             if(event2.getX()>event1.getX()){
                 //left to right swipe
                 Intent intent1 = new Intent(Coordinates_View_Activity.this, Big_Red_Button.class);
-                finish();
                 startActivity(intent1);
+                finish();
             }else if(event2.getX()<event1.getX()){
                 //right to left swipe
                 Intent intent1 = new Intent(Coordinates_View_Activity.this, Maps_Activity.class);
-                finish();
                 startActivity(intent1);
+                finish();
             }
             return true;
         }
