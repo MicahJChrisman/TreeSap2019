@@ -8,13 +8,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
+//import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +29,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
@@ -39,6 +48,7 @@ import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.example.treesapv2new.view.MapsActivity;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -52,13 +62,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.apache.commons.csv.CSVRecord;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
+public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GestureDetectorCompat gestureObject;
+
 
     private GoogleMap mMap;
     private static final String[] PERMS = {
@@ -81,12 +93,33 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     Double longitude, latitude;
 
 
+    private Location location;
+    private TextView locationTv;
+    private GoogleApiClient googleApiClient;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private LocationRequest locationRequest;
+    private LocationListener locationListener;
+    private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
+    // lists for permissions
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    // integer for permissions results request
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_map_new);
 
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
 //        pageRight.setOnTouchListener(new pageRight.);
+
+        googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
+        googleApiClient.connect();
+
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
@@ -155,6 +188,75 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+            } else {
+                finish();
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                &&  ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        // Permissions ok, we get last location
+        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+//        if (location != null) {
+//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+//        }
+
+        startLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                &&  ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
+
+//    @Override
+//    public void onLocationChanged(Location location) {
+//        if (location != null) {
+//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+//        }
+//    }
+
+    
     @Override
     public boolean onTouchEvent(MotionEvent event){
         this.gestureObject.onTouchEvent(event);
@@ -282,7 +384,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    .show();
 //        }
 
-        String location = "";
+       // String location42 = "";
 
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         for (String source : sources) {
@@ -310,27 +412,27 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             ds.initialize(Maps_Activity.this, null);
             Iterable<CSVRecord> stuff = null;
             int treeField = 0;
-//            String location = "";
+            String location42 = "";
 
             if (ds instanceof CityOfHollandDataSource) {
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/COHTreeData.csv");
                 treeField = 1;
-                location = "blah blah blah";
+                location42 = "blah blah blah";
                 whichSource = false;
             } else if (ds instanceof HopeCollegeDataSource) {
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
                 treeField = 2;
-                location = "Hope College Pine Grove";
+                location42 = "Hope College Pine Grove";
                 whichSource = true;
             } else if (ds instanceof ITreeDataSource) {
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/iTreeTreeData.csv");
                 treeField = 2;
-                location = "Hope College Pine Grove";
+                location42 = "Hope College Pine Grove";
                 whichSource = true;
             } else if (ds instanceof ExtendedCoHDataSource){
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv");
                 treeField = 1;
-                location= "Holland, MI";
+                location42= "Holland, MI";
                 whichSource = false;
             }
             if (stuff == null) {
@@ -365,11 +467,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 if (longitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
                                     LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
                                     if (ds.getClass().equals(CityOfHollandDataSource.class)) {
-                                        location = record.get("Park");
+                                        location42 = record.get("Park");
                                     }
                                     try {
                                         String name = Transform.ChangeName(record.get(treeField));
-                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location).icon(BitmapDescriptorFactory.defaultMarker(treeMarker)));
+                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.defaultMarker(treeMarker)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
 
                                     }
@@ -383,6 +485,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         LatLng hope = new LatLng(42.788002, -86.105971);
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(PERMS, REQUEST_ID);
@@ -390,14 +493,36 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hope, zoom));
             return;
         } else {
-            LocationManager locationManager = (LocationManager)
-                    getSystemService(Context.LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            boolean isGPSEnabled = locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             Criteria criteria = new Criteria();
             Location location1 = null;
             Location defaultLocation = new Location("");
             defaultLocation.setLatitude(42.788002);
             defaultLocation.setLongitude(-86.105971);
             List<String> provs = locationManager.getAllProviders();
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //LocationListener locationListenerGps = new LocationListener();
+            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
+            String a = LocationManager.GPS_PROVIDER;
+            location1 = locationManager.getLastKnownLocation(a);
+            //locationManager.removeUpdates(this);
+            Location location2 = location;
             for(String prov : provs) {
                 if (locationManager.getLastKnownLocation(prov) != null) {
                     if (!prov.equals("gps")) {
@@ -451,20 +576,20 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
 
     }
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String s) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
+//    @Override
+//    public void onStatusChanged(String s, int i, Bundle bundle) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderEnabled(String s) {
+//
+//    }
+//
+//    @Override
+//    public void onProviderDisabled(String s) {
+//
+//    }
 
     private class AddTreeEvent implements View.OnClickListener {
         @Override
