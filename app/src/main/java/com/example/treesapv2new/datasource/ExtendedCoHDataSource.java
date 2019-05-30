@@ -135,8 +135,8 @@ public class ExtendedCoHDataSource extends DataSource {
         for (CSVRecord record : records) {
             entry++;
             try {
-                Double lati = Double.valueOf(record.get("Latitude"));
-                Double longi = Double.valueOf(record.get("Longitude"));
+                Double lati = Double.valueOf(record.get("y_coord"));
+                Double longi = Double.valueOf(record.get("x_coord"));
 
                 Location.distanceBetween(lati, longi,
                         location.getLatitude(), location.getLongitude(),
@@ -172,15 +172,15 @@ public class ExtendedCoHDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
-            Double lat = new Double(closestRecord.get("Latitude"));
-            Double longi = new Double(closestRecord.get("Longitude"));
-            tree.setCommonName(closestRecord.get("CommonName"));
-            tree.setScientificName(closestRecord.get("Scientific"));
+            Double lat = new Double(closestRecord.get("y_coord"));
+            Double longi = new Double(closestRecord.get("x_coord"));
+            tree.setCommonName(closestRecord.get("species_name"));
+//            tree.setScientificName(closestRecord.get("Scientific"));
             tree.setLocation(new TreeLocation(lat, longi));
             tree.setID(closestRecord.get(Tree.TREE_ID));
-            tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
-            if (closestRecord.get("Park").length() > 0)
-                tree.addInfo("Park", closestRecord.get("Park"));
+            tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
+//            if (closestRecord.get("Park").length() > 0)
+//                tree.addInfo("Park", closestRecord.get("Park"));
             tree.setFound(true);
             tree.setIsClosest(true);
 

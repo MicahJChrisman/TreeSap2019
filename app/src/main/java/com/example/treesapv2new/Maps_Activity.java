@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -140,6 +141,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -213,13 +216,15 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 
                     for (String source : sources) {
-                        Log.d("MainActivity", "Searching.  Trying: "+source);
+                        Log.d("MainActivity", "Searching.  Trying: " + source);
                         DataSource ds;
-                        if(source.equals("HopeCollegeDataSource")){
+                        if (source.equals("HopeCollegeDataSource")) {
                             ds = new HopeCollegeDataSource();
-                        }else if(source.equals("CityOfHollandDataSource")){
+                        } else if (source.equals("CityOfHollandDataSource")) {
                             ds = new CityOfHollandDataSource();
-                        }else{
+                        } else if(source.equals("ExtendedCoHDataSource")){
+                            ds = new ExtendedCoHDataSource();
+                        } else{
                             ds = new ITreeDataSource();
                         }
 
@@ -277,8 +282,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    .show();
 //        }
 
-
-
         String location = "";
 
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
@@ -289,11 +292,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 ds = new HopeCollegeDataSource();
             }else if(source.equals("CityOfHollandDataSource")){
                 ds = new CityOfHollandDataSource();
+            }else if(source.equals("ExtendedCoHDataSource")){
+                ds = new ExtendedCoHDataSource();
             }else{
                 ds = new ITreeDataSource();
             }
-
-
 //        HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //        ds.initialize(Maps_Activity.this, null);
 //        Iterable<CSVRecord> stuff = null;
@@ -327,7 +330,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else if (ds instanceof ExtendedCoHDataSource){
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv");
                 treeField = 1;
-                location= "xxxxx";
+                location= "Holland, MI";
                 whichSource = false;
             }
             if (stuff == null) {
@@ -342,8 +345,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 String latitude;
                 String longitude;
                 if(!whichSource) {
-                    latitude = record.get("Latitude");
-                    longitude = record.get("Longitude");
+                    if(ds instanceof ExtendedCoHDataSource){
+                        latitude = record.get("y_coord");
+                        longitude = record.get("x_coord");
+                    }else{
+                        latitude = record.get("Latitude");
+                        longitude = record.get("Longitude");
+                    }
                 }
                 else{
                     latitude = record.get(Tree.LATITUDE);
