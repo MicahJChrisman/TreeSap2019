@@ -239,6 +239,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        googleApiClient.disconnect();
     }
 
     @Override
@@ -256,7 +257,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        }
 //    }
 
-    
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
         this.gestureObject.onTouchEvent(event);
@@ -303,48 +304,52 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public void onInfoWindowClick(Marker marker) {
                 Bundle bundle = new Bundle();
                 if(!marker.getTitle().equals("My Position")) {
+                    if(!marker.getTitle().equals("Current Position")) {
+
 //                    bundle.putDouble("longitude", marker.getPosition().longitude);
 //                    bundle.putDouble("latitude", marker.getPosition().latitude);
 //                    Intent mapsIntent = new Intent();
 //                    mapsIntent.putExtras(bundle);
 //                    setResult(RESULT_OK, mapsIntent);
 //                    finish();
-                    latitude = marker.getPosition().latitude;
-                    longitude= marker.getPosition().longitude;
+                        latitude = marker.getPosition().latitude;
+                        longitude = marker.getPosition().longitude;
 
-                    TreeLocation testing = new TreeLocation(latitude,longitude);
+                        TreeLocation testing = new TreeLocation(latitude, longitude);
 
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                    Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                        Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
 
-                    for (String source : sources) {
-                        Log.d("MainActivity", "Searching.  Trying: " + source);
-                        DataSource ds;
-                        if (source.equals("HopeCollegeDataSource")) {
-                            ds = new HopeCollegeDataSource();
-                        } else if (source.equals("CityOfHollandDataSource")) {
-                            ds = new CityOfHollandDataSource();
-                        } else if(source.equals("ExtendedCoHDataSource")){
-                            ds = new ExtendedCoHDataSource();
-                        } else{
-                            ds = new ITreeDataSource();
+                        for (String source : sources) {
+                            Log.d("MainActivity", "Searching.  Trying: " + source);
+                            DataSource ds;
+                            if (source.equals("HopeCollegeDataSource")) {
+                                ds = new HopeCollegeDataSource();
+                            } else if (source.equals("CityOfHollandDataSource")) {
+                                ds = new CityOfHollandDataSource();
+                            } else if (source.equals("ExtendedCoHDataSource")) {
+                                ds = new ExtendedCoHDataSource();
+                            } else {
+                                ds = new ITreeDataSource();
+                            }
+
+                            ds.initialize(Maps_Activity.this, null);
+                            MainActivity.banana = ds.search(testing);
+                            if (MainActivity.banana != null) {
+                                if (MainActivity.banana.isFound())
+                                    break;  // and NOT just the closest
+                            }
                         }
-
-                        ds.initialize(Maps_Activity.this,null);
-                        MainActivity.banana = ds.search(testing);
-                        if (MainActivity.banana != null) {
-                            if (MainActivity.banana.isFound()) break;  // and NOT just the closest
-                        }
-                    }
 
 
 //                    HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //                    ds.initialize(Maps_Activity.this,null);
 //                    MainActivity.banana = ds.search(testing);
 
-                    Intent intentA = new Intent(Maps_Activity.this, Cereal_Box_Activity.class);
+                        Intent intentA = new Intent(Maps_Activity.this, Cereal_Box_Activity.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
-                    startActivity(intentA);
+                        startActivity(intentA);
+                    }
 
                 } else {
                     android.support.v7.app.AlertDialog.Builder builder;
