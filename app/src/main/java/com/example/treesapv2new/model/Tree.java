@@ -9,6 +9,7 @@ public class Tree {
 
     String treeCommonName;
     String treeScientificName;
+    String dataSource;
     TreeLocation location;
     GPSCoordinates searchedfor;
     String treeID;
@@ -30,6 +31,14 @@ public class Tree {
 
     public String getCommonName() {
         return treeCommonName;
+    }
+
+    public void setDataSource(String dataSource){
+        this.dataSource = dataSource;
+    }
+
+    public String getDataSource(){
+        return dataSource;
     }
 
     public void setCommonName(String treeName) {

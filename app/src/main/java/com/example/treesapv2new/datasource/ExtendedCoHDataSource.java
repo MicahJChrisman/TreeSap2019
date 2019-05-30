@@ -183,6 +183,7 @@ public class ExtendedCoHDataSource extends DataSource {
 //                tree.addInfo("Park", closestRecord.get("Park"));
             tree.setFound(true);
             tree.setIsClosest(true);
+            tree.setDataSource("ExtendedCoH");
 
             return tree;
         }

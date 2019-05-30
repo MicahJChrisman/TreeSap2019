@@ -165,25 +165,77 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             }
         });
+
         ArrayList<PieEntry> entries = new ArrayList<>();
-        float stormWater;
-        if(hasValues){ stormWater = Float.valueOf(allInfo.split(",")[STORM_WATER]); }
-        else{ stormWater = 5f; }
-        entries.add(new PieEntry(stormWater, "Storm Water"));
-        float electricity;
-        //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
-        //else{electricity = 2.54f;}
-        //entries.add(new PieEntry(2.54f, "Energy"));
-        final float pollution;
-        if(hasValues) { pollution = Float.valueOf(allInfo.split(",")[POLLUTION]); }
-        else{pollution = 5;}
-        entries.add(new PieEntry(pollution, "Air Quality"));
-        //entries.add(new PieEntry(1.23f, "Property Value"));
-        //entries.add(new PieEntry(0.45f, "Natural Gas"));
-        float co2;
-        if(hasValues) {co2 = Float.valueOf(allInfo.split(",")[CO2]);}
-        else{co2=5f;}
-        entries.add(new PieEntry(co2, "CO2"));
+        if(!tree.getDataSource().equals("ExtendedCoH")){
+            float stormWater;
+            if (hasValues) {
+                stormWater = Float.valueOf(allInfo.split(",")[STORM_WATER]);
+            } else {
+                stormWater = 5f;
+            }
+            entries.add(new PieEntry(stormWater, "Storm Water"));
+            float electricity;
+            //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
+            //else{electricity = 2.54f;}
+            //entries.add(new PieEntry(2.54f, "Energy"));
+            final float pollution;
+            if (hasValues) {
+                pollution = Float.valueOf(allInfo.split(",")[POLLUTION]);
+            } else {
+                pollution = 5;
+            }
+            entries.add(new PieEntry(pollution, "Air Quality"));
+            //entries.add(new PieEntry(1.23f, "Property Value"));
+            //entries.add(new PieEntry(0.45f, "Natural Gas"));
+            float co2;
+            if (hasValues) {
+                co2 = Float.valueOf(allInfo.split(",")[CO2]);
+            } else {
+                co2 = 5f;
+            }
+            entries.add(new PieEntry(co2, "CO2"));
+        }else{
+            float stormWater;
+            if (hasValues) {
+                stormWater = Float.valueOf(allInfo.split(",")[23]);
+            } else {
+                stormWater = 5f;
+            }
+            if(stormWater != 0) {
+                entries.add(new PieEntry(stormWater, "Storm Water"));
+            }
+
+            float energy;
+            if (hasValues) {
+                energy = Float.valueOf(allInfo.split(",")[28]);
+            } else {
+                energy = 5f;
+            }
+            if(energy!=0) {
+                entries.add(new PieEntry(energy, "Energy"));
+            }
+
+            final float pollution;
+            if (hasValues) {
+                pollution = Float.valueOf(allInfo.split(",")[27]);
+            } else {
+                pollution = 5;
+            }
+            if(energy!=0) {
+                entries.add(new PieEntry(pollution, "Air Quality"));
+            }
+
+            float co2;
+            if (hasValues) {
+                co2 = Float.valueOf(allInfo.split(",")[21]);
+            } else {
+                co2 = 5f;
+            }
+            if(energy!=0) {
+                entries.add(new PieEntry(co2, "CO2"));
+            }
+        }
         dataset = new PieDataSet(entries, "");
         data = new PieData(dataset);
         IValueFormatter iValueFormatter = new IValueFormatter() {
@@ -316,7 +368,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         total = 0.0;
         hasValues = false;
         //InputStream inputStream = parent.getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
-        InputStream input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
+        InputStream input;
+        if(!tree.getDataSource().equals("ExtendedCoH")) {
+            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
+        }else{
+            input = getResources().openRawResource(R.raw.katelyns_database);
+        }
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
         commonName = Transform.ChangeName(tree.getCommonName());

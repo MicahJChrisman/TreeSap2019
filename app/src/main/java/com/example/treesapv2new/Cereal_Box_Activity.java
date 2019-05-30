@@ -96,6 +96,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         display(MainActivity.banana);
 
+
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
 //        button.setOnClickListener(new AddNotesEvent());
     }
