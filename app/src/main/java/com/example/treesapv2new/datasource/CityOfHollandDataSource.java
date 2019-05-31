@@ -184,6 +184,8 @@ public class CityOfHollandDataSource extends DataSource {
                 tree.addInfo("Park", closestRecord.get("Park"));
             tree.setFound(true);
             tree.setIsClosest(true);
+            tree.setDataSource("CoHdatabase");
+
 
             return tree;
         }

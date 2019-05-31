@@ -156,22 +156,27 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
     public void findInfo(Tree tree) throws IOException {
 
-        InputStream inputStream = getApplicationContext().getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        InputStream input;
+        if(tree.getDataSource().equals("ExtendedCoH")) {
+            input = getResources().openRawResource(R.raw.katelyns_database);
+        }else{
+            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
         commonName = Transform.ChangeName(tree.getCommonName());
         allInfo = "";
         hasValues = false;
         double treeDbh = tree.getCurrentDBH();
         BigDecimal bd = new BigDecimal(treeDbh);
-        bd = bd.setScale(0, RoundingMode.DOWN);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
         while ((line = reader.readLine()) != null) {
             String treeName = line.split(",")[1];
             if (treeName.equals(commonName)) {
                 String dbh = line.split(",")[2];
                 Double diameter = Double.parseDouble(dbh);
                 BigDecimal bd1 = new BigDecimal(diameter);
-                bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                bd1 = bd1.setScale(2, RoundingMode.HALF_UP);
                 if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
                 if (bd1.doubleValue() == bd.doubleValue()) {
                     allInfo = line;
@@ -186,7 +191,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     }
 
     public void display(Tree tree) {
-        trees = tree;
+
         try {
             findInfo(tree);
         } catch (IOException e) {
@@ -268,121 +273,244 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         // Make some computations
 
 
-        // And report the computations
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 15;
-        canvas.drawText("Total benefits for this year:",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText("$" + allInfo.split(",")[TOTAL], right, y, rightPaint);
-        y += dpToPx(subtitleTextSize, displaymetrics) - 10;
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
+        if(!tree.getDataSource().equals("ExtendedCoH")) {
 
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Carbon Dioxide Sequestered",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        canvas.drawText("$" + allInfo.split(",")[CO2], right, y, rightPaint);
 
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+            // And report the computations
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
+            canvas.drawText("Total benefits for this year:",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[TOTAL], right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
 
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("CO2 absorbed each year",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText(allInfo.split(",")[CARBON_LBS]+" " +
-                "lbs", right, y, rightPaint);
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Carbon Dioxide Sequestered",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            canvas.drawText("$" + allInfo.split(",")[CO2], right, y, rightPaint);
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Storm Water",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText("$" + allInfo.split(",")[STORM_WATER], right, y, rightPaint);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
 
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("CO2 absorbed each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[CARBON_LBS] + " " +
+                    "lbs", right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
 
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Rainfall intercepted each year",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        String ft = allInfo.split(",")[WATER_GAL];
-        if(!ft.equals("N/A")) {
-            double gal = Double.parseDouble(ft) * 7.48052;
-            DecimalFormat df = new DecimalFormat("0.00");
-            ft = df.format(gal);
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Storm Water",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[STORM_WATER], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Rainfall intercepted each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            String ft = allInfo.split(",")[WATER_GAL];
+            if (!ft.equals("N/A")) {
+                double gal = Double.parseDouble(ft) * 7.48052;
+                DecimalFormat df = new DecimalFormat("0.00");
+                ft = df.format(gal);
+            }
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(ft + " gal.", right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Pollution",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[POLLUTION], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Air Pollution removed each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[POLLUTION_OZ] + " oz", right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(15);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+        }else{
+
+
+            // And report the computations
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
+            canvas.drawText("Total benefits for this year:",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[28], right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Carbon Dioxide Sequestered",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            canvas.drawText("$" + allInfo.split(",")[21], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("CO2 absorbed each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[20] + " " +
+                    "lbs", right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Storm Water",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[23], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Rainfall intercepted each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            String ft = allInfo.split(",")[22];
+            if (!ft.equals("N/A")) {
+                double gal = Double.parseDouble(ft) * 7.48052;
+                DecimalFormat df = new DecimalFormat("0.00");
+                ft = df.format(gal);
+            }
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(ft + " gal.", right, y, rightPaint);
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Pollution",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[27], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Air Pollution removed each year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[26] + " oz", right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(15);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
         }
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText( ft+ " gal.", right, y, rightPaint);
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Pollution",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText("$" + allInfo.split(",")[POLLUTION], right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Air Pollution removed each year",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText(allInfo.split(",")[POLLUTION_OZ] +" oz", right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(15);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
 
         /*textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         y += dpToPx(subtitleTextSize, displaymetrics) + 20;

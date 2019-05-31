@@ -194,6 +194,8 @@ public class HopeCollegeDataSource extends DataSource {
             tree.addInfo("Root infringement", closestRecord.get(Tree.ROOT_INFRINGEMENT));
             tree.setFound(true);
             tree.setIsClosest(true);
+            tree.setDataSource("HopeCollegeData");
+
 
             return tree;
         }

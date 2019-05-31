@@ -198,7 +198,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         }else{
             float stormWater;
             if (hasValues) {
-                stormWater = Float.valueOf(allInfo.split(",")[23]);
+                stormWater = Float.valueOf(allInfo.split(",")[22]);
             } else {
                 stormWater = 5f;
             }
@@ -218,7 +218,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             final float pollution;
             if (hasValues) {
-                pollution = Float.valueOf(allInfo.split(",")[27]);
+                pollution = Float.valueOf(allInfo.split(",")[26]);
             } else {
                 pollution = 5;
             }
@@ -228,7 +228,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             float co2;
             if (hasValues) {
-                co2 = Float.valueOf(allInfo.split(",")[21]);
+                co2 = Float.valueOf(allInfo.split(",")[20]);
             } else {
                 co2 = 5f;
             }
@@ -366,13 +366,11 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
     private void findInfo(Tree tree) throws IOException {
         total = 0.0;
-        hasValues = false;
-        //InputStream inputStream = parent.getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
         InputStream input;
-        if(!tree.getDataSource().equals("ExtendedCoH")) {
-            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
-        }else{
+        if(tree.getDataSource().equals("ExtendedCoH")) {
             input = getResources().openRawResource(R.raw.katelyns_database);
+        }else{
+            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
@@ -381,14 +379,14 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         hasValues = false;
         double treeDbh = tree.getCurrentDBH();
         BigDecimal bd = new BigDecimal(treeDbh);
-        bd = bd.setScale(0, RoundingMode.DOWN);
+        //bd = bd.setScale(0, RoundingMode.DOWN);
         while ((line = reader.readLine()) != null) {
             String treeName = line.split(",")[1];
             if (treeName.equals(commonName)) {
                 String dbh = line.split(",")[2];
                 Double diameter = Double.parseDouble(dbh);
                 BigDecimal bd1 = new BigDecimal(diameter);
-                bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                //bd1 = bd1.setScale(0, RoundingMode.DOWN);
                 if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
                 if (bd1.doubleValue() == bd.doubleValue()) {
                     allInfo = line;
@@ -400,5 +398,53 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         if (allInfo.equals("")) {
             allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
         }
+//        total = 0.0;
+//        hasValues = false;
+//        //InputStream inputStream = parent.getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
+//        InputStream input;
+//        if(tree.getDataSource().equals("ExtendedCoH")) {
+//            input = getResources().openRawResource(R.raw.katelyns_database);
+//        }else{
+//            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
+//        }
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+//        String line;
+//        commonName = Transform.ChangeName(tree.getCommonName());
+//        allInfo = "";
+//        hasValues = false;
+//        double treeDbh = tree.getCurrentDBH();
+//        BigDecimal bd = new BigDecimal(treeDbh);
+//        //bd = bd.setScale(0, RoundingMode.DOWN);
+//        int treeID= Integer.parseInt(tree.getID());
+//        while ((line = reader.readLine()) != null) {
+//            String treeName = line.split(",")[1];
+//            if (treeName.equals(commonName)) {
+////
+////                String tID = line.split(",")[0];
+////                int trees = Integer.parseInt(tID);
+////                if(trees == treeID){
+////                    allInfo = line;
+////                    hasValues = true;
+////                    break;
+////                }
+//
+//
+//
+//
+//                String dbh = line.split(",")[2];
+//                Double diameter = Double.parseDouble(dbh);
+//                BigDecimal bd1 = new BigDecimal(diameter);
+//                //bd1 = bd1.setScale(0, RoundingMode.DOWN);
+//                if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
+//                if (bd1.doubleValue() == bd.doubleValue()) {
+//                    allInfo = line;
+//                    hasValues = true;
+//                    break;
+//                }
+//            }
+//        }
+//        if (allInfo.equals("")) {
+//            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
+//        }
     }
 }
