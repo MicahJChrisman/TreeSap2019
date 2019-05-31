@@ -2,11 +2,13 @@ package com.example.treesapv2new;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class Tree_Bark_Activity extends AppCompatActivity {
@@ -17,8 +19,45 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         Button b = (Button) findViewById(R.id.next_pic_bark);
         b.setOnClickListener(new NextEvent());
 
+        ImageButton imageClickedbutton = (ImageButton) findViewById(R.id.add_bark_pic);
+        imageClickedbutton.setOnClickListener(new addImageEvent());
+
+
         TextView skip = (TextView) findViewById(R.id.skip_bark_tree);
         skip.setOnClickListener(new SkipEvent());
+
+        TextView txtclose = (TextView) findViewById(R.id.bark_pic_close);
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Bark_Activity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Discard your tree?");
+                builder.setMessage("This will get rid of the data you entered.");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Discard Tree", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intentA = new Intent(Tree_Bark_Activity.this, MainActivity.class);
+                        startActivity(intentA);
+                    }
+                });
+                builder.show();
+            }
+        });
+    }
+
+    private class addImageEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+        }
     }
 
     private class SkipEvent implements View.OnClickListener{

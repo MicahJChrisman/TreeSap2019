@@ -6,6 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:id="@+id/add_tree_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/accent_gray"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/add_tree_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +46,9 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <TextView
             android:id="@+id/addtreemessage"
@@ -52,8 +68,8 @@
             android:id="@+id/lat_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/get_location_button"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:visibility="gone">
 
@@ -61,10 +77,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Latitude: " />
+
             <TextView
+                android:id="@+id/lat_putter"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lat_putter"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -72,8 +89,8 @@
             android:id="@+id/long_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/lat_layout"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:visibility="gone">
 
@@ -81,20 +98,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Longitude: " />
+
             <TextView
+                android:id="@+id/long_putter"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/long_putter"/>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/get_location_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Get Coordinates"
-            android:id="@+id/get_location_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </RelativeLayout>

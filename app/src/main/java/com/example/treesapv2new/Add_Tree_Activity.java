@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,33 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE, this);
+
+        TextView txtclose = (TextView) findViewById(R.id.add_tree_close);
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder builder = new AlertDialog.Builder(Add_Tree_Activity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Discard your tree?");
+                builder.setMessage("This will get rid of the data you entered.");
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setPositiveButton("Discard Tree", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
+                        startActivity(intentA);
+                    }
+                });
+                builder.show();
+            }
+        });
+
     }
 
     public void getLocation(){
