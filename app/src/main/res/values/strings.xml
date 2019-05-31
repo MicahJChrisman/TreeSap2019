@@ -21,4 +21,84 @@
         <item>Close</item>
         <item>Far</item>
     </string-array>
+    <string-array name="known_trees">
+        <item>	American basswood	</item>
+        <item>	American beech	</item>
+        <item>	American chestnut	</item>
+        <item>	American elm	</item>
+        <item>	American sycamore	</item>
+        <item>	Austrian pine	</item>
+        <item>	Balsam fir	</item>
+        <item>	Bitternut hickory	</item>
+        <item>	Black ash	</item>
+        <item>	Black birch	</item>
+        <item>	Black locust	</item>
+        <item>	Black maple	</item>
+        <item>	Black poplar	</item>
+        <item>	Black tupelo	</item>
+        <item>	Black walnut	</item>
+        <item>	Black willow	</item>
+        <item>	Blue spruce	</item>
+        <item>	Boxelder	</item>
+        <item>	Bur oak	</item>
+        <item>	Butternut	</item>
+        <item>	Callery pear	</item>
+        <item>	Cherry plum	</item>
+        <item>	Chinese privet	</item>
+        <item>	Common chokecherry	</item>
+        <item>	Dawn redwood	</item>
+        <item>	Eastern red cedar	</item>
+        <item>	Eastern redbud	</item>
+        <item>	Eastern white pine	</item>
+        <item>	European alder	</item>
+        <item>	European beech	</item>
+        <item>	European hornbeam	</item>
+        <item>	Flowering dogwood	</item>
+        <item>	Freeman maple	</item>
+        <item>	Ginkgo	</item>
+        <item>	Green ash	</item>
+        <item>	Hedge maple	</item>
+        <item>	Honeylocust	</item>
+        <item>	Japanese flower crabapple	</item>
+        <item>	Japanese flowering cherry	</item>
+        <item>	Japanese maple	</item>
+        <item>	Japanese tree lilac	</item>
+        <item>	Japanese zelkova	</item>
+        <item>	Katsura tree	</item>
+        <item>	Littleleaf linden	</item>
+        <item>	London planetree	</item>
+        <item>	Mountain maple	</item>
+        <item>	Mountain silverbell	</item>
+        <item>	Northern hackberry	</item>
+        <item>	Northern red oak	</item>
+        <item>	Norway maple	</item>
+        <item>	Norway spruce	</item>
+        <item>	Paper birch	</item>
+        <item>	Pawpaw	</item>
+        <item>	Pin oak	</item>
+        <item>	Red maple	</item>
+        <item>	River birch	</item>
+        <item>	Rock elm	</item>
+        <item>	Rose-of-sharon	</item>
+        <item>	Scots pine	</item>
+        <item>	Siberian elm	</item>
+        <item>	Silver linden	</item>
+        <item>	Silver maple	</item>
+        <item>	Slippery elm	</item>
+        <item>	Southern catalpa	</item>
+        <item>	Staghorn sumac	</item>
+        <item>	Striped maple	</item>
+        <item>	Sugar maple	</item>
+        <item>	Swamp white oak	</item>
+        <item>	Sweet cherry	</item>
+        <item>	Sweet crabapple	</item>
+        <item>	Sweetgum	</item>
+        <item>	Sycamore maple	</item>
+        <item>	Tulip tree	</item>
+        <item>	White ash	</item>
+        <item>	White oak	</item>
+        <item>	White spruce	</item>
+        <item>	Wych elm	</item>
+
+    </string-array>
 </resources>

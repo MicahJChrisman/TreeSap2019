@@ -6,10 +6,18 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class Tree_Other_Info_Activity extends AppCompatActivity {
+
+    private static final String[] treeOptions = new String[]{
+        "Oak","Maple","Mulberry"
+    };
+
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
@@ -42,6 +50,12 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 builder.show();
             }
         });
+
+        String[] treeTypes = getResources().getStringArray(R.array.known_trees);
+
+        AutoCompleteTextView editTrees = findViewById(R.id.common_name);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,treeTypes);
+        editTrees.setAdapter(adapter);
     }
 
     private class SubmitEvent implements View.OnClickListener{
