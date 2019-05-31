@@ -83,6 +83,10 @@
             android:label="TreeSapV2New">
         </activity>
 
+        <activity
+            android:name=".Tree_Bark_Activity"
+            android:label="TreeSapV2New">
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

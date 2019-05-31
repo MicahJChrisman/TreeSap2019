@@ -19,7 +19,7 @@ public class Add_Tree_Activity extends AppCompatActivity {
     private class NextEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentA = new Intent(Add_Tree_Activity.this, Tree_Pic_Activity.class);
+            Intent intentA = new Intent(Add_Tree_Activity.this, Tree_Bark_Activity.class);
             startActivity(intentA);
         }
     }
