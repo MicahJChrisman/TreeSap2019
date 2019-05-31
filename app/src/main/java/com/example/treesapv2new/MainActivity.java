@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         dbs.add("CityOfHollandDataSource");
         dbs.add("ExtendedCoHDataSource");
         dbs.add("ITreeDataSource");
-        editor.putStringSet("dataBasesUsedSelector", dbs);
+        editor.putStringSet("databasesUsedSelector", dbs);
         editor.apply();
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
