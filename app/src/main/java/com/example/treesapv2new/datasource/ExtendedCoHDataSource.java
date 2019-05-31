@@ -6,6 +6,7 @@ import android.location.Location;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.treesapv2new.MainActivity;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 
@@ -188,6 +189,24 @@ public class ExtendedCoHDataSource extends DataSource {
             return tree;
         }
 
+    }
+
+    public void patchData(Tree tree){
+        if (MainActivity.banana.getCommonName() == (null)) {
+            MainActivity.banana.setCommonName(tree.getCommonName());
+        }
+        if (MainActivity.banana.getLocation() == (null)) {
+            MainActivity.banana.setLocation(tree.getLocation());
+        }
+        if (MainActivity.banana.getID() == (null)) {
+            MainActivity.banana.setID(tree.getID());
+        }
+        if (MainActivity.banana.getCurrentDBH() == (null)) {
+            MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
+        }
+        if(MainActivity.banana.getDataSource() == null){
+            MainActivity.banana.setDataSource("ExtendedCoH");
+        }
     }
 
     @Override

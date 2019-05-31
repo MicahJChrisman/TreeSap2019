@@ -3,6 +3,7 @@ package com.example.treesapv2new.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tree {
@@ -26,8 +27,17 @@ public class Tree {
     public static final int ROOT_INFRINGEMENT = 23;
 
     Double currentDBH;
+    ArrayList<String> dbsUsed = new ArrayList<>();
 
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
+
+    public void addDb(String dbName){
+        dbsUsed.add(dbName);
+    }
+
+    public ArrayList<String> getDbsUsed(){
+        return dbsUsed;
+    }
 
     public String getCommonName() {
         return treeCommonName;

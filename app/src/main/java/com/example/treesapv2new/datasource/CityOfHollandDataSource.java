@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.example.treesapv2new.MainActivity;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
@@ -190,6 +191,27 @@ public class CityOfHollandDataSource extends DataSource {
             return tree;
         }
 
+    }
+
+    public void patchData(Tree tree) {
+        if (MainActivity.banana.getCommonName() == (null)) {
+            MainActivity.banana.setCommonName(tree.getCommonName());
+        }
+        if (MainActivity.banana.getScientificName() == (null)) {
+            MainActivity.banana.setScientificName(tree.getScientificName());
+        }
+        if (MainActivity.banana.getLocation() == (null)) {
+            MainActivity.banana.setLocation(tree.getLocation());
+        }
+        if (MainActivity.banana.getID() == (null)) {
+            MainActivity.banana.setID(tree.getID());
+        }
+        if (MainActivity.banana.getCurrentDBH() == (null)) {
+            MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
+        }
+        if (tree.getInfo("Park") != (null) && MainActivity.banana.getInfo("Park") == (null)){
+            MainActivity.banana.addInfo("Park", closestRecord.get("Park"));
+        }
     }
 
     @Override

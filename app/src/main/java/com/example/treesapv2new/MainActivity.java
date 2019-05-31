@@ -2,7 +2,9 @@ package com.example.treesapv2new;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashSet;
 import java.util.List;
 
 import android.Manifest;
@@ -67,6 +70,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.example.treesapv2new.R;
 import com.example.treesapv2new.control.BoxSwipeController;
@@ -75,6 +79,7 @@ import com.example.treesapv2new.control.IntentIntegrator;
 import com.example.treesapv2new.control.IntentResult;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.SwipeControllerActions;
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.DataSourceList;
 import com.example.treesapv2new.display.AddNotesActivity;
@@ -119,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
     private String newLog;
     String emailAddress = "jipping@hope.edu";
     String sharingLink = "https://play.google.com/store";
+
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
 
     private static final String[] PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -184,14 +192,49 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         };
-
+//        prefs.edit().putString("HopeCollegeDataSource", "");
+//        prefs.edit().putString("CityOfHollandDataSource", "");
+//        prefs.edit().putString("ExtendedCoHDataSource", "");
+//        prefs.edit().putString("ITreeDataSource", "");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
+        //sharedPreferences = getSharedPreferences("com.example.treesapv2new", MODE_PRIVATE);
+        //checkFirstRun();
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences.Editor editor = prefs.edit();
+        HashSet<String> dbs = new HashSet<String>();
+        dbs.add("HopeCollegeDataSource");
+        dbs.add("CityOfHollandDataSource");
+        dbs.add("ExtendedCoHDataSource");
+        dbs.add("ITreeDataSource");
+        editor.putStringSet("dataBasesUsedSelector", dbs);
+        editor.apply();
+
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
+//        if(firstStart){                                                    **Commented out to fiz later**
+//            setDatabases();
+//        }
     }
 
+//    public void setDatabases(){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        SharedPreferences.Editor editor = prefs.edit();
+//        HashSet<String> dbs = new HashSet<String>();
+//        dbs.add("HopeCollegeDataSource");
+//        dbs.add("CityOfHollandDataSource");
+//        dbs.add("ExtendedCoHDataSource");
+//        dbs.add("ITreeDataSource");
+//        editor.putStringSet("dataBasesUsedSelector", dbs);
+//        editor.apply();
+//        editor.putBoolean("firstStart", false);
+//        editor.apply();
+//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+//
+//    }
     private class NextEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -817,4 +860,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        if (sharedPreferences.getBoolean("firstRun", false)) {
+//            //You can perform anything over here. This will call only first time
+//            editor = sharedPreferences.edit();
+//            editor.putBoolean("firstRun", false);
+//            editor.commit();
+//
+//        }
+//    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        if (prefs.getBoolean("firstrun", false)) {
+//        }
+//        else{
+//            HashSet<String> dbs = new HashSet<String>();
+//            dbs.add("HopeCollegeDataSource");
+//            dbs.add("CityOfHollandDataSource");
+//            dbs.add("ExtendedCoHDataSource");
+//            dbs.add("ITreeDataSource");
+//            //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//            prefs.edit().putStringSet("dataBasesUsedSelector", dbs);
+//            prefs.edit().putBoolean("firstrun", false).commit();
+//        }
+//    }
+
+
 }

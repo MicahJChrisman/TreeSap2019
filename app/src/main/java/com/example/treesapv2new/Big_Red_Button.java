@@ -291,14 +291,15 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }else{
                     ds = new ITreeDataSource();
                 }
-
                 ds.initialize(Big_Red_Button.this,null);
                 MainActivity.banana = ds.search(testing);
+
                 if (MainActivity.banana != null) {
                     if (MainActivity.banana.isFound()) break;  // and NOT just the closest
                 }
             }
 
+//            checkTree(sources);
 
 //            HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //            ds.initialize(Big_Red_Button.this,null);
@@ -331,6 +332,85 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 //            startActivity(new Intent(Big_Red_Button.this, Cereal_Box_Activity.class));
         }
+
+
+//        private void checkTree(Set<String> sources){
+//            if(MainActivity.banana != null){
+//                if(MainActivity.banana.getCommonName().equals(null)){
+//                    for (String source : sources) {
+//                        for(String sourceUsed : MainActivity.banana.getDbsUsed()){
+//                            Log.d("MainActivity", "Searching.  Trying: "+source);
+//                            DataSource ds;
+//                            if(source.equals(sourceUsed)) {
+//                            }else if(source.equals("HopeCollegeDataSource")){
+//                                ds = new HopeCollegeDataSource();
+//                            }else if(source.equals("CityOfHollandDataSource")) {
+//                                ds = new CityOfHollandDataSource();
+//                            }else if(source.equals("ExtendedCoHDataSource"))){
+//                                ds = new ExtendedCoHDataSource();
+//                            }else{
+//                                ds = new ITreeDataSource();
+//                            }
+//                            ds.initialize(Big_Red_Button.this,null);
+//                            Tree tree = ds.search(MainActivity.banana.getLocation());
+//                            MainActivity.banana.addDb(source);
+//                            if(!tree.getCommonName().equals(null)){
+//                                MainActivity.banana.setCommonName(tree.getCommonName());
+//                            }
+//                        }
+//                    }
+//                }if(MainActivity.banana.getScientificName().equals(null)){
+//                    for (String source : sources){
+//                        for (String sourceUsed : MainActivity.banana.getDbsUsed()) {
+//                            Log.d("MainActivity", "Searching.  Trying: " + source);
+//                            DataSource ds;
+//                            if (source.equals(sourceUsed)) {
+//                            } else if (source.equals("HopeCollegeDataSource")) {
+//                                ds = new HopeCollegeDataSource();
+//                            } else if (source.equals("CityOfHollandDataSource")) {
+//                                ds = new CityOfHollandDataSource();
+//                            } else if (source.equals("ExtendedCoHDataSource")) {
+//                                ds = new ExtendedCoHDataSource();
+//                            } else {
+//                                ds = new ITreeDataSource();
+//                            }
+//                            ds.initialize(Big_Red_Button.this, null);
+//                            Tree tree = ds.search(MainActivity.banana.getLocation());
+//                            MainActivity.banana.addDb(source);
+//                            if (!tree.getScientificName().equals(null)) {
+//                                MainActivity.banana.setScientificName(tree.getScientificName());
+//                            }
+//                        }
+//                    }
+//                }if(MainActivity.banana.getID().equals(null)){
+//                    for (String source : sources){
+//                        for (String sourceUsed : MainActivity.banana.getDbsUsed()) {
+//                            Log.d("MainActivity", "Searching.  Trying: " + source);
+//                            DataSource ds;
+//                            if (source.equals(sourceUsed)) {
+//                            } else if (source.equals("HopeCollegeDataSource")) {
+//                                ds = new HopeCollegeDataSource();
+//                            } else if (source.equals("CityOfHollandDataSource")) {
+//                                ds = new CityOfHollandDataSource();
+//                            } else if (source.equals("ExtendedCoHDataSource")) {
+//                                ds = new ExtendedCoHDataSource();
+//                            } else {
+//                                ds = new ITreeDataSource();
+//                            }
+//                            ds.initialize(Big_Red_Button.this, null);
+//                            Tree tree = ds.search(MainActivity.banana.getLocation());
+//                            MainActivity.banana.addDb(source);
+//                            if (!tree.getID().equals(null)) {
+//                                MainActivity.banana.setID(tree.getID());
+//                            }
+//                            if(!MainActivity.banana.getID().equals(null)){
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
 //    private Tree treeToSend;
