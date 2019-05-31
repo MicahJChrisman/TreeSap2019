@@ -88,6 +88,16 @@
             android:label="TreeSapV2New">
         </activity>
 
+        <activity
+            android:name=".Tree_Leaf_Activity"
+            android:label="TreeSapV2New">
+        </activity>
+
+        <activity
+            android:name=".Tree_Other_Info_Activity"
+            android:label="TreeSapV2New">
+        </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

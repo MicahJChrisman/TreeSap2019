@@ -38,7 +38,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    Intent intentA = new Intent(Tree_Bark_Activity.this, Tree_Pic_Activity.class);
+                    Intent intentA = new Intent(Tree_Bark_Activity.this, Tree_Leaf_Activity.class);
                     startActivity(intentA);
                 }
             });
@@ -49,7 +49,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
     private class NextEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentA = new Intent(Tree_Bark_Activity.this, Tree_Pic_Activity.class);
+            Intent intentA = new Intent(Tree_Bark_Activity.this, Tree_Leaf_Activity.class);
             startActivity(intentA);
         }
     }}
