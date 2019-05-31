@@ -15,4 +15,5 @@
     <color name="altAppBackground">#c0d5fc</color>
     <color name="white">#fff</color>
     <color name = "accent_gray">#FF353333</color>
+    <color name="black">#000</color>
 </resources>

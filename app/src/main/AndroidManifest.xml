@@ -74,6 +74,11 @@
         </activity>
 
         <activity
+            android:name=".Tree_Pic_Activity"
+            android:label="TreeSapV2New">
+        </activity>
+
+        <activity
             android:name=".Pie_Chart_Activity"
             android:label="TreeSapV2New">
         </activity>
