@@ -94,21 +94,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_gravity="center"
             android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Circumference: "
+                android:text="Circumference:"
                 android:textColor="@color/accent_gray"
                 android:textSize="24sp" />
 
+
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_border"
+                android:layout_weight="1"
                 android:hint="(Optional)"
+                android:layout_marginLeft="2dp"
                 android:textSize="24sp" />
+
+            <ImageButton
+                android:id="@+id/circum_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/info_icon"
+                android:scaleType="centerCrop"
+                android:maxWidth="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"
+                android:background="@color/appBackground" />
         </LinearLayout>
 
         <TextView

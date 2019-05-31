@@ -101,4 +101,1110 @@
         <item>	Wych elm	</item>
 
     </string-array>
+    <string-array name="known_trees_full">
+        <item>	Abies Amabilis	</item>
+        <item>	Abies Balsamea	</item>
+        <item>	Abies Bracteata	</item>
+        <item>	Abies Fraseri	</item>
+        <item>	Abies Lasiocarpa	</item>
+        <item>	Abies Magnifica	</item>
+        <item>	Abies Procera	</item>
+        <item>	Acer Macrophyllum	</item>
+        <item>	Acer Negundo	</item>
+        <item>	Acer Pensylvanicum	</item>
+        <item>	Acer Rubrum	</item>
+        <item>	Acer Saccharinum	</item>
+        <item>	Acer Saccharum	</item>
+        <item>	Aesculus Californica	</item>
+        <item>	Ague Tree	</item>
+        <item>	Ahuehuete	</item>
+        <item>	Alaska Cedar	</item>
+        <item>	Alaska Cypress	</item>
+        <item>	Alaska Yellow-cedar	</item>
+        <item>	Alaska Yellowcedar	</item>
+        <item>	Alaska-cedar	</item>
+        <item>	Alaskan Larch	</item>
+        <item>	Alberta Spruce	</item>
+        <item>	Alberta White Spruce	</item>
+        <item>	Allegheny Chinkapin	</item>
+        <item>	Alligator-tree	</item>
+        <item>	Almond Willow	</item>
+        <item>	Almondleaf Willow	</item>
+        <item>	Alnus Incana Subsp. Rugosa	</item>
+        <item>	Alnus Incana Subsp. Tenuifolia	</item>
+        <item>	Alnus Rhombifolia	</item>
+        <item>	Alnus Rubra	</item>
+        <item>	Alnus Viridis Subsp. Crispa	</item>
+        <item>	Alnus Viridis Subsp. Sinuata	</item>
+        <item>	Alpine Fir	</item>
+        <item>	Alpine Hemlock	</item>
+        <item>	Alpine Larch	</item>
+        <item>	Amabilis Fir	</item>
+        <item>	Amelanchier Arborea	</item>
+        <item>	American Basswood	</item>
+        <item>	American Beech	</item>
+        <item>	American Elm	</item>
+        <item>	American Green Alder	</item>
+        <item>	American Hackberry	</item>
+        <item>	American Holly	</item>
+        <item>	American Hophornbeam	</item>
+        <item>	American Hornbeam	</item>
+        <item>	American Larch	</item>
+        <item>	American Mountain-ash	</item>
+        <item>	American Plum	</item>
+        <item>	American Sycamore	</item>
+        <item>	American Walnut	</item>
+        <item>	Angelica Tree	</item>
+        <item>	Apache Pine	</item>
+        <item>	Aralia Spinosa	</item>
+        <item>	Arbor Vitae	</item>
+        <item>	Arborvitae	</item>
+        <item>	Arbutus Arizonica	</item>
+        <item>	Arbutus Menziesii	</item>
+        <item>	Arbutus Texana	</item>
+        <item>	Arce (Spanish)	</item>
+        <item>	Arizona Black Walnut	</item>
+        <item>	Arizona Cypress	</item>
+        <item>	Arizona Fir	</item>
+        <item>	Arizona Longleaf Pine	</item>
+        <item>	Arizona Madrone	</item>
+        <item>	Arizona Madrono	</item>
+        <item>	Arizona Oak	</item>
+        <item>	Arizona Rough Cypress	</item>
+        <item>	Arizona Walnut	</item>
+        <item>	Arizona White Oak	</item>
+        <item>	Arkansas Pine	</item>
+        <item>	Arkansas Soft Pine	</item>
+        <item>	Ash-leaved Maple	</item>
+        <item>	Ashe Juniper	</item>
+        <item>	Ashleaf Maple	</item>
+        <item>	Asimina Triloba	</item>
+        <item>	Aspen	</item>
+        <item>	Athel Tamarisk	</item>
+        <item>	Atlantic White-cedar	</item>
+        <item>	Australian-pine	</item>
+        <item>	Austrian Pine	</item>
+        <item>	Baker Cypress	</item>
+        <item>	Baldcypress	</item>
+        <item>	Balsam	</item>
+        <item>	Balsam Fir	</item>
+        <item>	Balsam Fraser Fir	</item>
+        <item>	Balsam Poplar	</item>
+        <item>	Banks Pine	</item>
+        <item>	Banksian Pine	</item>
+        <item>	Barren Oak	</item>
+        <item>	Basket Oak	</item>
+        <item>	Basswood	</item>
+        <item>	Bay	</item>
+        <item>	Bay Laurel	</item>
+        <item>	Baytree	</item>
+        <item>	Beach Pine	</item>
+        <item>	Beak Willow	</item>
+        <item>	Beaked Willow	</item>
+        <item>	Bearberry	</item>
+        <item>	Beaverwood	</item>
+        <item>	Bebb Willow	</item>
+        <item>	Beech	</item>
+        <item>	Bellota	</item>
+        <item>	Betula Alleghaniensis	</item>
+        <item>	Betula Nigra	</item>
+        <item>	Betula Occidentalis	</item>
+        <item>	Betula Papyrifera	</item>
+        <item>	Betula Populifolia	</item>
+        <item>	Big Drunk Bean	</item>
+        <item>	Big-cone Pine	</item>
+        <item>	Big-laurel	</item>
+        <item>	Big-leaf Maple	</item>
+        <item>	Bigcone Douglas-fir	</item>
+        <item>	Bigcone Douglas-spruce	</item>
+        <item>	Bigcone Spruce	</item>
+        <item>	Bigleaf Maple	</item>
+        <item>	Bigtooth Aspen	</item>
+        <item>	Bigtree	</item>
+        <item>	Biltmore Ash	</item>
+        <item>	Biltmore White Ash	</item>
+        <item>	Bishop Pine	</item>
+        <item>	Bishops Pine	</item>
+        <item>	Bitter Cherry	</item>
+        <item>	Bitternut	</item>
+        <item>	Bitternut Hickory	</item>
+        <item>	Black Birch	</item>
+        <item>	Black Birck	</item>
+        <item>	Black Cherry	</item>
+        <item>	Black Hemlock	</item>
+        <item>	Black Hills Spruce	</item>
+        <item>	Black Jack Oak	</item>
+        <item>	Black Locust	</item>
+        <item>	Black Myrtle	</item>
+        <item>	Black Oak	</item>
+        <item>	Black Pine	</item>
+        <item>	Black Tupelo	</item>
+        <item>	Black Walnut	</item>
+        <item>	Black Willow	</item>
+        <item>	Blackgum	</item>
+        <item>	Blackjack Oak	</item>
+        <item>	Blisted	</item>
+        <item>	Blister Fir	</item>
+        <item>	Blue Oak	</item>
+        <item>	Blue Paloverde	</item>
+        <item>	Blue Spruce	</item>
+        <item>	Blue-beech	</item>
+        <item>	Blue-poplar	</item>
+        <item>	Bluegum	</item>
+        <item>	Bluegum Eucalyptus	</item>
+        <item>	Bluejack Oak	</item>
+        <item>	Bois Darc	</item>
+        <item>	Border Limber Pine	</item>
+        <item>	Border Pinyon	</item>
+        <item>	Border White Pine	</item>
+        <item>	Bottom White Pine	</item>
+        <item>	Bottom-land Post Oak	</item>
+        <item>	Bottomland Post Oak	</item>
+        <item>	Bottomland Red Oak	</item>
+        <item>	Boxelder	</item>
+        <item>	Boynton Post Oak	</item>
+        <item>	Bracted Balsam Fir	</item>
+        <item>	Brake Cedar	</item>
+        <item>	Break Cedar	</item>
+        <item>	Brewer Spruce	</item>
+        <item>	Bristlecone Fir	</item>
+        <item>	Broadleaf Maple	</item>
+        <item>	Broom Hickory	</item>
+        <item>	Buckeye	</item>
+        <item>	Bull Pine	</item>
+        <item>	Bull-bay	</item>
+        <item>	Bullnut	</item>
+        <item>	Bur Oak	</item>
+        <item>	Butternut	</item>
+        <item>	Buttonball Tree	</item>
+        <item>	Cabbage Palmetto	</item>
+        <item>	California Bay	</item>
+        <item>	California Black Walnut	</item>
+        <item>	California Blue Oak	</item>
+        <item>	California Boxelder	</item>
+        <item>	California Buckeye	</item>
+        <item>	California Coulter Pine	</item>
+        <item>	California Fan Palm	</item>
+        <item>	California Filbert	</item>
+        <item>	California Hazel	</item>
+        <item>	California Hazelnut	</item>
+        <item>	California Juniper	</item>
+        <item>	California Laurel	</item>
+        <item>	California Nutmeg	</item>
+        <item>	California Palm	</item>
+        <item>	California Red Fir	</item>
+        <item>	California Redwood	</item>
+        <item>	California Swamp Pine	</item>
+        <item>	California Torreya	</item>
+        <item>	California Walnut	</item>
+        <item>	California Washington-palm	</item>
+        <item>	California White Oak	</item>
+        <item>	Calocedrus Decurrens	</item>
+        <item>	Cambria Pine	</item>
+        <item>	Canada Balsam	</item>
+        <item>	Canada Hemlock	</item>
+        <item>	Canadian Balsam	</item>
+        <item>	Canadian Spruce	</item>
+        <item>	Cane Ash	</item>
+        <item>	Canoe Birch	</item>
+        <item>	Canoe-cedar	</item>
+        <item>	Canyon Live Oak	</item>
+        <item>	Carolina Beech	</item>
+        <item>	Carolina Hemlock	</item>
+        <item>	Carpinus Caroliniana	</item>
+        <item>	Carya Cordiformis	</item>
+        <item>	Carya Glabra	</item>
+        <item>	Carya Illinoensis	</item>
+        <item>	Carya Ovata	</item>
+        <item>	Carya Tomentosa	</item>
+        <item>	Cascades Fir	</item>
+        <item>	Castanea Pumila	</item>
+        <item>	Casuarina Spp.	</item>
+        <item>	Cat Spruce	</item>
+        <item>	Caudate Willow	</item>
+        <item>	Cedar Pine	</item>
+        <item>	Cedro	</item>
+        <item>	Cedro Blanco	</item>
+        <item>	Cedro De La Sierra	</item>
+        <item>	Cedros Island Pine	</item>
+        <item>	Celtis Laevigata	</item>
+        <item>	Celtis Occidentalis	</item>
+        <item>	Celtis Reticulata	</item>
+        <item>	Cercidium Floridum	</item>
+        <item>	Cercis Canadensis	</item>
+        <item>	Chamaecyparis Lawsoniana	</item>
+        <item>	Chamaecyparis Nootkatensis	</item>
+        <item>	Chamaecyparis Thyoides	</item>
+        <item>	Chaton	</item>
+        <item>	Cherioni	</item>
+        <item>	Cherrion	</item>
+        <item>	Cherrybark Oak	</item>
+        <item>	Chestnut Oak	</item>
+        <item>	Chihuahua Pine	</item>
+        <item>	Chinaberry	</item>
+        <item>	Chinkapin	</item>
+        <item>	Chinkapin Oak	</item>
+        <item>	Chinquapin	</item>
+        <item>	Chinquapin Oak	</item>
+        <item>	Chrysolepis Chrysophylla	</item>
+        <item>	Cinnamon Bush	</item>
+        <item>	Cinnamon Oak	</item>
+        <item>	Cinnamon Wood	</item>
+        <item>	Cipres	</item>
+        <item>	Ciruela	</item>
+        <item>	Coast Douglas-fir	</item>
+        <item>	Coast Pignut Hickory	</item>
+        <item>	Coast Pine	</item>
+        <item>	Coast Redwood	</item>
+        <item>	Coast Spruce	</item>
+        <item>	Coastal Laurel Oak	</item>
+        <item>	Colorado Blue Spruce	</item>
+        <item>	Colorado Spruce	</item>
+        <item>	Colorin	</item>
+        <item>	Columbian Spruce	</item>
+        <item>	Common Hackberry	</item>
+        <item>	Common Honey-locust	</item>
+        <item>	Common Larch	</item>
+        <item>	Common Persimmon	</item>
+        <item>	Common Red Oak	</item>
+        <item>	Common Sassafras	</item>
+        <item>	Coos Bay Laurel	</item>
+        <item>	Copalm Balsam	</item>
+        <item>	Coral Bean	</item>
+        <item>	Coralbean	</item>
+        <item>	Cork-bark Fir	</item>
+        <item>	Corkbark Fir	</item>
+        <item>	Cormier (Quebec)	</item>
+        <item>	Cornus Racemosa	</item>
+        <item>	Corsican Pine	</item>
+        <item>	Corylus Cornuta Var. Californica	</item>
+        <item>	Coulter Pine	</item>
+        <item>	Cow Oak	</item>
+        <item>	Crataegus Douglasii	</item>
+        <item>	Crimean Pine	</item>
+        <item>	Cross Oak	</item>
+        <item>	Cuban Pine	</item>
+        <item>	Cunningham Casuarina	</item>
+        <item>	Cupressus Bakeri	</item>
+        <item>	Cupressus Forbesii	</item>
+        <item>	Cupressus Goveniana	</item>
+        <item>	Cupressus Macnabiana	</item>
+        <item>	Cupressus Macrocarpa	</item>
+        <item>	Cupressus Sargentii	</item>
+        <item>	Curtiss Possumhaw	</item>
+        <item>	Custard Apple	</item>
+        <item>	Cypress	</item>
+        <item>	Dade County Pine	</item>
+        <item>	Dade County Slash Pine	</item>
+        <item>	Darlington Oak	</item>
+        <item>	Deciduous Holly	</item>
+        <item>	Del Mar Pine	</item>
+        <item>	Delta Post Oak	</item>
+        <item>	Desert Fir	</item>
+        <item>	Desert Palm	</item>
+        <item>	Desert White Cedar	</item>
+        <item>	Devils Walking Stick	</item>
+        <item>	Diamond Willow	</item>
+        <item>	Diamond-leaf Oak	</item>
+        <item>	Diospyros Texana	</item>
+        <item>	Diospyros Virginiana	</item>
+        <item>	Dog Banana	</item>
+        <item>	Dogberry	</item>
+        <item>	Douglas-fir	</item>
+        <item>	Downy Serviceberry	</item>
+        <item>	Drummond Post Oak	</item>
+        <item>	Drummond Soapberry	</item>
+        <item>	Duck Oak	</item>
+        <item>	Dudley Willow	</item>
+        <item>	Dune Holly	</item>
+        <item>	Dwarf Canyon Live Oak	</item>
+        <item>	Dwarf Interior Live Oak	</item>
+        <item>	Dwarf Post Oak	</item>
+        <item>	Dwarf Walnut	</item>
+        <item>	Eastern Arborvitae	</item>
+        <item>	Eastern Black Walnut	</item>
+        <item>	Eastern Fir	</item>
+        <item>	Eastern Hemlock	</item>
+        <item>	Eastern Hophornbeam	</item>
+        <item>	Eastern Larch	</item>
+        <item>	Eastern Persimmon	</item>
+        <item>	Eastern Red Oak	</item>
+        <item>	Eastern Red Pine	</item>
+        <item>	Eastern Redbud	</item>
+        <item>	Eastern Spruce	</item>
+        <item>	Eastern White Pine	</item>
+        <item>	Eastern White-cedar	</item>
+        <item>	Elliott Oak	</item>
+        <item>	Emory Oak	</item>
+        <item>	Enebro	</item>
+        <item>	Engelmann Spruce	</item>
+        <item>	Eucalyptus Globulus	</item>
+        <item>	European Black Pine	</item>
+        <item>	European Larch	</item>
+        <item>	European Speckled Alder	</item>
+        <item>	European Spruce	</item>
+        <item>	Evergreen Coralbean	</item>
+        <item>	Evergreen Magnolia	</item>
+        <item>	Fagus Grandifolia	</item>
+        <item>	False Acacia	</item>
+        <item>	False Cypress	</item>
+        <item>	False Elm	</item>
+        <item>	False Hemlock	</item>
+        <item>	False Shagbark	</item>
+        <item>	False-banana	</item>
+        <item>	False-cedar	</item>
+        <item>	Fetid-shrub	</item>
+        <item>	Fire Birch	</item>
+        <item>	Florida Elm	</item>
+        <item>	Florida Persimmon	</item>
+        <item>	Florida Torreya	</item>
+        <item>	Florida Yew	</item>
+        <item>	Foothills Pine	</item>
+        <item>	Forbes Cypress	</item>
+        <item>	Fork-leaf Oak	</item>
+        <item>	Forked-leaf White Oak	</item>
+        <item>	Four-needled Pinyon	</item>
+        <item>	Fraser Fir	</item>
+        <item>	Frasers Fir	</item>
+        <item>	Fraxinus Americana	</item>
+        <item>	Fresno De Guajuco (Spanish)	</item>
+        <item>	Frigolito	</item>
+        <item>	Frijolillo	</item>
+        <item>	Frijolito	</item>
+        <item>	Frijollito	</item>
+        <item>	Giant Arborvitae	</item>
+        <item>	Giant Chinkapin	</item>
+        <item>	Giant Chinquapin	</item>
+        <item>	Giant Evergreen Chinkapin	</item>
+        <item>	Giant Evergreen-chinkapin	</item>
+        <item>	Giant Redcedar	</item>
+        <item>	Giant Sequoia	</item>
+        <item>	Ginger Pine	</item>
+        <item>	Glaucous Willow	</item>
+        <item>	Gleditsia Triacanthos	</item>
+        <item>	Golden Chinkapin	</item>
+        <item>	Golden Fir	</item>
+        <item>	Golden Willow	</item>
+        <item>	Goldenleaf Chestnut	</item>
+        <item>	Goodding Willow	</item>
+        <item>	Goosefoot Maple	</item>
+        <item>	Gopherwood	</item>
+        <item>	Gordonia	</item>
+        <item>	Gordonia Lasianthus	</item>
+        <item>	Gowen Cypress	</item>
+        <item>	Gray Alder	</item>
+        <item>	Gray Beech	</item>
+        <item>	Gray Birch	</item>
+        <item>	Gray Dogwood	</item>
+        <item>	Gray Elm	</item>
+        <item>	Gray Oak	</item>
+        <item>	Gray Pine	</item>
+        <item>	Gray Willow	</item>
+        <item>	Gray-leaved Willow	</item>
+        <item>	Gray-stemmed Dogwood	</item>
+        <item>	Grayleaf Willow	</item>
+        <item>	Green Alder	</item>
+        <item>	Green Locust	</item>
+        <item>	Grey Birch	</item>
+        <item>	Grey Dogwood	</item>
+        <item>	Grey Oak	</item>
+        <item>	Grey Sheoak	</item>
+        <item>	Guadalupe Island Pine	</item>
+        <item>	Gulf Black Willow	</item>
+        <item>	Gulf Cypress	</item>
+        <item>	Gum-wood	</item>
+        <item>	Gumbo File	</item>
+        <item>	Hackberry	</item>
+        <item>	Hackmatack	</item>
+        <item>	Hamamelis Virginiana	</item>
+        <item>	Hard Maple	</item>
+        <item>	Hazel Alder	</item>
+        <item>	He-balsam	</item>
+        <item>	Hedge-apple	</item>
+        <item>	Hemlock	</item>
+        <item>	Hemlock Spruce	</item>
+        <item>	Hercules Club	</item>
+        <item>	Hickory Pine	</item>
+        <item>	Highland Live Oak	</item>
+        <item>	Hills Oak	</item>
+        <item>	Hoary Alder	</item>
+        <item>	Hognut	</item>
+        <item>	Hojalito	</item>
+        <item>	Holly Bay	</item>
+        <item>	Honey Shucks Locust	</item>
+        <item>	Honey-locust	</item>
+        <item>	Hophornbeam	</item>
+        <item>	Horestail Casuarina	</item>
+        <item>	Horsechestnut	</item>
+        <item>	Hudson Bay Pine	</item>
+        <item>	Hummock Holly	</item>
+        <item>	Idaho White Pine	</item>
+        <item>	Ilex Decidua	</item>
+        <item>	Ilex Opaca	</item>
+        <item>	Illinois Nut	</item>
+        <item>	Incense-cedar	</item>
+        <item>	Indian Banana	</item>
+        <item>	Indian Soap Plant	</item>
+        <item>	Inland Boxelder	</item>
+        <item>	Insignis Pine	</item>
+        <item>	Interior Live Oak	</item>
+        <item>	Iron Oak	</item>
+        <item>	Ironwood	</item>
+        <item>	Jaboncillo	</item>
+        <item>	Jack Oak	</item>
+        <item>	Jack Pine	</item>
+        <item>	Jeffrey Pine	</item>
+        <item>	Jersey Pine	</item>
+        <item>	Judas-tree	</item>
+        <item>	Juglans Californica	</item>
+        <item>	Juglans Cinerea	</item>
+        <item>	Juglans Major	</item>
+        <item>	Juglans Microcarpa	</item>
+        <item>	Juglans Nigra	</item>
+        <item>	Juneberry	</item>
+        <item>	Juniper	</item>
+        <item>	Juniperus Ashei	</item>
+        <item>	Juniperus Californica	</item>
+        <item>	Juniperus Coahuilensis	</item>
+        <item>	Knobcone Pine	</item>
+        <item>	Knowlton Hophornbeam	</item>
+        <item>	Lady Legs	</item>
+        <item>	Ladys Legs	</item>
+        <item>	Larch	</item>
+        <item>	Large-flower Magnolia	</item>
+        <item>	Largetooth Aspen	</item>
+        <item>	Larix Decidua	</item>
+        <item>	Larix Laricina	</item>
+        <item>	Larix Lyallii	</item>
+        <item>	Laurel	</item>
+        <item>	Laurel Magnolia	</item>
+        <item>	Laurel Oak	</item>
+        <item>	Laurel-leaf Oak	</item>
+        <item>	Lawson Cypress	</item>
+        <item>	Lawson False-cypress	</item>
+        <item>	Lily-of-the-valley-tree	</item>
+        <item>	Linden	</item>
+        <item>	Liquidambar Styraciflua	</item>
+        <item>	Liriodendron Tulipifera	</item>
+        <item>	Lithocarpus Densiflorus	</item>
+        <item>	Little Walnut	</item>
+        <item>	Live Oak	</item>
+        <item>	Loblolly Pine	</item>
+        <item>	Loblolly-bay	</item>
+        <item>	Locust	</item>
+        <item>	Lodgepole Pine	</item>
+        <item>	Long-beaked Willow	</item>
+        <item>	Longleaf Casuarina	</item>
+        <item>	Lovely Fir	</item>
+        <item>	Lowland Hackberry	</item>
+        <item>	Lyall Larch	</item>
+        <item>	Lyalls Larch	</item>
+        <item>	MacNab Cypress	</item>
+        <item>	Maclura Pomifera	</item>
+        <item>	Madrona	</item>
+        <item>	Madrone	</item>
+        <item>	Madrono	</item>
+        <item>	Magnolia Grandiflora	</item>
+        <item>	Magnolia Virginiana	</item>
+        <item>	Manitoba Maple	</item>
+        <item>	Manzanita	</item>
+        <item>	Maul Oak	</item>
+        <item>	Menzies Spruce	</item>
+        <item>	Mescal Bean	</item>
+        <item>	Mescal-bean Sophora	</item>
+        <item>	Mescalbean Sophora	</item>
+        <item>	Mexican Blue Oak	</item>
+        <item>	Mexican Juniper	</item>
+        <item>	Mexican Persimmon	</item>
+        <item>	Mexican Pinyon	</item>
+        <item>	Mexican Soapberry	</item>
+        <item>	Mexican Walnut	</item>
+        <item>	Mexican White Pine	</item>
+        <item>	Missey-mossey	</item>
+        <item>	Mississippi Valley Oak	</item>
+        <item>	Mitten Tree	</item>
+        <item>	Mockernut	</item>
+        <item>	Mockernut Hickory	</item>
+        <item>	Modoc Cypress	</item>
+        <item>	Monterey Cypress	</item>
+        <item>	Monterey Pine	</item>
+        <item>	Montezuma Baldcypress	</item>
+        <item>	Moosewood	</item>
+        <item>	Moral	</item>
+        <item>	Morus Rubra	</item>
+        <item>	Mossy-overcup Oak	</item>
+        <item>	Mossycup Oak	</item>
+        <item>	Mountain Alder	</item>
+        <item>	Mountain Ash	</item>
+        <item>	Mountain Birch	</item>
+        <item>	Mountain Black Cherry	</item>
+        <item>	Mountain Cedar	</item>
+        <item>	Mountain Cypress	</item>
+        <item>	Mountain Hemlock	</item>
+        <item>	Mountain Laurel	</item>
+        <item>	Mountain Mahogany	</item>
+        <item>	Mountain Oak	</item>
+        <item>	Mountain Pine	</item>
+        <item>	Mountain Red Oak	</item>
+        <item>	Mountain Spruce	</item>
+        <item>	Mountain White Oak	</item>
+        <item>	Mountain White Pine	</item>
+        <item>	Mulberry	</item>
+        <item>	Muscletree	</item>
+        <item>	Myrtle	</item>
+        <item>	Myrtletree	</item>
+        <item>	Myrtlewood	</item>
+        <item>	Naked Indian	</item>
+        <item>	Namboca	</item>
+        <item>	Netleaf Hackberry	</item>
+        <item>	Nettletree	</item>
+        <item>	New Mexican Locust	</item>
+        <item>	New Mexico Locust	</item>
+        <item>	Noble Fir	</item>
+        <item>	Nogal	</item>
+        <item>	Nogalillo	</item>
+        <item>	Nogalito	</item>
+        <item>	Nootka Cypress	</item>
+        <item>	Nootka False-cypress	</item>
+        <item>	North Carolina Pine	</item>
+        <item>	Northern Hackberry	</item>
+        <item>	Northern Pin Oak	</item>
+        <item>	Northern Pine	</item>
+        <item>	Northern Red Oak	</item>
+        <item>	Northern Scrub Pine	</item>
+        <item>	Northern White Cedar	</item>
+        <item>	Northern White Pine	</item>
+        <item>	Northern White-cedar	</item>
+        <item>	Norway Pine	</item>
+        <item>	Norway Spruce	</item>
+        <item>	Nut Pine	</item>
+        <item>	Nuzu-ndu	</item>
+        <item>	Nyssa Sylvatica	</item>
+        <item>	Obtusa Oak	</item>
+        <item>	Oilnut	</item>
+        <item>	Old Field Pine	</item>
+        <item>	Oldfield Birch	</item>
+        <item>	Oldfield Pine	</item>
+        <item>	Opossum-tree	</item>
+        <item>	Orange Oak	</item>
+        <item>	Oregon Alder	</item>
+        <item>	Oregon Douglas-fir	</item>
+        <item>	Oregon Maple	</item>
+        <item>	Oregon Myrtle	</item>
+        <item>	Oregon-cedar	</item>
+        <item>	Osage-orange	</item>
+        <item>	Ostrya Knowltonii	</item>
+        <item>	Ostrya Virginiana	</item>
+        <item>	Overcup Oak	</item>
+        <item>	Oxydendrum Arboreum	</item>
+        <item>	Ozark Chinkapin	</item>
+        <item>	Ozark White Cedar	</item>
+        <item>	Pacific Coast Alder	</item>
+        <item>	Pacific Hemlock	</item>
+        <item>	Pacific Madrone	</item>
+        <item>	Pacific Myrtle	</item>
+        <item>	Pacific Ponderosa Pine	</item>
+        <item>	Pacific Redcedar	</item>
+        <item>	Pacific Silver Fir	</item>
+        <item>	Pacific Willow	</item>
+        <item>	Pacific Yew	</item>
+        <item>	Palo Blanco	</item>
+        <item>	Panicled Dogwood	</item>
+        <item>	Paper Birch	</item>
+        <item>	Papershell Pinyon	</item>
+        <item>	Parry Pinyon	</item>
+        <item>	Pawpaw	</item>
+        <item>	Pawpaw-apple	</item>
+        <item>	Peach Oak	</item>
+        <item>	Peach Willow	</item>
+        <item>	Peach-leaved Willow	</item>
+        <item>	Peachleaf Willow	</item>
+        <item>	Pecan	</item>
+        <item>	Pecan Hickory	</item>
+        <item>	Pentamon	</item>
+        <item>	Pepperidge	</item>
+        <item>	Pepperwood	</item>
+        <item>	Persea Borbonia	</item>
+        <item>	Persimmon	</item>
+        <item>	Petit Minou	</item>
+        <item>	Picea Abies	</item>
+        <item>	Picea Breweriana	</item>
+        <item>	Picea Engelmannii	</item>
+        <item>	Picea Glauca	</item>
+        <item>	Picea Pungens	</item>
+        <item>	Picea Rubens	</item>
+        <item>	Picea Sitchensis	</item>
+        <item>	Pick Tree	</item>
+        <item>	Pignut	</item>
+        <item>	Pignut Hickory	</item>
+        <item>	Pin Blanc	</item>
+        <item>	Pin Oak	</item>
+        <item>	Pino Enano	</item>
+        <item>	Pino Real	</item>
+        <item>	Pino Real Blanco	</item>
+        <item>	Pinobete	</item>
+        <item>	Pinus Attenuata	</item>
+        <item>	Pinus Banksiana	</item>
+        <item>	Pinus Cembroides	</item>
+        <item>	Pinus Clausa	</item>
+        <item>	Pinus Contorta Var. Contorta	</item>
+        <item>	Pinus Contorta Var. Murrayana	</item>
+        <item>	Pinus Coulteri	</item>
+        <item>	Pinus Echinata	</item>
+        <item>	Pinus Elliottii	</item>
+        <item>	Pinus Engelmannii	</item>
+        <item>	Pinus Glabra	</item>
+        <item>	Pinus Jeffreyi	</item>
+        <item>	Pinus Lambertiana	</item>
+        <item>	Pinus Leiophylla Var. Chihuahuana	</item>
+        <item>	Pinus Monticola	</item>
+        <item>	Pinus Muricata	</item>
+        <item>	Pinus Nigra	</item>
+        <item>	Pinus Ponderosa Var. Ponderosa	</item>
+        <item>	Pinus Pungens	</item>
+        <item>	Pinus Quadrifolia	</item>
+        <item>	Pinus Radiata	</item>
+        <item>	Pinus Resinosa	</item>
+        <item>	Pinus Sabiniana	</item>
+        <item>	Pinus Strobiformis	</item>
+        <item>	Pinus Strobus	</item>
+        <item>	Pinus Sylvestris	</item>
+        <item>	Pinus Taeda	</item>
+        <item>	Pinus Torreyana	</item>
+        <item>	Pinus Virginiana	</item>
+        <item>	Pinus Washoensis	</item>
+        <item>	Pitch Pine	</item>
+        <item>	Plane Tree	</item>
+        <item>	Platanus Occidentalis	</item>
+        <item>	Polecat Wood	</item>
+        <item>	Pondcypress	</item>
+        <item>	Ponderosa Pine	</item>
+        <item>	Populus Balsamifera	</item>
+        <item>	Populus Grandidentata	</item>
+        <item>	Populus Tremuloides	</item>
+        <item>	Porsild Spruce	</item>
+        <item>	Port Orford-cedar	</item>
+        <item>	Port-Orford White-cedar	</item>
+        <item>	Port-Orford-cedar	</item>
+        <item>	Possum Oak	</item>
+        <item>	Possum Pine	</item>
+        <item>	Possumhaw	</item>
+        <item>	Possumwood	</item>
+        <item>	Post Cedar	</item>
+        <item>	Post Locust	</item>
+        <item>	Post Oak	</item>
+        <item>	Pottawattami Plum	</item>
+        <item>	Poverty Pine	</item>
+        <item>	Prickle-cone Pine	</item>
+        <item>	Prickly Ash	</item>
+        <item>	Prickly Elder	</item>
+        <item>	Prickly Pine	</item>
+        <item>	Princess Pine	</item>
+        <item>	Prosopis Velutina	</item>
+        <item>	Prunus Americana	</item>
+        <item>	Prunus Emarginata	</item>
+        <item>	Prunus Serotina	</item>
+        <item>	Pseudotsuga Macrocarpa	</item>
+        <item>	Pseudotsuga Menziesii Var. Menziesii	</item>
+        <item>	Punk Oak	</item>
+        <item>	Pyrenees Pine	</item>
+        <item>	Quaking Aspen	</item>
+        <item>	Quercitron	</item>
+        <item>	Quercitron Oak	</item>
+        <item>	Quercus Alba	</item>
+        <item>	Quercus Arizonica	</item>
+        <item>	Quercus Bicolor	</item>
+        <item>	Quercus Chrysolepis	</item>
+        <item>	Quercus Coccinea	</item>
+        <item>	Quercus Douglasii	</item>
+        <item>	Quercus Ellipsoidalis	</item>
+        <item>	Quercus Emoryi	</item>
+        <item>	Quercus Falcata	</item>
+        <item>	Quercus Grisea	</item>
+        <item>	Quercus Incana	</item>
+        <item>	Quercus Laurifolia	</item>
+        <item>	Quercus Lobata	</item>
+        <item>	Quercus Lyrata	</item>
+        <item>	Quercus Macrocarpa	</item>
+        <item>	Quercus Marilandica	</item>
+        <item>	Quercus Michauxii	</item>
+        <item>	Quercus Muehlenbergii	</item>
+        <item>	Quercus Nigra	</item>
+        <item>	Quercus Oblongifolia	</item>
+        <item>	Quercus Palustris	</item>
+        <item>	Quercus Phellos	</item>
+        <item>	Quercus Prinus	</item>
+        <item>	Quercus Pungens	</item>
+        <item>	Quercus Rubra	</item>
+        <item>	Quercus Shumardii	</item>
+        <item>	Quercus Stellata	</item>
+        <item>	Quercus Velutina	</item>
+        <item>	Quercus Virginiana	</item>
+        <item>	Quercus Wislizenii	</item>
+        <item>	Radiata Pine	</item>
+        <item>	Red Alder	</item>
+        <item>	Red Bean	</item>
+        <item>	Red Beech	</item>
+        <item>	Red Birch	</item>
+        <item>	Red Cypress	</item>
+        <item>	Red Elm	</item>
+        <item>	Red Fir	</item>
+        <item>	Red Hickory	</item>
+        <item>	Red Maple	</item>
+        <item>	Red Mulberry	</item>
+        <item>	Red Oak	</item>
+        <item>	Red Pine	</item>
+        <item>	Red Plum	</item>
+        <item>	Red Spruce	</item>
+        <item>	Red Willow	</item>
+        <item>	Red-hots	</item>
+        <item>	Redbay	</item>
+        <item>	Redberry Juniper	</item>
+        <item>	Redbud	</item>
+        <item>	Redgum	</item>
+        <item>	Redwood	</item>
+        <item>	Rhus Typhina	</item>
+        <item>	Ridge Beech	</item>
+        <item>	Ridge White Oak	</item>
+        <item>	River Alder	</item>
+        <item>	River Birch	</item>
+        <item>	River Plum	</item>
+        <item>	River Sheoak	</item>
+        <item>	River Walnut	</item>
+        <item>	River-oak	</item>
+        <item>	Robinia Neomexicana	</item>
+        <item>	Robinia Pseudoacacia	</item>
+        <item>	Roble	</item>
+        <item>	Rock Cedar	</item>
+        <item>	Rock Chestnut Oak	</item>
+        <item>	Rock Maple	</item>
+        <item>	Rock Oak	</item>
+        <item>	Rocky Mountain Birch	</item>
+        <item>	Rocky Mountain Fir	</item>
+        <item>	Rose-fruited Juniper	</item>
+        <item>	Rough-bark Cypress	</item>
+        <item>	Roundwood	</item>
+        <item>	Rum Cherry	</item>
+        <item>	Runner Oak	</item>
+        <item>	Sabal Palmetto	</item>
+        <item>	Sabino	</item>
+        <item>	Salix Amygdaloides	</item>
+        <item>	Salix Bebbiana	</item>
+        <item>	Salix Glauca	</item>
+        <item>	Salix Gooddingii	</item>
+        <item>	Salix Lasiandra	</item>
+        <item>	Salix Lutea	</item>
+        <item>	Salix Nigra	</item>
+        <item>	Saloop	</item>
+        <item>	Sand Pine	</item>
+        <item>	Sand Post Oak	</item>
+        <item>	Sandhill Post Oak	</item>
+        <item>	Sandjack Oak	</item>
+        <item>	Sandpaper Oak	</item>
+        <item>	Santa Lucia Fir	</item>
+        <item>	Santa Rosa Island Torrey Pine	</item>
+        <item>	Sapgum	</item>
+        <item>	Sapindus Saponaria Var. Drummondii	</item>
+        <item>	Sargent Cypress	</item>
+        <item>	Sassafras	</item>
+        <item>	Sassafras Albidum	</item>
+        <item>	Satin-walnut	</item>
+        <item>	Savin	</item>
+        <item>	Scalybark Hickory	</item>
+        <item>	Scarlet Maple	</item>
+        <item>	Scarlet Oak	</item>
+        <item>	Schneck Oak	</item>
+        <item>	Scots Pine	</item>
+        <item>	Scrub Holly	</item>
+        <item>	Scrub Interior Live Oak	</item>
+        <item>	Scrub Live Oak	</item>
+        <item>	Scrub Oak	</item>
+        <item>	Scrub Pine	</item>
+        <item>	Scrub-bay	</item>
+        <item>	Scrubby Post Oak	</item>
+        <item>	Scythe-leaved Willow	</item>
+        <item>	Sequoia Sempervirens	</item>
+        <item>	Sequoiadendron Giganteum	</item>
+        <item>	Shadblow	</item>
+        <item>	Shadbush	</item>
+        <item>	Shagbark Hickory	</item>
+        <item>	Shasta Fir	</item>
+        <item>	Shasta Red Fir	</item>
+        <item>	She-balsam	</item>
+        <item>	She-oak	</item>
+        <item>	Shellbark Hickory	</item>
+        <item>	Sheoak	</item>
+        <item>	Shin Oak	</item>
+        <item>	Shinglewood	</item>
+        <item>	Shipmast Locust	</item>
+        <item>	Shore Pine	</item>
+        <item>	Shorebay	</item>
+        <item>	Shortleaf Pine	</item>
+        <item>	Shortleaf Yellow Pine	</item>
+        <item>	Shortstraw Pine	</item>
+        <item>	Shotbush	</item>
+        <item>	Shumard Oak	</item>
+        <item>	Shumard Red Oak	</item>
+        <item>	Shumards Red Oak	</item>
+        <item>	Sierra Alder	</item>
+        <item>	Sierra Live Oak	</item>
+        <item>	Sierra Lodgepole Pine	</item>
+        <item>	Sierra-Cascade Lodgepole Pine	</item>
+        <item>	Silkbay	</item>
+        <item>	Silver Birch	</item>
+        <item>	Silver Fir	</item>
+        <item>	Silver Maple	</item>
+        <item>	Silver Pine	</item>
+        <item>	Silver Spruce	</item>
+        <item>	Silvertip Fir	</item>
+        <item>	Simmon	</item>
+        <item>	Siskiyou Cypress	</item>
+        <item>	Sitka Alder	</item>
+        <item>	Sitka Cypress	</item>
+        <item>	Sitka Spruce	</item>
+        <item>	Skunk Spruce	</item>
+        <item>	Slash Pine	</item>
+        <item>	Slippery Elm	</item>
+        <item>	Small-fruited Mountain Ash	</item>
+        <item>	Small-seed White Ash	</item>
+        <item>	Smelling Stick	</item>
+        <item>	Smooth Bebb Willow	</item>
+        <item>	Smooth-bark Cypress	</item>
+        <item>	Smooth-bark Oak	</item>
+        <item>	Smoothbark Hickory	</item>
+        <item>	Smoothbark Oak	</item>
+        <item>	Soap Berry	</item>
+        <item>	Soapberry	</item>
+        <item>	Soft Elm	</item>
+        <item>	Soft Maple	</item>
+        <item>	Soft Pine	</item>
+        <item>	Soft-shelled Hickory	</item>
+        <item>	Soledad Pine	</item>
+        <item>	Sophora Secundiflora	</item>
+        <item>	Sorbus Americana	</item>
+        <item>	Sorrel-tree	</item>
+        <item>	Sourgum	</item>
+        <item>	Sourwood	</item>
+        <item>	South Florida Slash Pine	</item>
+        <item>	Southern Balsam Fir	</item>
+        <item>	Southern California Black Walnut	</item>
+        <item>	Southern California Walnut	</item>
+        <item>	Southern Cypress	</item>
+        <item>	Southern Fir	</item>
+        <item>	Southern Hackberry	</item>
+        <item>	Southern Magnolia	</item>
+        <item>	Southern Red Oak	</item>
+        <item>	Southern Sweetbay	</item>
+        <item>	Southern White-cedar	</item>
+        <item>	Southern Yellow Pine	</item>
+        <item>	Southwestern Black Willow	</item>
+        <item>	Southwestern Locust	</item>
+        <item>	Southwestern Peach Willow	</item>
+        <item>	Southwestern White Pine	</item>
+        <item>	Spanish Oak	</item>
+        <item>	Speckled Alder	</item>
+        <item>	Spice-tree	</item>
+        <item>	Spotted Oak	</item>
+        <item>	Spring Birch	</item>
+        <item>	Spruce Pine	</item>
+        <item>	Staghorn Sumac	</item>
+        <item>	Star-leaf Gum	</item>
+        <item>	Stave Oak	</item>
+        <item>	Stinking Cedar	</item>
+        <item>	Stinking Nutmeg	</item>
+        <item>	Stinking Yew	</item>
+        <item>	Striped Maple	</item>
+        <item>	Striped Oak	</item>
+        <item>	Subalpine Fir	</item>
+        <item>	Subalpine Larch	</item>
+        <item>	Sugar Hackberry	</item>
+        <item>	Sugar Maple	</item>
+        <item>	Sugar Pine	</item>
+        <item>	Sugarberry	</item>
+        <item>	Sugarplum	</item>
+        <item>	Swamp Birch	</item>
+        <item>	Swamp Blackgum	</item>
+        <item>	Swamp Chestnut Oak	</item>
+        <item>	Swamp Cypress	</item>
+        <item>	Swamp Hickory	</item>
+        <item>	Swamp Holly	</item>
+        <item>	Swamp Laurel Oak	</item>
+        <item>	Swamp Magnolia	</item>
+        <item>	Swamp Oak	</item>
+        <item>	Swamp Pine	</item>
+        <item>	Swamp Post Oak	</item>
+        <item>	Swamp Red Oak	</item>
+        <item>	Swamp Spanish Oak	</item>
+        <item>	Swamp Tupelo	</item>
+        <item>	Swamp White Oak	</item>
+        <item>	Swamp Willow	</item>
+        <item>	Swamp Willow Oak	</item>
+        <item>	Swamp-cedar	</item>
+        <item>	Swampbay	</item>
+        <item>	Sweet Bean Locust	</item>
+        <item>	Sweet Magnolia	</item>
+        <item>	Sweet Pecan	</item>
+        <item>	Sweet Pignut Hickory	</item>
+        <item>	Sweetbay	</item>
+        <item>	Sweetgum	</item>
+        <item>	Sycamore	</item>
+        <item>	Table Mountain Pine	</item>
+        <item>	Tag Alder	</item>
+        <item>	Tamarack	</item>
+        <item>	Tamarack Larch	</item>
+        <item>	Tamarack Pine	</item>
+        <item>	Tamarix Aphylla	</item>
+        <item>	Tan Oak	</item>
+        <item>	Tanbark Oak	</item>
+        <item>	Tanbark-oak	</item>
+        <item>	Tanoak	</item>
+        <item>	Tascate	</item>
+        <item>	Tasmanian Bluegum	</item>
+        <item>	Taxodium Distichum	</item>
+        <item>	Taxodium Mucronatum	</item>
+        <item>	Taxus Brevifolia	</item>
+        <item>	Taxus Floridana	</item>
+        <item>	Tecate Cypress	</item>
+        <item>	Texas Arbutus	</item>
+        <item>	Texas Black Walnut	</item>
+        <item>	Texas Cedar	</item>
+        <item>	Texas Madrone	</item>
+        <item>	Texas Madrono	</item>
+        <item>	Texas Mountain Laurel	</item>
+        <item>	Texas Oak	</item>
+        <item>	Texas Persimmon	</item>
+        <item>	Texas Red Oak	</item>
+        <item>	Texas Sugarberry	</item>
+        <item>	Texas Walnut	</item>
+        <item>	Texate	</item>
+        <item>	Thin-leaved Alder	</item>
+        <item>	Thinleaf Alder	</item>
+        <item>	Thuja Occidentalis	</item>
+        <item>	Thuja Plicata	</item>
+        <item>	Tideland Spruce	</item>
+        <item>	Tilia Americana	</item>
+        <item>	Timberline Larch	</item>
+        <item>	Toothache Tree	</item>
+        <item>	Torrey Pine	</item>
+        <item>	Torreya Californica	</item>
+        <item>	Torreya Taxifolia	</item>
+        <item>	Trembling Aspen	</item>
+        <item>	Tsuga Canadensis	</item>
+        <item>	Tsuga Caroliniana	</item>
+        <item>	Tsuga Heterophylla	</item>
+        <item>	Tsuga Mertensiana	</item>
+        <item>	Tulip-poplar	</item>
+        <item>	Tuliptree	</item>
+        <item>	Tupelo	</item>
+        <item>	Tupelo-gum	</item>
+        <item>	Ulmus Americana	</item>
+        <item>	Ulmus Rubra	</item>
+        <item>	Umbellularia Californica	</item>
+        <item>	Una De Gato	</item>
+        <item>	Upland Willow Oak	</item>
+        <item>	Valley Oak	</item>
+        <item>	Valley White Oak	</item>
+        <item>	Valley Willow	</item>
+        <item>	Vasey Shin Oak	</item>
+        <item>	Velvet Mesquite	</item>
+        <item>	Velvet Sumac	</item>
+        <item>	Vinegar Tree	</item>
+        <item>	Virginia Live Oak	</item>
+        <item>	Virginia Pine	</item>
+        <item>	Walnut	</item>
+        <item>	Walter Pine	</item>
+        <item>	Walters Pine	</item>
+        <item>	Washington Palm	</item>
+        <item>	Washingtonia Filifera	</item>
+        <item>	Washoe Pine	</item>
+        <item>	Water Birch	</item>
+        <item>	Water Elm	</item>
+        <item>	Water Oak	</item>
+        <item>	Water White Oak	</item>
+        <item>	Water-beech	</item>
+        <item>	Wavyleaf Alder	</item>
+        <item>	Weeping Oak	</item>
+        <item>	Weeping Spruce	</item>
+        <item>	West Coast Hemlock	</item>
+        <item>	West Texas Live Oak	</item>
+        <item>	West Virginia Spruce	</item>
+        <item>	Western Alder	</item>
+        <item>	Western Balsam Fir	</item>
+        <item>	Western Black Willow	</item>
+        <item>	Western Boxelder	</item>
+        <item>	Western Chinkapin	</item>
+        <item>	Western Hackberry	</item>
+        <item>	Western Hemlock	</item>
+        <item>	Western Hophornbeam	</item>
+        <item>	Western Red-cedar	</item>
+        <item>	Western Redcedar	</item>
+        <item>	Western Soapberry	</item>
+        <item>	Western Spruce	</item>
+        <item>	Western White Pine	</item>
+        <item>	Western White Spruce	</item>
+        <item>	Western Yellowpine	</item>
+        <item>	Western Yew	</item>
+        <item>	Weymouth Pine	</item>
+        <item>	Whiplash Willow	</item>
+        <item>	Whistlewood	</item>
+        <item>	Whistling Pine	</item>
+        <item>	White Alder	</item>
+        <item>	White Ash	</item>
+        <item>	White Balsam	</item>
+        <item>	White Beech	</item>
+        <item>	White Birch	</item>
+        <item>	White Cedar	</item>
+        <item>	White Cypress	</item>
+        <item>	White Elm	</item>
+        <item>	White Fir	</item>
+        <item>	White Gum	</item>
+        <item>	White Hickory	</item>
+        <item>	White Locust	</item>
+        <item>	White Myrtle	</item>
+        <item>	White Oak	</item>
+        <item>	White Pine	</item>
+        <item>	White Sassafras	</item>
+        <item>	White Spruce	</item>
+        <item>	White Walnut	</item>
+        <item>	White Willow	</item>
+        <item>	White-bay	</item>
+        <item>	White-cedar	</item>
+        <item>	White-laurel	</item>
+        <item>	Whiteheart Hickory	</item>
+        <item>	Wild Black Cherry	</item>
+        <item>	Wild Cherry	</item>
+        <item>	Wild China-tree	</item>
+        <item>	Wild Chinaberry	</item>
+        <item>	Wild Chinatree	</item>
+        <item>	Wild Plum	</item>
+        <item>	Willow Oak	</item>
+        <item>	Winterberry	</item>
+        <item>	Wire Birch	</item>
+        <item>	Witch-hazel	</item>
+        <item>	Wolf Hophornbeam	</item>
+        <item>	Woolly Hophornbeam	</item>
+        <item>	Woolly Larch	</item>
+        <item>	Wright Willow	</item>
+        <item>	Yellow Birch	</item>
+        <item>	Yellow Butt Oak	</item>
+        <item>	Yellow Chestnut Oak	</item>
+        <item>	Yellow Cypress	</item>
+        <item>	Yellow Gum	</item>
+        <item>	Yellow Locust	</item>
+        <item>	Yellow Myrtle	</item>
+        <item>	Yellow Oak	</item>
+        <item>	Yellow Pine	</item>
+        <item>	Yellow Plum	</item>
+        <item>	Yellow Slash Pine	</item>
+        <item>	Yellow Spruce	</item>
+        <item>	Yellow Willow	</item>
+        <item>	Yellow Wood	</item>
+        <item>	Yellow-bark Oak	</item>
+        <item>	Yellow-cedar	</item>
+        <item>	Yellow-poplar	</item>
+        <item>	Yellowbark Oak	</item>
+        <item>	Yew	</item>
+        <item>	Yew Brush	</item>
+        <item>	Yucu-ndatura	</item>
+    </string-array>
 </resources>
