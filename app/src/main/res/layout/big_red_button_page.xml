@@ -43,19 +43,19 @@
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageButton
             android:id="@+id/bigredbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bigredbutton"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
             android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:background="?android:attr/colorBackground"
-            />
+            android:clickable="true"
+            android:src="@drawable/bigredbutton" />
     </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView

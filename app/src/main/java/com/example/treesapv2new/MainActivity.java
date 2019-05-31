@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -550,16 +551,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.container);
         if(selectedDisplayMethod!=null) {
             if (selectedDisplayMethod.getPopupWindow() != null) {
                 selectedDisplayMethod.dismiss();
                 return;
             }
         }
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
             final AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
             a_builder.setMessage("").setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -579,7 +581,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alert = a_builder.create();
             alert.setTitle("Are you sure you want to exit?");
             alert.show();
-        }
+//        }
     }
 
     String mCurrentPhotoPath;

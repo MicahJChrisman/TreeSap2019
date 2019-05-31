@@ -176,7 +176,7 @@ public class ExtendedCoHDataSource extends DataSource {
             Double lat = new Double(closestRecord.get("y_coord"));
             Double longi = new Double(closestRecord.get("x_coord"));
             tree.setCommonName(closestRecord.get("species_name"));
-//            tree.setScientificName(closestRecord.get("Scientific"));
+            tree.setScientificName(closestRecord.get("Scientific"));
             tree.setLocation(new TreeLocation(lat, longi));
             tree.setID(closestRecord.get(Tree.TREE_ID));
             tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
@@ -194,6 +194,10 @@ public class ExtendedCoHDataSource extends DataSource {
     public void patchData(Tree tree){
         if (MainActivity.banana.getCommonName() == (null)) {
             MainActivity.banana.setCommonName(tree.getCommonName());
+        }
+
+        if (MainActivity.banana.getScientificName() == (null)) {
+            MainActivity.banana.setScientificName(tree.getScientificName());
         }
         if (MainActivity.banana.getLocation() == (null)) {
             MainActivity.banana.setLocation(tree.getLocation());
