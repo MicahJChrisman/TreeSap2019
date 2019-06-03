@@ -38,6 +38,18 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
                 image.setImageBitmap(bmp);
             }
+            byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
+            if(byteArrayLeaf != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
+                image.setImageBitmap(bmp);
+            }
+            byte[] byteArrayFull = extras.getByteArray("full_pic_byte_array");
+            if(byteArrayFull != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
+                image.setImageBitmap(bmp);
+            }
         }
 
         Button sumbitButton = (Button) findViewById(R.id.add_tree_submit);
