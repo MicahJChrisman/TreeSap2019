@@ -5,6 +5,7 @@ import android.app.Instrumentation;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.text.Layout;
+import android.transition.Visibility;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,12 +75,9 @@ public class Add_Tree_ActivityTest {
     @Test
     public void getLocationPressed(){
         onView(withId(R.id.get_location_button)).perform(click());
-        assertEquals(2, mActivity.findViewById(R.id.lat_layout).getVisibility());
-        //onView(withId(R.id.lat_layout)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        assertEquals(2, mActivity.findViewById(R.id.long_layout).getVisibility());
-       // onView(withId(R.id.long_layout)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
-        assertEquals(2, mActivity.findViewById(R.id.next_add_tree).getVisibility());
-        //onView(withId(R.id.next_add_tree)).check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        assertEquals(0, mActivity.findViewById(R.id.lat_layout).getVisibility());
+        assertEquals(0, mActivity.findViewById(R.id.long_layout).getVisibility());
+        assertEquals(0, mActivity.findViewById(R.id.next_add_tree).getVisibility());
         //onView(withId(R.id.lat_putter)).check(matches(withText("-?\\d{1,2}(\\.\\d+)?")));
         //onView(withId(R.id.long_putter)).check(matches(withText("-?\\d+(\\.\\d+)?")));
     }

@@ -33,15 +33,15 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/next_add_tree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Next>"
-        android:id="@+id/next_add_tree"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
