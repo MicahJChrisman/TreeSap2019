@@ -2,6 +2,8 @@ package com.example.treesapv2new;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Tree_Other_Info_Activity extends AppCompatActivity {
@@ -28,6 +31,13 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             kevin.setText(lat_value);
             TextView carl = (TextView) findViewById(R.id.long_thing);
             carl.setText(long_value);
+
+            byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+            if(byteArray != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
+                image.setImageBitmap(bmp);
+            }
         }
 
         Button sumbitButton = (Button) findViewById(R.id.add_tree_submit);
