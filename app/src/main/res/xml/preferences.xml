@@ -7,6 +7,7 @@
             android:key="@string/distanceFromTreePref"
             android:summary="Change max distance away to get tree results."
             android:numeric="decimal"
+            android:hint="10"
             android:title="Maximum Distance From Tree" />
         <MultiSelectListPreference
             android:dialogTitle="Choose databases"
