@@ -20,6 +20,8 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -54,7 +56,7 @@ public class Coordinates_View_ActivityTest {
         ImageButton addButton = coordActivity.findViewById(R.id.add_tree_button_0);
         assertNotNull(addButton);
         ImageButton settingsButton = coordActivity.findViewById(R.id.setting_button);
-        assertNotNull(addButton);
+        assertNotNull(settingsButton);
         TextView instructions = coordActivity.findViewById(R.id.coordinates_instructions);
         assertNotNull(instructions);
         TextView title = coordActivity.findViewById(R.id.coordinates_header);
@@ -140,6 +142,16 @@ public class Coordinates_View_ActivityTest {
         assertNotNull(MainActivity.banana);
         Activity cerealBoxActivity = getInstrumentation().waitForMonitorWithTimeout(cerealBoxMonitor, 5000);
         assertNotNull(cerealBoxActivity);
+    }
+
+    @Test
+    public void onFlings(){
+        onView(isRoot()).perform(swipeRight());
+        Activity brbActivity = getInstrumentation().waitForMonitorWithTimeout(monitor1, 5000);
+        assertNotNull(brbActivity);
+        onView(isRoot()).perform(swipeLeft());
+        Activity mapActivity = getInstrumentation().waitForMonitorWithTimeout(monitor3, 5000);
+        assertNotNull(mapActivity);
     }
 
     @Test
