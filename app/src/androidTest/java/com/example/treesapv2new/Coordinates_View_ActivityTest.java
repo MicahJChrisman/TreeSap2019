@@ -154,7 +154,7 @@ public class Coordinates_View_ActivityTest {
         assertNotNull(mapActivity);
     }
 
-    @Test
-    public void onTouchEvent() {
-    }
+//    @Test
+//    public void onTouchEvent() {
+//    }
 }
