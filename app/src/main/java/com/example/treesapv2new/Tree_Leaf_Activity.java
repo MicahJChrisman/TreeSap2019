@@ -87,6 +87,13 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentA = new Intent(Tree_Leaf_Activity.this, Tree_Pic_Activity.class);
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String lat_value = extras.getString("lat_value");
+                String long_value = extras.getString("long_value");
+                intentA.putExtra("lat_value", lat_value);
+                intentA.putExtra("long_value", long_value);
+            }
             startActivity(intentA);
         }
     }}

@@ -146,6 +146,10 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         @Override
         public void onClick(View v) {
             Intent intentA = new Intent(Add_Tree_Activity.this, Tree_Bark_Activity.class);
+            TextView latString = (TextView) findViewById(R.id.lat_putter);
+            TextView longString = (TextView) findViewById(R.id.long_putter);
+            intentA.putExtra("lat_value", latString.getText().toString());
+            intentA.putExtra("long_value", longString.getText().toString());
             startActivity(intentA);
         }
     }

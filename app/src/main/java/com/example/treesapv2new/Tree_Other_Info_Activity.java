@@ -14,14 +14,21 @@ import android.widget.TextView;
 
 public class Tree_Other_Info_Activity extends AppCompatActivity {
 
-    private static final String[] treeOptions = new String[]{
-        "Oak","Maple","Mulberry"
-    };
 
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String lat_value = extras.getString("lat_value");
+            String long_value = extras.getString("long_value");
+            TextView kevin = (TextView) findViewById(R.id.lat_thing);
+            kevin.setText(lat_value);
+            TextView carl = (TextView) findViewById(R.id.long_thing);
+            carl.setText(long_value);
+        }
 
         Button sumbitButton = (Button) findViewById(R.id.add_tree_submit);
         sumbitButton.setOnClickListener(new SubmitEvent());

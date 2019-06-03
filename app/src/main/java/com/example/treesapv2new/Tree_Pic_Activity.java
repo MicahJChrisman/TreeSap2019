@@ -15,6 +15,9 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.camera_full_tree);
 
+
+
+
         Button b = (Button) findViewById(R.id.next_pic_full);
         b.setOnClickListener(new NextEvent());
 
@@ -87,6 +90,13 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intentA = new Intent(Tree_Pic_Activity.this, Tree_Other_Info_Activity.class);
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                String lat_value = extras.getString("lat_value");
+                String long_value = extras.getString("long_value");
+                intentA.putExtra("lat_value", lat_value);
+                intentA.putExtra("long_value", long_value);
+            }
             startActivity(intentA);
         }
     }}
