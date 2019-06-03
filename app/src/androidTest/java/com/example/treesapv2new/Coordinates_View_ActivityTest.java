@@ -19,7 +19,9 @@ import org.junit.Test;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
 
@@ -122,7 +124,7 @@ public class Coordinates_View_ActivityTest {
         ImageButton addTreeBtn = coordActivity.findViewById(R.id.add_tree_button_0);
         assertNotNull(addTreeBtn);
         //settingsBtn.performClick();
-        onView(withId(R.id.add_tree_button_1)).perform(click());
+        onView(withId(R.id.add_tree_button_0)).perform(click());
         Activity addTreeActivity = getInstrumentation().waitForMonitorWithTimeout(addTreeMonitor, 5000);
         assertNotNull(addTreeActivity);
     }
@@ -133,6 +135,7 @@ public class Coordinates_View_ActivityTest {
         //Button submit = coordActivity.findViewById(R.id.sub_coord_but);
         onView(withId(R.id.lat_edit)).perform(typeText("42.78773499"));
         onView(withId(R.id.long_edit)).perform(typeText("-86.10578919"));
+        onView(isRoot()).perform(closeSoftKeyboard());
         onView(withId(R.id.sub_coord_but)).perform(click());
         assertNotNull(MainActivity.banana);
         Activity cerealBoxActivity = getInstrumentation().waitForMonitorWithTimeout(cerealBoxMonitor, 5000);
