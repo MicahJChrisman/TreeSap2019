@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -20,6 +21,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +57,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.example.treesapv2new.Pie_Chart_Activity.CARBON_LBS;
 import static com.example.treesapv2new.Pie_Chart_Activity.CO2;
@@ -93,8 +97,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
 
         myDialog = new Dialog(this);
-
-        display(MainActivity.banana);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        if(sources.size()>0) {
+            display(MainActivity.banana);
+        }else{
+            finish();
+            Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
+        }
 
 
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
