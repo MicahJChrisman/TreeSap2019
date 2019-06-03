@@ -69,7 +69,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private PieData data;
     private double total;
     private boolean hasValues = false;
-    private TextView noData;
     private Tree tree;
 
 
@@ -171,10 +170,11 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             float stormWater;
             if (hasValues) {
                 stormWater = Float.valueOf(allInfo.split(",")[STORM_WATER]);
+                entries.add(new PieEntry(stormWater, "Storm Water"));
             } else {
                 stormWater = 5f;
             }
-            entries.add(new PieEntry(stormWater, "Storm Water"));
+            //entries.add(new PieEntry(stormWater, "Storm Water"));
             float electricity;
             //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
             //else{electricity = 2.54f;}
@@ -182,19 +182,24 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             final float pollution;
             if (hasValues) {
                 pollution = Float.valueOf(allInfo.split(",")[POLLUTION]);
+                entries.add(new PieEntry(pollution, "Air Quality"));
+
             } else {
                 pollution = 5;
             }
-            entries.add(new PieEntry(pollution, "Air Quality"));
+//            entries.add(new PieEntry(pollution, "Air Quality"));
             //entries.add(new PieEntry(1.23f, "Property Value"));
             //entries.add(new PieEntry(0.45f, "Natural Gas"));
             float co2;
             if (hasValues) {
                 co2 = Float.valueOf(allInfo.split(",")[CO2]);
+                entries.add(new PieEntry(co2, "CO2"));
+
             } else {
                 co2 = 5f;
             }
-            entries.add(new PieEntry(co2, "CO2"));
+//            entries.add(new PieEntry(co2, "CO2"));
+
         }else{
             float stormWater;
             if (hasValues) {
@@ -271,11 +276,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
         setContentView(customView);
         gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
-//        if(!hasValues){
-//            pieChart.setVisibility(View.GONE);
-//            noData.setVisibility(View.VISIBLE);
-//            noData.setText("There is no data to display on this "+ commonName);
-//        }
+        if(!hasValues){
+            pieChart.setVisibility(View.GONE);
+            TextView noData = (TextView) findViewById(R.id.no_data_1);
+            noData.setVisibility(View.VISIBLE);
+            noData.setText("There is no data to display on this "+ commonName);
+        }
         //customView/setContentView();
 
 
