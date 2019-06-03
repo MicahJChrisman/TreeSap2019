@@ -58,7 +58,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#FFF"
-        android:src="@drawable/add"
+        android:src="@drawable/icons8_plus_math_30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +73,7 @@
         <!--android:layout_marginStart="8dp"-->
         <!--android:layout_marginTop="8dp"-->
         <!--android:background="?android:attr/colorBackground"-->
-        <!--android:src="@drawable/add"-->
+        <!--android:src="@drawable/icons8-plus-math-30"-->
         <!--app:layout_constraintStart_toStartOf="parent"-->
         <!--app:layout_constraintTop_toTopOf="parent" />-->
 
