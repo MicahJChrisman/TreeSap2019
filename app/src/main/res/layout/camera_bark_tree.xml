@@ -17,6 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
     <TextView
         android:id="@+id/bark_pic_header"
         android:layout_width="wrap_content"
@@ -63,23 +65,36 @@
             android:src="@drawable/camera_logo"
             android:scaleType="centerCrop"
             android:maxWidth="100dp"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
             android:background="@drawable/button_style_black"
+            android:layout_below="@+id/bark_text"
+            android:layout_marginTop="25dp"
             />
 
         <TextView
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/add_bark_pic"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"
             android:text="Take a picture of the tree's bark."
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
+            android:id="@+id/bark_text"/>
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:id="@+id/camera_appear"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_below="@+id/add_bark_pic"
+            android:layout_marginTop="10dp"/>
+
     </RelativeLayout>
 
 

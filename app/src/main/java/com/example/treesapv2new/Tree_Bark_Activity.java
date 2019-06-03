@@ -2,16 +2,22 @@ package com.example.treesapv2new;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Tree_Bark_Activity extends AppCompatActivity {
+    private ImageView mimagesView;
+    private static final int REQUSET_IMGAGE_CAPTURE = 101;
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.camera_bark_tree);
@@ -56,7 +62,21 @@ public class Tree_Bark_Activity extends AppCompatActivity {
     private class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
+            mimagesView = findViewById(R.id.camera_appear);
+            findViewById(R.id.camera_appear).setVisibility(View.VISIBLE);
             findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
+                startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
+            }
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mimagesView.setImageBitmap(imageBitmap);
         }
     }
 
