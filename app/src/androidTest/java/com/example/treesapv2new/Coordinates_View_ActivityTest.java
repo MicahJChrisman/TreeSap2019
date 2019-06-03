@@ -7,6 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,58 +19,57 @@ import org.junit.Test;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-public class Big_Red_ButtonTest {
+public class Coordinates_View_ActivityTest {
     @Rule
-    public ActivityTestRule<Big_Red_Button> mActivityTestRule = new ActivityTestRule<Big_Red_Button>(Big_Red_Button.class);
+    public ActivityTestRule<Coordinates_View_Activity> mActivityTestRule = new ActivityTestRule<Coordinates_View_Activity>(Coordinates_View_Activity.class);
 
-    private Big_Red_Button brbActivity;
+    private Coordinates_View_Activity coordActivity;
 
     Instrumentation.ActivityMonitor monitor0 = getInstrumentation().addMonitor(MainActivity.class.getName(), null, false);
-    Instrumentation.ActivityMonitor monitor2 = getInstrumentation().addMonitor(Coordinates_View_Activity.class.getName(), null, false);
+    Instrumentation.ActivityMonitor monitor1 = getInstrumentation().addMonitor(Big_Red_Button.class.getName(), null, false);
     Instrumentation.ActivityMonitor monitor3 = getInstrumentation().addMonitor(Maps_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor monitor4 = getInstrumentation().addMonitor(QR_Code_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor settingsMonitor = getInstrumentation().addMonitor(SettingsActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor addTreeMonitor = getInstrumentation().addMonitor(Add_Tree_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor cerealBoxMonitor = getInstrumentation().addMonitor(Cereal_Box_Activity.class.getName(), null, false);
 
-
     @Before
     public void setUp() throws Exception {
-        brbActivity = mActivityTestRule.getActivity();
+        coordActivity = mActivityTestRule.getActivity();
     }
 
     @After
     public void tearDown() throws Exception {
-        brbActivity = null;
+        coordActivity = null;
     }
 
-    /**
-     * Fling test is not fixed
-     */
     @Test
     public void onCreate() {
-        ImageButton addButton = brbActivity.findViewById(R.id.add_tree_button_1);
+        ImageButton addButton = coordActivity.findViewById(R.id.add_tree_button_0);
         assertNotNull(addButton);
-        ImageButton settingsButton = brbActivity.findViewById(R.id.setting_button_1);
+        ImageButton settingsButton = coordActivity.findViewById(R.id.setting_button);
         assertNotNull(addButton);
-        View brb = brbActivity.findViewById(R.id.bigredbutton);
-        assertNotNull(brb);
-        TextView title = brbActivity.findViewById(R.id.button_button);
+        TextView instructions = coordActivity.findViewById(R.id.coordinates_instructions);
+        assertNotNull(instructions);
+        TextView title = coordActivity.findViewById(R.id.coordinates_header);
         assertNotNull(title);
-    }
-
-    @Test
+        TextView latText = coordActivity.findViewById(R.id.latitude_coord);
+        assertNotNull(latText);
+        TextView longi = coordActivity.findViewById(R.id.longitude_coord);
+        assertNotNull(longi);
+        EditText latInput = coordActivity.findViewById(R.id.lat_edit);
+        assertNotNull(latInput);
+        TextView longInput = coordActivity.findViewById(R.id.long_edit);
+        assertNotNull(longInput);
+        Button submit = coordActivity.findViewById(R.id.sub_coord_but);
+        assertNotNull(submit);
+    }@Test
     public void testGoToMainFromNavigation(){
-        BottomNavigationView navView = brbActivity.findViewById(R.id.nav_view);
+        BottomNavigationView navView = coordActivity.findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
         assertNotNull(menu.getItem(0));
         onView(withId(R.id.navigation_home)).perform(click());
@@ -78,18 +78,18 @@ public class Big_Red_ButtonTest {
     }
 
     @Test
-    public void testGoToCoordinateActivityFromNavigation(){
-        BottomNavigationView navView = brbActivity.findViewById(R.id.nav_view);
+    public void testGoToBrbActivityFromNavigation(){
+        BottomNavigationView navView = coordActivity.findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
-        assertNotNull(menu.getItem(2));
-        onView(withId(R.id.navigation_coordinates)).perform(click());
-        Activity coordinateActivity = getInstrumentation().waitForMonitorWithTimeout(monitor2, 5000);
+        assertNotNull(menu.getItem(1));
+        onView(withId(R.id.navigation_brb)).perform(click());
+        Activity coordinateActivity = getInstrumentation().waitForMonitorWithTimeout(monitor1, 5000);
         assertNotNull(coordinateActivity);
     }
 
     @Test
     public void testGoToMapFromNavigation(){
-        BottomNavigationView navView = brbActivity.findViewById(R.id.nav_view);
+        BottomNavigationView navView = coordActivity.findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
         assertNotNull(menu.getItem(3));
         onView(withId(R.id.navigation_map)).perform(click());
@@ -99,7 +99,7 @@ public class Big_Red_ButtonTest {
 
     @Test
     public void testGoToQrScannerFromNavigation(){
-        BottomNavigationView navView = brbActivity.findViewById(R.id.nav_view);
+        BottomNavigationView navView = coordActivity.findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
         assertNotNull(menu.getItem(4));
         onView(withId(R.id.navigation_qr)).perform(click());
@@ -109,17 +109,17 @@ public class Big_Red_ButtonTest {
 
     @Test
     public void testGoToSettings(){
-        ImageButton settingsBtn = brbActivity.findViewById(R.id.setting_button_1);
+        ImageButton settingsBtn = coordActivity.findViewById(R.id.setting_button);
         assertNotNull(settingsBtn);
         //settingsBtn.performClick();
-        onView(withId(R.id.setting_button_1)).perform(click());
+        onView(withId(R.id.setting_button)).perform(click());
         Activity settingsActivity = getInstrumentation().waitForMonitorWithTimeout(settingsMonitor, 5000);
         assertNotNull(settingsActivity);
     }
 
     @Test
     public void testGoToAddTree(){
-        ImageButton addTreeBtn = brbActivity.findViewById(R.id.add_tree_button_1);
+        ImageButton addTreeBtn = coordActivity.findViewById(R.id.add_tree_button_0);
         assertNotNull(addTreeBtn);
         //settingsBtn.performClick();
         onView(withId(R.id.add_tree_button_1)).perform(click());
@@ -127,51 +127,19 @@ public class Big_Red_ButtonTest {
         assertNotNull(addTreeActivity);
     }
 
-//    @Test
-//    public void testFlings(){
-//        Object testView = onView(isRoot());
-//        onView(allOf(isRoot(), not(isClickable()))).perform(swipeRight());
-//        //onView(withId(R.id.relativeLayout)).perform(swipeRight());
-//        Activity mainActivity = getInstrumentation().waitForMonitorWithTimeout(monitor0, 5000);
-//        assertNotNull(mainActivity);
-//
-//        onView(isRoot()).perform(swipeLeft());
-//        Activity coordinateActivity = getInstrumentation().waitForMonitorWithTimeout(monitor2, 5000);
-//        assertNotNull(coordinateActivity);
-//    }
 
     @Test
-    public void onBrbPressed(){
-        ImageButton brb = brbActivity.findViewById(R.id.bigredbutton);
-        onView(withId(R.id.bigredbutton)).perform(click());
+    public void onSubmitPressed(){
+        //Button submit = coordActivity.findViewById(R.id.sub_coord_but);
+        onView(withId(R.id.lat_edit)).perform(typeText("42.78773499"));
+        onView(withId(R.id.long_edit)).perform(typeText("-86.10578919"));
+        onView(withId(R.id.sub_coord_but)).perform(click());
         assertNotNull(MainActivity.banana);
         Activity cerealBoxActivity = getInstrumentation().waitForMonitorWithTimeout(cerealBoxMonitor, 5000);
         assertNotNull(cerealBoxActivity);
     }
 
-
-//    @Test
-//    public void getLocation() {
-//
-//    }
-//
-//    @Test
-//    public void onLocationChanged() {
-//    }
-//
-//    @Test
-//    public void onStatusChanged() {
-//    }
-//
-//    @Test
-//    public void onProviderEnabled() {
-//    }
-//
-//    @Test
-//    public void onProviderDisabled() {
-//    }
-//
-//    @Test
-//    public void onTouchEvent() {
-//    }
+    @Test
+    public void onTouchEvent() {
+    }
 }
