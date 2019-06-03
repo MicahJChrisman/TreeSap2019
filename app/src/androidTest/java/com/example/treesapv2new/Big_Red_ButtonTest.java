@@ -60,7 +60,7 @@ public class Big_Red_ButtonTest {
         ImageButton addButton = brbActivity.findViewById(R.id.add_tree_button_1);
         assertNotNull(addButton);
         ImageButton settingsButton = brbActivity.findViewById(R.id.setting_button_1);
-        assertNotNull(addButton);
+        assertNotNull(settingsButton);
         View brb = brbActivity.findViewById(R.id.bigredbutton);
         assertNotNull(brb);
         TextView title = brbActivity.findViewById(R.id.button_button);
