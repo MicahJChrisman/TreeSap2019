@@ -204,15 +204,20 @@ public class MainActivity extends AppCompatActivity {
         //sharedPreferences = getSharedPreferences("com.example.treesapv2new", MODE_PRIVATE);
         //checkFirstRun();
 
+
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        SharedPreferences.Editor editor = prefs.edit();
-        HashSet<String> dbs = new HashSet<String>();
-        dbs.add("HopeCollegeDataSource");
-        dbs.add("CityOfHollandDataSource");
-        dbs.add("ExtendedCoHDataSource");
-        dbs.add("ITreeDataSource");
-        editor.putStringSet("databasesUsedSelector", dbs);
-        editor.apply();
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        if(sources.size()==0) {
+            SharedPreferences.Editor editor = prefs.edit();
+            HashSet<String> dbs = new HashSet<String>();
+            dbs.add("HopeCollegeDataSource");
+            dbs.add("CityOfHollandDataSource");
+            dbs.add("ExtendedCoHDataSource");
+            dbs.add("ITreeDataSource");
+            editor.putStringSet("databasesUsedSelector", dbs);
+            editor.apply();
+        }
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 //        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
