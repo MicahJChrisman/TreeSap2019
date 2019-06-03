@@ -79,6 +79,13 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     Intent intentA = new Intent(Tree_Pic_Activity.this, Tree_Other_Info_Activity.class);
+                    Bundle extras = getIntent().getExtras();
+                    if (extras != null) {
+                        String lat_value = extras.getString("lat_value");
+                        String long_value = extras.getString("long_value");
+                        intentA.putExtra("lat_value", lat_value);
+                        intentA.putExtra("long_value", long_value);
+                    }
                     startActivity(intentA);
                 }
             });
@@ -94,6 +101,8 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             if (extras != null) {
                 String lat_value = extras.getString("lat_value");
                 String long_value = extras.getString("long_value");
+                byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                intentA.putExtra("bark_pic_byte_array", byteArray);
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
             }

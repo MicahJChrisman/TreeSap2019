@@ -14,9 +14,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
+
 public class Tree_Bark_Activity extends AppCompatActivity {
     private ImageView mimagesView;
     private static final int REQUSET_IMGAGE_CAPTURE = 101;
+    private byte[] byteArray;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -78,6 +81,9 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            byteArray = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
         }
     }
@@ -100,6 +106,13 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     Intent intentA = new Intent(Tree_Bark_Activity.this, Tree_Leaf_Activity.class);
+                    Bundle extras = getIntent().getExtras();
+                    if (extras != null) {
+                        String lat_value = extras.getString("lat_value");
+                        String long_value = extras.getString("long_value");
+                        intentA.putExtra("lat_value", lat_value);
+                        intentA.putExtra("long_value", long_value);
+                    }
                     startActivity(intentA);
                 }
             });
@@ -117,6 +130,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 String long_value = extras.getString("long_value");
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
+                intentA.putExtra("bark_pic_byte_array", byteArray);
             }
             startActivity(intentA);
         }
