@@ -29,27 +29,32 @@
         android:textSize="30dp" />
 
 
-    <EditText
-        android:id="@+id/add_notes_box_1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Add Note"
-        android:textColor="@color/white"
-        android:textColorHint="@color/appToolbarBackground"
-        android:inputType="text"/>
+        android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/add_notes_box_1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_vertical"
+            android:hint="Add Note"
+            android:textColor="@color/white"
+            android:textColorHint="@color/appToolbarBackground"
+            android:inputType="text"/>
 
-    <Button
-        android:id="@+id/add_notes_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_marginTop="25dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_style"
-        android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/add_notes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:background="@drawable/button_style"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/previousNotesText"
@@ -63,16 +68,56 @@
         android:paddingTop="50dp"
         android:textSize="24sp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="Take a picture of this tree: "
+            android:textSize="24dp"
+            android:textColor="#FFF"
+            android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+            android:id="@+id/user_add_tree_pic"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/camera_logo"
+            android:scaleType="centerCrop"
+            android:maxWidth="100dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_style"
+            android:backgroundTint="@color/appBackground"
+            android:backgroundTintMode="add" />
+
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/noPreviousNotesText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
+        android:paddingTop="50dp"
         android:text="There are no previous notes about this tree."
         android:textColor="@color/white"
-        android:paddingTop="50dp"
         android:textSize="24sp" />
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/user_add_tree_pic_appear"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
+
 
 </LinearLayout>
 

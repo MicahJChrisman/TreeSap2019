@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +52,7 @@ import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -74,6 +77,10 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
     String sentString;
     Dialog myDialog;
+    private static final int REQUSET_IMGAGE_CAPTURE = 101;
+    private byte[] byteArray;
+    ImageView picAppear;
+
 
 //    public Cereal_Box_Activity(String sentString){
 //        this.sentString = sentString;
@@ -752,9 +759,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         TextView txtclose;
         Button buttonSubmit;
+        ImageButton imageButton;
         myDialog.setContentView(R.layout.add_notes_display);
+        imageButton = (ImageButton) myDialog.findViewById(R.id.user_add_tree_pic);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        imageButton.setOnClickListener(new addImageEvent());
+        //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
+//        button.setOnClickListener(new AddNotesEvent());
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -769,5 +781,37 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+    }
+
+    private class addImageEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            picAppear = findViewById(R.id.user_add_tree_pic_appear);
+            //findViewById(R.id.user_add_tree_pic_appear).setVisibility(View.VISIBLE);
+            //findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
+                startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
+            }
+        }
+    }
+
+    public static Bitmap bmp;
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            byteArray = stream.toByteArray();
+         //   picAppear.setImageBitmap(imageBitmap);
+
+
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_cereal);
+            //image.setImageBitmap(bmp);
+
+        }
     }
 }
