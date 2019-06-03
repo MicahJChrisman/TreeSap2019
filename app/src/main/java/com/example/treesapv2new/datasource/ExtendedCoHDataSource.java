@@ -176,7 +176,7 @@ public class ExtendedCoHDataSource extends DataSource {
             Double lat = new Double(closestRecord.get("y_coord"));
             Double longi = new Double(closestRecord.get("x_coord"));
             tree.setCommonName(closestRecord.get("species_name"));
-            tree.setScientificName(closestRecord.get("Scientific"));
+            //tree.setScientificName(closestRecord.get("Scientific"));
             tree.setLocation(new TreeLocation(lat, longi));
             tree.setID(closestRecord.get(Tree.TREE_ID));
             tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
