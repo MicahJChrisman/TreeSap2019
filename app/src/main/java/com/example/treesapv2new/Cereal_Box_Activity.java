@@ -19,10 +19,12 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
@@ -807,10 +809,10 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             byteArray = stream.toByteArray();
          //   picAppear.setImageBitmap(imageBitmap);
 
-
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_cereal);
             //image.setImageBitmap(bmp);
+            Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
 
         }
     }
