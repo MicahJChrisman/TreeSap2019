@@ -3,6 +3,7 @@ package com.example.treesapv2new;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.design.widget.BottomNavigationView;
+import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.text.Layout;
 import android.transition.Scene;
@@ -24,9 +25,12 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParentIndex;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.*;
 
@@ -141,12 +145,15 @@ public class MainActivityTest {
         assertNotNull(brbActivity);
     }
 
-//    @Test
-//    public void testBackButton(){
-//        pressBack();
-//        Scene scene = mActivity.getContentScene();
-//        onView(isRoot()).check()
-//    }
+    @Test
+    public void testBackButton(){
+        pressBack();
+        onView(withText("Cancel")).inRoot(RootMatchers.isDialog()).perform(click());
+        assertNotNull(mActivity.getContentScene());
+        pressBack();
+        onView(withText("Yes")).inRoot(RootMatchers.isDialog()).perform(click());
+        assertNull(mActivity.getContentScene());
+    }
 
 
 
