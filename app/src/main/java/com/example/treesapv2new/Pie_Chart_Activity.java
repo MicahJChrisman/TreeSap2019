@@ -217,7 +217,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 energy = 5f;
             }
-            if(energy!=0) {
+            if(energy>0) {
                 entries.add(new PieEntry(energy, "Energy"));
             }
 
@@ -227,7 +227,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 pollution = 5;
             }
-            if(energy!=0) {
+            if(pollution!=0) {
                 entries.add(new PieEntry(pollution, "Air Quality"));
             }
 
@@ -237,7 +237,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 co2 = 5f;
             }
-            if(energy!=0) {
+            if(co2!=0) {
                 entries.add(new PieEntry(co2, "CO2"));
             }
         }
