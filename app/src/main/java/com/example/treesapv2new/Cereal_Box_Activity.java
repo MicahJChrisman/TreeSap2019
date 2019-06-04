@@ -30,6 +30,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,8 +46,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.control.Transform;
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.display.AddNotesDisplay;
 import com.example.treesapv2new.display.DisplayMethod;
@@ -109,17 +113,42 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         if(sources.size()>0) {
+            patchTreeData();
             display(MainActivity.banana);
         }else{
             finish();
             Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
         }
-
+        patchTreeData();
 
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
 //        button.setOnClickListener(new AddNotesEvent());
     }
+    public void patchTreeData(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        // sources.remove(MainActivity.banana.getDataSource());
+        for (String source : sources) {
+            Log.d("MainActivity", "Searching.  Trying: "+source);
+            DataSource ds;
+            if(source.equals("HopeCollegeDataSource")){
+                ds = new HopeCollegeDataSource();
+            }else if(source.equals("CityOfHollandDataSource")) {
+                ds = new CityOfHollandDataSource();
+            }else if(source.equals("ExtendedCoHDataSource")){
+                ds = new ExtendedCoHDataSource();
+            }else{
+                ds = new ITreeDataSource();
+            }
+            ds.initialize(Cereal_Box_Activity.this,null);
+            Tree tree = ds.search(MainActivity.banana.getLocation());
 
+            if(tree != null && tree.isFound()){
+                ds.patchData(tree);
+            }
+        }
+
+    }
 
 
     private String allInfo;

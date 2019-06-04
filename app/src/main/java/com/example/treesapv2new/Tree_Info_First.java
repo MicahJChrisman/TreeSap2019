@@ -38,7 +38,7 @@ public class Tree_Info_First extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
-        patchTreeData();
+//        patchTreeData();
 
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
@@ -126,32 +126,31 @@ public class Tree_Info_First extends AppCompatActivity {
         button.setOnClickListener(new AddNotesEvent());
     }
 
-    public void patchTreeData(){
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-       // sources.remove(MainActivity.banana.getDataSource());
-        for (String source : sources) {
-            Log.d("MainActivity", "Searching.  Trying: "+source);
-            DataSource ds;
-            if(source.equals("HopeCollegeDataSource")){
-                ds = new HopeCollegeDataSource();
-            }else if(source.equals("CityOfHollandDataSource")) {
-                ds = new CityOfHollandDataSource();
-            }else if(source.equals("ExtendedCoHDataSource")){
-                ds = new ExtendedCoHDataSource();
-            }else{
-                ds = new ITreeDataSource();
-            }
-            ds.initialize(Tree_Info_First.this,null);
-            Tree tree = ds.search(MainActivity.banana.getLocation());
-
-            if(tree != null && tree.isFound()){
-                ds.patchData(tree);
-            }
-        }
-
-    }
+//    public void patchTreeData(){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+//       // sources.remove(MainActivity.banana.getDataSource());
+//        for (String source : sources) {
+//            Log.d("MainActivity", "Searching.  Trying: "+source);
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//            ds.initialize(Tree_Info_First.this,null);
+//            Tree tree = ds.search(MainActivity.banana.getLocation());
+//
+//            if(tree != null && tree.isFound()){
+//                ds.patchData(tree);
+//            }
+//        }
+//
+//    }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
