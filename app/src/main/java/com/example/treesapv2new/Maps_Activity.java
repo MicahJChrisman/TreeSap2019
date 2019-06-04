@@ -321,8 +321,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
                         if(newTree != null && !newTree.getCommonName().equals("Unknown")){
                             marker.setTitle(newTree.getCommonName());
+                            if(marker.getSnippet().equals("Holland, MI") && newTree.getInfo("Park") != null){
+                                marker.setSnippet(newTree.getInfo("Park").toString());
+                            }
                             break;
                         }
+                    }
+                }
+                if(marker.getSnippet().equals("Holland, MI")){
+                    DataSource ds = new CityOfHollandDataSource();
+                    ds.initialize(Maps_Activity.this, null);
+                    Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
+                    if(newTree.getInfo("Park") != null){
+                        marker.setSnippet(newTree.getInfo("Park").toString());
                     }
                 }
                 marker.showInfoWindow();
