@@ -64,6 +64,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -299,6 +300,35 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
 
         mMap = googleMap;
+        mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if(marker.getTitle().equals("Unknown")){
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                    Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
+                    for (String source : sources) {
+                        DataSource ds;
+                        if(source.equals("HopeCollegeDataSource")){
+                            ds = new HopeCollegeDataSource();
+                        }else if(source.equals("CityOfHollandDataSource")){
+                            ds = new CityOfHollandDataSource();
+                        }else if(source.equals("ExtendedCoHDataSource")){
+                            ds = new ExtendedCoHDataSource();
+                        }else{
+                            ds = new ITreeDataSource();
+                        }
+                        ds.initialize(Maps_Activity.this, null);
+                        Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
+                        if(newTree != null && !newTree.getCommonName().equals("Unknown")){
+                            marker.setTitle(newTree.getCommonName());
+                            break;
+                        }
+                    }
+                }
+                marker.showInfoWindow();
+                return true;
+            }
+        });
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -392,6 +422,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
        // String location42 = "";
 
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        Iterator<String> it = sources.iterator();
         for (String source : sources) {
 
             DataSource ds;
@@ -465,28 +496,66 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     longitude = record.get(Tree.LONGITUDE);
                 }
                 if (latitude != null && longitude != null) {
-                    if (!latitude.equals("")) {
+                   // if (!latitude.equals("")) {
                         if (latitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
 
-                            if (!longitude.equals("")) {
+                            //if (!longitude.equals("")) {
                                 if (longitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
                                     LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
                                     if (ds.getClass().equals(CityOfHollandDataSource.class)) {
                                         location42 = record.get("Park");
                                     }
+//                                    if(location42.equals("Hope College Pine Grove") || location42.equals("Hope College Pine Grove") || location42.equals("Holland, MI")){
+//                                        DataSource COHds = new CityOfHollandDataSource();
+//                                        COHds.initialize(Maps_Activity.this, null);
+//                                        double doubleLat = Double.parseDouble(latitude);
+//                                        double doubleLong = Double.parseDouble(longitude);
+//                                        Tree tree = COHds.search(new TreeLocation(doubleLat, doubleLong));
+//                                        if(tree != null){
+//                                            Object loc = tree.getInfo("Park");
+//                                            if(loc != null) {
+//                                                location42 = loc.toString();
+//                                            }
+//                                        }
+//                                    }
                                     try {
                                         String name = Transform.ChangeName(record.get(treeField));
+//                                        if(name == null || name.equals("Unknown") || name.equals("")){
+//                                            Set<String> newSources = new HashSet<>(sources);
+//                                            for (String newSource : newSources) {
+//                                                DataSource newDs;
+//                                                if(newSource.equals("HopeCollegeDataSource")){
+//                                                    newDs = new HopeCollegeDataSource();
+//                                                }else if(newSource.equals("CityOfHollandDataSource")){
+//                                                    newDs = new CityOfHollandDataSource();
+//                                                }else if(newSource.equals("ExtendedCoHDataSource")){
+//                                                    newDs = new ExtendedCoHDataSource();
+//                                                }else{
+//                                                    newDs = new ITreeDataSource();
+//                                                }
+//                                                newDs.initialize(Maps_Activity.this, null);
+//                                                double doubleLat = Double.parseDouble(latitude);
+//                                                double doubleLong = Double.parseDouble(longitude);
+//                                                Tree newTree = newDs.search(new TreeLocation(doubleLat, doubleLong));
+//                                                if(newTree != null && !newTree.getCommonName().equals("Unknown")){
+//                                                    name = newTree.getCommonName();
+//                                                    break;
+//                                                }
+//                                            }
+//                                        }
+
                                         mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.defaultMarker(treeMarker)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
 
                                     }
 
                                 }
-                            }
+                            //}
                         }
-                    }
+                    //}
                 }
             }
+            it.next();
         }
 
         LatLng hope = new LatLng(42.788002, -86.105971);
