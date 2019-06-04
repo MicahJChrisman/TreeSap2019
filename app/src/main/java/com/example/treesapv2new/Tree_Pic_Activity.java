@@ -68,7 +68,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         public void onClick(View v){
             mimagesView = findViewById(R.id.camera_appear_full);
             findViewById(R.id.camera_appear_full).setVisibility(View.VISIBLE);
-            findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
+            //findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
                 startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
@@ -84,6 +84,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArrayFull = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
+            findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
         }
     }
 

@@ -70,7 +70,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         public void onClick(View v){
             mimagesView = findViewById(R.id.camera_appear);
             findViewById(R.id.camera_appear).setVisibility(View.VISIBLE);
-            findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+            //findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
                 startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
@@ -86,6 +86,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArray = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
+            findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
         }
     }
 
