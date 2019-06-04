@@ -104,7 +104,7 @@ public class Tree_Info_First extends AppCompatActivity {
 //            assetValueText.setText(assetValue+"");
 //        }else{
 //            //assetValueText.setText("Asset value: " + "Unavailable");
-//            findViewById(R.id.assetTitle).setVisibility(View.GONE);
+            findViewById(R.id.assetTitle).setVisibility(View.GONE);
             assetValueText.setVisibility(View.GONE);
 //        }
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -119,6 +120,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             builder.show();
         }
     }
+
 
     private class NextEvent implements View.OnClickListener {
         @Override

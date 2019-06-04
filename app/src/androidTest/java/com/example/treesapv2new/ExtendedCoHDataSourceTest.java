@@ -50,13 +50,11 @@ public class ExtendedCoHDataSourceTest {
         editor.putStringSet("distanceFromTreePref", dbs);
         editor.apply();
 
-        assertEquals("Sugar maple",tree.getCommonName());
-        assertEquals("Acer saccharum", tree.getScientificName());
-        assertEquals(42.787707512, tree.getLocation().getLatitude(), 0.000001);
-        assertEquals(-86.107341049, tree.getLocation().getLongitude(), 0.000001);
-        assertEquals(13.220000267,tree.getCurrentDBH(),0.01);
-        assertEquals("94", tree.getID());
-        assertEquals("Centennial Park", tree.getInfo("Park"));
+        assertEquals("Japanese flower crabapple",tree.getCommonName());
+        assertEquals(42.78797522, tree.getLocation().getLatitude(), 0.000001);
+        assertEquals(-86.10783075, tree.getLocation().getLongitude(), 0.000001);
+        assertEquals(3.5,tree.getCurrentDBH(),0.01);
+        assertEquals("6612", tree.getID());
     }
 
 
