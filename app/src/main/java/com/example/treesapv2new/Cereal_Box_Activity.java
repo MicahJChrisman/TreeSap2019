@@ -87,6 +87,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     private byte[] byteArray;
     ImageView picAppear;
 
+    Float testY;
+
 
 //    public Cereal_Box_Activity(String sentString){
 //        this.sentString = sentString;
@@ -295,6 +297,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     boxMargin + boxLineWidth + 10, y,
                     textPaint);
         }
+        testY = y;
 
 
         // Subtitle
