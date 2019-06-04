@@ -98,15 +98,15 @@ public class Tree_Info_First extends AppCompatActivity {
             longitudeText.setVisibility(View.GONE);
         }
 
-//        Object assetValue = MainActivity.banana.getInfo("Tree asset value");
-        TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
-//        if(assetValue != null) {
-//            assetValueText.setText(assetValue+"");
-//        }else{
-//            //assetValueText.setText("Asset value: " + "Unavailable");
-            findViewById(R.id.assetTitle).setVisibility(View.GONE);
-            assetValueText.setVisibility(View.GONE);
-//        }
+////        Object assetValue = MainActivity.banana.getInfo("Tree asset value");
+//        TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
+////        if(assetValue != null) {
+////            assetValueText.setText(assetValue+"");
+////        }else{
+////            //assetValueText.setText("Asset value: " + "Unavailable");
+//            findViewById(R.id.assetTitle).setVisibility(View.GONE);
+//            assetValueText.setVisibility(View.GONE);
+////        }
 
         String otherInfo = MainActivity.banana.getAllInfo();
         TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
