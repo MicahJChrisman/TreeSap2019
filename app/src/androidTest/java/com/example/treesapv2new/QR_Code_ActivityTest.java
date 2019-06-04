@@ -2,7 +2,11 @@ package com.example.treesapv2new;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.BottomNavigationView;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.view.Menu;
 import android.view.SurfaceView;
@@ -19,6 +23,8 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
@@ -130,6 +136,20 @@ public class QR_Code_ActivityTest {
     }
 
     @Test
-    public void onTouchEvent() {
+    public void qrCodeDetection(){
+        Bitmap icon = BitmapFactory.decodeResource(InstrumentationRegistry.getTargetContext().getResources(), R.mipmap.qrcode2);
+
+        Intent resultData = new Intent();
+        resultData.putExtra("data", icon);
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
+        //intending(toPackage("com.android.view.SurfaceView")).respondWith(result);
+        //int
+
+
+
     }
+
+//    @Test
+//    public void onTouchEvent() {
+//    }
 }
