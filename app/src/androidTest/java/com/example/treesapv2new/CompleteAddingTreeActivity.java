@@ -3,10 +3,14 @@ package com.example.treesapv2new;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -14,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -75,6 +80,8 @@ public class CompleteAddingTreeActivity {
 
 //        ByteArrayOutputStream stream =
 //        byte[] z = null;
+        byte[] z = tree_bark_activityActivityTestRule.getActivity().getByteArray();
+
 //        assertEquals(z, tree_bark_activityActivityTestRule.getActivity().getByteArray());
         onView(withId(R.id.next_pic_bark)).perform(click());
 //        while(tree_leaf_activityActivityTestRule.getActivity().findViewById(R.id.next_pic_leaf).getVisibility() == 8) {
@@ -93,6 +100,33 @@ public class CompleteAddingTreeActivity {
 
         assertEquals("42.78779833333333", ((TextView)tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.lat_thing)).getText().toString());
         assertEquals("-86.10569833333332", ((TextView)tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.long_thing)).getText().toString());
+        //assertEquals(z,((ImageView)tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.show_bark_pic))).toByteArray();
+
+
+        ImageView imageView = tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.show_bark_pic);
+        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageInbyte = byteArrayOutputStream.toByteArray();
+
+        ImageView imageView2 = tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.show_leaf_pic);
+        Bitmap bitmap2 = ((BitmapDrawable) imageView2.getDrawable()).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream2 = new ByteArrayOutputStream();
+        bitmap2.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream2);
+        byte[] imageInbyte2 = byteArrayOutputStream.toByteArray();
+
+        boolean x = Arrays.equals(imageInbyte,imageInbyte2);
+
+        ImageView imageView3 = tree_other_info_activityActivityTestRule.getActivity().findViewById(R.id.show_leaf_pic);
+        Bitmap bitmap3 = ((BitmapDrawable) imageView3.getDrawable()).getBitmap();
+        ByteArrayOutputStream byteArrayOutputStream3 = new ByteArrayOutputStream();
+        bitmap3.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream3);
+        byte[] imageInbyte3 = byteArrayOutputStream.toByteArray();
+
+        boolean y = Arrays.equals(imageInbyte,imageInbyte3);
+
+        assertEquals(true, x);
+        assertEquals(true, y);
     }
 
 }

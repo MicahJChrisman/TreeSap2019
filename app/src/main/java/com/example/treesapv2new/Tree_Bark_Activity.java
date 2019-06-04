@@ -121,6 +121,10 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         }
     }
 
+    public byte[] getByteArray(){
+        return byteArray;
+    }
+
 
     private class NextEvent implements View.OnClickListener {
         @Override
