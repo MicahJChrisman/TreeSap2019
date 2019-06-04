@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.BottomNavigationView;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.rule.ActivityTestRule;
 import android.view.Menu;
 import android.view.SurfaceView;
@@ -23,7 +24,9 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.Intents.intending;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasPackage;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -32,6 +35,8 @@ import static org.junit.Assert.*;
 public class QR_Code_ActivityTest {
     @Rule
     public ActivityTestRule<QR_Code_Activity> mActivityTestRule = new ActivityTestRule<QR_Code_Activity>(QR_Code_Activity.class);
+//    @Rule
+    public IntentsTestRule<QR_Code_Activity> intentsTestRule = new IntentsTestRule<>(QR_Code_Activity.class);
 
     private QR_Code_Activity mActivity;
 
@@ -136,13 +141,16 @@ public class QR_Code_ActivityTest {
     }
 
     @Test
-    public void qrCodeDetection(){
+    public void qrCodeDetection(){//TODO
         Bitmap icon = BitmapFactory.decodeResource(InstrumentationRegistry.getTargetContext().getResources(), R.mipmap.qrcode2);
 
         Intent resultData = new Intent();
         resultData.putExtra("data", icon);
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
-        //intending(toPackage("com.android.view.SurfaceView")).respondWith(result);
+        intending(hasPackage("com.sec.android.app.camera")).respondWith(result); //Getting a null pointer exception
+                                                                                                // "Attempt to invoke virtual method 'android.support.test.espresso.intent.OngoingStubbing android.support.test.espresso.intent.Intents.internalIntending(org.hamcrest.Matcher)' on a null object reference"
+        mActivity = mActivityTestRule.getActivity();
+        intended(hasPackage("com.sec.android.app.camera"));
         //int
 
 
