@@ -6,7 +6,9 @@ import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 
+import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
+import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 
@@ -24,12 +26,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HopeCollegeDataSourceTest {
+public class ITreeDataSourceTest {
     @Rule
     public ActivityTestRule<Big_Red_Button> mActivityTestRule = new ActivityTestRule<Big_Red_Button>(Big_Red_Button.class);
 
     private Big_Red_Button brb;
-    private HopeCollegeDataSource ds = new HopeCollegeDataSource();
+    private ITreeDataSource ds = new ITreeDataSource();
     @Before
     public void setUp() throws Exception {
         brb = mActivityTestRule.getActivity();
@@ -51,7 +53,7 @@ public class HopeCollegeDataSourceTest {
         assertEquals("Sycamore-American ",tree.getCommonName());
         assertEquals(42.78773499, tree.getLocation().getLatitude(), 0.000001);
         assertEquals(-86.10578919, tree.getLocation().getLongitude(), 0.000001);
-        assertEquals(27.0,tree.getCurrentDBH(),0.0001);
+        assertEquals(27.0,tree.getCurrentDBH(),0.01);
         assertEquals("134", tree.getID());
         assertEquals("13760.44",tree.getInfo("Tree asset value"));
         assertEquals("Good", tree.getInfo("Condition"));
