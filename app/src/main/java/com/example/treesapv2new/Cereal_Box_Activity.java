@@ -26,6 +26,8 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,8 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,6 +105,43 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.activity_cereal_box);
 
+
+
+
+
+        BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_brb:
+                        Intent intent1 = new Intent(Cereal_Box_Activity.this, Big_Red_Button.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.navigation_home:
+                        Intent intent2 = new Intent(Cereal_Box_Activity.this, MainActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.navigation_coordinates:
+                        Intent intent3 = new Intent(Cereal_Box_Activity.this, Coordinates_View_Activity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.navigation_map:
+                        Intent intent4 = new Intent(Cereal_Box_Activity.this, Maps_Activity.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.navigation_qr:
+                        Intent intent5 = new Intent(Cereal_Box_Activity.this, QR_Code_Activity.class);
+                        startActivity(intent5);
+                        break;
+                }
+                return false;
+            }
+        };
+
+
+
 //        TextView eventer = (TextView) findViewById(R.id.treeNamePlease);
 //        eventer.setText(MainActivity.banana.getCommonName());
 //
@@ -125,6 +166,17 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
 //        button.setOnClickListener(new AddNotesEvent());
+
+        BottomNavigationView navView = findViewById(R.id.cereal_box_menu);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navView.setSelectedItemId(R.id.cereal_box_menu);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.cereal_box_menu);
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem1 = menu.getItem(0);
+        menuItem1.setCheckable(false);
+
     }
     public void patchTreeData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -274,13 +326,11 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         // Draw on the canvas
         paint.setColor(Color.BLACK);
-        canvas.drawRect(boxMargin, boxMargin,
-                cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin,
-                paint);
+        //canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin, paint);
+        canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-200, paint);
         paint.setColor(Color.WHITE);
-        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth,
-                cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth,
-                paint);
+        //canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth, paint);
+        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-200-boxLineWidth, paint);
         // Title
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(dpToPx(titleTextSize, displaymetrics));
