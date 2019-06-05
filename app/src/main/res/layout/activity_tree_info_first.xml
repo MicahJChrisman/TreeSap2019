@@ -4,39 +4,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/tree_background">
+
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linearLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="0dp"-->
+        <!--android:gravity="start|top"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/appBackground"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/add3"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:background="?android:attr/colorBackground"-->
+            <!--android:src="@drawable/icons8_plus_math_30" />-->
+    <!--</LinearLayout>-->
+
+    <!--android:background="#D9000000"-->
+    <!--android:background="#E66F6F6F"-->
+
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="start|top"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageButton
-            android:id="@+id/add3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="0dp"
-            android:background="?android:attr/colorBackground"
-            android:src="@drawable/icons8_plus_math_30" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="415dp"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/tree_info_background"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tree_info_first_menu">
+
 
         <TextView
             android:id="@+id/CommonName"
@@ -46,7 +59,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
-            android:textColor="@color/accent_gray"
+            android:textColor="@color/white"
             android:textSize="30sp" />
 
         <TextView
@@ -57,7 +70,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
-            android:textColor="@color/accent_gray"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="italic" />
 
@@ -72,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Tree ID:"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -81,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -96,8 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="DBH:"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textColor="@color/accent_gray"
                 android:textStyle="italic" />
 
             <TextView
@@ -105,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -120,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Latitude: "
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textColor="@color/accent_gray"
                 android:textStyle="italic" />
 
             <TextView
@@ -129,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -144,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Longitude: "
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -153,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -168,8 +181,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Other info: "
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textColor="@color/accent_gray"
                 android:textStyle="italic" />
 
             <TextView
@@ -177,12 +190,45 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="visible" />
         </LinearLayout>
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipe_instructions"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/altAppBackground"
+            android:textSize="16sp"
+            android:text="&lt;swipe for other information&gt;"/>
 
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/add3"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/icon_plus_white_30" />
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/tree_info_first_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="?android:attr/windowBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/bottom_nav_menu" />
 
 </android.support.constraint.ConstraintLayout>

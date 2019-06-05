@@ -7,10 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +39,43 @@ public class Tree_Info_First extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_tree_info_first);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.tree_info_first_menu);
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem1 = menu.getItem(0);
+        menuItem1.setCheckable(false);
+
+        BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_brb:
+                        Intent intent1 = new Intent(Tree_Info_First.this, Big_Red_Button.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.navigation_home:
+                        Intent intent2 = new Intent(Tree_Info_First.this, MainActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.navigation_coordinates:
+                        Intent intent3 = new Intent(Tree_Info_First.this, Coordinates_View_Activity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.navigation_map:
+                        Intent intent4 = new Intent(Tree_Info_First.this, Maps_Activity.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.navigation_qr:
+                        Intent intent5 = new Intent(Tree_Info_First.this, QR_Code_Activity.class);
+                        startActivity(intent5);
+                        break;
+                }
+                return false;
+            }
+        };
 
         myDialog = new Dialog(this);
 
@@ -124,6 +165,10 @@ public class Tree_Info_First extends AppCompatActivity {
 
         ImageButton button = (ImageButton) findViewById(R.id.add3);
         button.setOnClickListener(new AddNotesEvent());
+
+        BottomNavigationView navView = findViewById(R.id.tree_info_first_menu);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navView.setSelectedItemId(R.id.tree_info_first_menu);
     }
 
 //    public void patchTreeData(){
