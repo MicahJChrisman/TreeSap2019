@@ -6,6 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 //import android.location.LocationListener;
@@ -68,6 +73,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
+
 public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GestureDetectorCompat gestureObject;
@@ -108,6 +115,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     // integer for permissions results request
     private static final int ALL_PERMISSIONS_RESULT = 1011;
 
+    Bitmap.Config conf = Bitmap.Config.ARGB_8888;
+    Bitmap bmp = Bitmap.createBitmap(80, 80, conf);
+    Canvas canvas1 = new Canvas(bmp);
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -185,6 +195,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         MapFragment.newInstance(options);
         mapFragment.getMapAsync(this);
         parent = (Context) getIntent().getSerializableExtra("parent");
+
+
+
+        // paint defines the text color, stroke width and size
+        Paint color = new Paint();
+        color.setTextSize(35);
+        color.setColor(Color.GREEN);
+
+        // modify canvas
+        canvas1.drawCircle(30,30,30,color);
+        color.setColor(Color.WHITE);
+        canvas1.drawBitmap(BitmapFactory.decodeResource(getResources(),
+                R.drawable.icons8_evergreen_30), 0,0, color);
 
 
     }
@@ -516,46 +539,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                     if (ds.getClass().equals(CityOfHollandDataSource.class)) {
                                         location42 = record.get("Park");
                                     }
-//                                    if(location42.equals("Hope College Pine Grove") || location42.equals("Hope College Pine Grove") || location42.equals("Holland, MI")){
-//                                        DataSource COHds = new CityOfHollandDataSource();
-//                                        COHds.initialize(Maps_Activity.this, null);
-//                                        double doubleLat = Double.parseDouble(latitude);
-//                                        double doubleLong = Double.parseDouble(longitude);
-//                                        Tree tree = COHds.search(new TreeLocation(doubleLat, doubleLong));
-//                                        if(tree != null){
-//                                            Object loc = tree.getInfo("Park");
-//                                            if(loc != null) {
-//                                                location42 = loc.toString();
-//                                            }
-//                                        }
-//                                    }
                                     try {
                                         String name = Transform.ChangeName(record.get(treeField));
-//                                        if(name == null || name.equals("Unknown") || name.equals("")){
-//                                            Set<String> newSources = new HashSet<>(sources);
-//                                            for (String newSource : newSources) {
-//                                                DataSource newDs;
-//                                                if(newSource.equals("HopeCollegeDataSource")){
-//                                                    newDs = new HopeCollegeDataSource();
-//                                                }else if(newSource.equals("CityOfHollandDataSource")){
-//                                                    newDs = new CityOfHollandDataSource();
-//                                                }else if(newSource.equals("ExtendedCoHDataSource")){
-//                                                    newDs = new ExtendedCoHDataSource();
-//                                                }else{
-//                                                    newDs = new ITreeDataSource();
-//                                                }
-//                                                newDs.initialize(Maps_Activity.this, null);
-//                                                double doubleLat = Double.parseDouble(latitude);
-//                                                double doubleLong = Double.parseDouble(longitude);
-//                                                Tree newTree = newDs.search(new TreeLocation(doubleLat, doubleLong));
-//                                                if(newTree != null && !newTree.getCommonName().equals("Unknown")){
-//                                                    name = newTree.getCommonName();
-//                                                    break;
-//                                                }
-//                                            }
-//                                        }
 
-                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.defaultMarker(treeMarker)));
+                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_2)));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
 
                                     }
@@ -592,16 +579,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
 
 
-
-
-
-
-
-
-
-
-
-
             //LocationListener locationListenerGps = new LocationListener();
             //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
             String a = LocationManager.GPS_PROVIDER;
@@ -630,7 +607,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             if (locMarker == true) {
                 mMap.addMarker(new MarkerOptions().position(currentLocation)
                         .title("My Position").snippet("You are here.")
-                        .icon(BitmapDescriptorFactory.defaultMarker(personalMarker)));
+                        .icon(defaultMarker(personalMarker)));
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
         }
@@ -653,7 +630,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
             markerOptions.title("Current Position");
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(personalMarker));
+            markerOptions.icon(defaultMarker(personalMarker));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
 
