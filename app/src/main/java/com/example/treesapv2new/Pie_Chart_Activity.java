@@ -168,20 +168,24 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                 display.getSize(size);
                 int width = size.x;
                 int height = size.y;
-                description.setPosition(width/2, height /4*3);
+                description.setPosition(width/2, height/4*3);
                 description.setTextAlign(CENTER);
+                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
                 switch (category){
                     case("Storm Water"):
                         description.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
                         pieChart.setDescription(description);
+                        tv.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
                         break;
                     case("Energy"):
                         description.setText("Strategically placed trees can increase home energy efficiency.");
                         pieChart.setDescription(description);
+                        tv.setText("Strategically placed trees can increase home energy efficiency.");
                         break;
                     case("Air Quality"):
                         description.setText("Urban forest can mitigate the health effects of pollution.");
                         pieChart.setDescription(description);
+                        tv.setText("Urban forest can mitigate the health effects of pollution.");
                         break;
                     case("Property Value"):
                         description.setText("");
@@ -194,6 +198,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                     case("CO2"):
                         description.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
                         pieChart.setDescription(description);
+                        tv.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
                         break;
                 }
             }
