@@ -9,6 +9,8 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,8 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +98,41 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
 //        ImageButton button = (ImageButton) findViewById(R.id.add2);
 //        button.setOnClickListener(new AddNotesEvent());
+
+
+
+        BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_brb:
+                        Intent intent1 = new Intent(Pie_Chart_Activity.this, Big_Red_Button.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.navigation_home:
+                        Intent intent2 = new Intent(Pie_Chart_Activity.this, MainActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.navigation_coordinates:
+                        Intent intent3 = new Intent(Pie_Chart_Activity.this, Coordinates_View_Activity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.navigation_map:
+                        Intent intent4 = new Intent(Pie_Chart_Activity.this, Maps_Activity.class);
+                        startActivity(intent4);
+                        break;
+                    case R.id.navigation_qr:
+                        Intent intent5 = new Intent(Pie_Chart_Activity.this, QR_Code_Activity.class);
+                        startActivity(intent5);
+                        break;
+                }
+                return false;
+            }
+        };
+
+
 
         myDialog = new Dialog(this);
 
@@ -312,6 +351,16 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //            }
 //        });
 
+
+        BottomNavigationView navView = findViewById(R.id.pie_chart_menu);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navView.setSelectedItemId(R.id.pie_chart_menu);
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.pie_chart_menu);
+
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem1 = menu.getItem(0);
+        menuItem1.setCheckable(false);
     }
 
 
