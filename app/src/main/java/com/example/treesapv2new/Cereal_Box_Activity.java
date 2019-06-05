@@ -326,13 +326,11 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         // Draw on the canvas
         paint.setColor(Color.BLACK);
-        canvas.drawRect(boxMargin, boxMargin,
-                cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin,
-                paint);
+        //canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin, paint);
+        canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-200, paint);
         paint.setColor(Color.WHITE);
-        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth,
-                cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth,
-                paint);
+        //canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth, paint);
+        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-200-boxLineWidth, paint);
         // Title
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(dpToPx(titleTextSize, displaymetrics));
