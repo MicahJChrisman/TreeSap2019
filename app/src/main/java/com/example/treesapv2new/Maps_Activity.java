@@ -542,7 +542,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                     try {
                                         String name = Transform.ChangeName(record.get(treeField));
 
-                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_2)));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1)));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
 
                                     }
