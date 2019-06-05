@@ -98,7 +98,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 
 
-        ImageButton button = (ImageButton) findViewById(R.id.bigredbutton);
+        ImageButton button = (ImageButton) findViewById(R.id.biggreenbutton);
         button.setOnClickListener(new AddEventAction());
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_1);
