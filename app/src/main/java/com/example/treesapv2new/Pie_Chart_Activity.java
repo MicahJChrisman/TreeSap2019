@@ -205,7 +205,8 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected() {
-
+                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
+                tv.setText("Select a category for more information.");
             }
         });
 
@@ -325,6 +326,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             TextView noData = (TextView) findViewById(R.id.no_data_1);
             noData.setVisibility(View.VISIBLE);
             noData.setText("There is no data to display on this "+ commonName);
+            ((TextView) findViewById(R.id.pie_chart_text)).setVisibility(View.GONE);
         }
         //customView/setContentView();
 

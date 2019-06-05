@@ -72,13 +72,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <TextView
-                    android:id="@+id/latitude_coord"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="Latitude: "
-                    android:textColor="@color/accent_gray"
-                    android:textSize="20sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/latitude_coord"-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Latitude: "-->
+                    <!--android:textColor="@color/accent_gray"-->
+                    <!--android:textSize="20sp" />-->
 
                 <EditText
                     android:id="@+id/lat_edit"
@@ -87,6 +87,7 @@
                     android:background="@drawable/edittext_border"
                     android:inputType="numberSigned|numberDecimal"
                     android:textColor="@color/accent_gray"
+                    android:hint="Latitude:"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -96,13 +97,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-                <TextView
-                    android:id="@+id/longitude_coord"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="Longitude: "
-                    android:textColor="@color/accent_gray"
-                    android:textSize="20sp" />
+                <!--<TextView-->
+                    <!--android:id="@+id/longitude_coord"-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Longitude: "-->
+                    <!--android:textColor="@color/accent_gray"-->
+                    <!--android:textSize="20sp" />-->
 
                 <EditText
                     android:id="@+id/long_edit"
@@ -112,6 +113,7 @@
                     android:background="@drawable/edittext_border"
                     android:inputType="numberSigned|numberDecimal"
                     android:textColor="@color/accent_gray"
+                    android:hint="Longitude"
                     android:textSize="20sp" />
             </LinearLayout>
 
