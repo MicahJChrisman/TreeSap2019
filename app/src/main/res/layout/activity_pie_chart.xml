@@ -3,60 +3,79 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/masterLayout"
+    android:background="@mipmap/tree_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/pie_chart_benefits"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="Tree Benefits"
-        android:textAlignment="center"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/accent_gray"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/no_data_1"
-        android:layout_width="266dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
-        android:text="There is no data to display"
-        android:textAppearance="@android:style/TextAppearance.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
-    <ImageButton
-        android:id="@+id/add2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/colorBackground"
-        android:src="@drawable/icons8_plus_math_30"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/tree_info_background_white"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/pie_chart_menu">
+
+        <TextView
+            android:id="@+id/pie_chart_benefits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tree Benefits"
+            android:gravity="center_horizontal"
+            android:textColor="@color/accent_gray"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/no_data_1"
+            android:layout_width="266dp"
+            android:layout_height="86dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="100dp"
+            android:text="There is no data to display"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
+
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+        <TextView
+            android:id="@+id/pie_chart_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/chart"
+            android:layout_marginTop="5dp"
+            android:text="Select a category for more information." />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:id="@+id/pie_chart_selection"
+            app:layout_constraintTop_toBottomOf="@+id/chart"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/pie_chart_menu"
@@ -73,24 +92,16 @@
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/white"/>
 
-    <TextView
-        android:id="@+id/pie_chart_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/chart"
-        android:layout_marginTop="5dp"
-        android:text="Select a category for more information." />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:id="@+id/pie_chart_selection"
-        app:layout_constraintTop_toBottomOf="@+id/chart"
-        android:layout_marginTop="5dp"
-        android:visibility="gone"/>
+    <ImageButton
+        android:id="@+id/add2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/icons8_plus_math_30" />
 
 </android.support.constraint.ConstraintLayout>
