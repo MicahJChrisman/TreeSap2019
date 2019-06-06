@@ -52,6 +52,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.delight-im:Android-SimpleLocation:v1.0.1'
     // https://github.com/osiegmar/FastCSV
+    implementation 'com.opencsv:opencsv:4.6'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     implementation 'de.siegmar:fastcsv:1.0.2'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'

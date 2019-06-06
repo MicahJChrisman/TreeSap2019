@@ -86,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edittext_border"
+                android:id="@+id/scientific_name"
                 android:hint="(Optional)"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -112,6 +113,7 @@
                 android:layout_weight="1"
                 android:hint="(Optional)"
                 android:layout_marginLeft="2dp"
+                android:id="@+id/dbh_edit"
                 android:textSize="24sp" />
 
             <ImageButton
@@ -167,6 +169,7 @@
             android:background="@drawable/edittext_border"
             android:textSize="24sp"
             android:hint="(Optional)"
+            android:id="@+id/notes_about_tree"
             android:layout_marginBottom="10dp"/>
 
         <LinearLayout
