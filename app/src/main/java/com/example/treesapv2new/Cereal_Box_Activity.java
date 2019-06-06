@@ -328,7 +328,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         paint.setColor(Color.BLACK);
         //canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin, paint);
         canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-50, paint);
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.parseColor("#FFFFFF"));
         //canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth, paint);
         canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-50-boxLineWidth, paint);
         // Title
