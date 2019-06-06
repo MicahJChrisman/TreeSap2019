@@ -28,46 +28,72 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/button_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:text="Button by GPS"
-            android:textAlignment="center"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/accent_gray"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+    <TextView
+        android:id="@+id/button_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Button by GPS"
+        android:textAlignment="center"
+        android:textColor="@color/accent_gray"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_marginBottom="50dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/instructions"
             android:layout_width="307dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
             android:text="Hold your phone up to a tree and press the button below to get information"
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
-            android:textSize="22dp" />
+            android:textSize="22dp"
+            tools:layout_marginBottom="0dp" />
 
-        <ImageButton
+        <Button
+            android:id="@+id/biggreenbutton"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/big_green_button_background"
+            android:clickable="true"
+
+            android:elevation="50dp"
+            android:text="Get tree"
+
+            android:textAllCaps="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25dp" />
+
+        <!--android:foreground="?attr/selectableItemBackground"-->
+
+
+        <!-- <ImageButton
             android:id="@+id/biggreenbutton"
             android:layout_width="288dp"
             android:layout_height="286dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:background="?android:attr/colorBackground"
+            android:layout_marginBottom="10dp"
+            android:background="@color/appBackground"
+            android:foreground="?attr/selectableItemBackground"
             android:clickable="true"
-            android:src="@drawable/biggreenbutton" />
+            android:src="@drawable/biggreenbutton" />-->
 
     </LinearLayout>
 
