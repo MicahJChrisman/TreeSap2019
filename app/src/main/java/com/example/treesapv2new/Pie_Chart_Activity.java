@@ -3,10 +3,14 @@ package com.example.treesapv2new;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -155,60 +161,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         //pieChartDisplay.display(tree);
         //noData = (TextView) customView.findViewById(R.id.no_data);
         //noData.setVisibility(View.GONE);
-        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                Description description = new Description();
-                description.setTextSize(12);
-                PieEntry selected = (PieEntry) e.copy();
-                String category = selected.getLabel();
-                Log.i("thing", "description set: " + description.getPosition());
-                Display display = getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-                int height = size.y;
-                description.setPosition(width/2, height/4*3);
-                description.setTextAlign(CENTER);
-                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
-                switch (category){
-                    case("Storm Water"):
-                        description.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
-                        pieChart.setDescription(description);
-                        tv.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
-                        break;
-                    case("Energy"):
-                        description.setText("Strategically placed trees can increase home energy efficiency.");
-                        pieChart.setDescription(description);
-                        tv.setText("Strategically placed trees can increase home energy efficiency.");
-                        break;
-                    case("Air Quality"):
-                        description.setText("Urban forest can mitigate the health effects of pollution.");
-                        pieChart.setDescription(description);
-                        tv.setText("Urban forest can mitigate the health effects of pollution.");
-                        break;
-                    case("Property Value"):
-                        description.setText("");
-                        pieChart.setDescription(description);
-                        break;
-                    case("Natural Gas"):
-                        description.setText("");
-                        pieChart.setDescription(description);
-                        break;
-                    case("CO2"):
-                        description.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
-                        pieChart.setDescription(description);
-                        tv.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
-                        break;
-                }
-            }
-
-            @Override
-            public void onNothingSelected() {
-                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
-                tv.setText("Select a category for more information.");
-            }
-        });
 
         ArrayList<PieEntry> entries = new ArrayList<>();
         if(!tree.getDataSource().equals("ExtendedCoH")){
@@ -258,7 +210,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             float energy;
             if (hasValues) {
-                energy = Float.valueOf(allInfo.split(",")[28]);
+                energy = Float.valueOf(allInfo.split(",")[59]);
             } else {
                 energy = 5f;
             }
@@ -286,6 +238,147 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                 entries.add(new PieEntry(co2, "CO2"));
             }
         }
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Description description = new Description();
+                description.setTextSize(12);
+                PieEntry selected = (PieEntry) e.copy();
+                String category = selected.getLabel();
+                Log.i("thing", "description set: " + description.getPosition());
+                Display display = getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+                int height = size.y;
+                description.setPosition(width/2, height/4*3);
+                description.setTextAlign(CENTER);
+                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
+                ((LinearLayout) findViewById(R.id.bar_key)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_chart)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_chart_pol)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_key_pol)).setVisibility(View.GONE);
+                switch (category){
+                    case("Storm Water"):
+                        description.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
+                        pieChart.setDescription(description);
+                        tv.setVisibility(View.VISIBLE);
+                        tv.setText("Trees act as mini-reservoirs, controlling runoff at the source.");
+                        break;
+                    case("Energy"):
+                        ((LinearLayout) findViewById(R.id.bar_chart)).setVisibility(View.VISIBLE);
+                        description.setText("Strategically placed trees can increase home energy efficiency.");
+                        pieChart.setDescription(description);
+
+                        float coolingEnergy = Float.valueOf(allInfo.split(",")[58]);
+                        float heatingEnergy = Float.valueOf(allInfo.split(",")[56]);
+                        heatingEnergy = heatingEnergy + Float.valueOf(allInfo.split(",")[54]);
+                        float totalEnergy = coolingEnergy+heatingEnergy;
+                        if(totalEnergy>0) {
+                            tv.setVisibility(View.GONE);
+                            float coolPercent = coolingEnergy / totalEnergy;
+                            float heatPercent = heatingEnergy / totalEnergy;
+
+                            int linWidth = ((LinearLayout) findViewById(R.id.bar_chart)).getWidth();
+                            int coolLength = Math.round(linWidth * coolPercent);
+                            int heatLength = Math.round(linWidth * heatPercent);
+
+
+                            ((ImageView) findViewById(R.id.red_rect)).setVisibility(View.VISIBLE);
+                            ((ImageView) findViewById(R.id.blue_rect)).setVisibility(View.VISIBLE);
+                            ((LinearLayout) findViewById(R.id.bar_key)).setVisibility(View.VISIBLE);
+                            ImageView cooling = findViewById(R.id.blue_rect);
+                            cooling.requestLayout();
+                            cooling.getLayoutParams().width = coolLength;
+                            ImageView heating = findViewById(R.id.red_rect);
+                            heating.requestLayout();
+                            heating.getLayoutParams().width = heatLength;
+                        }else{
+                            tv.setText("Strategically placed trees can increase home energy efficiency.");
+                        }
+
+                        break;
+                    case("Air Quality"):
+                        ((LinearLayout) findViewById(R.id.bar_chart_pol)).setVisibility(View.VISIBLE);
+                        description.setText("Urban forest can mitigate the health effects of pollution.");
+                        pieChart.setDescription(description);
+                        float coRemoved = Float.valueOf(allInfo.split(",")[41]);
+                        float ozoneRemoved = Float.valueOf(allInfo.split(",")[42]);
+                        float noRemoved = Float.valueOf(allInfo.split(",")[43]);
+                        float soRemoved = Float.valueOf(allInfo.split(",")[44]);
+                        float pmRemoved = Float.valueOf(allInfo.split(",")[45]);
+                        float totalRemoved = coRemoved+ozoneRemoved+noRemoved+soRemoved+pmRemoved;
+                        if(totalRemoved>0){
+                            tv.setVisibility(View.GONE);
+                            coRemoved = coRemoved/totalRemoved;
+                            ozoneRemoved = ozoneRemoved/totalRemoved;
+                            noRemoved = noRemoved/totalRemoved;
+                            soRemoved = soRemoved/totalRemoved;
+                            pmRemoved = pmRemoved/totalRemoved;
+
+                            int linWidth = ((LinearLayout) findViewById(R.id.bar_chart_pol)).getWidth();
+                            int coLength = Math.round(linWidth * coRemoved);
+                            int ozoneLength = Math.round(linWidth * ozoneRemoved);
+                            int noLength = Math.round(linWidth * noRemoved);
+                            int soLength = Math.round(linWidth * soRemoved);
+                            int pmLength = Math.round(linWidth * pmRemoved);
+
+
+
+                            ((ImageView) findViewById(R.id.co_rect)).setVisibility(View.VISIBLE);
+                            ((ImageView) findViewById(R.id.o3_rect)).setVisibility(View.VISIBLE);
+                            ((ImageView) findViewById(R.id.no2_rect)).setVisibility(View.VISIBLE);
+                            ((ImageView) findViewById(R.id.so_rect)).setVisibility(View.VISIBLE);
+                            ((ImageView) findViewById(R.id.pm_rect)).setVisibility(View.VISIBLE);
+                            ((LinearLayout) findViewById(R.id.bar_key_pol)).setVisibility(View.VISIBLE);
+                            ImageView co = findViewById(R.id.co_rect);
+                            co.requestLayout();
+                            co.getLayoutParams().width = coLength;
+                            ImageView ozone = findViewById(R.id.o3_rect);
+                            ozone.requestLayout();
+                            ozone.getLayoutParams().width = ozoneLength;
+                            ImageView no = findViewById(R.id.no2_rect);
+                            no.requestLayout();
+                            no.getLayoutParams().width = noLength;
+                            ImageView so = findViewById(R.id.so_rect);
+                            so.requestLayout();
+                            so.getLayoutParams().width = soLength;
+                            ImageView pm = findViewById(R.id.pm_rect);
+                            pm.requestLayout();
+                            pm.getLayoutParams().width = pmLength;
+                        }else {
+                            tv.setText("Urban forest can mitigate the health effects of pollution.");
+                        }
+                        break;
+                    case("Property Value"):
+                        description.setText("");
+                        pieChart.setDescription(description);
+                        break;
+                    case("Natural Gas"):
+                        description.setText("");
+                        pieChart.setDescription(description);
+                        break;
+                    case("CO2"):
+                        description.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
+                        pieChart.setDescription(description);
+                        tv.setText("Trees sequester CO2 in their roots, trunks, stems and leaves");
+                        tv.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected() {
+                TextView tv = (TextView) findViewById(R.id.pie_chart_text);
+                tv.setVisibility(View.VISIBLE);
+                tv.setText("Select a category for more information.");
+                ((LinearLayout) findViewById(R.id.bar_chart)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_key)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_chart_pol)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.bar_key_pol)).setVisibility(View.GONE);
+            }
+        });
+
         dataset = new PieDataSet(entries, "");
         data = new PieData(dataset);
         IValueFormatter iValueFormatter = new IValueFormatter() {
