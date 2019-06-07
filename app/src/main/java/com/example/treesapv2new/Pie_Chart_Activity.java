@@ -242,7 +242,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 Description description = new Description();
-                description.setTextSize(12);
+                description.setTextSize(-12);
                 PieEntry selected = (PieEntry) e.copy();
                 String category = selected.getLabel();
                 Log.i("thing", "description set: " + description.getPosition());
@@ -302,11 +302,25 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                         ((LinearLayout) findViewById(R.id.bar_chart_pol)).setVisibility(View.VISIBLE);
                         description.setText("Urban forest can mitigate the health effects of pollution.");
                         pieChart.setDescription(description);
-                        float coRemoved = Float.valueOf(allInfo.split(",")[41]);
-                        float ozoneRemoved = Float.valueOf(allInfo.split(",")[42]);
-                        float noRemoved = Float.valueOf(allInfo.split(",")[43]);
-                        float soRemoved = Float.valueOf(allInfo.split(",")[44]);
-                        float pmRemoved = Float.valueOf(allInfo.split(",")[45]);
+                        float coRemoved;
+                        float ozoneRemoved;
+                        float noRemoved;
+                        float soRemoved;
+                        float pmRemoved;
+                        if(tree.getDataSource().equals("ExtendedCoH")) {
+                            coRemoved = Float.valueOf(allInfo.split(",")[41]);
+                            ozoneRemoved = Float.valueOf(allInfo.split(",")[42]);
+                            noRemoved = Float.valueOf(allInfo.split(",")[43]);
+                            soRemoved = Float.valueOf(allInfo.split(",")[44]);
+                            pmRemoved = Float.valueOf(allInfo.split(",")[45]);
+                        }
+                        else{
+                            coRemoved = Float.valueOf(allInfo.split(",")[6]);
+                            ozoneRemoved=0;
+                            noRemoved = 0;
+                            soRemoved = 0;
+                            pmRemoved = 0;
+                        }
                         float totalRemoved = coRemoved+ozoneRemoved+noRemoved+soRemoved+pmRemoved;
                         if(totalRemoved>0){
                             tv.setVisibility(View.GONE);

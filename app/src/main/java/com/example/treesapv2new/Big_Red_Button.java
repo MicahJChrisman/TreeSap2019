@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -32,6 +33,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -98,7 +101,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 
 
-        ImageButton button = (ImageButton) findViewById(R.id.biggreenbutton);
+        Button button = (Button) findViewById(R.id.biggreenbutton);
         button.setOnClickListener(new AddEventAction());
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_1);
@@ -269,10 +272,10 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         }
     }
 
-    private class AddEventAction implements View.OnClickListener{
+
+    private class AddEventAction implements View.OnClickListener, View.OnTouchListener{
         @Override
         public void onClick(View v){
-
             getLocation();
             TreeLocation testing = new TreeLocation(latitude,longitude);
 
@@ -298,13 +301,13 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     if (MainActivity.banana.isFound()) break;  // and NOT just the closest
                 }
             }
-
 //            checkTree(sources);
 
 //            HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //            ds.initialize(Big_Red_Button.this,null);
 //            MainActivity.banana = ds.search(testing);
 
+//            button.layout(67, 117, 67, 47);
             if(MainActivity.banana != null){
                 Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
@@ -326,11 +329,30 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 //                        .show();
                 Toast.makeText(getBaseContext(), "There are no trees near enough!", Toast.LENGTH_LONG).show();
             }
+        }
 
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            Button button = findViewById(R.id.biggreenbutton);
+            if (event.getAction() == MotionEvent.ACTION_DOWN){
+                float x = (float) .75;
+                float y = (float) .75;
 
+                button.setScaleX(x);
+                button.setScaleY(y);
+            button.setBackground(Drawable.createFromPath("@drawable/smaller_ripple"));
+            }
+            else if(event.getAction() == MotionEvent.ACTION_UP)
+            {
+                float x = 1;
+                float y = 1;
+//
+                button.setScaleX(x);
+                button.setScaleY(y);
+                button.setBackground(Drawable.createFromPath("@drawable/ripple_overlay"));
 
-
-//            startActivity(new Intent(Big_Red_Button.this, Cereal_Box_Activity.class));
+            }
+            return false;
         }
 
 

@@ -4,7 +4,7 @@
     <color name="appToolbarBackground">#7D869C</color>
     <color name="fabColor">#FF0000</color>
     <!--<color name="colorPrimary">#10AA00</color>-->
-    <color name="colorPrimary">#FFF</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#003300</color>
     <color name="colorAccent">#FF4081</color>
     <color name="boxBackground">#10AA00</color>
@@ -18,4 +18,5 @@
     <color name = "accent_gray">#353333</color>
     <color name="black">#000</color>
     <color name="new_invented_color">#58883F</color>
+    <color name="highlight">#7DB162</color>
 </resources>
