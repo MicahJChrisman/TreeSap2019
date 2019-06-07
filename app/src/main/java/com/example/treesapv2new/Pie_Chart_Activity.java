@@ -1,8 +1,10 @@
 package com.example.treesapv2new;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -13,10 +15,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
@@ -33,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
@@ -51,6 +57,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,6 +73,13 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
 
     Dialog myDialog;
+    private static final int REQUSET_IMGAGE_CAPTURE = 101;
+    private static final String[] PERMS = {
+            Manifest.permission.CAMERA,
+    };
+    private static final int REQUEST_ID = 1;
+    private static final int[] PERMISSION_ALL = new int[0];
+    private byte[] byteArray;
 
     private static final int[] COLORFUL_COLORS = {
             Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0),
@@ -511,28 +525,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         }
     }
 
-    public void ShowPopup(View v){
-        TextView txtclose;
-        Button buttonSubmit;
-        myDialog.setContentView(R.layout.add_notes_display);
-        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
-        buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
-        txtclose.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                myDialog.dismiss();
-            }
-        });
-        buttonSubmit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-    }
-
     private void findInfo(Tree tree) throws IOException {
         total = 0.0;
         InputStream input;
@@ -615,5 +607,78 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //        if (allInfo.equals("")) {
 //            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
 //        }
+    }
+    public void ShowPopup(View v){
+        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+        TextView txtclose;
+        Button buttonSubmit;
+        ImageButton imageButton;
+        myDialog.setContentView(R.layout.add_notes_display);
+        imageButton = (ImageButton) myDialog.findViewById(R.id.user_add_tree_pic);
+        txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
+        buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        imageButton.setOnClickListener(new addImageEvent());
+        //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
+//        button.setOnClickListener(new AddNotesEvent());
+        txtclose.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        buttonSubmit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    private class addImageEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            ImageView picAppear = findViewById(R.id.user_add_tree_pic_appear_pie);
+            picAppear.setVisibility(View.VISIBLE);
+
+            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(PERMS, REQUEST_ID);
+                }
+            }else{
+                onRequestPermissionsResult(REQUEST_ID,PERMS,PERMISSION_ALL);
+            }
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
+            }
+        }else{
+            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static Bitmap bmp;
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            byteArray = stream.toByteArray();
+            //   picAppear.setImageBitmap(imageBitmap);
+
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_pie);
+            //image.setImageBitmap(bmp);
+            MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
+            myDialog.dismiss();
+            Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
+        }
     }
 }
