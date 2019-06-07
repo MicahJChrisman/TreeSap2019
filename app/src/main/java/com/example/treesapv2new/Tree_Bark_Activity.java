@@ -86,6 +86,8 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(PERMS, REQUEST_ID);
                 }
+            }else{
+                onRequestPermissionsResult(REQUEST_ID,PERMS,PERMISSION_ALL);
             }
         }
     }

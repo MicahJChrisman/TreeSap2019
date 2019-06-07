@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Base64;
 
@@ -86,8 +87,13 @@ public class Tree_Info_First extends AppCompatActivity {
         myDialog = new Dialog(this);
 
 //        patchTreeData();
-        if(MainActivity.banana.getDataSource() == "User") {
+        if(MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
             byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
+            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
+            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
+        }
+        if(MainActivity.banana.getPics("User pic") !=null){
+            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("User pic").toString(), Base64.DEFAULT);
             BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
             ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
         }

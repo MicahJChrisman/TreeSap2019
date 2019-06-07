@@ -25,6 +25,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
     private static final int REQUSET_IMGAGE_CAPTURE = 101;
     private byte[] byteArrayLeaf;
 
+    private static final int[] PERMISSION_ALL = new int[0];
     private static final String[] PERMS = {
             Manifest.permission.CAMERA,
     };
@@ -80,6 +81,8 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(PERMS, REQUEST_ID);
                 }
+            }else{
+                onRequestPermissionsResult(REQUEST_ID,PERMS,PERMISSION_ALL);
             }
         }
     }
