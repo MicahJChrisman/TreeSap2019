@@ -23,6 +23,12 @@
             android:key="@string/locationMarkerSwitch"
             android:summary="See your marker on the map"
             android:title="Location Marker" />
+        <SwitchPreference
+            android:id="@+id/teaching_toggle"
+            android:defaultValue="false"
+            android:key="teachingSwitch"
+            android:summary="Placeholder text"
+            android:title="Teaching tool/education mode"/>
     </PreferenceCategory>
 
     <PreferenceCategory
