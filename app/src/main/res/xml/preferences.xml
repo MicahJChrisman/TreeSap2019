@@ -8,6 +8,7 @@
             android:dialogTitle="Enter a distance (meters)"
             android:key="@string/distanceFromTreePref"
             android:numeric="decimal"
+            android:defaultValue="100000"
             android:summary="Change max distance away to get tree results."
             android:title="Maximum Distance From Tree" />
         <MultiSelectListPreference
