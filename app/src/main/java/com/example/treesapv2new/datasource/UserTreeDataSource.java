@@ -232,6 +232,8 @@ public class UserTreeDataSource extends DataSource {
 //                tree.addInfo("Park", closestRecord.get("Park"));
             tree.setFound(true);
             tree.setIsClosest(true);
+            tree.addInfo("Source:", "You submitted this tree");
+            tree.addInfo("Notes", closestRecord.get("Notes"));
             tree.setDataSource("User");
 
             return tree;

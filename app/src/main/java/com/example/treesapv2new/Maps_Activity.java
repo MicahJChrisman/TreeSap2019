@@ -36,6 +36,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -393,6 +395,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 ds = new CityOfHollandDataSource();
                             } else if (source.equals("ExtendedCoHDataSource")) {
                                 ds = new ExtendedCoHDataSource();
+                            } else if(source.equals("UserTreeDataSource")){
+                                ds = MainActivity.userTreeDataSourceGlobal;
                             } else {
                                 ds = new ITreeDataSource();
                             }
@@ -466,6 +470,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 ds = new CityOfHollandDataSource();
             }else if(source.equals("ExtendedCoHDataSource")){
                 ds = new ExtendedCoHDataSource();
+            }else if(source.equals("UserTreeDataSource")){
+                ds = MainActivity.userTreeDataSourceGlobal;
             }else{
                 ds = new ITreeDataSource();
             }
@@ -503,6 +509,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv");
                 treeField = 1;
                 location42= "Holland, MI";
+                whichSource = false;
+            } else if (ds instanceof UserTreeDataSource){
+                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv");
+                treeField = 1;
+                location42 = "";
                 whichSource = false;
             }
             if (stuff == null) {
