@@ -311,7 +311,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 //            button.layout(67, 117, 67, 47);
             if(MainActivity.banana != null){
-                Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
+                Intent intentA = new Intent(Big_Red_Button.this, Tree_Info_First.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
                 startActivity(intentA);
             }else{

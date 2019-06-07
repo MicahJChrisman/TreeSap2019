@@ -279,7 +279,7 @@ public class QR_Code_Activity extends AppCompatActivity {
 
                                             }
                                             if(MainActivity.banana != null) {
-                                                Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
+                                                Intent intentA = new Intent(QR_Code_Activity.this, Tree_Info_First.class);
                                                 startActivity(intentA);
                                             }else{
                                                 txtResult.setText("Invalid QR code for this app.");

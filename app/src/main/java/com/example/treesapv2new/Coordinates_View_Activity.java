@@ -217,7 +217,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 //                MainActivity.banana = ds.search(testing);
 
                 if(MainActivity.banana != null) {
-                    Intent intentA = new Intent(Coordinates_View_Activity.this, Cereal_Box_Activity.class);
+                    Intent intentA = new Intent(Coordinates_View_Activity.this, Tree_Info_First.class);
                     //              intentA.putExtra("treeClass", MainActivity.banana);
                     startActivity(intentA);
                 }else{

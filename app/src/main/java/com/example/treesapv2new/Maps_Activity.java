@@ -414,7 +414,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    ds.initialize(Maps_Activity.this,null);
 //                    MainActivity.banana = ds.search(testing);
 
-                        Intent intentA = new Intent(Maps_Activity.this, Cereal_Box_Activity.class);
+                        Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
                         startActivity(intentA);
                     }
