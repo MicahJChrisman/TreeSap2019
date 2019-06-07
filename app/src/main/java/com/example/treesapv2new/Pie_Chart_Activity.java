@@ -315,7 +315,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                             pmRemoved = Float.valueOf(allInfo.split(",")[45]);
                         }
                         else{
-                            coRemoved = Float.valueOf(allInfo.split(",")[6]);
+                            coRemoved = 0;
                             ozoneRemoved=0;
                             noRemoved = 0;
                             soRemoved = 0;
