@@ -21,6 +21,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String[] johnny = new String[7];
 
 
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
@@ -80,16 +81,6 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                johnny[0] = "69";
-                johnny[1] = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
-                johnny[2] = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
-                johnny[3] = ((TextView) findViewById(R.id.dbh_edit)).getText().toString();
-                johnny[6] = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
-
-
-
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
                 builder.setCancelable(true);
                 builder.setTitle("Discard your tree?");
@@ -130,14 +121,21 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    UserTreeDataSource.addTree(johnny);
+
                     dialog.dismiss();
                 }
             });
             builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    johnny[0] = "69";
+                    johnny[1] = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
+                    johnny[2] = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
+                    johnny[3] = ((TextView) findViewById(R.id.dbh_edit)).getText().toString();
+                    johnny[6] = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
                     dialog.dismiss();
+                    MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this,null);
+                    MainActivity.userTreeDataSourceGlobal.addTree(johnny);
                     Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
                     startActivity(intentA);
                 }

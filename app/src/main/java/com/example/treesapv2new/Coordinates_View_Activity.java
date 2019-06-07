@@ -200,7 +200,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                     }else if(source.equals("ExtendedCoHDataSource")){
                         ds = new ExtendedCoHDataSource();
                     }else if(source.equals("UserTreeDataSource")){
-                        ds = new UserTreeDataSource();
+                        ds = MainActivity.userTreeDataSourceGlobal;
                     }else{
                         ds = new ITreeDataSource();
                     }

@@ -83,6 +83,7 @@ import com.example.treesapv2new.control.SwipeControllerActions;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.DataSourceList;
+import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.display.DisplayMethod;
 import com.example.treesapv2new.display.DisplayMethodList;
@@ -106,7 +107,7 @@ import com.example.treesapv2new.view.UserViewAdapter;
 
 public class MainActivity extends AppCompatActivity {
     public static Tree banana = null;
-
+    public static UserTreeDataSource userTreeDataSourceGlobal = new UserTreeDataSource();
     private TextView mTextMessage;
     private GestureDetectorCompat gestureObject;
 
@@ -216,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             dbs.add("CityOfHollandDataSource");
             dbs.add("ExtendedCoHDataSource");
             dbs.add("ITreeDataSource");
-            //dbs.add("UserTreeDataSource");
+            dbs.add("UserTreeDataSource");
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }

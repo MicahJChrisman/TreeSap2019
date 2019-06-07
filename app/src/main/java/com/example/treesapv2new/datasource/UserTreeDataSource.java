@@ -3,6 +3,7 @@ package com.example.treesapv2new.datasource;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -13,17 +14,23 @@ import com.example.treesapv2new.model.TreeLocation;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.io.FileUtils;
+
+//import com.github.mikephil.charting.utils.FileUtils;
+import com.google.android.gms.common.util.IOUtils;
 import com.opencsv.CSVWriter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -36,6 +43,8 @@ public class UserTreeDataSource extends DataSource {
 
     String internetFileName = "users.csv";
     String localFileName = "user_tree_database.csv";
+    static String carl = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
+    static File steve = new File(carl);
 
     Reader in;
     Iterable<CSVRecord> records;
@@ -67,7 +76,7 @@ public class UserTreeDataSource extends DataSource {
 //        InputStream input = getResources().openRawResource(R.raw.katelyns_database);
         String csv = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter(csv));
+            CSVWriter writer = new CSVWriter(new FileWriter(steve, true));
             writer.writeNext(passed);
             writer.close();
         }catch (IOException e){
@@ -77,27 +86,32 @@ public class UserTreeDataSource extends DataSource {
     }
 
     private void download(String earl, String filename) {
-        String str;
+//        String str;
+//
+//        downloaded = false;
+//        try {
+//            URL url = new URL(earl);
+//            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+//            BufferedWriter out = new BufferedWriter(new FileWriter(filename));
+//
+//            while ((str = in.readLine()) != null) {
+//                out.write(str);
+//                out.newLine();
+//            }
+//
+//            in.close();
+//            downloaded = true;
+//            alreadyRead = false;
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.i("Error", "Unable to download datasource.");
+//        }
+        downloaded = true;
 
-        downloaded = false;
-        try {
-            URL url = new URL(earl);
-            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-            BufferedWriter out = new BufferedWriter(new FileWriter(filename));
 
-            while ((str = in.readLine()) != null) {
-                out.write(str);
-                out.newLine();
-            }
-
-            in.close();
-            downloaded = true;
-            alreadyRead = false;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            Log.i("Error", "Unable to download datasource.");
-        }
+//        Environment.getExternalStorageDirectory().getPath();
+//        Context.getFilesDir().getPath();
     }
 
     @Override
@@ -110,10 +124,25 @@ public class UserTreeDataSource extends DataSource {
         if(!localFileName.contains("/")) {
             localFileName = parent.getFilesDir() + "/" + localFileName;
         }
-        File userFile = new File(localFileName);
+        File userFile = new File(carl);
 
         // Check to see if db is downloaded
         if (! userFile.exists()) {
+            InputStream inputStream = parent.getResources().openRawResource(R.raw.user_tree_database);
+            try {
+                FileUtils.copyInputStreamToFile(inputStream, steve);
+            }catch (IOException e){
+
+            }
+
+
+//            try(OutputStream outputStream = new FileOutputStream(steve)){
+//                IOUtils.copy(inputStream, outputStream);
+//            } catch (FileNotFoundException e) {
+//                // handle exception here
+//            } catch (IOException e) {
+//                // handle exception here
+//            }
             updateDataSource();
         }
 
@@ -124,7 +153,7 @@ public class UserTreeDataSource extends DataSource {
         if (alreadyRead) return true;
 
         try {
-            in = new FileReader(localFileName);
+            in = new FileReader(steve);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -155,8 +184,8 @@ public class UserTreeDataSource extends DataSource {
         for (CSVRecord record : records) {
             entry++;
             try {
-                Double lati = Double.valueOf(record.get("y_coord"));
-                Double longi = Double.valueOf(record.get("x_coord"));
+                Double lati = Double.valueOf(record.get("Latitude"));
+                Double longi = Double.valueOf(record.get("Longitude"));
 
                 Location.distanceBetween(lati, longi,
                         location.getLatitude(), location.getLongitude(),
@@ -192,18 +221,18 @@ public class UserTreeDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
-            Double lat = new Double(closestRecord.get("y_coord"));
-            Double longi = new Double(closestRecord.get("x_coord"));
-            tree.setCommonName(closestRecord.get("species_name"));
+            Double lat = new Double(closestRecord.get("Latitude"));
+            Double longi = new Double(closestRecord.get("Longitude"));
+            tree.setCommonName(closestRecord.get("Species"));
             //tree.setScientificName(closestRecord.get("Scientific"));
             tree.setLocation(new TreeLocation(lat, longi));
             tree.setID(closestRecord.get(Tree.TREE_ID));
-            tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
+            tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
 //            if (closestRecord.get("Park").length() > 0)
 //                tree.addInfo("Park", closestRecord.get("Park"));
             tree.setFound(true);
             tree.setIsClosest(true);
-            tree.setDataSource("ExtendedCoH");
+            tree.setDataSource("User");
 
             return tree;
         }
@@ -228,7 +257,7 @@ public class UserTreeDataSource extends DataSource {
             MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
         }
         if(MainActivity.banana.getDataSource() == null){
-            MainActivity.banana.setDataSource("ExtendedCoH");
+            MainActivity.banana.setDataSource("User");
         }
     }
 
@@ -266,6 +295,7 @@ public class UserTreeDataSource extends DataSource {
     @Override
     public Boolean updateDataSource() {
         Log.d("UserTreeDataSource", "Downloading " + getSourceName() + " to " + localFileName);
+
         File userFile = new File(localFileName);
         download(getInternetFileName(), localFileName);
         return true;
