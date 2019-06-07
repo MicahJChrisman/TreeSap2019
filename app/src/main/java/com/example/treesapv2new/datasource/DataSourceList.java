@@ -11,6 +11,7 @@ public class DataSourceList {
         dataSourceClasses.add(HopeCollegeDataSource.class);
         dataSourceClasses.add(ITreeDataSource.class);
         dataSourceClasses.add(ExtendedCoHDataSource.class);
+        dataSourceClasses.add(UserTreeDataSource.class);
     }
 
     public static ArrayList<Class> getList() {

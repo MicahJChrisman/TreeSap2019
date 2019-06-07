@@ -144,7 +144,7 @@ public class HopeCollegeDataSource extends DataSource {
 //        float close =
 
         readData();
-        closestDistance = 99999;
+        closestDistance = 999999999;
         for (CSVRecord record : records) {
             try {
                 Double lat = Double.valueOf(record.get(Tree.LATITUDE));

@@ -42,6 +42,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
+import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.common.util.NumberUtils;
 
@@ -198,6 +199,8 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                         ds = new CityOfHollandDataSource();
                     }else if(source.equals("ExtendedCoHDataSource")){
                         ds = new ExtendedCoHDataSource();
+                    }else if(source.equals("UserTreeDataSource")){
+                        ds = new UserTreeDataSource();
                     }else{
                         ds = new ITreeDataSource();
                     }

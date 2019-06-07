@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             dbs.add("CityOfHollandDataSource");
             dbs.add("ExtendedCoHDataSource");
             dbs.add("ITreeDataSource");
+            //dbs.add("UserTreeDataSource");
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }
