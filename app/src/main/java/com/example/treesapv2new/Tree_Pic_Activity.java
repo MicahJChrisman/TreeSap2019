@@ -1,10 +1,14 @@
 package com.example.treesapv2new;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
@@ -19,6 +24,11 @@ public class Tree_Pic_Activity extends AppCompatActivity {
     private ImageView mimagesView;
     private static final int REQUSET_IMGAGE_CAPTURE = 101;
     private byte[] byteArrayFull;
+
+    private static final String[] PERMS = {
+            Manifest.permission.CAMERA,
+    };
+    private static final int REQUEST_ID = 1;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -69,10 +79,21 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             mimagesView = findViewById(R.id.camera_appear_full);
             findViewById(R.id.camera_appear_full).setVisibility(View.VISIBLE);
             //findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
-            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
-                startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
+            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(PERMS, REQUEST_ID);
+                }
             }
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
+            }
+        }else{
+            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
         }
     }
 
