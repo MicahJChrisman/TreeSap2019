@@ -179,11 +179,20 @@ public class UserTreeDataSource extends DataSource {
             if(closestRecord.get("Notes")!="") {
                 tree.addInfo("Notes", closestRecord.get("Notes"));
             }
+
+            if(closestRecord.get("Image Leaf")!="") {
+                tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+            }
+            if(closestRecord.get("Image Bark")!="") {
+                tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+            }
+            if(closestRecord.get("Image Tree")!="") {
+                tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+            }
             tree.setDataSource("User");
 
             return tree;
         }
-
     }
 
     public void patchData(Tree tree){
