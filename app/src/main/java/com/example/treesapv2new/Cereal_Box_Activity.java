@@ -31,6 +31,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -92,6 +93,12 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     ImageView picAppear;
 
     Float testY;
+
+    private static final String[] PERMS = {
+            Manifest.permission.CAMERA,
+    };
+    private static final int REQUEST_ID = 1;
+    private static final int[] PERMISSION_ALL = new int[0];
 
 
 //    public Cereal_Box_Activity(String sentString){
@@ -870,13 +877,26 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     private class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            picAppear = findViewById(R.id.user_add_tree_pic_appear);
-            //findViewById(R.id.user_add_tree_pic_appear).setVisibility(View.VISIBLE);
-            //findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
-            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(imageTakeIntent.resolveActivity(getPackageManager()) != null){
-                startActivityForResult(imageTakeIntent,REQUSET_IMGAGE_CAPTURE);
+            picAppear = findViewById(R.id.user_add_tree_pic_appear_cereal);
+            picAppear.setVisibility(View.VISIBLE);
+
+            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(PERMS, REQUEST_ID);
+                }
+            }else{
+                onRequestPermissionsResult(REQUEST_ID,PERMS,PERMISSION_ALL);
             }
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
+            }
+        }else{
+            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -894,8 +914,9 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_cereal);
             //image.setImageBitmap(bmp);
+            MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
+            myDialog.dismiss();
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
-
         }
     }
 }

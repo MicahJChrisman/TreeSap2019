@@ -3,12 +3,17 @@ package com.example.treesapv2new;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,7 +24,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Base64;
 
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
@@ -79,7 +86,19 @@ public class Tree_Info_First extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
-        patchTreeData();
+//        patchTreeData();
+
+//        patchTreeData();
+        if(MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
+            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
+            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
+            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
+        }
+        if(MainActivity.banana.getPics("User pic") !=null){
+            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("User pic").toString(), Base64.DEFAULT);
+            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
+            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
+        }
 
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
@@ -171,31 +190,31 @@ public class Tree_Info_First extends AppCompatActivity {
         navView.setSelectedItemId(R.id.tree_info_first_menu);
     }
 
-    public void patchTreeData(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-       // sources.remove(MainActivity.banana.getDataSource());
-        for (String source : sources) {
-            Log.d("MainActivity", "Searching.  Trying: "+source);
-            DataSource ds;
-            if(source.equals("HopeCollegeDataSource")){
-                ds = new HopeCollegeDataSource();
-            }else if(source.equals("CityOfHollandDataSource")) {
-                ds = new CityOfHollandDataSource();
-            }else if(source.equals("ExtendedCoHDataSource")){
-                ds = new ExtendedCoHDataSource();
-            }else{
-                ds = new ITreeDataSource();
-            }
-            ds.initialize(Tree_Info_First.this,null);
-            Tree tree = ds.search(MainActivity.banana.getLocation());
-
-            if(tree != null && tree.isFound()){
-                ds.patchData(tree);
-            }
-        }
-
-    }
+//    public void patchTreeData(){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+//       // sources.remove(MainActivity.banana.getDataSource());
+//        for (String source : sources) {
+//            Log.d("MainActivity", "Searching.  Trying: "+source);
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//            ds.initialize(Tree_Info_First.this,null);
+//            Tree tree = ds.search(MainActivity.banana.getLocation());
+//
+//            if(tree != null && tree.isFound()){
+//                ds.patchData(tree);
+//            }
+//        }
+//
+//    }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){

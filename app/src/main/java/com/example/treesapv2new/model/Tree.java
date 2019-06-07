@@ -30,6 +30,9 @@ public class Tree {
     ArrayList<String> dbsUsed = new ArrayList<>();
 
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
+    HashMap<String, Object> treePics = new HashMap<String, Object>();
+
+
 
     public void addDb(String dbName){
         dbsUsed.add(dbName);
@@ -108,6 +111,41 @@ public class Tree {
         this.currentDBH = currentDBH;
     }
 
+    public void addPics(String key, Object value) {
+        treePics.put(key, value);
+    }
+
+    public Object getPics(String key) {
+        return treePics.get(key);
+    }
+
+    public String getAllPics() {
+
+        if (treePics.size() == 0) return null;
+
+        String out = "";
+
+        for (String key : treePics.keySet()) {
+            out += "\t" + key + ": " + treePics.get(key).toString() + "\n";
+        }
+
+        if (out.length() > 0) out = out.substring(0, out.length()-1);
+        return out;
+    }
+
+    public Boolean isOtherPicsPresent() {
+        return treePics.size() > 0;
+    }
+
+    // For debugging
+    public void setSearchFor(GPSCoordinates gps) {
+        searchedfor = gps;
+    }
+
+    public GPSCoordinates getSearchedfor() {
+        return searchedfor;
+    }
+
     public void addInfo(String key, Object value) {
         otherInfo.put(key, value);
     }
@@ -132,14 +170,5 @@ public class Tree {
 
     public Boolean isOtherInfoPresent() {
         return otherInfo.size() > 0;
-    }
-
-    // For debugging
-    public void setSearchFor(GPSCoordinates gps) {
-        searchedfor = gps;
-    }
-
-    public GPSCoordinates getSearchedfor() {
-        return searchedfor;
     }
 }

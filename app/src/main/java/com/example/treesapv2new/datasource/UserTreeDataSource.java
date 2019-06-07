@@ -16,7 +16,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 
-//import com.github.mikephil.charting.utils.FileUtils;
 import com.google.android.gms.common.util.IOUtils;
 import com.opencsv.CSVWriter;
 
@@ -43,8 +42,8 @@ public class UserTreeDataSource extends DataSource {
 
     String internetFileName = "users.csv";
     String localFileName = "user_tree_database.csv";
-    static String carl = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
-    static File steve = new File(carl);
+    static String treeDataStream = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
+    static File treeDataFile = new File(treeDataStream);
 
     Reader in;
     Iterable<CSVRecord> records;
@@ -76,7 +75,7 @@ public class UserTreeDataSource extends DataSource {
 //        InputStream input = getResources().openRawResource(R.raw.katelyns_database);
         String csv = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter(steve, true));
+            CSVWriter writer = new CSVWriter(new FileWriter(treeDataFile, true));
             writer.writeNext(passed);
             writer.close();
         }catch (IOException e){
@@ -85,64 +84,21 @@ public class UserTreeDataSource extends DataSource {
 
     }
 
-    private void download(String earl, String filename) {
-//        String str;
-//
-//        downloaded = false;
-//        try {
-//            URL url = new URL(earl);
-//            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-//            BufferedWriter out = new BufferedWriter(new FileWriter(filename));
-//
-//            while ((str = in.readLine()) != null) {
-//                out.write(str);
-//                out.newLine();
-//            }
-//
-//            in.close();
-//            downloaded = true;
-//            alreadyRead = false;
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            Log.i("Error", "Unable to download datasource.");
-//        }
-        downloaded = true;
-
-
-//        Environment.getExternalStorageDirectory().getPath();
-//        Context.getFilesDir().getPath();
-    }
-
     @Override
     public Boolean initialize(Context aParent, String initString) {
 
         parent = aParent;
-        downloaded = false;
         alreadyRead = false;
-
-        if(!localFileName.contains("/")) {
-            localFileName = parent.getFilesDir() + "/" + localFileName;
-        }
-        File userFile = new File(carl);
+        File userFile = new File(treeDataStream);
 
         // Check to see if db is downloaded
         if (! userFile.exists()) {
             InputStream inputStream = parent.getResources().openRawResource(R.raw.user_tree_database);
             try {
-                FileUtils.copyInputStreamToFile(inputStream, steve);
+                FileUtils.copyInputStreamToFile(inputStream, treeDataFile);
             }catch (IOException e){
 
             }
-
-
-//            try(OutputStream outputStream = new FileOutputStream(steve)){
-//                IOUtils.copy(inputStream, outputStream);
-//            } catch (FileNotFoundException e) {
-//                // handle exception here
-//            } catch (IOException e) {
-//                // handle exception here
-//            }
             updateDataSource();
         }
 
@@ -153,7 +109,7 @@ public class UserTreeDataSource extends DataSource {
         if (alreadyRead) return true;
 
         try {
-            in = new FileReader(steve);
+            in = new FileReader(treeDataFile);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -195,22 +151,6 @@ public class UserTreeDataSource extends DataSource {
                     closestDistance = results[0];
                     closestRecord = record;
                 }
-                 /*   continue;
-                //}
-
-                //MATCH!  Build tree and return it.
-                Tree tree = new Tree();
-                tree.setCommonName(record.get("CommonName"));
-                tree.setScientificName(record.get("Scientific"));
-                tree.setLocation(new TreeLocation(lati, longi));
-                tree.setID(record.get(Tree.TREE_ID));
-                tree.setCurrentDBH(new Double(record.get("DBH")));
-                if (record.get("Park").length() > 0)
-                    tree.addInfo("Park", record.get("Park"));
-                tree.setFound(true);
-                tree.setIsClosest(true);
-
-                return tree;*/
             } catch (Exception e) {
                 continue;
             }
@@ -223,22 +163,36 @@ public class UserTreeDataSource extends DataSource {
             Tree tree = new Tree();
             Double lat = new Double(closestRecord.get("Latitude"));
             Double longi = new Double(closestRecord.get("Longitude"));
-            tree.setCommonName(closestRecord.get("Species"));
-            //tree.setScientificName(closestRecord.get("Scientific"));
+            if(closestRecord.get("Species") !="") {
+                tree.setCommonName(closestRecord.get("Species"));
+            }
+            if(closestRecord.get("Scientific Name") != "") {
+                tree.setScientificName(closestRecord.get("Scientific Name"));
+            }
             tree.setLocation(new TreeLocation(lat, longi));
-            tree.setID(closestRecord.get(Tree.TREE_ID));
-            tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
-//            if (closestRecord.get("Park").length() > 0)
-//                tree.addInfo("Park", closestRecord.get("Park"));
+            if(closestRecord.get("DBH")!="") {
+                tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
+            }
             tree.setFound(true);
             tree.setIsClosest(true);
-            tree.addInfo("Source:", "You submitted this tree");
-            tree.addInfo("Notes", closestRecord.get("Notes"));
+            tree.addInfo("Source", "You submitted this tree");
+            if(closestRecord.get("Notes")!="") {
+                tree.addInfo("Notes", closestRecord.get("Notes"));
+            }
+
+            if(closestRecord.get("Image Leaf")!="") {
+                tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+            }
+            if(closestRecord.get("Image Bark")!="") {
+                tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+            }
+            if(closestRecord.get("Image Tree")!="") {
+                tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+            }
             tree.setDataSource("User");
 
             return tree;
         }
-
     }
 
     public void patchData(Tree tree){
@@ -275,31 +229,11 @@ public class UserTreeDataSource extends DataSource {
 
     @Override
     public Boolean isUpToDate() {
-
-        try {
-            File userFile = new File(localFileName);
-            if (userFile.exists()) {
-                URL url = new URL(getInternetFileName());
-                HttpURLConnection c = (HttpURLConnection) url.openConnection();
-                c.setRequestMethod("HEAD");
-                c.connect();
-                InputStream in = c.getInputStream();
-                return userFile.lastModified() >= c.getLastModified();
-            } else
-                return false;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return true;
     }
 
     @Override
     public Boolean updateDataSource() {
-        Log.d("UserTreeDataSource", "Downloading " + getSourceName() + " to " + localFileName);
-
-        File userFile = new File(localFileName);
-        download(getInternetFileName(), localFileName);
         return true;
     }
 
