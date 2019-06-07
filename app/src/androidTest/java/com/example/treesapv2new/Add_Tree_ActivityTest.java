@@ -16,6 +16,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -78,8 +81,10 @@ public class Add_Tree_ActivityTest {
         assertEquals(0, mActivity.findViewById(R.id.lat_layout).getVisibility());
         assertEquals(0, mActivity.findViewById(R.id.long_layout).getVisibility());
         assertEquals(0, mActivity.findViewById(R.id.next_add_tree).getVisibility());
-        //onView(withId(R.id.lat_putter)).check(matches(withText("-?\\d{1,2}(\\.\\d+)?")));
-        //onView(withId(R.id.long_putter)).check(matches(withText("-?\\d+(\\.\\d+)?")));
+        boolean b = Pattern.matches("-?\\d+(\\.\\d+)?", ((TextView)mActivity.findViewById(R.id.lat_putter)).getText());
+        assertTrue(b);
+        b = Pattern.matches("-?\\d+(\\.\\d+)?", ((TextView)mActivity.findViewById(R.id.long_putter)).getText());
+        assertTrue(b);
     }
 
     @Test

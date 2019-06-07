@@ -46,7 +46,7 @@ public class QR_Code_ActivityTest {
     Instrumentation.ActivityMonitor monitor3 = getInstrumentation().addMonitor(Maps_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor settingsMonitor = getInstrumentation().addMonitor(SettingsActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor addTreeMonitor = getInstrumentation().addMonitor(Add_Tree_Activity.class.getName(), null, false);
-    Instrumentation.ActivityMonitor cerealBoxMonitor = getInstrumentation().addMonitor(Cereal_Box_Activity.class.getName(), null, false);
+    Instrumentation.ActivityMonitor treeInfoMonitor = getInstrumentation().addMonitor(Tree_Info_First.class.getName(), null, false);
 
 
     @Before

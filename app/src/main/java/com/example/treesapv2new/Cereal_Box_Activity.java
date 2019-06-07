@@ -102,7 +102,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(null);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cereal_box);
 
 
@@ -156,13 +156,13 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         if(sources.size()>0) {
-            patchTreeData();
+            //patchTreeData();
             display(MainActivity.banana);
         }else{
             finish();
             Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
         }
-        patchTreeData();
+        //patchTreeData();
 
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
 //        button.setOnClickListener(new AddNotesEvent());

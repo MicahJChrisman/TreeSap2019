@@ -38,17 +38,17 @@
 
 
     <LinearLayout
+        android:id="@+id/blackLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
         android:background="@drawable/tree_info_background"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/tree_info_first_menu"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tree_info_first_menu">
+        tools:layout_editor_absoluteX="20dp">
 
 
         <TextView
@@ -75,6 +75,7 @@
             android:textStyle="italic" />
 
         <LinearLayout
+            android:id="@+id/idLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -99,6 +100,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/dbhLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -123,6 +125,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/latLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -147,6 +150,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/longLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -171,6 +175,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/otherLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">

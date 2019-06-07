@@ -32,7 +32,7 @@ public class Maps_ActivityTest {
     Instrumentation.ActivityMonitor monitor4 = getInstrumentation().addMonitor(QR_Code_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor settingsMonitor = getInstrumentation().addMonitor(SettingsActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor addTreeMonitor = getInstrumentation().addMonitor(Add_Tree_Activity.class.getName(), null, false);
-    Instrumentation.ActivityMonitor cerealBoxMonitor = getInstrumentation().addMonitor(Cereal_Box_Activity.class.getName(), null, false);
+    Instrumentation.ActivityMonitor treeInfoMonitor = getInstrumentation().addMonitor(Tree_Info_First.class.getName(), null, false);
 
 
     @Before

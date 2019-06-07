@@ -39,7 +39,7 @@ public class Coordinates_View_ActivityTest {
     Instrumentation.ActivityMonitor monitor4 = getInstrumentation().addMonitor(QR_Code_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor settingsMonitor = getInstrumentation().addMonitor(SettingsActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor addTreeMonitor = getInstrumentation().addMonitor(Add_Tree_Activity.class.getName(), null, false);
-    Instrumentation.ActivityMonitor cerealBoxMonitor = getInstrumentation().addMonitor(Cereal_Box_Activity.class.getName(), null, false);
+    Instrumentation.ActivityMonitor treeInfoMonitor = getInstrumentation().addMonitor(Tree_Info_First.class.getName(), null, false);
 
     @Before
     public void setUp() throws Exception {
@@ -61,17 +61,15 @@ public class Coordinates_View_ActivityTest {
         assertNotNull(instructions);
         TextView title = coordActivity.findViewById(R.id.coordinates_header);
         assertNotNull(title);
-        TextView latText = coordActivity.findViewById(R.id.latitude_coord);
-        assertNotNull(latText);
-        TextView longi = coordActivity.findViewById(R.id.longitude_coord);
-        assertNotNull(longi);
         EditText latInput = coordActivity.findViewById(R.id.lat_edit);
         assertNotNull(latInput);
         TextView longInput = coordActivity.findViewById(R.id.long_edit);
         assertNotNull(longInput);
         Button submit = coordActivity.findViewById(R.id.sub_coord_but);
         assertNotNull(submit);
-    }@Test
+    }
+
+    @Test
     public void testGoToMainFromNavigation(){
         BottomNavigationView navView = coordActivity.findViewById(R.id.nav_view);
         Menu menu = navView.getMenu();
@@ -140,8 +138,8 @@ public class Coordinates_View_ActivityTest {
         onView(isRoot()).perform(closeSoftKeyboard());
         onView(withId(R.id.sub_coord_but)).perform(click());
         assertNotNull(MainActivity.banana);
-        Activity cerealBoxActivity = getInstrumentation().waitForMonitorWithTimeout(cerealBoxMonitor, 5000);
-        assertNotNull(cerealBoxActivity);
+        Activity treeFirstActivity = getInstrumentation().waitForMonitorWithTimeout(treeInfoMonitor, 5000);
+        assertNotNull(treeFirstActivity);
     }
 
     @Test

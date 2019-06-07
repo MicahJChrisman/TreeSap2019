@@ -39,7 +39,7 @@ public class Big_Red_ButtonTest {
     Instrumentation.ActivityMonitor monitor4 = getInstrumentation().addMonitor(QR_Code_Activity.class.getName(), null, false);
     Instrumentation.ActivityMonitor settingsMonitor = getInstrumentation().addMonitor(SettingsActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor addTreeMonitor = getInstrumentation().addMonitor(Add_Tree_Activity.class.getName(), null, false);
-    Instrumentation.ActivityMonitor cerealBoxMonitor = getInstrumentation().addMonitor(Cereal_Box_Activity.class.getName(), null, false);
+    Instrumentation.ActivityMonitor treeInfoMonitor = getInstrumentation().addMonitor(Tree_Info_First.class.getName(), null, false);
 
 
     @Before
@@ -61,7 +61,7 @@ public class Big_Red_ButtonTest {
         assertNotNull(addButton);
         ImageButton settingsButton = brbActivity.findViewById(R.id.setting_button_1);
         assertNotNull(settingsButton);
-        View brb = brbActivity.findViewById(R.id.bigredbutton);
+        View brb = brbActivity.findViewById(R.id.biggreenbutton);
         assertNotNull(brb);
         TextView title = brbActivity.findViewById(R.id.button_button);
         assertNotNull(title);
@@ -142,11 +142,11 @@ public class Big_Red_ButtonTest {
 
     @Test
     public void onBrbPressed(){
-        ImageButton brb = brbActivity.findViewById(R.id.bigredbutton);
-        onView(withId(R.id.bigredbutton)).perform(click());
+        Button brb = brbActivity.findViewById(R.id.biggreenbutton);
+        onView(withId(R.id.biggreenbutton)).perform(click());
         assertNotNull(MainActivity.banana);
-        Activity cerealBoxActivity = getInstrumentation().waitForMonitorWithTimeout(cerealBoxMonitor, 5000);
-        assertNotNull(cerealBoxActivity);
+        Activity treeInfoActivity = getInstrumentation().waitForMonitorWithTimeout(treeInfoMonitor, 5000);
+        assertNotNull(treeInfoActivity);
     }
 
 
