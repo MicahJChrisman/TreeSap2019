@@ -130,7 +130,7 @@ public class ExtendedCoHDataSource extends DataSource {
         int entry, closestEntry;
 
         readData();
-        closestDistance = 99999;
+        closestDistance = 999999999;
         closestEntry = 0;
         entry = -1;
         for (CSVRecord record : records) {

@@ -65,7 +65,7 @@ public class UserTreeDataSource extends DataSource {
     public static void addTree(String[] passed){
 //        "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv"
 //        InputStream input = getResources().openRawResource(R.raw.katelyns_database);
-        String csv = "/data/user/0/com.example.treesapv2new/files/ECOHdata.csv";
+        String csv = "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv";
         try {
             CSVWriter writer = new CSVWriter(new FileWriter(csv));
             writer.writeNext(passed);
@@ -110,10 +110,10 @@ public class UserTreeDataSource extends DataSource {
         if(!localFileName.contains("/")) {
             localFileName = parent.getFilesDir() + "/" + localFileName;
         }
-        File ECOHfile = new File(localFileName);
+        File userFile = new File(localFileName);
 
         // Check to see if db is downloaded
-        if (! ECOHfile.exists()) {
+        if (! userFile.exists()) {
             updateDataSource();
         }
 
@@ -149,7 +149,7 @@ public class UserTreeDataSource extends DataSource {
         int entry, closestEntry;
 
         readData();
-        closestDistance = 99999;
+        closestDistance = 999999999;
         closestEntry = 0;
         entry = -1;
         for (CSVRecord record : records) {
@@ -246,14 +246,14 @@ public class UserTreeDataSource extends DataSource {
     public Boolean isUpToDate() {
 
         try {
-            File ECOHfile = new File(localFileName);
-            if (ECOHfile.exists()) {
+            File userFile = new File(localFileName);
+            if (userFile.exists()) {
                 URL url = new URL(getInternetFileName());
                 HttpURLConnection c = (HttpURLConnection) url.openConnection();
                 c.setRequestMethod("HEAD");
                 c.connect();
                 InputStream in = c.getInputStream();
-                return ECOHfile.lastModified() >= c.getLastModified();
+                return userFile.lastModified() >= c.getLastModified();
             } else
                 return false;
 
@@ -265,8 +265,8 @@ public class UserTreeDataSource extends DataSource {
 
     @Override
     public Boolean updateDataSource() {
-        Log.d("ECOHDataSource", "Downloading " + getSourceName() + " to " + localFileName);
-        File ECOHfile = new File(localFileName);
+        Log.d("UserTreeDataSource", "Downloading " + getSourceName() + " to " + localFileName);
+        File userFile = new File(localFileName);
         download(getInternetFileName(), localFileName);
         return true;
     }
