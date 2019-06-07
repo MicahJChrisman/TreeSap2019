@@ -62,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:layout_marginBottom="10dp"
                 android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
                 android:textAlignment="center"
                 android:textColor="@color/accent_gray"
@@ -70,24 +71,25 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp">
 
                 <!--<TextView-->
-                    <!--android:id="@+id/latitude_coord"-->
-                    <!--android:layout_width="100dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Latitude: "-->
-                    <!--android:textColor="@color/accent_gray"-->
-                    <!--android:textSize="20sp" />-->
+                <!--android:id="@+id/latitude_coord"-->
+                <!--android:layout_width="100dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Latitude: "-->
+                <!--android:textColor="@color/accent_gray"-->
+                <!--android:textSize="20sp" />-->
 
                 <EditText
                     android:id="@+id/lat_edit"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_border"
+                    android:hint="Latitude:"
                     android:inputType="numberSigned|numberDecimal"
                     android:textColor="@color/accent_gray"
-                    android:hint="Latitude:"
                     android:textSize="20sp" />
             </LinearLayout>
 
