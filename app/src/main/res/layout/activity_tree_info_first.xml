@@ -52,6 +52,14 @@
         tools:layout_editor_absoluteX="20dp">
 
 
+        <ImageView
+            android:id="@+id/user_add_tree_pic_appear_info"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="8dp" />
+
         <TextView
             android:id="@+id/CommonName"
             android:layout_width="wrap_content"

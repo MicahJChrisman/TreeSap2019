@@ -73,7 +73,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private GestureDetectorCompat gestureObject;
 
     Dialog myDialog;
-    private static final int REQUSET_IMGAGE_CAPTURE = 101;
+    private static final int REQUEST_IMGAGE_CAPTURE = 101;
     private static final String[] PERMS = {
             Manifest.permission.CAMERA,
     };
@@ -655,7 +655,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
+                startActivityForResult(imageTakeIntent, REQUEST_IMGAGE_CAPTURE);
             }
         }else{
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
@@ -665,7 +665,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     public static Bitmap bmp;
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+        if(requestCode == REQUEST_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

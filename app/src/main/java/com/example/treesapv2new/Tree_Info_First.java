@@ -1,18 +1,23 @@
 package com.example.treesapv2new;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Base64;
+import android.widget.Toast;
 
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
@@ -36,12 +42,25 @@ import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.model.Tree;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Tree_Info_First extends AppCompatActivity {
     Dialog myDialog;
     private GestureDetectorCompat gestureObject;
+    ImageView picAppear;
+    private byte[] byteArray;
+
+    private static final int REQUEST_IMGAGE_CAPTURE = 101;
+    private static final String[] PERMS = {
+            Manifest.permission.CAMERA,
+    };
+    private static final int REQUEST_ID = 1;
+    private static final int[] PERMISSION_ALL = new int[0];
+
+    //private GestureDetectorCompat gestureObject;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -86,9 +105,8 @@ public class Tree_Info_First extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
-//        patchTreeData();
+        patchTreeData();
 
-//        patchTreeData();
         if(MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
             byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
             BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
@@ -190,31 +208,31 @@ public class Tree_Info_First extends AppCompatActivity {
         navView.setSelectedItemId(R.id.tree_info_first_menu);
     }
 
-//    public void patchTreeData(){
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-//       // sources.remove(MainActivity.banana.getDataSource());
-//        for (String source : sources) {
-//            Log.d("MainActivity", "Searching.  Trying: "+source);
-//            DataSource ds;
-//            if(source.equals("HopeCollegeDataSource")){
-//                ds = new HopeCollegeDataSource();
-//            }else if(source.equals("CityOfHollandDataSource")) {
-//                ds = new CityOfHollandDataSource();
-//            }else if(source.equals("ExtendedCoHDataSource")){
-//                ds = new ExtendedCoHDataSource();
-//            }else{
-//                ds = new ITreeDataSource();
-//            }
-//            ds.initialize(Tree_Info_First.this,null);
-//            Tree tree = ds.search(MainActivity.banana.getLocation());
-//
-//            if(tree != null && tree.isFound()){
-//                ds.patchData(tree);
-//            }
-//        }
-//
-//    }
+    public void patchTreeData(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+       // sources.remove(MainActivity.banana.getDataSource());
+        for (String source : sources) {
+            Log.d("MainActivity", "Searching.  Trying: "+source);
+            DataSource ds;
+            if(source.equals("HopeCollegeDataSource")){
+                ds = new HopeCollegeDataSource();
+            }else if(source.equals("CityOfHollandDataSource")) {
+                ds = new CityOfHollandDataSource();
+            }else if(source.equals("ExtendedCoHDataSource")){
+                ds = new ExtendedCoHDataSource();
+            }else{
+                ds = new ITreeDataSource();
+            }
+            ds.initialize(Tree_Info_First.this,null);
+            Tree tree = ds.search(MainActivity.banana.getLocation());
+
+            if(tree != null && tree.isFound()){
+                ds.patchData(tree);
+            }
+        }
+
+    }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
@@ -227,9 +245,12 @@ public class Tree_Info_First extends AppCompatActivity {
     public void ShowPopup(View v){
         TextView txtclose;
         Button buttonSubmit;
+        ImageButton imageButton;
         myDialog.setContentView(R.layout.add_notes_display);
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
+        imageButton = (ImageButton) myDialog.findViewById(R.id.user_add_tree_pic);
+        imageButton.setOnClickListener(new addImageEvent());
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -244,6 +265,52 @@ public class Tree_Info_First extends AppCompatActivity {
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+    }
+
+    public class addImageEvent implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            picAppear = findViewById(R.id.user_add_tree_pic_appear_info);
+
+            if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(PERMS, REQUEST_ID);
+                }
+            }else{
+                onRequestPermissionsResult(REQUEST_ID,PERMS,PERMISSION_ALL);
+            }
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults){
+        if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(imageTakeIntent, REQUEST_IMGAGE_CAPTURE);
+            }
+        }else{
+            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public static Bitmap bmp;
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUEST_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            byteArray = stream.toByteArray();
+            //   picAppear.setImageBitmap(imageBitmap);
+
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            BitmapDrawable dBmp = new BitmapDrawable(bmp);
+            ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_info);
+            //image.setImageBitmap(bmp);
+            MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
+            myDialog.dismiss();
+            Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
+            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(dBmp);
+        }
     }
 
     @Override

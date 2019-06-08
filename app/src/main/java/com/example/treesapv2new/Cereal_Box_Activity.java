@@ -88,11 +88,11 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
     String sentString;
     Dialog myDialog;
-    private static final int REQUSET_IMGAGE_CAPTURE = 101;
+    private static final int REQUEST_IMGAGE_CAPTURE = 101;
     private byte[] byteArray;
     ImageView picAppear;
 
-    Float testY;
+    Float testY; //for testing
 
     private static final String[] PERMS = {
             Manifest.permission.CAMERA,
@@ -300,7 +300,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     }
 
     public void display(Tree tree) {
-
         try {
             findInfo(tree);
         } catch (IOException e) {
@@ -501,8 +500,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
                     paint);
         }else{
-
-
             // And report the computations
             textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             y += dpToPx(subtitleTextSize, displaymetrics) + 15;
@@ -874,7 +871,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         myDialog.show();
     }
 
-    private class addImageEvent implements View.OnClickListener{
+    public class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
             picAppear = findViewById(R.id.user_add_tree_pic_appear_cereal);
@@ -893,7 +890,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
+                startActivityForResult(imageTakeIntent, REQUEST_IMGAGE_CAPTURE);
             }
         }else{
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
@@ -903,7 +900,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     public static Bitmap bmp;
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+        if(requestCode == REQUEST_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
