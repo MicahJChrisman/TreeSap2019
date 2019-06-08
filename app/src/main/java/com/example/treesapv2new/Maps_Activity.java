@@ -199,17 +199,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         parent = (Context) getIntent().getSerializableExtra("parent");
 
 
-
-        // paint defines the text color, stroke width and size
-        Paint color = new Paint();
-        color.setTextSize(35);
-        color.setColor(Color.GREEN);
-
-        // modify canvas
-        canvas1.drawCircle(30,30,30,color);
-        color.setColor(Color.WHITE);
-        canvas1.drawBitmap(BitmapFactory.decodeResource(getResources(),
-                R.drawable.icons8_evergreen_30), 0,0, color);
+//
+//        // paint defines the text color, stroke width and size
+//        Paint color = new Paint();
+//        color.setTextSize(35);
+//        color.setColor(Color.GREEN);
+//
+//        // modify canvas
+//        canvas1.drawCircle(30,30,30,color);
+//        color.setColor(Color.WHITE);
+//        canvas1.drawBitmap(BitmapFactory.decodeResource(getResources(),
+//                R.drawable.icons8_evergreen_30), 0,0, color);
 
 
     }
@@ -328,7 +328,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(marker.getTitle().equals("Unknown")){
+                Marker thisMarker = marker;
+                if(thisMarker.getTitle().equals("Unknown")){
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                     Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
                     for (String source : sources) {
@@ -353,7 +354,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }
                 }
-                if(marker.getSnippet().equals("Holland, MI")){
+                if(thisMarker.getSnippet().equals("Holland, MI")){
                     DataSource ds = new CityOfHollandDataSource();
                     ds.initialize(Maps_Activity.this, null);
                     Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
@@ -361,7 +362,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         marker.setSnippet(newTree.getInfo("Park").toString());
                     }
                 }
-                marker.showInfoWindow();
+                thisMarker.showInfoWindow();
                 return true;
             }
         });
@@ -616,8 +617,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             double longitude = location1.getLongitude();
             LatLng currentLocation = new LatLng(latitude, longitude);
             if (locMarker == true) {
-                mMap.addMarker(new MarkerOptions().position(currentLocation)
-                        .title("My Position").snippet("You are here.")
+                mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation)
+                        .title("Current Position").snippet("This is you!")
                         .icon(defaultMarker(personalMarker)));
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
@@ -641,6 +642,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
             markerOptions.title("Current Position");
+            markerOptions.snippet("This is you!");
             markerOptions.icon(defaultMarker(personalMarker));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
