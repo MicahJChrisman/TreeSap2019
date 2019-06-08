@@ -147,13 +147,13 @@
             android:id="@+id/units_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:switchMinWidth="56dp"
-            android:thumb="@drawable/thumb"
-            android:track="@drawable/track"
             android:showText="true"
+            android:switchMinWidth="56dp"
             android:switchTextAppearance="@style/SwitchTextAppearance"
             android:textOff=" in. "
-            android:textOn=" cm. "/>
+            android:textOn=" cm. "
+            android:thumb="@color/new_invented_color"
+            android:track="@drawable/track" />
     </LinearLayout>
 
         <TextView

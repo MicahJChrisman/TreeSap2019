@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="350dp"
     android:layout_height="475dp"
-    android:background="@color/colorPrimaryDark"
-    android:padding="5dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/new_invented_color"
+    android:orientation="vertical"
+    android:padding="5dp">
+
     <TextView
         android:id="@+id/txtclose"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:textColor="@color/white"
-        android:text="X"
-        android:textStyle="bold"
         android:layout_gravity="end"
+        android:background="@drawable/cerclebackground"
         android:gravity="center"
-        android:background="@drawable/cerclebackground"/>
+        android:text="X"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 
     <TextView
@@ -33,27 +34,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
+
         <EditText
             android:id="@+id/add_notes_box_1"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_gravity="center_vertical"
-            android:hint="Add Note"
-            android:textColor="@color/white"
-            android:textColorHint="@color/appToolbarBackground"
-            android:inputType="text"/>
+            android:layout_weight="1"
+            android:drawableBottom="@color/black"
+            android:hint="Add Note(s) here"
+            android:inputType="text"
+            android:lines="3"
+            android:shadowColor="#00000000"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="@color/colorPrimaryDark"
+            android:textColorHint="#FFF" />
 
         <Button
             android:id="@+id/add_notes_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:background="@drawable/button_style"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/white"/>
+            android:background="@drawable/button_style_solid"
+            android:text="Submit"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <TextView
@@ -62,40 +68,40 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
-        android:text="Previous Notes About This Tree:"
-        android:visibility="gone"
-        android:textColor="@color/white"
         android:paddingTop="50dp"
-        android:textSize="24sp" />
+        android:text="Previous Notes About This Tree:"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
+            android:layout_weight="1"
             android:text="Take a picture of this tree: "
-            android:textSize="24dp"
             android:textColor="#FFF"
-            android:layout_gravity="center_vertical"/>
+            android:textSize="24dp" />
 
         <ImageButton
             android:id="@+id/user_add_tree_pic"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/camera_logo"
-            android:scaleType="centerCrop"
-            android:maxWidth="100dp"
             android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
             android:background="@drawable/button_style"
             android:backgroundTint="@color/appBackground"
-            android:backgroundTintMode="add" />
+            android:backgroundTintMode="add"
+            android:maxWidth="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/camera_logo" />
 
 
     </LinearLayout>
@@ -112,11 +118,11 @@
         android:textSize="24sp" />
 
     <ImageView
+        android:id="@+id/user_add_tree_pic_appear"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:id="@+id/user_add_tree_pic_appear"
-        android:gravity="center"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:gravity="center" />
 
 
 </LinearLayout>
