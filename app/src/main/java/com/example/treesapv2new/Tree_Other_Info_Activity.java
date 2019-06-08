@@ -71,7 +71,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
-                builder.setTitle("This measurement is very useful for calculating the value of a tree.");
+                builder.setTitle("This is necessary to calculate the benefits of a tree.");
                 builder.setMessage("Please measure the circumference at chest height.");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
