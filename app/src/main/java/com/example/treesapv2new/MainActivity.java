@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Currency;
 import java.util.HashSet;
 import java.util.List;
 
@@ -163,6 +164,14 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
         addTreeButton.setOnClickListener(new AddTreeEvent());
+
+        Button curatorButton = (Button) findViewById(R.id.curator_button);
+        curatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CuratorApproveActivity.class));
+            }
+        });
 
 
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
