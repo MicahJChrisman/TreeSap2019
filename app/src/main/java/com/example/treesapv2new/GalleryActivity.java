@@ -47,10 +47,7 @@ public class GalleryActivity extends AppCompatActivity {
         name.setText(imageName);
 
         ImageView image = findViewById(R.id.image);
-        Glide.with(this)
-                .asBitmap()
-                .load(imageUrl)
-                .into(image);
+        Glide.with(this).asBitmap().load(imageUrl).into(image);
     }
 
 }

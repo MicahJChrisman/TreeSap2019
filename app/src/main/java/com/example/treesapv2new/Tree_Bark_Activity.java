@@ -49,6 +49,17 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         TextView skip = (TextView) findViewById(R.id.skip_bark_tree);
         skip.setOnClickListener(new SkipEvent());
 
+        ((TextView) findViewById(R.id.camera_disappear)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.camera_disappear).setVisibility(View.GONE);
+                findViewById(R.id.camera_appear).setVisibility(View.GONE);
+                findViewById(R.id.next_pic_bark).setVisibility(View.GONE);
+                byteArray = null;
+                findViewById(R.id.skip_bark_tree).setVisibility(View.VISIBLE);
+            }
+        });
+
         TextView txtclose = (TextView) findViewById(R.id.bark_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -112,6 +123,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             byteArray = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
             findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
         }
     }
 

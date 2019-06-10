@@ -44,6 +44,17 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         TextView skip = (TextView) findViewById(R.id.skip_leaf_tree);
         skip.setOnClickListener(new SkipEvent());
 
+        findViewById(R.id.camera_appear_leaf).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.camera_disappear_leaf).setVisibility(View.GONE);
+                findViewById(R.id.camera_appear_leaf).setVisibility(View.GONE);
+                findViewById(R.id.next_pic_leaf).setVisibility(View.GONE);
+                byteArrayLeaf = null;
+                findViewById(R.id.skip_leaf_tree).setVisibility(View.VISIBLE);
+            }
+        });
+
         TextView txtclose = (TextView) findViewById(R.id.leaf_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -106,6 +117,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
             byteArrayLeaf = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
             findViewById(R.id.next_pic_leaf).setVisibility(View.VISIBLE);
+            findViewById(R.id.camera_disappear_leaf).setVisibility(View.VISIBLE);
         }
     }
 

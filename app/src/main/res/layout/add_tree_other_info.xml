@@ -57,7 +57,7 @@
                     android:layout_marginBottom="2dp"
                     android:text="Tree Type: "
                     android:textColor="@color/accent_gray"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                     android:layout_marginBottom="2dp"
                     android:text="Scientific Name: "
                     android:textColor="@color/accent_gray"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                         android:gravity="center_vertical"
                         android:text="Circumference: "
                         android:textColor="@color/accent_gray"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <ImageButton
                         android:id="@+id/circum_info_button"
@@ -149,7 +149,7 @@
                 android:layout_marginRight="10dp"
                 android:text="Units:"
                 android:textColor="@color/accent_gray"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Switch
                 android:id="@+id/units_switch"
@@ -170,7 +170,7 @@
             android:layout_marginBottom="10dp"
             android:text="Notes About The Tree:"
             android:textColor="@color/accent_gray"
-            android:textSize="24sp" />
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/notes_about_tree"
