@@ -46,7 +46,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/tree_info_background"
+        android:background="@drawable/tree_info_background_white"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/tree_info_first_menu"
@@ -71,7 +71,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/accent_gray"
             android:textSize="30sp" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/accent_gray"
             android:textSize="20sp"
             android:textStyle="italic" />
 
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Tree ID:"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="DBH:"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="  Latitude: "
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -157,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -173,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Longitude: "
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -182,7 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
         </LinearLayout>
 
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Other info: "
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
@@ -207,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textColor="@color/white"
+                android:textColor="@color/accent_gray"
                 android:textSize="20sp"
                 android:visibility="visible" />
         </LinearLayout>
@@ -223,7 +223,7 @@
         android:background="@drawable/transparent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/icon_plus_white_30" />
+        android:src="@drawable/icons8_plus_math_30" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/tree_info_first_menu"
@@ -245,7 +245,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="&lt;swipe for other information&gt;"
-        android:textColor="#C0C0C0"
+        android:textColor="@color/accent_gray"
         android:textSize="16sp"
         android:layout_marginBottom="87dp"
         app:layout_constraintStart_toStartOf="parent"

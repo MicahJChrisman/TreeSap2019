@@ -427,6 +427,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         pieChart.invalidate();
         pieChart.setCenterText(commonName +" Annual Benefits equals "+ entry);
         pieChart.setCenterTextSize(20);
+        pieChart.setHoleColor(Color.TRANSPARENT);
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
