@@ -127,11 +127,11 @@ public class ITreeDataSource extends DataSource {
         alreadyRead = true;
         return true;
     }
-
+    float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
         float[] results = new float[1];
-        float closestDistance;
+
 //        float cap = PrefManager.getFloat("tree result", 10f);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
         float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
@@ -182,6 +182,7 @@ public class ITreeDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
+            tree.setClosest(closestDistance);
             Double lat = new Double(closestRecord.get(Tree.LATITUDE));
             Double longi = new Double(closestRecord.get(Tree.LONGITUDE));
             tree.setCommonName(closestRecord.get(Tree.NAME));

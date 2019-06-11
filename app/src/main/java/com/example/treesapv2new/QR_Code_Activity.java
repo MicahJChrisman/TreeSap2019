@@ -39,6 +39,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
+import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -248,7 +249,7 @@ public class QR_Code_Activity extends AppCompatActivity {
 
                                             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                                             Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-
+                                            Tree closestTree = null;
                                             for (String source : sources) {
                                                 Log.d("MainActivity", "Searching.  Trying: "+source);
                                                 DataSource ds;
@@ -264,10 +265,15 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                     ds = new ITreeDataSource();
                                                 }
 
-                                                ds.initialize(QR_Code_Activity.this,null);
+                                                ds.initialize(QR_Code_Activity.this, null);
                                                 MainActivity.banana = ds.search(testing);
+
+                                                float closest1 =0;
                                                 if (MainActivity.banana != null) {
-                                                    if (MainActivity.banana.isFound()) break;  // and NOT just the closest
+                                                    if(MainActivity.banana.getClosestDist() < closest1) {
+                                                        closest1 = MainActivity.banana.getClosestDist();
+                                                        closestTree = MainActivity.banana;
+                                                    }
                                                 }
 
 
@@ -276,7 +282,9 @@ public class QR_Code_Activity extends AppCompatActivity {
 //                                            ds.initialize(QR_Code_Activity.this,null);
 //                                            MainActivity.banana = ds.search(testing);
 //
-
+                                            }
+                                            if(closestTree != null) {
+                                                MainActivity.banana = closestTree;
                                             }
                                             if(MainActivity.banana != null) {
                                                 Intent intentA = new Intent(QR_Code_Activity.this, Tree_Info_First.class);

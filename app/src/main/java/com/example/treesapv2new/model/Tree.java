@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class Tree {
 
+    float closestDist;
     String treeCommonName;
     String treeScientificName;
     String dataSource;
@@ -174,5 +175,13 @@ public class Tree {
 
     public void clearInfo(){
         otherInfo.clear();
+    }
+
+    public void setClosest(float distanceTo){
+        closestDist = distanceTo;
+    }
+
+    public float getClosestDist(){
+        return closestDist;
     }
 }

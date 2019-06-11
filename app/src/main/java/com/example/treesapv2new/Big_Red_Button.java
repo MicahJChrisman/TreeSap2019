@@ -281,7 +281,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-
+            Tree closestTree = null;
             for (String source : sources) {
                 Log.d("MainActivity", "Searching.  Trying: "+source);
                 DataSource ds;
@@ -296,11 +296,15 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }else{
                     ds = new ITreeDataSource();
                 }
-                ds.initialize(Big_Red_Button.this,null);
+                ds.initialize(Big_Red_Button.this, null);
                 MainActivity.banana = ds.search(testing);
 
+                float closest1 =0;
                 if (MainActivity.banana != null) {
-                    if (MainActivity.banana.isFound()) break;  // and NOT just the closest
+                    if(MainActivity.banana.getClosestDist() < closest1) {
+                        closest1 = MainActivity.banana.getClosestDist();
+                        closestTree = MainActivity.banana;
+                    }
                 }
             }
 //            checkTree(sources);
@@ -308,7 +312,9 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 //            HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //            ds.initialize(Big_Red_Button.this,null);
 //            MainActivity.banana = ds.search(testing);
-
+            if(closestTree != null) {
+                MainActivity.banana = closestTree;
+            }
 //            button.layout(67, 117, 67, 47);
             if(MainActivity.banana != null){
                 Intent intentA = new Intent(Big_Red_Button.this, Tree_Info_First.class);
