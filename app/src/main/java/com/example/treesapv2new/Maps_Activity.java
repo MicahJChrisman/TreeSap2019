@@ -123,6 +123,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
+        MainActivity.banana=null;
         setContentView(R.layout.activity_map_new);
 
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);

@@ -171,4 +171,8 @@ public class Tree {
     public Boolean isOtherInfoPresent() {
         return otherInfo.size() > 0;
     }
+
+    public void clearInfo(){
+        otherInfo.clear();
+    }
 }

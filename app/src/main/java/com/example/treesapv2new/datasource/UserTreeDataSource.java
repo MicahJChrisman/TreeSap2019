@@ -161,6 +161,7 @@ public class UserTreeDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
+
             Double lat = new Double(closestRecord.get("Latitude"));
             Double longi = new Double(closestRecord.get("Longitude"));
             if(closestRecord.get("Species") !="") {

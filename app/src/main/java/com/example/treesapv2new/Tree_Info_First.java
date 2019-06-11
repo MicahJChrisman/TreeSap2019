@@ -221,6 +221,8 @@ public class Tree_Info_First extends AppCompatActivity {
                 ds = new CityOfHollandDataSource();
             }else if(source.equals("ExtendedCoHDataSource")){
                 ds = new ExtendedCoHDataSource();
+            }else if (source.equals("UserTreeDataSource")) {
+                ds = MainActivity.userTreeDataSourceGlobal;
             }else{
                 ds = new ITreeDataSource();
             }
