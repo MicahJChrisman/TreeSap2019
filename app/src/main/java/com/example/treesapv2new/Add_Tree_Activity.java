@@ -90,8 +90,9 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
-                        startActivity(intentA);
+//                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
+//                        startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();

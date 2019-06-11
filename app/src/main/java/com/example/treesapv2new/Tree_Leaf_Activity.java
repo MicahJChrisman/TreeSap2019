@@ -44,7 +44,14 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         TextView skip = (TextView) findViewById(R.id.skip_leaf_tree);
         skip.setOnClickListener(new SkipEvent());
 
-        findViewById(R.id.camera_appear_leaf).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back_leaf_pic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.camera_disappear_leaf).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 findViewById(R.id.camera_disappear_leaf).setVisibility(View.GONE);
@@ -75,6 +82,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                         dialog.dismiss();
                         Intent intentA = new Intent(Tree_Leaf_Activity.this, MainActivity.class);
                         startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();

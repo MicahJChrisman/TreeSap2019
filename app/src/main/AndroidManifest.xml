@@ -24,6 +24,8 @@
 
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,51 +35,83 @@
         </activity>
         <activity
             android:name=".Big_Red_Button"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Cereal_Box_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Coordinates_View_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".SettingsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Add_Tree_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Maps_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".QR_Code_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".display.AddNotesActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Tree_Info_First"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Tree_Pic_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Pie_Chart_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Tree_Bark_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Tree_Leaf_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Tree_Other_Info_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New" />
         <activity
             android:name=".Login_Activity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>
         <activity
             android:name=".CuratorApproveActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -91,6 +125,8 @@
 
         <activity
             android:name=".view.MapsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" />
         <activity android:name=".view.Settings" />
     </application>

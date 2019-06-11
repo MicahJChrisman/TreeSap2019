@@ -49,6 +49,13 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         TextView skip = (TextView) findViewById(R.id.skip_bark_tree);
         skip.setOnClickListener(new SkipEvent());
 
+        findViewById(R.id.back_bark_pic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         ((TextView) findViewById(R.id.camera_disappear)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +87,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                         dialog.dismiss();
                         Intent intentA = new Intent(Tree_Bark_Activity.this, MainActivity.class);
                         startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();

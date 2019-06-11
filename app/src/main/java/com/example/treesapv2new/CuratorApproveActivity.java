@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,13 @@ public class CuratorApproveActivity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.activity_curator_approve);
         initImageBitmaps();
+
+        ((TextView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initImageBitmaps(){

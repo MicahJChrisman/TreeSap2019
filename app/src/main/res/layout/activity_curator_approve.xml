@@ -5,19 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/curator_constraint_layout">
 
-    <TextView
-        android:id="@+id/curator_approve_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginStart="8dp"
-        android:gravity="center"
-        android:text="X"
-        android:textColor="@color/accent_gray"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/curator_approve_header"
@@ -40,6 +28,20 @@
         android:paddingStart="15dp"
         android:id="@+id/recycler_view_curator">
     </android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/curator_approve_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="X"
+        android:textColor="@color/accent_gray"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 

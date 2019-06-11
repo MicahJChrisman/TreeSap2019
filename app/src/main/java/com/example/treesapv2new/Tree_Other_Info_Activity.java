@@ -28,6 +28,13 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
 
+        findViewById(R.id.back_final_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String lat_value = extras.getString("lat_value");
@@ -103,6 +110,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                         dialog.dismiss();
                         Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
                         startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();
