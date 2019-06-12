@@ -105,8 +105,8 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
-                        Intent intent3 = new Intent(Coordinates_View_Activity.this, Coordinates_View_Activity.class);
-                        startActivity(intent3);
+//                        Intent intent3 = new Intent(Coordinates_View_Activity.this, Coordinates_View_Activity.class);
+//                        startActivity(intent3);
                         break;
                     case R.id.navigation_map:
                         Intent intent4 = new Intent(Coordinates_View_Activity.this, Maps_Activity.class);

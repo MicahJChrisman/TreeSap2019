@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
-                        Intent intent2 = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(intent2);
+//                        Intent intent2 = new Intent(MainActivity.this, MainActivity.class);
+//                        startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
                         Intent intent3 = new Intent(MainActivity.this, Coordinates_View_Activity.class);

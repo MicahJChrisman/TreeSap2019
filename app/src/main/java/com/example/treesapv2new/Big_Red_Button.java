@@ -122,8 +122,8 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
-                        Intent intent1 = new Intent(Big_Red_Button.this, Big_Red_Button.class);
-                        startActivity(intent1);
+//                        Intent intent1 = new Intent(Big_Red_Button.this, Big_Red_Button.class);
+//                        startActivity(intent1);
                         break;
                     case R.id.navigation_home:
                         Intent intent2 = new Intent(Big_Red_Button.this, MainActivity.class);

@@ -172,8 +172,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
-                        Intent intent4 = new Intent(Maps_Activity.this, Maps_Activity.class);
-                        startActivity(intent4);
+//                        Intent intent4 = new Intent(Maps_Activity.this, Maps_Activity.class);
+//                        startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
                         Intent intent5 = new Intent(Maps_Activity.this, QR_Code_Activity.class);
