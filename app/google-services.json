@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1028144395798",
+    "firebase_url": "https://treesap-10e46.firebaseio.com",
+    "project_id": "treesap-10e46",
+    "storage_bucket": "treesap-10e46.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028144395798:android:61db2d7ff3d0961a",
+        "android_client_info": {
+          "package_name": "com.example.treesapv2new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028144395798-0k5t9i9den7vqpv80a8l1rfqt66cno85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.treesapv2new",
+            "certificate_hash": "a6f9d487d8063ecb4f87a80a19a6e366fdbe50f1"
+          }
+        },
+        {
+          "client_id": "1028144395798-48b6phmk3jcgvo6raa1fttl7j5icsp6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB8hBuImXTnFKE-U4aJc4WqhPOYvA8Gok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1028144395798-48b6phmk3jcgvo6raa1fttl7j5icsp6j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1028144395798-jlv2o4oa49c81iou9h5r0k3lei3fjlnh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "edu.hope.cs.ios.TreeSap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
