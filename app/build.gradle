@@ -74,6 +74,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
 
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-firestore:19.0.2'
+
     testImplementation 'org.mockito:mockito-core:1.10.19'
     androidTestImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     androidTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
@@ -95,3 +98,5 @@ dependencies {
     }
 
 }
+
+apply plugin: 'com.google.gms.google-services'
