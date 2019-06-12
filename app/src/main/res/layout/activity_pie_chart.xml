@@ -112,13 +112,15 @@
             android:id="@+id/blue_rect"
             android:layout_width="18dp"
             android:layout_height="match_parent"
-            android:src="@drawable/blue_rectangle"
+            android:src="@drawable/transparent_rect"
+            android:background="#34888C"
             android:visibility="gone"/>
         <ImageView
             android:layout_width="10dp"
             android:layout_height="25dp"
             android:id="@+id/red_rect"
-            android:src="@drawable/red_rectangle"
+            android:src="@drawable/transparent_rect"
+            android:background="#B43211"
             android:visibility="gone"/>
     </LinearLayout>
     <LinearLayout
@@ -133,7 +135,8 @@
             android:id="@+id/blue_rect_key"
             android:layout_width="5dp"
             android:layout_height="5dp"
-            android:src="@drawable/blue_rectangle"
+            android:src="@drawable/transparent_rect"
+            android:background="#34888C"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -144,7 +147,8 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:id="@+id/red_rect_key"
-            android:src="@drawable/red_rectangle"
+            android:background="#B43211"
+            android:src="@drawable/transparent_rect"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -167,7 +171,7 @@
             android:id="@+id/co_rect"
             android:layout_width="18dp"
             android:layout_height="match_parent"
-            android:background="#0000FF"
+            android:background="@color/colorPrimaryDark"
             android:src="@drawable/transparent_rect"
             android:visibility="gone" />
 
@@ -175,7 +179,7 @@
             android:id="@+id/o3_rect"
             android:layout_width="10dp"
             android:layout_height="25dp"
-            android:background="#FF0000"
+            android:background="#7CAA2D"
             android:src="@drawable/transparent_rect"
             android:visibility="gone" />
 
@@ -183,7 +187,7 @@
             android:id="@+id/no2_rect"
             android:layout_width="10dp"
             android:layout_height="25dp"
-            android:background="#000"
+            android:background="#db6a97"
             android:src="@drawable/transparent_rect"
             android:visibility="gone" />
 
@@ -191,7 +195,7 @@
             android:id="@+id/so_rect"
             android:layout_width="10dp"
             android:layout_height="25dp"
-            android:background="#FFF"
+            android:background="#fff"
             android:src="@drawable/transparent_rect"
             android:visibility="gone" />
 
@@ -199,7 +203,7 @@
             android:id="@+id/pm_rect"
             android:layout_width="10dp"
             android:layout_height="25dp"
-            android:background="#D3D"
+            android:background="#F5E356"
             android:src="@drawable/transparent_rect"
             android:visibility="gone" />
     </LinearLayout>
@@ -217,7 +221,7 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@drawable/transparent_rect"
-            android:background="#0000FF"
+            android:background="@color/colorPrimaryDark"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -229,7 +233,7 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@drawable/transparent_rect"
-            android:background="#FF0000"
+            android:background="#7CAA2D"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -241,7 +245,7 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@drawable/transparent_rect"
-            android:background="#000"
+            android:background="#db6a97"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -253,7 +257,7 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@drawable/transparent_rect"
-            android:background="#FFF"
+            android:background="#fff"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
@@ -265,7 +269,7 @@
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@drawable/transparent_rect"
-            android:background="#D3D"
+            android:background="#F5E356"
             android:layout_gravity="center_vertical"/>
         <TextView
             android:layout_width="wrap_content"
