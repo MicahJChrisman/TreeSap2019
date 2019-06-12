@@ -47,6 +47,24 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         TextView skip = (TextView) findViewById(R.id.skip_full_tree);
         skip.setOnClickListener(new SkipEvent());
 
+        findViewById(R.id.back_full_pic).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        ((TextView) findViewById(R.id.camera_disappear_full)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.camera_disappear_full).setVisibility(View.GONE);
+                findViewById(R.id.camera_appear_full).setVisibility(View.GONE);
+                findViewById(R.id.next_pic_full).setVisibility(View.GONE);
+                byteArrayFull = null;
+                findViewById(R.id.skip_full_tree).setVisibility(View.VISIBLE);
+            }
+        });
+
         TextView txtclose = (TextView) findViewById(R.id.full_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -67,6 +85,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                         dialog.dismiss();
                         Intent intentA = new Intent(Tree_Pic_Activity.this, MainActivity.class);
                         startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();
@@ -109,6 +128,8 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             byteArrayFull = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
             findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
+            findViewById(R.id.camera_appear_full).setVisibility(View.VISIBLE);
+            findViewById(R.id.camera_disappear_full).setVisibility(View.VISIBLE);
         }
     }
 

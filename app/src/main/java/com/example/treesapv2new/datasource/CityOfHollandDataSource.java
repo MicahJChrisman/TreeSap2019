@@ -120,11 +120,12 @@ public class CityOfHollandDataSource extends DataSource {
         alreadyRead = true;
         return true;
     }
+    float closestDistance;
 
     @Override
     public Tree search(TreeLocation location) {
         float[] results = new float[1];
-        float closestDistance;
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
         float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
 
@@ -174,6 +175,7 @@ public class CityOfHollandDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
+            tree.setClosest(closestDistance);
             Double lat = new Double(closestRecord.get("Latitude"));
             Double longi = new Double(closestRecord.get("Longitude"));
             tree.setCommonName(closestRecord.get("CommonName"));

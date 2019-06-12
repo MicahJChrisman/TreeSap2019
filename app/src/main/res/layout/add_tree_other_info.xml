@@ -33,177 +33,190 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="2dp"
+                    android:text="Tree Type: "
+                    android:textColor="@color/accent_gray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="2dp"
+                    android:text="Scientific Name: "
+                    android:textColor="@color/accent_gray"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="55dp"
+                        android:gravity="center_vertical"
+                        android:text="Circumference: "
+                        android:textColor="@color/accent_gray"
+                        android:textSize="18sp" />
+
+                    <ImageButton
+                        android:id="@+id/circum_info_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:adjustViewBounds="true"
+                        android:background="@color/appBackground"
+                        android:maxWidth="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/info_icon" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="0dp"
+                android:orientation="vertical">
+
+                <AutoCompleteTextView
+                    android:id="@+id/common_name"
+                    android:layout_width="170dp"
+                    android:layout_height="55dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="@drawable/edittext_border"
+                    android:layout_marginBottom="2dp"
+                    android:completionThreshold="1"
+                    android:hint="(Optional)"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/scientific_name"
+                    android:layout_width="170dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/edittext_border"
+                    android:hint="(Optional)"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/dbh_edit"
+                    android:layout_width="170dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_height="55dp"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_border"
+                    android:hint="(Optional)"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
+            android:layout_marginTop="-12dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tree Type: "
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:text="Units:"
                 android:textColor="@color/accent_gray"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
-            <!--<EditText-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/edittext_border"-->
-                <!--android:hint="(Optional)"-->
-                <!--android:textSize="24sp" />-->
-            <AutoCompleteTextView
-                android:id="@+id/common_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_border"
-                android:completionThreshold="1"
-                android:hint="(Optional)"
-                android:textSize="24sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
-
-            <TextView
+            <Switch
+                android:id="@+id/units_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Scientific Name: "
-                android:textColor="@color/accent_gray"
-                android:textSize="24sp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_border"
-                android:id="@+id/scientific_name"
-                android:hint="(Optional)"
-                android:textSize="24sp" />
+                android:showText="true"
+                android:switchMinWidth="56dp"
+                android:switchTextAppearance="@style/SwitchTextAppearance"
+                android:textOff=" in. "
+                android:textOn=" cm. "
+                android:thumb="@color/new_invented_color"
+                android:track="@drawable/track" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:layout_marginBottom="-10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Circumference: "
-                android:textColor="@color/accent_gray"
-                android:textSize="24sp" />
-
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edittext_border"
-                android:layout_weight="1"
-                android:hint="(Optional)"
-                android:layout_marginLeft="2dp"
-                android:id="@+id/dbh_edit"
-                android:textSize="24sp" />
-
-            <ImageButton
-                android:id="@+id/circum_info_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/info_icon"
-                android:scaleType="centerCrop"
-                android:maxWidth="25dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="2dp"
-                android:background="@color/appBackground" />
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
-            android:text="Units:"
-            android:textColor="@color/accent_gray"
-            android:textSize="24sp"/>
-
-        <Switch
-            android:id="@+id/units_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:showText="true"
-            android:switchMinWidth="56dp"
-            android:switchTextAppearance="@style/SwitchTextAppearance"
-            android:textOff=" in. "
-            android:textOn=" cm. "
-            android:thumb="@color/new_invented_color"
-            android:track="@drawable/track" />
-    </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="Notes About The Tree:"
-            android:textSize="24sp"
             android:textColor="@color/accent_gray"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="18sp" />
 
         <EditText
+            android:id="@+id/notes_about_tree"
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_border"
-            android:textSize="24sp"
             android:hint="(Optional)"
-            android:id="@+id/notes_about_tree"
-            android:layout_marginBottom="10dp"/>
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Latitude: "/>
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Latitude"
+                android:text="Latitude: " />
+
+            <TextView
                 android:id="@+id/lat_thing"
-                android:layout_marginBottom="10dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Latitude" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Longitude: "/>
+                android:text="Longitude: " />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/long_thing"
-                android:text="Longitude"
-                android:layout_marginBottom="10dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Longitude" />
         </LinearLayout>
 
         <LinearLayout
@@ -211,20 +224,22 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/show_bark_pic"
-                android:layout_marginLeft="5dp"/>
-            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
                 android:id="@+id/show_leaf_pic"
-                android:layout_marginLeft="5dp"/>
-            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
                 android:id="@+id/show_tree_pic"
-                android:layout_marginLeft="5dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
         </LinearLayout>
 
 
@@ -239,5 +254,16 @@
         android:id="@+id/add_tree_submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="&lt;Back"
+        android:id="@+id/back_final_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

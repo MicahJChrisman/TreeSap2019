@@ -123,6 +123,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
+        MainActivity.banana=null;
         setContentView(R.layout.activity_map_new);
 
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
@@ -329,9 +330,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Marker thisMarker = marker;
+                latitude = marker.getPosition().latitude;
+                longitude = marker.getPosition().longitude;
+                TreeLocation testing = new TreeLocation(latitude, longitude);
                 if(thisMarker.getTitle().equals("Unknown")){
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                     Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
+                    Tree closestTree = null;
                     for (String source : sources) {
                         DataSource ds;
                         if(source.equals("HopeCollegeDataSource")){
@@ -340,11 +345,23 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             ds = new CityOfHollandDataSource();
                         }else if(source.equals("ExtendedCoHDataSource")){
                             ds = new ExtendedCoHDataSource();
-                        }else{
+                        }else if(source.equals("UserTreeDataSource")){
+                            ds = MainActivity.userTreeDataSourceGlobal;
+                        } else{
                             ds = new ITreeDataSource();
                         }
+//                        ds.initialize(Maps_Activity.this, null);
+//                        MainActivity.banana = ds.search(testing);
+//
+//                        float closest1 =999999999;
+//                        if (MainActivity.banana != null) {
+//                            if(MainActivity.banana.getClosestDist() < closest1) {
+//                                closest1 = MainActivity.banana.getClosestDist();
+//                                closestTree = MainActivity.banana;
+//                            }
+//                        }
                         ds.initialize(Maps_Activity.this, null);
-                        Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
+                        Tree newTree = ds.search(new TreeLocation(thisMarker.getPosition().latitude, thisMarker.getPosition().longitude));
                         if(newTree != null && !newTree.getCommonName().equals("Unknown")){
                             marker.setTitle(newTree.getCommonName());
                             if(marker.getSnippet().equals("Holland, MI") && newTree.getInfo("Park") != null){
@@ -386,7 +403,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
-
+                        Tree closestTree = null;
+                        float closest1 =999999999;
                         for (String source : sources) {
                             Log.d("MainActivity", "Searching.  Trying: " + source);
                             DataSource ds;
@@ -404,9 +422,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                             ds.initialize(Maps_Activity.this, null);
                             MainActivity.banana = ds.search(testing);
+
+
                             if (MainActivity.banana != null) {
-                                if (MainActivity.banana.isFound())
-                                    break;  // and NOT just the closest
+                                if(MainActivity.banana.getClosestDist() < closest1) {
+                                    closest1 = MainActivity.banana.getClosestDist();
+                                    closestTree = MainActivity.banana;
+                                }
                             }
                         }
 
@@ -414,7 +436,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                    HopeCollegeDataSource ds = new HopeCollegeDataSource();
 //                    ds.initialize(Maps_Activity.this,null);
 //                    MainActivity.banana = ds.search(testing);
-
+                        if(closestTree != null) {
+                            MainActivity.banana = closestTree;
+                        }
                         Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
 //            intentA.putExtra("treeClass", MainActivity.banana);
                         startActivity(intentA);
@@ -569,6 +593,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }
 
         LatLng hope = new LatLng(42.788002, -86.105971);
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

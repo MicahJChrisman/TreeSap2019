@@ -212,25 +212,46 @@ public class Tree_Info_First extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
        // sources.remove(MainActivity.banana.getDataSource());
-        for (String source : sources) {
-            Log.d("MainActivity", "Searching.  Trying: "+source);
-            DataSource ds;
-            if(source.equals("HopeCollegeDataSource")){
-                ds = new HopeCollegeDataSource();
-            }else if(source.equals("CityOfHollandDataSource")) {
-                ds = new CityOfHollandDataSource();
-            }else if(source.equals("ExtendedCoHDataSource")){
-                ds = new ExtendedCoHDataSource();
-            }else{
-                ds = new ITreeDataSource();
-            }
-            ds.initialize(Tree_Info_First.this,null);
-            Tree tree = ds.search(MainActivity.banana.getLocation());
-
-            if(tree != null && tree.isFound()){
-                ds.patchData(tree);
-            }
+        DataSource ds;
+        if(MainActivity.banana.getDataSource() == "ExtendedCoH"){
+            ds = new ExtendedCoHDataSource();
+        }else if(MainActivity.banana.getDataSource() == "iTreeData"){
+            ds = new ITreeDataSource();
+        }else if(MainActivity.banana.getDataSource()=="HopeCollegeData" ){
+            ds = new HopeCollegeDataSource();
+        }else if (MainActivity.banana.getDataSource()== "CoHdatabase"){
+            ds = new CityOfHollandDataSource();
+        }else{
+            ds = MainActivity.userTreeDataSourceGlobal;
         }
+        ds.initialize(Tree_Info_First.this,null);
+        Tree tree = ds.search(MainActivity.banana.getLocation());
+        if(tree != null && tree.isFound()){
+            ds.patchData(tree);
+        }
+
+
+//        for (String source : sources) {
+//            Log.d("MainActivity", "Searching.  Trying: "+source);
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else if (source.equals("UserTreeDataSource")) {
+//                ds = MainActivity.userTreeDataSourceGlobal;
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//            ds.initialize(Tree_Info_First.this,null);
+//            Tree tree = ds.search(MainActivity.banana.getLocation());
+//
+//            if(tree != null && tree.isFound()){
+//                ds.patchData(tree);
+//            }
+//        }
 
     }
     private class AddNotesEvent implements View.OnClickListener{

@@ -183,6 +183,7 @@ public class HopeCollegeDataSource extends DataSource {
         else {
             //MATCH!  Build tree and return it.
             Tree tree = new Tree();
+            tree.setClosest(closestDistance);
             Double lat = Double.valueOf(closestRecord.get(Tree.LATITUDE));
             Double longi = Double.valueOf(closestRecord.get(Tree.LONGITUDE));
             tree.setCommonName(closestRecord.get(Tree.NAME));

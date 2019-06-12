@@ -19,11 +19,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class Add_Tree_Activity extends AppCompatActivity implements LocationListener {
     Double longitude, latitude;
     LocationManager locationManager;
+    public static boolean loggedIn = false;
     final long LOCATION_REFRESH_TIME = 1;     // 1 minute
     final long LOCATION_REFRESH_DISTANCE = 1; // 10 meters
     private static final String[] PERMS = {
@@ -36,8 +38,26 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
     };
     private static final int REQUEST_ID = 6;
 
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
+
+        if (loggedIn == false) {
+            startActivityForResult(new Intent(this, Login_Activity.class), 1);
+        }else{
+            addTreesMethod();
+        }
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(loggedIn ==false){
+            finish();
+        }else{
+            addTreesMethod();
+        }
+    }
+
+    public void addTreesMethod(){
         setContentView(R.layout.add_tree_page);
 
         Button b = (Button) findViewById(R.id.next_add_tree);
@@ -53,9 +73,9 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME, LOCATION_REFRESH_DISTANCE, this);
 
         TextView txtclose = (TextView) findViewById(R.id.add_tree_close);
-        txtclose.setOnClickListener(new View.OnClickListener(){
+        txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Add_Tree_Activity.this);
                 builder.setCancelable(true);
                 builder.setTitle("Discard your tree?");
@@ -70,8 +90,9 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
-                        startActivity(intentA);
+//                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
+//                        startActivity(intentA);
+                        finish();
                     }
                 });
                 builder.show();

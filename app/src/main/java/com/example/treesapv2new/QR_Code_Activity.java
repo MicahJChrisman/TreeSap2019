@@ -39,6 +39,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
+import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -209,6 +210,7 @@ public class QR_Code_Activity extends AppCompatActivity {
                                         while (matcher.find()) {
                                             listBuffer.add(matcher.group());
                                         }
+<<<<<<< HEAD
                                         if (listBuffer.size() == 2) {
                                             String lat = listBuffer.get(0);
                                             String longit = listBuffer.get(1);
@@ -217,6 +219,57 @@ public class QR_Code_Activity extends AppCompatActivity {
                                             longD = -longD;
                                             Handler handler = new Handler(Looper.getMainLooper());
                                             if ((Math.abs(latD) > 90) || (Math.abs(longD) > 180)) {
+=======
+                                    });
+                                    builder.setPositiveButton("Get Info", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            TreeLocation testing = new TreeLocation(latD,longD);
+
+                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+                                            Tree closestTree = null;
+                                            for (String source : sources) {
+                                                Log.d("MainActivity", "Searching.  Trying: "+source);
+                                                DataSource ds;
+                                                if(source.equals("HopeCollegeDataSource")){
+                                                    ds = new HopeCollegeDataSource();
+                                                }else if(source.equals("CityOfHollandDataSource")) {
+                                                    ds = new CityOfHollandDataSource();
+                                                }else if(source.equals("ExtendedCoHDataSource")){
+                                                    ds = new ExtendedCoHDataSource();
+                                                }else if(source.equals("UserTreeDataSource")){
+                                                    ds = MainActivity.userTreeDataSourceGlobal;
+                                                }else{
+                                                    ds = new ITreeDataSource();
+                                                }
+
+                                                ds.initialize(QR_Code_Activity.this, null);
+                                                MainActivity.banana = ds.search(testing);
+
+                                                float closest1 =0;
+                                                if (MainActivity.banana != null) {
+                                                    if(MainActivity.banana.getClosestDist() < closest1) {
+                                                        closest1 = MainActivity.banana.getClosestDist();
+                                                        closestTree = MainActivity.banana;
+                                                    }
+                                                }
+
+
+
+//                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
+//                                            ds.initialize(QR_Code_Activity.this,null);
+//                                            MainActivity.banana = ds.search(testing);
+//
+                                            }
+                                            if(closestTree != null) {
+                                                MainActivity.banana = closestTree;
+                                            }
+                                            if(MainActivity.banana != null) {
+                                                Intent intentA = new Intent(QR_Code_Activity.this, Tree_Info_First.class);
+                                                startActivity(intentA);
+                                            }else{
+>>>>>>> 2ea43db266a4dbd736a68782920a855d7dbdd697
                                                 txtResult.setText("Invalid QR code for this app.");
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
                                                 builder.setCancelable(true);

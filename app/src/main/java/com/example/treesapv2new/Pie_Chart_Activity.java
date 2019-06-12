@@ -82,8 +82,36 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private byte[] byteArray;
 
     private static final int[] COLORFUL_COLORS = {
-            Color.rgb(193, 37, 82), Color.rgb(255, 102, 0), Color.rgb(245, 199, 0),
-            Color.rgb(106, 150, 31), Color.rgb(179, 100, 53), Color.rgb(55, 55, 200)
+
+            Color.parseColor("#F4CC70"),
+            Color.parseColor("#DE7A22"),
+            Color.parseColor("#20948B"),
+            Color.parseColor("#6AB187"),
+
+
+
+
+
+
+
+            //purplething
+            //Color.rgb(193, 37, 82),
+            //orange
+            //Color.rgb(255, 102, 0),
+            //yellow
+            //Color.rgb(245, 199, 0),
+            //beige
+            Color.rgb(239, 201, 175),
+            //dark blue
+            Color.rgb(16, 76, 145),
+            //turquiose
+            Color.rgb(31, 138, 192),
+            //green
+            Color.rgb(106, 150, 31),
+
+            Color.rgb(179, 100, 53),
+
+            Color.rgb(55, 55, 200),
     };
     private PopupWindow popupWindow;
     private String commonName = MainActivity.banana.getCommonName();
@@ -427,6 +455,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         pieChart.invalidate();
         pieChart.setCenterText(commonName +" Annual Benefits equals "+ entry);
         pieChart.setCenterTextSize(20);
+        pieChart.setHoleColor(Color.TRANSPARENT);
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
