@@ -219,8 +219,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        SharedPreferences.Editor editor = prefs.edit();
         if(sources.size()==0) {
-            SharedPreferences.Editor editor = prefs.edit();
             HashSet<String> dbs = new HashSet<String>();
             dbs.add("HopeCollegeDataSource");
             dbs.add("CityOfHollandDataSource");
@@ -230,7 +230,9 @@ public class MainActivity extends AppCompatActivity {
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }
-        //prefs.getString("")
+        if(prefs.getString("distanceFromTreePref", "") .equals("")){
+            editor.putString("distanceFromTreePref", "100,000");
+        } 
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 //        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
