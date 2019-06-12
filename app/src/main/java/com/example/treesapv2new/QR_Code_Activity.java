@@ -70,6 +70,7 @@ public class QR_Code_Activity extends AppCompatActivity {
 
     Double latD;
     Double longD;
+    final Object synchLock = new Object();
 
 
     private static final String[] PERMS = {
@@ -80,7 +81,7 @@ public class QR_Code_Activity extends AppCompatActivity {
     private static final int REQUEST_ID = 2;
 
 
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_qr_code);
 
@@ -129,8 +130,8 @@ public class QR_Code_Activity extends AppCompatActivity {
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
-                        Intent intent5 = new Intent(QR_Code_Activity.this, QR_Code_Activity.class);
-                        startActivity(intent5);
+//                        Intent intent5 = new Intent(QR_Code_Activity.this, QR_Code_Activity.class);   **Stops the qr code activity from being opened multiple times. if it is, we can get multiple pop ups after scanning
+//                        startActivity(intent5);
                         break;
                 }
                 return false;
@@ -147,18 +148,18 @@ public class QR_Code_Activity extends AppCompatActivity {
         txtResult = (TextView) findViewById(R.id.txtResult);
 
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
-        cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(100,100).build();
+        cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(100, 100).setAutoFocusEnabled(true).build();
 
         cameraPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                try{
+                try {
                     cameraSource.start(cameraPreview.getHolder());
-                }catch (IOException e){
+                } catch (IOException e) {
                     Log.i("Camera failed", "did not work exception");
                     e.printStackTrace();
                 }
@@ -179,6 +180,7 @@ public class QR_Code_Activity extends AppCompatActivity {
         //final SparseArray<Barcode> qrCodes = barcodeDetector.getDetectedItems();
 //        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
 //        final SparseArray<Barcode> qrCodes = barcodeDetector.detect(frame);
+//        barcodeDetector.processReceivedDetections();
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -186,158 +188,172 @@ public class QR_Code_Activity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
+                Handler handler = new Handler(Looper.getMainLooper());
                 final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
-                if(qrCodes.size()!=0){
-                    txtResult.post(new Runnable(){
-                        @Override
-                        public void run(){
-                            Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate((500));
-                            String q = qrCodes.valueAt(0).displayValue;
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                            if (qrCodes.size() != 0) {
+                                synchronized (synchLock) {
+                                txtResult.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        cameraSource.stop();
+                                        Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                                        vibrator.vibrate((500));
 
-                            ArrayList<String> listBuffer = new ArrayList<String>();
-                            Pattern pattern = Pattern.compile("([0-9]+[.][0-9]+)");
-                            Matcher matcher = pattern.matcher(q);
-                            while(matcher.find()){
-                                listBuffer.add(matcher.group());
-                            }
-                            if(listBuffer.size() == 2){
-                                String lat = listBuffer.get(0);
-                                String longit = listBuffer.get(1);
-                                latD = Double.parseDouble(lat);
-                                longD = Double.parseDouble(longit);
-                                longD = -longD;
-                                if((Math.abs(latD) >90)|| (Math.abs(longD)>180)){
-                                    txtResult.setText("Invalid QR code for this app.");
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
-                                    builder.setCancelable(true);
-                                    builder.setTitle("Invalid QR Code for this app.");
-                                    builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
+                                        String q = qrCodes.valueAt(0).displayValue;
+                                        ArrayList<String> listBuffer = new ArrayList<String>();
+                                        Pattern pattern = Pattern.compile("([0-9]+[.][0-9]+)");
+                                        Matcher matcher = pattern.matcher(q);
+                                        while (matcher.find()) {
+                                            listBuffer.add(matcher.group());
                                         }
-                                    });
-                                    Handler handler = new Handler(Looper.getMainLooper());
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            cameraSource.release();
-                                        }
-                                    });
-                                    builder.show();
-
-                                }else {
-
-                                    txtResult.setText("Location: " + lat + ", -" + longit);
-                                    //b.setVisibility(View.VISIBLE);
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
-                                    builder.setCancelable(true);
-                                    builder.setTitle("Location: " + lat + ", -" + longit);
-                                    builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                                    builder.setPositiveButton("Get Info", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            TreeLocation testing = new TreeLocation(latD,longD);
-
-                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                                            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-
-                                            for (String source : sources) {
-                                                Log.d("MainActivity", "Searching.  Trying: "+source);
-                                                DataSource ds;
-                                                if(source.equals("HopeCollegeDataSource")){
-                                                    ds = new HopeCollegeDataSource();
-                                                }else if(source.equals("CityOfHollandDataSource")) {
-                                                    ds = new CityOfHollandDataSource();
-                                                }else if(source.equals("ExtendedCoHDataSource")){
-                                                    ds = new ExtendedCoHDataSource();
-                                                }else if(source.equals("UserTreeDataSource")){
-                                                    ds = MainActivity.userTreeDataSourceGlobal;
-                                                }else{
-                                                    ds = new ITreeDataSource();
-                                                }
-
-                                                ds.initialize(QR_Code_Activity.this,null);
-                                                MainActivity.banana = ds.search(testing);
-                                                if (MainActivity.banana != null) {
-                                                    if (MainActivity.banana.isFound()) break;  // and NOT just the closest
-                                                }
-
-
-
-//                                            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-//                                            ds.initialize(QR_Code_Activity.this,null);
-//                                            MainActivity.banana = ds.search(testing);
-//
-
-                                            }
-                                            if(MainActivity.banana != null) {
-                                                Intent intentA = new Intent(QR_Code_Activity.this, Tree_Info_First.class);
-                                                startActivity(intentA);
-                                            }else{
+                                        if (listBuffer.size() == 2) {
+                                            String lat = listBuffer.get(0);
+                                            String longit = listBuffer.get(1);
+                                            latD = Double.parseDouble(lat);
+                                            longD = Double.parseDouble(longit);
+                                            longD = -longD;
+                                            Handler handler = new Handler(Looper.getMainLooper());
+                                            if ((Math.abs(latD) > 90) || (Math.abs(longD) > 180)) {
                                                 txtResult.setText("Invalid QR code for this app.");
                                                 AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
                                                 builder.setCancelable(true);
-                                                builder.setTitle("Location is not in any database");
+                                                builder.setTitle("Invalid QR Code for this app.");
+                                                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                                            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+                                                            return;
+                                                        }
+                                                        try {
+                                                            cameraSource.start(cameraPreview.getHolder());
+                                                        } catch (IOException e) {
+                                                            Log.i("Camera failed", "did not work exception");
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                            } else {
+                                                txtResult.setText("Location: " + lat + ", -" + longit);
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                                builder.setCancelable(true);
+                                                builder.setTitle("Location: " + lat + ", -" + longit);
                                                 builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         dialog.cancel();
+                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                                            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+                                                            return;
+                                                        }
+                                                        try {
+                                                            cameraSource.start(cameraPreview.getHolder());
+                                                        } catch (IOException e) {
+                                                            Log.i("Camera failed", "did not work exception");
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                                builder.setPositiveButton("Get Info", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        TreeLocation testing = new TreeLocation(latD, longD);
+
+                                                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                                                        Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
+
+                                                        for (String source : sources) {
+                                                            Log.d("MainActivity", "Searching.  Trying: " + source);
+                                                            DataSource ds;
+                                                            if (source.equals("HopeCollegeDataSource")) {
+                                                                ds = new HopeCollegeDataSource();
+                                                            } else if (source.equals("CityOfHollandDataSource")) {
+                                                                ds = new CityOfHollandDataSource();
+                                                            } else if (source.equals("ExtendedCoHDataSource")) {
+                                                                ds = new ExtendedCoHDataSource();
+                                                            } else if (source.equals("UserTreeDataSource")) {
+                                                                ds = MainActivity.userTreeDataSourceGlobal;
+                                                            } else {
+                                                                ds = new ITreeDataSource();
+                                                            }
+
+                                                            ds.initialize(QR_Code_Activity.this, null);
+                                                            MainActivity.banana = ds.search(testing);
+                                                            if (MainActivity.banana != null) {
+                                                                if (MainActivity.banana.isFound())
+                                                                    break;  // and NOT just the closest
+                                                            }
+                                                        }
+                                                        if (MainActivity.banana != null) {
+                                                            Intent intentA = new Intent(QR_Code_Activity.this, Tree_Info_First.class);
+                                                            startActivity(intentA);
+                                                        } else {
+                                                            txtResult.setText("Invalid QR code for this app.");
+                                                            AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                                            builder.setCancelable(true);
+                                                            builder.setTitle("Location is not in any database");
+                                                            builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int which) {
+                                                                    dialog.cancel();
+                                                                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                                                        Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+                                                                        return;
+                                                                    }
+                                                                    try {
+                                                                        cameraSource.start(cameraPreview.getHolder());
+                                                                    } catch (IOException e) {
+                                                                        Log.i("Camera failed", "did not work exception");
+                                                                        e.printStackTrace();
+                                                                    }
+                                                                }
+                                                            });
+                                                            builder.show();
+                                                        }
                                                     }
                                                 });
                                                 builder.show();
                                             }
-
+                                        } else {
+                                            txtResult.setText("Invalid QR code for this app.");
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
+                                            builder.setCancelable(true);
+                                            builder.setTitle("Invalid QR Code for this app.");
+                                            builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                                        Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    }
+                                                    try {
+                                                        cameraSource.start(cameraPreview.getHolder());
+                                                    } catch (IOException e) {
+                                                        Log.i("Camera failed", "did not work exception");
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            });
+                                            builder.show();
                                         }
-                                    });
-                                    Handler handler = new Handler(Looper.getMainLooper());
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            barcodeDetector.release();
-                                        }
-                                    });
-                                    builder.show();
-                                }
-                            }else{
-                                txtResult.setText("Invalid QR code for this app.");
-
-                                AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
-                                builder.setCancelable(true);
-                                builder.setTitle("Invalid QR Code for this app.");
-                                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
                                     }
                                 });
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                handler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        barcodeDetector.release();
-                                    }
-                                });
-                                builder.show();
-
-
                             }
-
-
-//                            txtResult.setText("Location: " +qrCodes.valueAt(0).displayValue);
                         }
-                    });
-                }
+                    }
+                });
             }
+
+
         });
     }
+
+
 
     private class AddTreeEvent implements View.OnClickListener {
         @Override
@@ -347,9 +363,9 @@ public class QR_Code_Activity extends AppCompatActivity {
         }
     }
 
-    private class AddSettingsEvent implements View.OnClickListener{
+    private class AddSettingsEvent implements View.OnClickListener {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             Intent intentA = new Intent(QR_Code_Activity.this, SettingsActivity.class);
             startActivity(intentA);
         }
@@ -359,34 +375,36 @@ public class QR_Code_Activity extends AppCompatActivity {
     private class NextEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            TreeLocation testing = new TreeLocation(latD,longD);
+            TreeLocation testing = new TreeLocation(latD, longD);
 
             HopeCollegeDataSource ds = new HopeCollegeDataSource();
-            ds.initialize(QR_Code_Activity.this,null);
+            ds.initialize(QR_Code_Activity.this, null);
             MainActivity.banana = ds.search(testing);
 
             Intent intentA = new Intent(QR_Code_Activity.this, Cereal_Box_Activity.class);
             startActivity(intentA);
         }
     }
+
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         this.gestureObject.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
+    class LearnGesture extends GestureDetector.SimpleOnGestureListener {
         @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
-            if(event2.getX()>event1.getX()){
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+            if (event2.getX() > event1.getX()) {
                 //left to right swipe
                 Intent intent1 = new Intent(QR_Code_Activity.this, Maps_Activity.class);
                 finish();
                 startActivity(intent1);
-            }else if(event2.getX()<event1.getX()){
+            } else if (event2.getX() < event1.getX()) {
                 //right to left swipe
             }
             return true;
         }
     }
+
 }
