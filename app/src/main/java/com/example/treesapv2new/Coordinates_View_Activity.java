@@ -191,6 +191,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
                 Tree closestTree = null;
+                float closest1 =999999999;
                 for (String source : sources) {
                     Log.d("MainActivity", "Searching.  Trying: "+source);
                     DataSource ds;
@@ -209,7 +210,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                     ds.initialize(Coordinates_View_Activity.this, null);
                     MainActivity.banana = ds.search(testing);
 
-                    float closest1 =0;
+
                     if (MainActivity.banana != null) {
                         if(MainActivity.banana.getClosestDist() < closest1) {
                             closest1 = MainActivity.banana.getClosestDist();

@@ -330,9 +330,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Marker thisMarker = marker;
+                latitude = marker.getPosition().latitude;
+                longitude = marker.getPosition().longitude;
+                TreeLocation testing = new TreeLocation(latitude, longitude);
                 if(thisMarker.getTitle().equals("Unknown")){
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                     Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
+                    Tree closestTree = null;
                     for (String source : sources) {
                         DataSource ds;
                         if(source.equals("HopeCollegeDataSource")){
@@ -346,6 +350,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         } else{
                             ds = new ITreeDataSource();
                         }
+//                        ds.initialize(Maps_Activity.this, null);
+//                        MainActivity.banana = ds.search(testing);
+//
+//                        float closest1 =999999999;
+//                        if (MainActivity.banana != null) {
+//                            if(MainActivity.banana.getClosestDist() < closest1) {
+//                                closest1 = MainActivity.banana.getClosestDist();
+//                                closestTree = MainActivity.banana;
+//                            }
+//                        }
                         ds.initialize(Maps_Activity.this, null);
                         Tree newTree = ds.search(new TreeLocation(thisMarker.getPosition().latitude, thisMarker.getPosition().longitude));
                         if(newTree != null && !newTree.getCommonName().equals("Unknown")){
@@ -390,7 +404,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
                         Tree closestTree = null;
-
+                        float closest1 =999999999;
                         for (String source : sources) {
                             Log.d("MainActivity", "Searching.  Trying: " + source);
                             DataSource ds;
@@ -409,7 +423,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             ds.initialize(Maps_Activity.this, null);
                             MainActivity.banana = ds.search(testing);
 
-                            float closest1 =0;
+
                             if (MainActivity.banana != null) {
                                 if(MainActivity.banana.getClosestDist() < closest1) {
                                     closest1 = MainActivity.banana.getClosestDist();
