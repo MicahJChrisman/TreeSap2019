@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }
+        //prefs.getString("")
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 //        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
