@@ -67,7 +67,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_border"
-            android:hint="Username"/>
+            android:hint="Email"/>
 
         <EditText
             android:id="@+id/edittext_password"
@@ -127,7 +127,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/edittext_border"
-            android:hint="Username"/>
+            android:hint="Email"/>
 
         <EditText
             android:id="@+id/edittext_password_reg"
