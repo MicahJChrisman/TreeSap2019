@@ -273,10 +273,19 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
-        commonName = Transform.ChangeName(tree.getCommonName());
+        if(tree.getCommonName() != null) {
+            commonName = Transform.ChangeName(tree.getCommonName());
+        }else{
+            commonName = "tree";
+        }
         allInfo = "";
         hasValues = false;
-        double treeDbh = tree.getCurrentDBH();
+        double treeDbh;
+        if(tree.getCurrentDBH() != null) {
+            treeDbh = tree.getCurrentDBH();
+        }else{
+            treeDbh = 0;
+        }
         BigDecimal bd = new BigDecimal(treeDbh);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         while ((line = reader.readLine()) != null) {
@@ -357,8 +366,17 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
 
         // Subtitle
-        str = "Serving size: "+((int)(tree.getCurrentDBH()*100)/100.0)+"\" DBH";
-        String condition = (String) tree.getInfo("Condition");
+        if (tree.getCurrentDBH() != null) {
+            str = "Serving size: " + ((int) (tree.getCurrentDBH() * 100) / 100.0) + "\" DBH";
+        }else{
+            str = ("Serving size: N/A"+ "\" DBH");
+        }
+        String condition;
+        if(tree.getInfo("Condition") != null) {
+            condition = (String) tree.getInfo("Condition");
+        }else{
+            condition = "N/A";
+        }
         textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
         textPaint.setTextSize(dpToPx(subtitleTextSize, displaymetrics));
         y += dpToPx(subtitleTextSize, displaymetrics) + 15;

@@ -564,10 +564,19 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
-        commonName = Transform.ChangeName(tree.getCommonName());
+        if(tree.getCommonName() != null) {
+            commonName = Transform.ChangeName(tree.getCommonName());
+        }else{
+            commonName = "tree";
+        }
         allInfo = "";
         hasValues = false;
-        double treeDbh = tree.getCurrentDBH();
+        double treeDbh;
+        if(tree.getCurrentDBH() != null) {
+            treeDbh = tree.getCurrentDBH();
+        }else{
+            treeDbh = 0;
+        }
         BigDecimal bd = new BigDecimal(treeDbh);
         //bd = bd.setScale(0, RoundingMode.DOWN);
         while ((line = reader.readLine()) != null) {
