@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(prefs.getString("distanceFromTreePref", "") .equals("")){
             editor.putString("distanceFromTreePref", "100,000");
-        } 
+        }
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 //        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
