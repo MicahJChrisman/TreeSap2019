@@ -19,8 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -51,6 +55,9 @@ public class SettingsActivity extends PreferenceActivity {
         // gallery EditText change listener
         bindPreferenceSummaryToValue(findPreference(getString(R.string.distanceFromTreePref)));
 
+
+
+
         // notification preference change listener
 
         // feedback preference click listener
@@ -69,6 +76,13 @@ public class SettingsActivity extends PreferenceActivity {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void logOut(View v){
+        Login_Activity.mAuth.signOut();
+        Toast toast = Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0,0);
+        toast.show();
     }
 
     private static void bindPreferenceSummaryToValue(Preference preference) {

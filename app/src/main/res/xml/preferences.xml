@@ -59,7 +59,12 @@
             android:selectable="false"
             android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
             android:title="Copyright of Hope College" />
-    </PreferenceCategory>
 
+        <Preference
+            android:key="logout_pref"
+            android:title="Account:"
+            android:widgetLayout="@layout/logout_button">
+        </Preference>
+    </PreferenceCategory>
 
 </PreferenceScreen>

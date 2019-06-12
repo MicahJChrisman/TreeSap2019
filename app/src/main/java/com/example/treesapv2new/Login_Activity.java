@@ -3,6 +3,8 @@ package com.example.treesapv2new;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import javax.annotation.Nonnull;
 
 public class Login_Activity extends AppCompatActivity {
-    FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    public static FirebaseAuth mAuth= FirebaseAuth.getInstance();
     FirebaseAuth.AuthStateListener mAuthListener;
 
 
@@ -54,7 +56,6 @@ public class Login_Activity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth1.getCurrentUser();
                 if(user!=null){
                     //user is signed in
-                    Add_Tree_Activity.loggedIn = true;
                     finish();
                 }else{
                     //user is signed out
@@ -68,12 +69,19 @@ public class Login_Activity extends AppCompatActivity {
         public void onClick(View v){
             String email = ((TextView)findViewById(R.id.edittext_username)).getText().toString();
             String password = ((TextView)findViewById(R.id.edittext_password)).getText().toString();
-            if(!email.equals("")&&!password.equals("")){
-                mAuth.signInWithEmailAndPassword(email,password);
-            }else{
-                Toast toast = Toast.makeText(Login_Activity.this, "Please enter email and password.", Toast.LENGTH_LONG);
-                toast.show();
-            }
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        FirebaseUser user = mAuth.getCurrentUser();
+                    }else{
+                        Toast toast = Toast.makeText(Login_Activity.this, "Invalid login.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0,0);
+                        toast.show();
+                    }
+                }
+            });
+
         }
     }
 
@@ -87,21 +95,21 @@ public class Login_Activity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(!task.isSuccessful()) {
+                        Log.i("Failed Task", "signinwithemail:failed ", task.getException());
                         try {
                             throw task.getException();
                         } catch(FirebaseAuthWeakPasswordException e) {
                             Toast toast = Toast.makeText(Login_Activity.this, "Password must be at least 6 characters.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0,0);
                             toast.show();
-//                            mTxtPassword.setError(getString(R.string.error_weak_password));
-//                            mTxtPassword.requestFocus();
                         } catch(FirebaseAuthInvalidCredentialsException e) {
-//                            mTxtEmail.setError(getString(R.string.error_invalid_email));
-//                            mTxtEmail.requestFocus();
+                            Toast toast = Toast.makeText(Login_Activity.this, "Please enter a valid email.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0,0);
+                            toast.show();
                         } catch(FirebaseAuthUserCollisionException e) {
                             Toast toast = Toast.makeText(Login_Activity.this, "This email already exists.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0,0);
                             toast.show();
-//                            mTxtEmail.setError(getString(R.string.error_user_exists));
-//                            mTxtEmail.requestFocus();
                         } catch(Exception e) {
                             Toast toast = Toast.makeText(Login_Activity.this, "Registration failed.", Toast.LENGTH_LONG);
                             toast.show();
@@ -109,23 +117,6 @@ public class Login_Activity extends AppCompatActivity {
                         }
                     }
                 });
-//            if(!email.equals("")){
-//                if(password.equals(passwordCnf)) {
-//                    if(password.length()>5) {
-//                        mAuth.createUserWithEmailAndPassword(email, password);
-//                    }else{
-//                        Toast toast = Toast.makeText(Login_Activity.this, "Password must be at least 6 characters.", Toast.LENGTH_LONG);
-//                        toast.show();
-//                    }
-//                }else{
-//                    Toast toast = Toast.makeText(Login_Activity.this, "Passwords do not match.", Toast.LENGTH_LONG);
-//                    toast.show();
-//                }
-//            }else{
-//                Toast toast = Toast.makeText(Login_Activity.this, "Please enter email and password.", Toast.LENGTH_LONG);
-//                toast.show();
-//            }
-            finish();
         }
     }
 

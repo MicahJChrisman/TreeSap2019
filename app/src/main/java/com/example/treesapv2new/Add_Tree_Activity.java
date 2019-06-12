@@ -19,13 +19,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.InputStream;
 import java.util.List;
+
+import javax.annotation.Nonnull;
 
 public class Add_Tree_Activity extends AppCompatActivity implements LocationListener {
     Double longitude, latitude;
     LocationManager locationManager;
-    public static boolean loggedIn = false;
     final long LOCATION_REFRESH_TIME = 1;     // 1 minute
     final long LOCATION_REFRESH_DISTANCE = 1; // 10 meters
     private static final String[] PERMS = {
@@ -38,22 +42,59 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
     };
     private static final int REQUEST_ID = 6;
 
+    FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(null);
+//
+//        //Authorization Stuff
+//        mAuthListener = new FirebaseAuth.AuthStateListener(){
+//            @Override
+//            public void onAuthStateChanged(@Nonnull FirebaseAuth firebaseAuth1){
+//                FirebaseUser user = firebaseAuth1.getCurrentUser();
+//                if(user!=null){
+//                    //user is signed in
+//                    addTreesMethod();
+//                }else{
+//                    //user is signed out
+//                    startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
+//
+//                }
+//            }
+//        };
+//    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
 
-        if (loggedIn == false) {
-            startActivityForResult(new Intent(this, Login_Activity.class), 1);
-        }else{
-            addTreesMethod();
-        }
+        //Authorization Stuff
+//        mAuthListener = new FirebaseAuth.AuthStateListener(){
+//            @Override
+//            public void onAuthStateChanged(@Nonnull FirebaseAuth firebaseAuth1){
+                FirebaseUser user = mAuth.getCurrentUser();
+                if(user!=null){
+                    //user is signed in
+                    addTreesMethod();
+                }else{
+                    //user is signed out
+                    startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
 
+                }
+            //}
+        //};
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(loggedIn ==false){
-            finish();
-        }else{
+        //Authorization Stuff
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            //user is signed in
             addTreesMethod();
+        }else{
+            //user is signed out
+            finish();
+
         }
     }
 
