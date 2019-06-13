@@ -219,8 +219,8 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        SharedPreferences.Editor editor = prefs.edit();
         if(sources.size()==0) {
-            SharedPreferences.Editor editor = prefs.edit();
             HashSet<String> dbs = new HashSet<String>();
             dbs.add("HopeCollegeDataSource");
             dbs.add("CityOfHollandDataSource");
@@ -229,6 +229,9 @@ public class MainActivity extends AppCompatActivity {
             dbs.add("UserTreeDataSource");
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
+        }
+        if(prefs.getString("distanceFromTreePref", "") .equals("")){
+            editor.putString("distanceFromTreePref", "100,000");
         }
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());

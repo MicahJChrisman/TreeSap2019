@@ -329,6 +329,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
             @Override
             public boolean onMarkerClick(Marker marker) {
+                String title = marker.getTitle();
                 Marker thisMarker = marker;
                 latitude = marker.getPosition().latitude;
                 longitude = marker.getPosition().longitude;
@@ -371,6 +372,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }
                 }
+                String snippet = marker.getSnippet();
                 if(thisMarker.getSnippet().equals("Holland, MI")){
                     DataSource ds = new CityOfHollandDataSource();
                     ds.initialize(Maps_Activity.this, null);
@@ -538,7 +540,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else if (ds instanceof UserTreeDataSource){
                 stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv");
                 treeField = 1;
-                location42 = "";
+                location42 = "N/A";
                 whichSource = false;
             }
             if (stuff == null) {
@@ -577,6 +579,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                     }
                                     try {
                                         String name = Transform.ChangeName(record.get(treeField));
+                                        if(name == ""){
+                                            name = "N/A";
+                                        }
 
                                         mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1)));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
