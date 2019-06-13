@@ -120,7 +120,6 @@
         android:id="@+id/register_container"
         android:visibility="gone">
 
-
         <EditText
             android:id="@+id/edittext_username_reg"
             android:layout_width="206dp"
