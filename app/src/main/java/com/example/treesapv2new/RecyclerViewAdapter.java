@@ -75,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             InputStream inputStream = new ByteArrayInputStream(encodeByte);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             if(bitmap == null){
-                
+
             }else {
                 GlideApp.with(mContext)
                         .asBitmap()
