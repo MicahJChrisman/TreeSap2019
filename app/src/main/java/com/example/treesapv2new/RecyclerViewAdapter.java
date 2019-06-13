@@ -66,20 +66,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
+        int a = mImageNames.size();
+        int b = mImages.size();
 
-        byte [] encodeByte= Base64.decode(mImages.get(position),Base64.DEFAULT);
+        if(mImages.size()>position) {
+            byte[] encodeByte = Base64.decode(mImages.get(position), Base64.DEFAULT);
 
-        InputStream inputStream  = new ByteArrayInputStream(encodeByte);
-        Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+            InputStream inputStream = new ByteArrayInputStream(encodeByte);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            if(bitmap == null){
+
+            }else {
+                GlideApp.with(mContext)
+                        .asBitmap()
+                        .load(bitmap)
+                        .into(holder.image);
+            }
+        }
+
+        holder.imageName.setText(mImageNames.get(position));
 //                        ImageView image = (ImageView) findViewById(R.id.set_image_curator);
 //                        image.setImageBitmap(bitmap);
 
 
 
-        GlideApp.with(mContext)
-                .asBitmap()
-                .load(bitmap)
-                .into(holder.image);
+
 
 
 
@@ -88,7 +99,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                .load(mImages.get(position))
 //                .into(holder.image);
 
-        holder.imageName.setText(mImageNames.get(position));
+
 
 //        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override

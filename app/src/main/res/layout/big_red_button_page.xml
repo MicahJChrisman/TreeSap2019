@@ -58,7 +58,7 @@
             android:layout_width="307dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="Hold your phone up to a tree and press the button below to get information"
+            android:text="Hold your phone near a tree and press the button below to get information about that tree."
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
             android:textSize="22dp"

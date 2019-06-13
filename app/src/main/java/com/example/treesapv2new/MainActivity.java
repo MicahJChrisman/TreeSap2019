@@ -104,6 +104,11 @@ import com.example.treesapv2new.view.BulletedWebView;
 import com.example.treesapv2new.view.CardViewListAdapter;
 import com.example.treesapv2new.view.MapsActivity;
 import com.example.treesapv2new.view.UserViewAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
+
+import javax.annotation.Nonnull;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -131,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
 
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     private static final String[] PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -140,6 +147,23 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_NETWORK_STATE
     };
     private static final int REQUEST_ID = 6;
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) {
+            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
+                //user is signed in
+                findViewById(R.id.curator_button).setVisibility(View.VISIBLE);
+            } else {
+                //user is signed out
+                findViewById(R.id.curator_button).setVisibility(View.GONE);
+            }
+        }else{
+            findViewById(R.id.curator_button).setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

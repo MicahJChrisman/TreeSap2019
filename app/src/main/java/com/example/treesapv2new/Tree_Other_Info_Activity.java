@@ -160,12 +160,11 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         public void onClick(View v){
             AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
             builder.setCancelable(true);
-            builder.setTitle("Thank you for submitting your tree!");
-            builder.setMessage("We will check over your submission and add it to the database if all looks good.");
+            builder.setTitle("Submit tree for approval?");
+            builder.setMessage("We will check over your submission and add it to the database if it is approved.");
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
                     dialog.dismiss();
                 }
             });
@@ -217,10 +216,21 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
 
                     dialog.dismiss();
-                    MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this,null);
-                    MainActivity.userTreeDataSourceGlobal.addTree(passedArray);
-                    Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
-                    startActivity(intentA);
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
+                    builder1.setCancelable(false);
+                    builder1.setTitle("Success!");
+                    builder1.setMessage("Your tree has been submitted for approval. While you wait, your tree will be available in the \"User Tree\" data set on your device.");
+                    builder1.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this,null);
+                            MainActivity.userTreeDataSourceGlobal.addTree(passedArray);
+                            Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
+                            startActivity(intentA);
+                        }
+                    });
+                    builder1.show();
                 }
             });
             builder.show();

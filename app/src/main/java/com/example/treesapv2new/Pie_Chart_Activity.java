@@ -47,6 +47,7 @@ import com.example.treesapv2new.display.PieChartDisplay;
 import com.example.treesapv2new.model.Tree;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -460,6 +461,8 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         description.setText("");
         pieChart.setDescription(description);
         dataset.setColors(COLORFUL_COLORS);
+        Legend legend = pieChart.getLegend();
+        legend.setTextSize(14);
         pieChart.getLegend().setWordWrapEnabled(true);
 //        if ( PrefManager.getInteger("lastIDMethod", -1)==3) {
 //

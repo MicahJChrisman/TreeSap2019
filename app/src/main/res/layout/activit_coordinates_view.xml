@@ -63,7 +63,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
-                android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
+                android:text="Enter GPS coordinates of a tree. In order to recieve the best results, its is important to enter 11 significant digits."
                 android:textAlignment="center"
                 android:textColor="@color/accent_gray"
                 android:textSize="15sp" />

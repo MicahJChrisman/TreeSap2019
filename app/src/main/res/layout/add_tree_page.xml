@@ -51,16 +51,26 @@
         tools:layout_editor_absoluteY="8dp">
 
         <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Step 1: Location"
+            android:textSize="32sp"
+            android:textColor="@color/black"
+            android:layout_above="@id/addtreemessage"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
             android:id="@+id/addtreemessage"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/get_location_button"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"
-            android:text="Stand next to the tree and press the button to get the location."
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="15dp"
+            android:text="Hold your phone near the tree you want to add and press the button below to gets its location."
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
-            android:textSize="30sp"
+            android:textSize="22sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,11 +86,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:text="Latitude: " />
 
             <TextView
                 android:id="@+id/lat_putter"
                 android:layout_width="wrap_content"
+                android:textSize="18sp"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -97,10 +109,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="18sp"
                 android:text="Longitude: " />
 
             <TextView
                 android:id="@+id/long_putter"
+                android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -111,8 +125,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Get Coordinates"
+            android:layout_below="@id/addtreemessage"
+            android:text="Get Tree Location"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </RelativeLayout>

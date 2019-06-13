@@ -21,14 +21,13 @@
         android:id="@+id/full_pic_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="Entire Tree Picture"
+        android:text="Add Tree"
         android:textAlignment="center"
-        android:layout_marginTop="8dp"
         android:textColor="@color/accent_gray"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:layout_width="wrap_content"
@@ -67,6 +66,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Step 4: Entire Tree"
+            android:layout_above="@id/full_text"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:layout_centerHorizontal="true"/>
+
         <ImageButton
             android:id="@+id/add_full_pic"
             android:layout_width="wrap_content"
@@ -75,22 +85,20 @@
             android:src="@drawable/camera_logo"
             android:scaleType="centerCrop"
             android:maxWidth="100dp"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:background="@drawable/button_style_black"
-            android:layout_below="@+id/full_text"
-            android:layout_marginTop="25dp"
             />
 
         <TextView
             android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Take a picture of the entire."
+            android:text="Please provide a clear photo of the entire tree."
+            android:layout_above="@id/add_full_pic"
+            android:layout_marginBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
-            android:textSize="30sp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="100dp"
+            android:textSize="22sp"
             android:id="@+id/full_text"/>
 
         <LinearLayout
