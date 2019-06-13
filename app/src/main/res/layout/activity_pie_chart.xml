@@ -66,26 +66,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/pie_chart_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chart"
-        android:layout_marginTop="5dp"
-        android:text="Select a category for more information." />
+        <TextView
+            android:id="@+id/pie_chart_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Select a category for more information."
+            app:layout_constraintBottom_toBottomOf="@+id/bar_chart_pol"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -99,184 +99,199 @@
         app:srcCompat="@drawable/common_full_open_on_phone"
         android:visibility="gone"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
-        android:id="@+id/bar_chart"
-        app:layout_constraintTop_toBottomOf="@+id/pie_chart_text"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/blue_rect"
-            android:layout_width="18dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/transparent_rect"
-            android:background="#34888C"
-            android:visibility="gone"/>
-        <ImageView
-            android:layout_width="10dp"
+        <LinearLayout
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:id="@+id/red_rect"
-            android:src="@drawable/transparent_rect"
-            android:background="#B43211"
-            android:visibility="gone"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/bar_key"
-        app:layout_constraintTop_toBottomOf="@id/bar_chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
-        <ImageView
-            android:id="@+id/blue_rect_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="#34888C"
-            android:layout_gravity="center_vertical"/>
-        <TextView
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/bar_key">
+
+            <ImageView
+                android:id="@+id/blue_rect"
+                android:layout_width="18dp"
+                android:layout_height="match_parent"
+                android:background="#34888C"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/red_rect"
+                android:layout_width="10dp"
+                android:layout_height="25dp"
+                android:background="#B43211"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bar_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cooling_text"
-            android:text="Cooling "/>
-        <ImageView
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:id="@+id/red_rect_key"
-            android:background="#B43211"
-            android:src="@drawable/transparent_rect"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/heating_text"
-            android:text="Heating"/>
-    </LinearLayout>
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/chart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
-        android:id="@+id/bar_chart_pol"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
-        android:visibility="visible"
-        app:layout_constraintTop_toBottomOf="@+id/pie_chart_text"
-        tools:layout_editor_absoluteX="206dp">
+            <ImageView
+                android:id="@+id/blue_rect_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#34888C"
+                android:src="@drawable/transparent_rect" />
 
-        <ImageView
-            android:id="@+id/co_rect"
-            android:layout_width="18dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:src="@drawable/transparent_rect"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/cooling_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cooling " />
 
-        <ImageView
-            android:id="@+id/o3_rect"
-            android:layout_width="10dp"
+            <ImageView
+                android:id="@+id/red_rect_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#B43211"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/heating_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heating" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bar_chart_pol"
+            android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:background="#7CAA2D"
-            android:src="@drawable/transparent_rect"
-            android:visibility="gone" />
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/bar_key_pol">
 
-        <ImageView
-            android:id="@+id/no2_rect"
-            android:layout_width="10dp"
-            android:layout_height="25dp"
-            android:background="#db6a97"
-            android:src="@drawable/transparent_rect"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/co_rect"
+                android:layout_width="18dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/so_rect"
-            android:layout_width="10dp"
-            android:layout_height="25dp"
-            android:background="#fff"
-            android:src="@drawable/transparent_rect"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/o3_rect"
+                android:layout_width="10dp"
+                android:layout_height="25dp"
+                android:background="#7CAA2D"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/pm_rect"
-            android:layout_width="10dp"
-            android:layout_height="25dp"
-            android:background="#F5E356"
-            android:src="@drawable/transparent_rect"
-            android:visibility="gone" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/no2_rect"
+                android:layout_width="10dp"
+                android:layout_height="25dp"
+                android:background="#db6a97"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
 
-    <LinearLayout
-        android:id="@+id/bar_key_pol"
-        app:layout_constraintTop_toBottomOf="@id/bar_chart_pol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone">
-        <ImageView
-            android:id="@+id/co_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="@color/colorPrimaryDark"
-            android:layout_gravity="center_vertical"/>
-        <TextView
+            <ImageView
+                android:id="@+id/so_rect"
+                android:layout_width="10dp"
+                android:layout_height="25dp"
+                android:background="#fff"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/pm_rect"
+                android:layout_width="10dp"
+                android:layout_height="25dp"
+                android:background="#F5E356"
+                android:src="@drawable/transparent_rect"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bar_key_pol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/co_text"
-            android:text="CO "/>
-        <ImageView
-            android:id="@+id/o3_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="#7CAA2D"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/o3_text"
-            android:text="O3 "/>
-        <ImageView
-            android:id="@+id/no2_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="#db6a97"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/no2_text"
-            android:text="NO2 "/>
-        <ImageView
-            android:id="@+id/so2_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="#fff"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/so2_text"
-            android:text="SO2 "/>
-        <ImageView
-            android:id="@+id/pm_key"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:src="@drawable/transparent_rect"
-            android:background="#F5E356"
-            android:layout_gravity="center_vertical"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pm_text"
-            android:text="PM 2.5 "/>
-    </LinearLayout>
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/chart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/co_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimaryDark"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/co_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CO " />
+
+            <ImageView
+                android:id="@+id/o3_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#7CAA2D"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/o3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="O3 " />
+
+            <ImageView
+                android:id="@+id/no2_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#db6a97"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/no2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NO2 " />
+
+            <ImageView
+                android:id="@+id/so2_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#fff"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/so2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SO2 " />
+
+            <ImageView
+                android:id="@+id/pm_key"
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:background="#F5E356"
+                android:src="@drawable/transparent_rect" />
+
+            <TextView
+                android:id="@+id/pm_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PM 2.5 " />
+        </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
 

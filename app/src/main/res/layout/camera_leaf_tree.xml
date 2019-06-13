@@ -22,14 +22,13 @@
         android:id="@+id/leaf_pic_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="Leaf Picture"
+        android:text="Add Tree"
         android:textAlignment="center"
-        android:layout_marginTop="8dp"
         android:textColor="@color/accent_gray"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:layout_width="wrap_content"
@@ -69,13 +68,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/leaf_text"
+            android:layout_marginBottom="10dp"
+            android:text="Step 3: Leaves"
+            android:textColor="@color/black"
+            android:textSize="32sp"/>
+
         <ImageButton
             android:id="@+id/add_leaf_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/leaf_text"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:background="@drawable/button_style_black"
             android:maxWidth="100dp"
@@ -87,13 +95,13 @@
             android:id="@+id/leaf_text"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:text="Take a picture of the tree's leaf."
+            android:text="Please provide a clear photo of the tree's leaves or needles."
+            android:layout_above="@+id/add_leaf_pic"
+            android:layout_marginBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
-            android:textSize="30sp" />
+            android:textSize="22sp" />
 
 
 
