@@ -1,13 +1,28 @@
 package com.example.treesapv2new;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class CuratorApproveActivity extends AppCompatActivity {
@@ -30,9 +45,36 @@ public class CuratorApproveActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
-        mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
-        mNames.add("Havasu Falls");
-        initRecyclerView();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference users = db.collection("Pending Trees");
+        final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot document = task.getResult();
+                    ArrayList<String> pic = (ArrayList<String>) document.getData().get("Pictures");
+                    try{
+                        byte [] encodeByte= Base64.decode(pic.get(0),Base64.DEFAULT);
+
+                        InputStream inputStream  = new ByteArrayInputStream(encodeByte);
+                        mImageUrls.add(pic.get(0));
+                        Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+//                        ImageView image = (ImageView) findViewById(R.id.set_image_curator);
+//                        image.setImageBitmap(bitmap);
+                    }catch(Exception e){
+                        e.getMessage();
+                    }
+                    mNames.add((String) document.getData().get("Common Name"));
+                    initRecyclerView();
+                }else{
+                    Toast toast = Toast.makeText(CuratorApproveActivity.this, "Unable to load trees.", Toast.LENGTH_LONG);
+                }
+            }
+        });
+
+
+
     }
 
     private void initRecyclerView(){

@@ -2,8 +2,11 @@ package com.example.treesapv2new;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.bumptech.glide.Glide;
 
-import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -49,23 +52,50 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return holder;
     }
 
+//    public class Glider extends AppGlideModule{
+//        @GlideModule
+//        public void gliderMove(ViewHolder holder, final int position){
+//            Glide.with(mContext)
+//                    .asBitmap()
+//                    .load(mImages.get(position))
+//                    .into(holder.image);
+//        }
+//    }
+
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
+
+
+        byte [] encodeByte= Base64.decode(mImages.get(position),Base64.DEFAULT);
+
+        InputStream inputStream  = new ByteArrayInputStream(encodeByte);
+        Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+//                        ImageView image = (ImageView) findViewById(R.id.set_image_curator);
+//                        image.setImageBitmap(bitmap);
+
+
+
+        GlideApp.with(mContext)
+                .asBitmap()
+                .load(bitmap)
+                .into(holder.image);
+
+
 
 //        Glide.with(mContext)
 //                .asBitmap()
 //                .load(mImages.get(position))
 //                .into(holder.image);
-//
-//        holder.imageName.setText(mImageNames.get(position));
+
+        holder.imageName.setText(mImageNames.get(position));
 
 //        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
 //
-//                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
 //
 //                Intent intent = new Intent(mContext, GalleryActivity.class);
 //                intent.putExtra("image_url", mImages.get(position));
@@ -88,6 +118,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
+            image = itemView.findViewById(R.id.tree_image_recycler);
             imageName = itemView.findViewById(R.id.image_name);
             parentLayout = itemView.findViewById(R.id.curator_constraint_layout);
         }
