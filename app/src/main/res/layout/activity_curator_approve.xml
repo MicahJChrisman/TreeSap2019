@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,13 +22,16 @@
         android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/recycler_view_curator"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="15dp"
         android:paddingTop="40dp"
         android:paddingEnd="15dp"
-        android:paddingStart="15dp"
-        android:id="@+id/recycler_view_curator">
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/curator_approve_header"></android.support.v7.widget.RecyclerView>
 
     <TextView
         android:id="@+id/curator_approve_close"
