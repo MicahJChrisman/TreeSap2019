@@ -36,7 +36,6 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 
         rowItems = new ArrayList<Tree>();
 
-
         arrayAdapter = new NewArrayAdapter(this, R.layout.item, rowItems );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
