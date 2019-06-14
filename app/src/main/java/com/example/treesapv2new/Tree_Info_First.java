@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.util.Base64;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
@@ -219,8 +220,10 @@ public class Tree_Info_First extends AppCompatActivity {
             ds = new ITreeDataSource();
         }else if(MainActivity.banana.getDataSource()=="HopeCollegeData" ){
             ds = new HopeCollegeDataSource();
-        }else if (MainActivity.banana.getDataSource()== "CoHdatabase"){
+        }else if (MainActivity.banana.getDataSource()== "CoHdatabase") {
             ds = new CityOfHollandDataSource();
+        }else if(MainActivity.banana.getDataSource()== "AllUserDB"){
+            ds = new AllUsersDataSource();
         }else{
             ds = MainActivity.userTreeDataSourceGlobal;
         }

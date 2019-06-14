@@ -68,6 +68,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apache.commons.csv.CSVRecord;
 
@@ -554,6 +560,79 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 treeField = 1;
                 location42 = "N/A";
                 whichSource = false;
+            } else if (ds instanceof AllUsersDataSource){
+                stuff = null;
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference users = db.collection("Pending Trees");
+                db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
+
+                                try {
+                                    Double latitude = Double.valueOf(document.getData().get("latitude").toString());
+                                    Double longitude = Double.valueOf(document.getData().get("longitude").toString());
+                                    if (latitude != null && longitude != null) {
+                                        // if (!latitude.equals("")) {
+
+                                        //if (!longitude.equals("")) {
+                                        LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+                                        if (ds.getClass().equals(CityOfHollandDataSource.class)) {
+//                                                    location42 = record.get("Park");
+                                        }
+                                        try {
+//                                                    String name = Transform.ChangeName(record.get(treeField));
+                                            String name = "Tree";
+//                                                    if(name == ""){
+//                                                        name = "N/A";
+//                                                    }
+                                            int iconInt = randomGenerator.nextInt(8);
+                                            BitmapDescriptor icon;
+                                            switch (iconInt) {
+                                                case 0:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                    break;
+                                                case 1:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                                    break;
+                                                case 2:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                                    break;
+                                                case 3:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                                    break;
+                                                case 4:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                                    break;
+                                                case 5:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                                    break;
+                                                case 6:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                                    break;
+                                                case 7:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                                    break;
+                                                default:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                    break;
+                                            }
+                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                        } catch (ArrayIndexOutOfBoundsException e) {
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    continue;
+                                }
+                            }
+                        } else {
+                            Toast toast = Toast.makeText(parent, "Unable to load trees.", Toast.LENGTH_LONG);
+                        }
+                    }
+                });
             }
             if (stuff == null) {
                 continue;

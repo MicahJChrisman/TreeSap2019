@@ -125,7 +125,7 @@ public class AllUsersDataSource extends DataSource {
         closestEntry = 0;
         entry = -1;
 
-
+        Tree tree = new Tree();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("Pending Trees");
         db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -138,13 +138,41 @@ public class AllUsersDataSource extends DataSource {
                         try {
                             Double lati = Double.valueOf(document.getData().get("latitude").toString());
                             Double longi = Double.valueOf(document.getData().get("longitude").toString());
-
                             Location.distanceBetween(lati, longi,
                                     location.getLatitude(), location.getLongitude(),
                                     results);
-                            // if (results[0] > 2.0) {
                             if (results[0] < closestDistance) {
                                 closestDistance = results[0];
+                            }
+                            if (closestDistance > cap)
+                                break;
+                            else {
+                                //MATCH!  Build tree and return it.
+
+                                tree.setClosest(closestDistance);
+                                tree.setCommonName(document.getData().get("commonName").toString());
+                                tree.setScientificName(document.getData().get("scientificName").toString());
+                                tree.setLocation(new TreeLocation(lati, longi));
+                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+                                tree.setFound(true);
+                                tree.setIsClosest(true);
+                                tree.addInfo("Source", document.getData().get("userID").toString());
+//                                if(closestRecord.get("Notes")!="") {
+//                                    tree.addInfo("Notes", closestRecord.get("Notes"));
+//                                }
+//
+//                                if(closestRecord.get("Image Leaf")!="") {
+//                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+//                                }
+//                                if(closestRecord.get("Image Bark")!="") {
+//                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+//                                }
+//                                if(closestRecord.get("Image Tree")!="") {
+//                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+//                                }
+                                tree.setDataSource("AllUserDB");
+
+                                finishedBoolean = true;
                             }
                         } catch (Exception e) {
                             continue;
@@ -155,66 +183,7 @@ public class AllUsersDataSource extends DataSource {
                 }
             }
         });
-
-
-//        for (CSVRecord record : records) {
-//            entry++;
-//            try {
-//                Double lati = Double.valueOf(record.get("Latitude"));
-//                Double longi = Double.valueOf(record.get("Longitude"));
-//
-//                Location.distanceBetween(lati, longi,
-//                        location.getLatitude(), location.getLongitude(),
-//                        results);
-//                // if (results[0] > 2.0) {
-//                if (results[0] < closestDistance) {
-//                    closestDistance = results[0];
-//                    closestRecord = record;
-//                }
-//            } catch (Exception e) {
-//                continue;
-//            }
-//        }
-
-        if (closestDistance > cap)
-            return null;
-        else {
-            //MATCH!  Build tree and return it.
-            Tree tree = new Tree();
-            tree.setClosest(closestDistance);
-            Double lat = new Double(closestRecord.get("Latitude"));
-            Double longi = new Double(closestRecord.get("Longitude"));
-            if(closestRecord.get("Species") !="") {
-                tree.setCommonName(closestRecord.get("Species"));
-            }
-            if(closestRecord.get("Scientific Name") != "") {
-                tree.setScientificName(closestRecord.get("Scientific Name"));
-            }
-            tree.setLocation(new TreeLocation(lat, longi));
-            if(closestRecord.get("DBH")!="") {
-                tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
-            }
-            tree.setFound(true);
-            tree.setIsClosest(true);
-            tree.addInfo("Source", "You submitted this tree");
-            if(closestRecord.get("Notes")!="") {
-                tree.addInfo("Notes", closestRecord.get("Notes"));
-            }
-
-            if(closestRecord.get("Image Leaf")!="") {
-                tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
-            }
-            if(closestRecord.get("Image Bark")!="") {
-                tree.addPics("Image Bark", closestRecord.get("Image Bark"));
-            }
-            if(closestRecord.get("Image Tree")!="") {
-                tree.addPics("Image Tree", closestRecord.get("Image Tree"));
-            }
-            tree.setDataSource("User");
-
-            finishedBoolean = true;
-            return tree;
-        }
+        return tree;
     }
 
     public void patchData(Tree tree){
@@ -235,7 +204,7 @@ public class AllUsersDataSource extends DataSource {
             MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
         }
         if(MainActivity.banana.getDataSource() == null){
-            MainActivity.banana.setDataSource("AllUsers");
+            MainActivity.banana.setDataSource("AllUserDB");
         }
     }
 
@@ -275,6 +244,7 @@ public class AllUsersDataSource extends DataSource {
         }
         return records;
     }
+
     public static boolean finishedBoolean = false;
 
 }
