@@ -539,7 +539,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             canvas.drawText("Carbon Dioxide Sequestered",
                     boxMargin + boxLineWidth + 10, y,
                     textPaint);
-            canvas.drawText("$" + allInfo.split(",")[21], right, y, rightPaint);
+            canvas.drawText("$" + allInfo.split(",")[20], right, y, rightPaint);
 
             y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
@@ -555,7 +555,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     boxMargin + boxLineWidth + 70, y,
                     textPaint);
             rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[20] + " " +
+            canvas.drawText(allInfo.split(",")[19] + " " +
                     "lbs", right, y, rightPaint);
             y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
@@ -571,7 +571,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     boxMargin + boxLineWidth + 10, y,
                     textPaint);
             rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[23], right, y, rightPaint);
+            canvas.drawText("$" + allInfo.split(",")[22], right, y, rightPaint);
 
             y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
@@ -586,7 +586,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             canvas.drawText("Rainfall intercepted each year",
                     boxMargin + boxLineWidth + 70, y,
                     textPaint);
-            String ft = allInfo.split(",")[22];
+            String ft = allInfo.split(",")[21];
             if (!ft.equals("N/A")) {
                 double gal = Double.parseDouble(ft) * 7.48052;
                 DecimalFormat df = new DecimalFormat("0.00");
@@ -608,7 +608,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     boxMargin + boxLineWidth + 10, y,
                     textPaint);
             rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[27], right, y, rightPaint);
+            canvas.drawText("$" + allInfo.split(",")[26], right, y, rightPaint);
 
             y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
@@ -624,8 +624,61 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                     boxMargin + boxLineWidth + 70, y,
                     textPaint);
             rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[26] + " oz", right, y, rightPaint);
+            canvas.drawText(allInfo.split(",")[25] + " oz", right, y, rightPaint);
 
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(15);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+
+
+            //Energy
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Energy",
+                    boxMargin + boxLineWidth + 10, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText("$" + allInfo.split(",")[59], right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Heating costs saved this year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[55] + " Kwh.", right, y, rightPaint);
+
+            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(5);
+            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+                    paint);
+            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+            canvas.drawText("Cooling costs saved this year",
+                    boxMargin + boxLineWidth + 70, y,
+                    textPaint);
+            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(allInfo.split(",")[57] + " Kwh.", right, y, rightPaint);
             y += dpToPx(subtitleTextSize, displaymetrics) - 5;
 
             paint.setColor(Color.BLACK);
