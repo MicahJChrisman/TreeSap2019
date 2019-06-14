@@ -37,6 +37,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
@@ -351,8 +352,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             ds = new CityOfHollandDataSource();
                         }else if(source.equals("ExtendedCoHDataSource")){
                             ds = new ExtendedCoHDataSource();
-                        }else if(source.equals("UserTreeDataSource")){
+                        }else if(source.equals("UserTreeDataSource")) {
                             ds = MainActivity.userTreeDataSourceGlobal;
+                        }else if(source.equals("AllUsersDataSource")){
+                                ds = new AllUsersDataSource();
                         } else{
                             ds = new ITreeDataSource();
                         }
@@ -423,6 +426,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 ds = new ExtendedCoHDataSource();
                             } else if(source.equals("UserTreeDataSource")){
                                 ds = MainActivity.userTreeDataSourceGlobal;
+                            }else if(source.equals("AllUsersDataSource")){
+                                ds = new AllUsersDataSource();
                             } else {
                                 ds = new ITreeDataSource();
                             }
@@ -504,6 +509,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 ds = new ExtendedCoHDataSource();
             }else if(source.equals("UserTreeDataSource")){
                 ds = MainActivity.userTreeDataSourceGlobal;
+            }else if(source.equals("AllUsersDataSource")){
+                ds = new AllUsersDataSource();
             }else{
                 ds = new ITreeDataSource();
             }

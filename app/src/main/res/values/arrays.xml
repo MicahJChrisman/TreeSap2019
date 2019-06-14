@@ -6,6 +6,7 @@
         <item>City of Holland Tree Data</item>
         <item>Extended City of Holland Tree Data</item>
         <item>User Tree Data Source</item>
+        <item>Trees Added by All Users</item>
     </string-array>
     <string-array name="settings_list_preference_values">
         <item>HopeCollegeDataSource</item>
@@ -13,5 +14,6 @@
         <item>CityOfHollandDataSource</item>
         <item>ExtendedCoHDataSource</item>
         <item>UserTreeDataSource</item>
+        <item>AllUsersDataSource</item>
     </string-array>
 </resources>

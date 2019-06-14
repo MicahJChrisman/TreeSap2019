@@ -43,6 +43,7 @@ import android.widget.Toast;
 import com.example.treesapv2new.control.IntentIntegrator;
 import com.example.treesapv2new.control.IntentResult;
 import com.example.treesapv2new.control.PrefManager;
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
@@ -292,13 +293,17 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     ds = new CityOfHollandDataSource();
                 }else if(source.equals("ExtendedCoHDataSource")){
                     ds = new ExtendedCoHDataSource();
-                }else if(source.equals("UserTreeDataSource")){
+                }else if(source.equals("UserTreeDataSource")) {
                     ds = MainActivity.userTreeDataSourceGlobal;
+                }else if(source.equals("AllUsersDataSource")){
+                    ds = new AllUsersDataSource();
                 }else{
                     ds = new ITreeDataSource();
                 }
                 ds.initialize(Big_Red_Button.this, null);
+
                 MainActivity.banana = ds.search(testing);
+
 
                 if (MainActivity.banana != null) {
                     if(MainActivity.banana.getClosestDist() < closest1) {
