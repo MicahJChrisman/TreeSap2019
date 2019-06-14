@@ -62,6 +62,7 @@ import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -73,7 +74,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
 
@@ -97,6 +100,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     Context parent;
     float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
     float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
+
+    Random randomGenerator;
 //    float zoom = 18-(2*PrefManager.getFloat("zoom", (float)1));
     float zoom = 16;
     boolean whichSource = false;
@@ -132,6 +137,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
         googleApiClient.connect();
 
+        randomGenerator = new Random();
 
 
 
@@ -582,8 +588,38 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                         if(name == ""){
                                             name = "N/A";
                                         }
-
-                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1)));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                        int iconInt = randomGenerator.nextInt(8);
+                                        BitmapDescriptor icon;
+                                        switch (iconInt){
+                                            case 0:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                break;
+                                            case 1:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                                break;
+                                            case 2:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                                break;
+                                            case 3:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                                break;
+                                            case 4:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                                break;
+                                            case 5:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                                break;
+                                            case 6:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                                break;
+                                            case 7:
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                                break;
+                                                default:
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                    break;
+                                        }
+                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                     }catch(ArrayIndexOutOfBoundsException e) {
 
                                     }
