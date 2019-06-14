@@ -336,11 +336,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public boolean onMarkerClick(Marker marker) {
                 String title = marker.getTitle();
-                Marker thisMarker = marker;
                 latitude = marker.getPosition().latitude;
                 longitude = marker.getPosition().longitude;
-                TreeLocation testing = new TreeLocation(latitude, longitude);
-                if(thisMarker.getTitle().equals("Unknown")){
+//                TreeLocation testing = new TreeLocation(latitude, longitude);
+                if(marker.getTitle().equals("Unknown")){
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                     Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
                     Tree closestTree = null;
@@ -368,7 +367,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                            }
 //                        }
                         ds.initialize(Maps_Activity.this, null);
-                        Tree newTree = ds.search(new TreeLocation(thisMarker.getPosition().latitude, thisMarker.getPosition().longitude));
+                        Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
                         if(newTree != null && !newTree.getCommonName().equals("Unknown")){
                             marker.setTitle(newTree.getCommonName());
                             if(marker.getSnippet().equals("Holland, MI") && newTree.getInfo("Park") != null){
@@ -378,8 +377,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }
                 }
-                String snippet = marker.getSnippet();
-                if(thisMarker.getSnippet().equals("Holland, MI")){
+//                String snippet = marker.getSnippet();
+                if(marker.getSnippet().equals("Holland, MI")){
                     DataSource ds = new CityOfHollandDataSource();
                     ds.initialize(Maps_Activity.this, null);
                     Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
@@ -387,7 +386,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         marker.setSnippet(newTree.getInfo("Park").toString());
                     }
                 }
-                thisMarker.showInfoWindow();
+                marker.showInfoWindow();
                 return true;
             }
         });

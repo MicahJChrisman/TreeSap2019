@@ -77,10 +77,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if(bitmap == null){
 
             }else {
-                GlideApp.with(mContext)
-                        .asBitmap()
-                        .load(bitmap)
-                        .into(holder.image);
+//                GlideApp.with(mContext)
+//                        .asBitmap()
+//                        .load(bitmap)
+//                        .into(holder.image);
             }
         }
 
