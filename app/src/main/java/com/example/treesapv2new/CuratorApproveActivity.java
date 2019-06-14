@@ -58,11 +58,15 @@ public class CuratorApproveActivity extends AppCompatActivity {
                     for(QueryDocumentSnapshot document : task.getResult()){
                         ArrayList<String> pic = (ArrayList<String>) document.getData().get("Pictures");
                         try{
-                            byte [] encodeByte= Base64.decode(pic.get(0),Base64.DEFAULT);
-
-                            InputStream inputStream  = new ByteArrayInputStream(encodeByte);
-                            mImageUrls.add(pic.get(pic.size()-1));
-                            Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+                            String b = null;
+                            for(String a : pic){
+                                if(a!=null){
+                                    b = a;
+                                }else{
+                                    b = "";
+                                }
+                            }
+                            mImageUrls.add(b);
                         }catch(Exception e){
                             e.getMessage();
                             mImageUrls.add("");
