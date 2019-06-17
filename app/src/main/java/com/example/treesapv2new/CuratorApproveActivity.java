@@ -49,9 +49,9 @@ public class CuratorApproveActivity extends AppCompatActivity {
 
     private void initImageBitmaps(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference users = db.collection("Pending Trees");
+        CollectionReference users = db.collection("pendingTrees");
         //final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");
-        db.collection("Pending Trees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -71,7 +71,7 @@ public class CuratorApproveActivity extends AppCompatActivity {
                             e.getMessage();
                             mImageUrls.add("");
                         }
-                        mNames.add((String) document.getData().get("Common Name"));
+                        mNames.add((String) document.getData().get("commonName"));
                     }
                     initRecyclerView();
                 }else {

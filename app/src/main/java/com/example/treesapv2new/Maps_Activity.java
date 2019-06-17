@@ -551,7 +551,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else if (ds instanceof AllUsersDataSource){
                 stuff = null;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                CollectionReference users = db.collection("Pending Trees");
+                CollectionReference users = db.collection("pendingTrees");
                 db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

@@ -33,7 +33,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         setContentView(R.layout.curator_swipe);
 
         db = FirebaseFirestore.getInstance();
-        CollectionReference penTrees = db.collection("Pending Trees");
+        CollectionReference penTrees = db.collection("pendingTrees");
 
         rowItems = new ArrayList<Tree>();
 
