@@ -37,6 +37,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
@@ -203,13 +204,20 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                         ds = new ExtendedCoHDataSource();
                     }else if(source.equals("UserTreeDataSource")){
                         ds = MainActivity.userTreeDataSourceGlobal;
+                    }else if(source.equals("AllUsersDataSource")){
+                        ds = new AllUsersDataSource();
                     }else{
                         ds = new ITreeDataSource();
                     }
 
-                    ds.initialize(Coordinates_View_Activity.this, null);
-                    MainActivity.banana = ds.search(testing);
-
+                    if(ds instanceof AllUsersDataSource){
+                        MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
+                    }else {
+                        ds.initialize(Coordinates_View_Activity.this, null);
+                        MainActivity.banana = ds.search(testing);
+                    }
+//                    ds.initialize(Coordinates_View_Activity.this, null);
+//                    MainActivity.banana = ds.search(testing);
 
                     if (MainActivity.banana != null) {
                         if(MainActivity.banana.getClosestDist() < closest1) {

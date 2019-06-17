@@ -84,20 +84,28 @@ public class AllUsersDataSource extends DataSource {
                 if(task.isSuccessful()){
 
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
+                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("images");
 
                         try {
                             Tree tree = new Tree();
                             Double lati = Double.valueOf(document.getData().get("latitude").toString());
                             Double longi = Double.valueOf(document.getData().get("longitude").toString());
-                                tree.setClosest(closestDistance);
-                                userDistance = closestDistance;
+                            if(document.getData().get("commonName").toString() !=null) {
                                 tree.setCommonName(document.getData().get("commonName").toString());
+                            }else{
+                                tree.setCommonName("Unknown");
+                            }
+                            if(document.getData().get("scientificName").toString() !=null) {
                                 tree.setScientificName(document.getData().get("scientificName").toString());
+                            }else{
+                                tree.setScientificName("Unknown");
+                            }
                                 tree.setLocation(new TreeLocation(lati, longi));
+                            if(document.getData().get("dbh").toString()!=null) {
                                 tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+                            }
 
-                                tree.setIsClosest(true);
+//                                tree.setIsClosest(true);
                                 tree.addInfo("Source", document.getData().get("userID").toString());
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
@@ -148,7 +156,6 @@ public class AllUsersDataSource extends DataSource {
 //        return true;
 //    }
 
-    float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
         float[] results = new float[1];
@@ -172,19 +179,20 @@ public class AllUsersDataSource extends DataSource {
             else {
                 //MATCH!  Build tree and return it.
 
-                treeReturn.setClosest(closestDistance);
+                if(results[0]==closestDistance) {
+                    treeReturn.setClosest(closestDistance);
 //                                tree.setCommonName(document.getData().get("commonName").toString());
-                treeReturn.setCommonName(tree.getCommonName());
+                    treeReturn.setCommonName(tree.getCommonName());
 //                                tree.setScientificName(document.getData().get("scientificName").toString());
-                treeReturn.setScientificName(tree.getScientificName());
+                    treeReturn.setScientificName(tree.getScientificName());
 //                                tree.setLocation(new TreeLocation(lati, longi));
-                treeReturn.setLocation(locOfTree);
+                    treeReturn.setLocation(locOfTree);
 //                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
-                treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                    treeReturn.setCurrentDBH(tree.getCurrentDBH());
 
-                treeReturn.setIsClosest(true);
+                    treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
-                treeReturn.addInfo("Source", tree.getInfo("Source"));
+                    treeReturn.addInfo("Source", tree.getInfo("Source"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -198,8 +206,9 @@ public class AllUsersDataSource extends DataSource {
 //                                if(closestRecord.get("Image Tree")!="") {
 //                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
 //                                }
-                treeReturn.setDataSource("AllUserDB");
-                treeReturn.setFound(true);
+                    treeReturn.setDataSource("AllUserDB");
+                    treeReturn.setFound(true);
+                }
             }
 
         }
@@ -294,8 +303,6 @@ public class AllUsersDataSource extends DataSource {
     }
 
     public static Tree a = new Tree();
-    public static float userDistance = 999999999;
-
 //    private class searchAsync extends AsyncTask<Object,Void,Tree> {
 //        TreeLocation treeLocation;
 //        Tree tree = new Tree();

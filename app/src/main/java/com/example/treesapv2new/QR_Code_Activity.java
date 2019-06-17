@@ -34,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
@@ -286,8 +287,15 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                                 ds = new ITreeDataSource();
                                                             }
 
-                                                            ds.initialize(QR_Code_Activity.this, null);
-                                                            MainActivity.banana = ds.search(testing);
+//                                                            ds.initialize(QR_Code_Activity.this, null);
+//                                                            MainActivity.banana = ds.search(testing);
+                                                            if(ds instanceof AllUsersDataSource){
+                                                                MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
+                                                            }else {
+                                                                ds.initialize(QR_Code_Activity.this, null);
+                                                                MainActivity.banana = ds.search(testing);
+                                                            }
+
 
                                                             float closest1 =0;
                                                             if (MainActivity.banana != null) {

@@ -303,8 +303,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }
 
                 if(ds instanceof AllUsersDataSource){
-                    AsyncTask z = new searchAsync(testing);
-                    z.execute(testing,null,null);
+                    MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
                 }else {
                     ds.initialize(Big_Red_Button.this, null);
                     MainActivity.banana = ds.search(testing);
@@ -467,24 +466,4 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 //        out.writeBundle(banana);
 //    }
 
-    private class searchAsync extends AsyncTask<Object,Void,Object>{
-        TreeLocation treeLocation;
-        DataSource ds = new AllUsersDataSource();
-
-        searchAsync(TreeLocation treeLocation1){
-            treeLocation = treeLocation1;
-        }
-
-        @Override
-        protected Void doInBackground(Object...treeLocations) {
-            ds.initialize(getBaseContext(),null);
-            MainActivity.banana = ds.search(treeLocation);
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Object value){
-//            Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
-//            startActivity(intentA);
-        }
-    }
 }
