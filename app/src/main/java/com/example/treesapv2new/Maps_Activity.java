@@ -406,13 +406,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 Bundle bundle = new Bundle();
                 if(!marker.getTitle().equals("My Position")) {
                     if(!marker.getTitle().equals("Current Position")) {
-
-//                    bundle.putDouble("longitude", marker.getPosition().longitude);
-//                    bundle.putDouble("latitude", marker.getPosition().latitude);
-//                    Intent mapsIntent = new Intent();
-//                    mapsIntent.putExtras(bundle);
-//                    setResult(RESULT_OK, mapsIntent);
-//                    finish();
                         latitude = marker.getPosition().latitude;
                         longitude = marker.getPosition().longitude;
 
@@ -420,8 +413,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
                         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                         Set<String> sources = prefs.getStringSet("databasesUsedSelector", new HashSet<String>());
-                        Tree closestTree = null;
-                        float closest1 =999999999;
                         for (String source : sources) {
                             Log.d("MainActivity", "Searching.  Trying: " + source);
                             DataSource ds;
@@ -438,12 +429,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             } else {
                                 ds = new ITreeDataSource();
                             }
-
-
-                            if(ds instanceof AllUsersDataSource) {
-                                AsyncTask z = new searchAsync(testing);
-                                z.execute(testing,null,null);
-                            }else {
+                            if(ds instanceof AllUsersDataSource){
+                                MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
+                            }else{
                                 ds.initialize(Maps_Activity.this, null);
                                 MainActivity.banana = ds.search(testing);
                             }
@@ -455,15 +443,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             }
                         }
 
-
-//                    HopeCollegeDataSource ds = new HopeCollegeDataSource();
-//                    ds.initialize(Maps_Activity.this,null);
-//                    MainActivity.banana = ds.search(testing);
                         if(closestTree != null) {
                             MainActivity.banana = closestTree;
                         }
                         Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
-//            intentA.putExtra("treeClass", MainActivity.banana);
                         startActivity(intentA);
                     }
 
@@ -783,27 +766,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-
-    private class searchAsync extends AsyncTask<Object,Void,Object>{
-        TreeLocation treeLocation;
-        DataSource ds = new AllUsersDataSource();
-
-        searchAsync(TreeLocation treeLocation1){
-            treeLocation = treeLocation1;
-        }
-
-        @Override
-        protected Void doInBackground(Object...treeLocations) {
-            ds.initialize(getBaseContext(),null);
-            MainActivity.banana = ds.search(treeLocation);
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Object value){
-//            Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
-//            startActivity(intentA);
-        }
-    }
+    Tree closestTree = null;
+    float closest1 =999999999;
 
     @Override
     public void onLocationChanged(Location location)

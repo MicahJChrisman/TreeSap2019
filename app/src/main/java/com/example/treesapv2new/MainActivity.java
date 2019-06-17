@@ -81,6 +81,7 @@ import com.example.treesapv2new.control.IntentIntegrator;
 import com.example.treesapv2new.control.IntentResult;
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.SwipeControllerActions;
+import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.DataSourceList;
@@ -165,10 +166,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static AllUsersDataSource allUsersDataSource = new AllUsersDataSource();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_main_new);
+
+//        AllUsersDataSource allUsersDataSource = new AllUsersDataSource();
+        allUsersDataSource.initialize(this,null);
+
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 

@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -300,9 +301,14 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }else{
                     ds = new ITreeDataSource();
                 }
-                ds.initialize(Big_Red_Button.this, null);
 
-                MainActivity.banana = ds.search(testing);
+                if(ds instanceof AllUsersDataSource){
+                    AsyncTask z = new searchAsync(testing);
+                    z.execute(testing,null,null);
+                }else {
+                    ds.initialize(Big_Red_Button.this, null);
+                    MainActivity.banana = ds.search(testing);
+                }
 
 
                 if (MainActivity.banana != null) {
@@ -461,4 +467,24 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 //        out.writeBundle(banana);
 //    }
 
+    private class searchAsync extends AsyncTask<Object,Void,Object>{
+        TreeLocation treeLocation;
+        DataSource ds = new AllUsersDataSource();
+
+        searchAsync(TreeLocation treeLocation1){
+            treeLocation = treeLocation1;
+        }
+
+        @Override
+        protected Void doInBackground(Object...treeLocations) {
+            ds.initialize(getBaseContext(),null);
+            MainActivity.banana = ds.search(treeLocation);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Object value){
+//            Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
+//            startActivity(intentA);
+        }
+    }
 }
