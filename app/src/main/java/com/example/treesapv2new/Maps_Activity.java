@@ -15,6 +15,7 @@ import android.location.Criteria;
 import android.location.Location;
 //import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -438,10 +439,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 ds = new ITreeDataSource();
                             }
 
-                            ds.initialize(Maps_Activity.this, null);
-                            MainActivity.banana = ds.search(testing);
 
-
+                            if(ds instanceof AllUsersDataSource) {
+                                AsyncTask z = new searchAsync(testing);
+                                z.execute(testing,null,null);
+                            }else {
+                                ds.initialize(Maps_Activity.this, null);
+                                MainActivity.banana = ds.search(testing);
+                            }
                             if (MainActivity.banana != null) {
                                 if(MainActivity.banana.getClosestDist() < closest1) {
                                     closest1 = MainActivity.banana.getClosestDist();
@@ -776,6 +781,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, zoom));
         }
 
+    }
+
+
+    private class searchAsync extends AsyncTask<Object,Void,Object>{
+        TreeLocation treeLocation;
+        DataSource ds = new AllUsersDataSource();
+
+        searchAsync(TreeLocation treeLocation1){
+            treeLocation = treeLocation1;
+        }
+
+        @Override
+        protected Void doInBackground(Object...treeLocations) {
+            ds.initialize(getBaseContext(),null);
+            MainActivity.banana = ds.search(treeLocation);
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Object value){
+//            Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
+//            startActivity(intentA);
+        }
     }
 
     @Override

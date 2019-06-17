@@ -1,8 +1,10 @@
 package com.example.treesapv2new.datasource;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -10,7 +12,9 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.CuratorApproveActivity;
 import com.example.treesapv2new.MainActivity;
+import com.example.treesapv2new.Maps_Activity;
 import com.example.treesapv2new.R;
+import com.example.treesapv2new.Tree_Info_First;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -113,11 +117,19 @@ public class AllUsersDataSource extends DataSource {
     float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
-        float[] results = new float[1];
+
+
+
+
+
+
+//            AsyncTask q = new searchAsync(location);
+//            q.execute(location, null, null);
+        TreeLocation treeLocation;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
         float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
-
+        float[] results = new float[1];
         int entry, closestEntry;
 
 //        readData();
@@ -183,8 +195,169 @@ public class AllUsersDataSource extends DataSource {
                 }
             }
         });
+        while(finishedBoolean == false) {
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException x) {
+
+            }
+        }
+//        return a;
         return tree;
     }
+
+    public static Tree a = new Tree();
+
+//    private class searchAsync extends AsyncTask<Object,Void,Tree> {
+//        TreeLocation treeLocation;
+//        Tree tree = new Tree();
+//        searchAsync(TreeLocation treeLocation1){
+//            treeLocation = treeLocation1;
+////            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+////            float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
+////            float[] results = new float[1];
+////            int entry, closestEntry;
+////
+////            closestDistance = 999999999;
+////            closestEntry = 0;
+////            entry = -1;
+////
+////            FirebaseFirestore db = FirebaseFirestore.getInstance();
+////            CollectionReference users = db.collection("Pending Trees");
+////            db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+////                @Override
+////                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+////                    if(task.isSuccessful()){
+////                        for(QueryDocumentSnapshot document : task.getResult()){
+////                            ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
+////
+////                            try {
+////                                Double lati = Double.valueOf(document.getData().get("latitude").toString());
+////                                Double longi = Double.valueOf(document.getData().get("longitude").toString());
+////                                Location.distanceBetween(lati, longi,
+////                                        treeLocation.getLatitude(), treeLocation.getLongitude(),
+////                                        results);
+////                                if (results[0] < closestDistance) {
+////                                    closestDistance = results[0];
+////                                }
+////                                if (closestDistance > cap)
+////                                    break;
+////                                else {
+////                                    //MATCH!  Build tree and return it.
+////
+////                                    tree.setClosest(closestDistance);
+////                                    tree.setCommonName(document.getData().get("commonName").toString());
+////                                    tree.setScientificName(document.getData().get("scientificName").toString());
+////                                    tree.setLocation(new TreeLocation(lati, longi));
+////                                    tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+////                                    tree.setFound(true);
+////                                    tree.setIsClosest(true);
+////                                    tree.addInfo("Source", document.getData().get("userID").toString());
+//////                                if(closestRecord.get("Notes")!="") {
+//////                                    tree.addInfo("Notes", closestRecord.get("Notes"));
+//////                                }
+//////
+//////                                if(closestRecord.get("Image Leaf")!="") {
+//////                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+//////                                }
+//////                                if(closestRecord.get("Image Bark")!="") {
+//////                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+//////                                }
+//////                                if(closestRecord.get("Image Tree")!="") {
+//////                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+//////                                }
+////                                    tree.setDataSource("AllUserDB");
+////
+////                                    finishedBoolean = true;
+////                                }
+////                            } catch (Exception e) {
+////                                continue;
+////                            }
+////                        }
+////                    }else {
+////                        Toast toast = Toast.makeText(parent, "Unable to load trees.", Toast.LENGTH_LONG);
+////                    }
+////                }
+////            });
+//        }
+//
+//        @Override
+//        protected Tree doInBackground(Object...treeLocations) {
+//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+//            float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
+//            float[] results = new float[1];
+//            int entry, closestEntry;
+//
+//            closestDistance = 999999999;
+//            closestEntry = 0;
+//            entry = -1;
+//
+//            Tree tree = new Tree();
+//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//            CollectionReference users = db.collection("Pending Trees");
+//            db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                @Override
+//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                    if(task.isSuccessful()){
+//                        for(QueryDocumentSnapshot document : task.getResult()){
+//                            ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
+//
+//                            try {
+//                                Double lati = Double.valueOf(document.getData().get("latitude").toString());
+//                                Double longi = Double.valueOf(document.getData().get("longitude").toString());
+//                                Location.distanceBetween(lati, longi,
+//                                        treeLocation.getLatitude(), treeLocation.getLongitude(),
+//                                        results);
+//                                if (results[0] < closestDistance) {
+//                                    closestDistance = results[0];
+//                                }
+//                                if (closestDistance > cap)
+//                                    break;
+//                                else {
+//                                    //MATCH!  Build tree and return it.
+//
+//                                    tree.setClosest(closestDistance);
+//                                    tree.setCommonName(document.getData().get("commonName").toString());
+//                                    tree.setScientificName(document.getData().get("scientificName").toString());
+//                                    tree.setLocation(new TreeLocation(lati, longi));
+//                                    tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+//                                    tree.setFound(true);
+//                                    tree.setIsClosest(true);
+//                                    tree.addInfo("Source", document.getData().get("userID").toString());
+////                                if(closestRecord.get("Notes")!="") {
+////                                    tree.addInfo("Notes", closestRecord.get("Notes"));
+////                                }
+////
+////                                if(closestRecord.get("Image Leaf")!="") {
+////                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+////                                }
+////                                if(closestRecord.get("Image Bark")!="") {
+////                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+////                                }
+////                                if(closestRecord.get("Image Tree")!="") {
+////                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+////                                }
+//                                    tree.setDataSource("AllUserDB");
+//
+//                                    finishedBoolean = true;
+//                                }
+//                            } catch (Exception e) {
+//                                continue;
+//                            }
+//                        }
+//                    }else {
+//                        Toast toast = Toast.makeText(parent, "Unable to load trees.", Toast.LENGTH_LONG);
+//                    }
+//                }
+//            });
+//
+//            return tree;
+//        }
+//        @Override
+//        protected void onPostExecute(Tree t){
+//            a = t;
+//        }
+//    }
 
     public void patchData(Tree tree){
         if (MainActivity.banana.getCommonName() == (null)) {
