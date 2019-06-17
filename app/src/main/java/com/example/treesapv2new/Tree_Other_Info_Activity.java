@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
@@ -49,6 +52,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String fullPic;
     String notes;
     String userID;
+    SimpleDateFormat sdf;
+    String currentDateandTime;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -60,6 +66,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 finish();
             }
         });
+
+        sdf = new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -175,7 +183,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
                     dbh = ((TextView) findViewById(R.id.dbh_edit)).getText().toString();
                     notes = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
-
+                    currentDateandTime = sdf.format(new Date());
 
 
                     passedArray[0] = "0";
@@ -212,6 +220,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     picArray.add(fullPic);
                     user.put("Pictures", picArray);
                     user.put("UserID", userID);
+                    user.put("Date and time", currentDateandTime);
                     users.document(lat + ", " + longit + ", " + commonName).set(user);
 
 

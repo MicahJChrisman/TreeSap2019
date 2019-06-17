@@ -28,6 +28,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getIntent().getExtras();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.curator_swipe);
 
