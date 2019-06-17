@@ -48,7 +48,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
+//
+//                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(mContext, Curator_Swipe_Activity.class);
+//                intent.putExtra("image_url", mImages.get(position));
+//                intent.putExtra("image_name", mImageNames.get(position));
+                mContext.startActivity(intent);
+
+            }
+        });
+
         ViewHolder holder = new ViewHolder(view);
+
         return holder;
     }
 
