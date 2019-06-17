@@ -51,14 +51,15 @@ public class CuratorApproveActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("pendingTrees");
         //final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");
-        db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
+//        db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("pendingTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("Pictures");
+                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("images");
                         try{
-                            String b = null;
+                            String b = "";
                             for(String a : pic){
                                 if(a!=null){
                                     b = a;
