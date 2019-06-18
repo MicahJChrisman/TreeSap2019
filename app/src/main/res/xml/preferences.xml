@@ -30,6 +30,42 @@
             android:key="teachingSwitch"
             android:summary="Placeholder text"
             android:title="Teaching tool/education mode"/>
+
+        <PreferenceScreen
+            android:key="account_screen"
+            android:title="Account Info"
+            android:widgetLayout="@layout/next_button_settings"
+            android:selectable="true"
+            >
+            <PreferenceCategory
+                android:key="account"
+                android:title="Account">
+                <Preference
+                    android:key="logout_pref"
+                    android:title="Logout:"
+                    android:widgetLayout="@layout/logout_button">
+                </Preference>
+
+                <Preference
+                    android:key="change_username"
+                    android:title="Change Username">
+                </Preference>
+
+                <Preference
+                    android:key="change_password"
+                    android:title="Change Password">
+                </Preference>
+
+                <Preference
+                    android:key="login_pref"
+                    android:title="Login"
+                    android:widgetLayout="@layout/login_button">
+                </Preference>
+
+            </PreferenceCategory>
+
+        </PreferenceScreen>
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -60,11 +96,6 @@
             android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
             android:title="Copyright of Hope College" />
 
-        <Preference
-            android:key="logout_pref"
-            android:title="Account:"
-            android:widgetLayout="@layout/logout_button">
-        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>

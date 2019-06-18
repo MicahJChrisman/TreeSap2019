@@ -16,6 +16,7 @@
     <string name="databasesUsedSelector">databasesUsedSelector</string>
     <string name="key_send_feedback">key_send_feedback</string>
     <string name="locationMarkerSwitch">locationMarkerSwitch</string>
+    <string name="username_of_user">No user found</string>
     <string-array name="zoom_array">
         <item>Very Close</item>
         <item>Close</item>

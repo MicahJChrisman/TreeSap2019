@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import javax.annotation.Nonnull;
 
@@ -46,6 +48,9 @@ public class Login_Activity extends AppCompatActivity {
                 finish();
             }
         });
+        ((TextView) findViewById(R.id.forgot_password_link)).setOnClickListener(new forgotPassword());
+        ((TextView) findViewById(R.id.back_to_login)).setOnClickListener( new onLoginClick());
+        ((TextView) findViewById(R.id.button_forgot_password)).setOnClickListener(new submitForgotPassword());
 
 
 
@@ -65,6 +70,42 @@ public class Login_Activity extends AppCompatActivity {
 
     }
 
+    private class submitForgotPassword implements View.OnClickListener{
+        private FirebaseAuth mAuth;
+
+        public void onClick(View v){
+            String emailForgot = ((TextView) findViewById(R.id.forgot_password_email)).getText().toString();
+            mAuth = FirebaseAuth.getInstance();
+            if(emailForgot.equals("")){
+                Toast.makeText(Login_Activity.this, "Please provide an email", Toast.LENGTH_SHORT).show();
+            }else{
+                mAuth.sendPasswordResetEmail(emailForgot).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(Login_Activity.this, "Please check your email", Toast.LENGTH_LONG).show();
+                            finish();
+                        }else{
+                            String message = task.getException().getMessage();
+                            Toast.makeText(Login_Activity.this,"Error occured: "+ message, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
+
+    private class forgotPassword implements View.OnClickListener{
+        public void onClick(View v){
+            ((LinearLayout)findViewById(R.id.login_first_menu)).setVisibility(View.GONE);
+            ((LinearLayout)findViewById(R.id.register_container)).setVisibility(View.GONE);
+            ((LinearLayout)findViewById(R.id.login_container)).setVisibility(View.GONE);
+            ((LinearLayout)findViewById(R.id.forgot_password_container)).setVisibility(View.VISIBLE);
+        }
+    }
+
     private class login implements View.OnClickListener{
         public void onClick(View v){
             String email = ((TextView)findViewById(R.id.edittext_username)).getText().toString();
@@ -74,6 +115,9 @@ public class Login_Activity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         FirebaseUser user = mAuth.getCurrentUser();
+                        Toast toast = Toast.makeText(Login_Activity.this, "You are logged in.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.show();
                     }else{
                         Toast toast = Toast.makeText(Login_Activity.this, "Invalid login.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0,0);
@@ -114,9 +158,14 @@ public class Login_Activity extends AppCompatActivity {
                             Toast toast = Toast.makeText(Login_Activity.this, "Registration failed.", Toast.LENGTH_LONG);
                             toast.show();
                         }
-                        }
+                    }else {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(((EditText) findViewById(R.id.edittext_displayname_reg)).getText().toString()).build();
+                        user.updateProfile(profileChangeRequest);
                     }
-                });
+
+                }
+            });
         }
     }
 
