@@ -84,10 +84,10 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
     private static final int[] COLORFUL_COLORS = {
 
-            Color.parseColor("#F4CC70"),
-            Color.parseColor("#DE7A22"),
-            Color.parseColor("#20948B"),
-            Color.parseColor("#6AB187"),
+            Color.parseColor("#F4CC70"), //Storm water, yellow
+            Color.parseColor("#DE7A22"), //Energy, orange
+            Color.parseColor("#20948B"), //Air quality, dark turquoise
+            Color.parseColor("#6AB187"), //CO2, sea green
 
 
 
