@@ -6,75 +6,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/frame"
-        app:layout_constraintStart_toStartOf="@+id/frame"
-        tools:layout_marginTop="8dp">
+        android:layout_height="match_parent"
+        android:foregroundGravity="bottom"
+        android:measureAllChildren="true"
+        tools:foregroundGravity="bottom">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            app:backgroundTint="#FF42C922"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/accept" />
+        <com.lorentzos.flingswipe.SwipeFlingAdapterView
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffeee9e2"
+            app:layout_constrainedHeight="true"
+            app:rotation_degrees="-15.5"
+            tools:context=".Curator_Swipe_Activity">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:clickable="true"
-            app:backgroundTint="#FFB700"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton4"
-            app:srcCompat="@drawable/undo"
-            tools:layout_editor_absoluteY="0dp" />
+        </com.lorentzos.flingswipe.SwipeFlingAdapterView>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginRight="40dp"
-            android:clickable="true"
-            app:backgroundTint="#FFE42222"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton3"
-            app:layout_constraintHorizontal_bias="0.289"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/reject"
-            tools:layout_editor_absoluteY="0dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="44dp"
-            android:clickable="true"
-            app:backgroundTint="#2196F3"
-            app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
-            app:srcCompat="@drawable/skip"
-            tools:layout_editor_absoluteY="0dp" />
-    </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutMode="opticalBounds"
+                tools:layout_marginTop="590dp">
 
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/frame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:background="#ffeee9e2"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-        app:rotation_degrees="15.5"
-        tools:context=".Curator_Swipe_Activity">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    app:backgroundTint="#FF42C922"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/accept" />
 
-    </com.lorentzos.flingswipe.SwipeFlingAdapterView>
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:backgroundTint="#FFB700"
+                    app:layout_constraintStart_toEndOf="@+id/floatingActionButton2"
+                    app:layout_constraintTop_toTopOf="@+id/floatingActionButton5"
+                    app:srcCompat="@drawable/undo" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:backgroundTint="#FFE42222"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/floatingActionButton3"
+                    app:srcCompat="@drawable/reject" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:backgroundTint="#2196F3"
+                    app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+                    app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+                    app:srcCompat="@drawable/skip" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTintMode="multiply"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toStartOf="@+id/floatingActionButton4"
+                    app:layout_constraintStart_toEndOf="@+id/floatingActionButton3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/map_new" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

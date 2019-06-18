@@ -34,14 +34,26 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
+        TextView label0 = (TextView) convertView.findViewById(R.id.label0);
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
+        TextView scientificName = (TextView) convertView.findViewById(R.id.scientific_name);
+        TextView dbh = (TextView) convertView.findViewById(R.id.dbh);
+        TextView notes = (TextView) convertView.findViewById(R.id.notes);
         ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
 
+        label0.setText("Common name:  ");
         commonName.setText(tree.getCommonName());
+        scientificName.setText(tree.getScientificName());
+        dbh.setText(tree.getCurrentDBH().toString());
+        notes.setText((String) tree.getInfo("Notes"));
 
-        byte[] byteArrayFull = Base64.decode((String) tree.getPics("full_pic_byte_array"), Base64.DEFAULT);
-        Bitmap bmp = BitmapFactory.decodeByteArray(byteArrayFull, 0, byteArrayFull.length);
-        fullPic.setImageBitmap(bmp);
+
+
+
+
+//        byte[] byteArrayFull = Base64.decode((String) tree.getPics("full_pic_byte_array"), Base64.DEFAULT);
+//        Bitmap bmp = BitmapFactory.decodeByteArray(byteArrayFull, 0, byteArrayFull.length);
+//        fullPic.setImageBitmap(bmp);
 
         return convertView;
     }

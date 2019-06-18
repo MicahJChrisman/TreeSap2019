@@ -1,11 +1,11 @@
 package com.example.treesapv2new;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,8 +19,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class Curator_Swipe_Activity extends AppCompatActivity {
     private NewArrayAdapter arrayAdapter;
@@ -30,6 +33,8 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
     ListView listView;
     List<Tree> rowItems;
     List<Tree> penTrees;
+    FirebaseFirestore db;
+    SwipeFlingAdapterView flingContainer;
 
 
     @Override
@@ -40,63 +45,26 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 
         penTrees = new ArrayList<Tree>();
 //                List<Tree> rowItems;
-        FirebaseFirestore db;
+        //FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        //CollectionReference penTrees = db.collection("pendingTrees");
-        db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Tree tree = new Tree();
-                        String commonName = (String) document.get("Common name");
-                        if(commonName == null || commonName.equals("")){
-                            tree.setCommonName("N/A");
-                        }else {
-                            tree.setCommonName(commonName);
-                        }
-                        String scientificName = (String) document.get("Scientific name");
-                        if(scientificName == null || scientificName.equals("")){
-                            tree.setCommonName("N/A");
-                        }else {
-                            tree.setScientificName(scientificName);
-                        }
-                        String dbh = (String) document.get("DBH");
-                        if(dbh == null || dbh.equals("")){
-                            tree.setCurrentDBH(0.0);
-                        }else{
-                            tree.setCurrentDBH(Double.parseDouble(dbh));
-                        }
-                        String[] otherInfo = (String[]) document.get("Other info");
-                        if(otherInfo != null){
-                            int i = (otherInfo.length-1);
-                            String notes = "";
-                            while(i>=0) {
-//                                String notes = (String) tree.getInfo("Notes");
-                                notes = notes + "/n" + otherInfo[i];
-                            }
-                            if(!notes.equals("")){
-                                tree.addInfo("Notes", notes);
-                            }
-                        }
-                        penTrees.add(tree);
-                    }
-                } else {
-                    Toast toast = Toast.makeText(Curator_Swipe_Activity.this, "Unable to load trees.", Toast.LENGTH_LONG);
-                }
-            }
-        });
+        CollectionReference treesRef = db.collection("pendingTrees");
+
 
 //        Tree tree = new Tree();
 //        tree.setCommonName("Test tree");
 //        tree.setScientificName("Testus treeus");
 //        tree.setCurrentDBH(50.0);
-//        penTrees.add(new Tree());
-        arrayAdapter = new NewArrayAdapter(this, R.layout.item, penTrees );
+//        penTrees.add(tree);
+        Object[] objects = {db};
+        //new DownloadFilesTask();
+        new DownloadFilesTask().execute();
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-
-        flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -145,5 +113,66 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             }
         });
 
+       //arrayAdapter = new NewArrayAdapter(this, R.layout.item, penTrees);
+
+    }
+
+    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+        @Override
+        protected Long doInBackground(URL... urls) {
+//            FirebaseFirestore db = (FirebaseFirestore) objects[0];
+            db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Tree tree = new Tree();
+                            String commonName = (String) document.get("commonName");
+                            if(commonName == null || commonName.equals("")){
+                                tree.setCommonName("N/A");
+                            }else {
+                                tree.setCommonName(commonName);
+                            }
+                            String scientificName = (String) document.get("scientificName");
+                            if(scientificName == null || scientificName.equals("")){
+                                tree.setScientificName("N/A");
+                            }else {
+                                tree.setScientificName(scientificName);
+                            }
+                            Double dbh = (Double) document.get("dbh");
+                            if(dbh == null || dbh.equals("")){
+                                tree.setCurrentDBH(0.0);
+                            }else{
+                                tree.setCurrentDBH(dbh);
+                            }
+//     TODO                       String[] otherInfo = document.get("otherInfo").get("notes");
+//                            if(otherInfo != null){
+//                                int i = (otherInfo.length-1);
+//                                String notes = "";
+//                                while(i>=0) {
+////    TODO                            String notes = (String) tree.getInfo("Notes");
+//                                    notes = notes + "/n" + otherInfo[i];
+//                                }
+//                                if(!notes.equals("")){
+//                                    tree.addInfo("Notes", notes);
+//                                }
+//                            }else{
+//                                otherInfo = new String[1];
+//                                otherInfo[0] = "";
+//                            }
+                            penTrees.add(tree);
+                        }
+                    } else {
+                        Toast toast = Toast.makeText(Curator_Swipe_Activity.this, "Unable to load trees.", Toast.LENGTH_LONG);
+                    }
+                }
+            });
+            return new Long(1);
+        }
+
+        protected void onPostExecute(Long result) {
+            arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees);
+            flingContainer.setAdapter(arrayAdapter);
+        }
     }
 }
