@@ -153,6 +153,26 @@
                     android:background="@drawable/edittext_border"
                     android:hint="(Optional)"
                     android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="55dp">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="55dp"
+                        android:text="DBH:"
+                        android:textColor="@color/accent_gray"
+                        android:textSize="18sp"
+                        android:gravity="center"/>
+
+                    <TextView
+                        android:id="@+id/dbh_textView"
+                        android:layout_width="100dp"
+                        android:layout_height="55dp"
+                        android:layout_gravity="right"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/edittext_border" />
+                </LinearLayout>
+
             </LinearLayout>
         </RelativeLayout>
 
@@ -160,7 +180,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-12dp">
+            android:layout_marginTop="-67dp">
 
             <TextView
                 android:layout_width="wrap_content"

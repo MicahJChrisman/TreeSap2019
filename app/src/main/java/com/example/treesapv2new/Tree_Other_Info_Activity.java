@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -32,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -153,6 +157,33 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         AutoCompleteTextView editTrees = findViewById(R.id.common_name);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,treeTypes);
         editTrees.setAdapter(adapter);
+
+        ((EditText) findViewById(R.id.dbh_edit)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_edit)).getText().toString();
+                if(!circumString.equals("")) {
+                    Double circumValue = Double.valueOf(circumString);
+                    Double dbhValue = circumValue / 3.1415;
+                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                    ((TextView) findViewById(R.id.dbh_textView)).setText(dbhValue.toString());
+                }else{
+                    ((TextView) findViewById(R.id.dbh_textView)).setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 
     private class SubmitEvent implements View.OnClickListener{
@@ -173,7 +204,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     commonName = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
-                    dbh = ((TextView) findViewById(R.id.dbh_edit)).getText().toString();
+                    dbh = ((TextView) findViewById(R.id.dbh_textView)).getText().toString();
                     notes = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
 
 
