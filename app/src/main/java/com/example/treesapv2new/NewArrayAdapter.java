@@ -34,17 +34,20 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
-        TextView label0 = (TextView) convertView.findViewById(R.id.label0);
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
         TextView scientificName = (TextView) convertView.findViewById(R.id.scientific_name);
         TextView dbh = (TextView) convertView.findViewById(R.id.dbh);
         TextView notes = (TextView) convertView.findViewById(R.id.notes);
         ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
 
-        label0.setText("Common name:  ");
         commonName.setText(tree.getCommonName());
         scientificName.setText(tree.getScientificName());
-        dbh.setText(tree.getCurrentDBH().toString());
+        Double treeDbh = tree.getCurrentDBH();
+        if(treeDbh.equals(0.0)){
+            dbh.setText("N/A");
+        }else{
+            dbh.setText(treeDbh.toString());
+        }
         notes.setText((String) tree.getInfo("Notes"));
 
 

@@ -96,6 +96,7 @@
                     android:backgroundTintMode="multiply"
                     android:clickable="true"
                     android:focusable="true"
+                    app:backgroundTint="#2A32CA"
                     app:layout_constraintEnd_toStartOf="@+id/floatingActionButton4"
                     app:layout_constraintStart_toEndOf="@+id/floatingActionButton3"
                     app:layout_constraintTop_toTopOf="parent"

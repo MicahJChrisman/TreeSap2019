@@ -139,11 +139,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                             }else {
                                 tree.setScientificName(scientificName);
                             }
-                            Double dbh = (Double) document.get("dbh");
+                            String dbh = (String) document.get("dbh");
                             if(dbh == null || dbh.equals("")){
                                 tree.setCurrentDBH(0.0);
                             }else{
-                                tree.setCurrentDBH(dbh);
+                                tree.setCurrentDBH(Double.parseDouble(dbh));
                             }
 //     TODO                       String[] otherInfo = document.get("otherInfo").get("notes");
 //                            if(otherInfo != null){

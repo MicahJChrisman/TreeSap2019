@@ -39,7 +39,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,6 +64,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
+
 
         findViewById(R.id.back_final_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,7 +233,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     currentDateandTime = sdf.format(new Date());
 
 
-
+                    sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    currentDateandTime = sdf.format(new Date());
                     //Send new tree to the database
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -253,6 +257,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     picArray.add(fullPic);
                     user.put("images", picArray);
                     user.put("userID", userID);
+                    user.put("Date and time", currentDateandTime);
                     users.document(lat + ", " + longit + ", " + commonName).set(user);
 
 
