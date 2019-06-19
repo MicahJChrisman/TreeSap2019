@@ -50,6 +50,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
+import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.display.CerealBoxDisplay;
 import com.example.treesapv2new.display.DisplayMethod;
 import com.example.treesapv2new.identify.Barcode_Identifier;
@@ -66,6 +67,7 @@ import com.example.treesapv2new.model.TreeLocation;
 import com.example.treesapv2new.view.BulletedWebView;
 import com.example.treesapv2new.view.MapsActivity;
 import com.example.treesapv2new.view.UserViewAdapter;
+import com.google.firebase.firestore.auth.User;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -304,9 +306,10 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
                 if(ds instanceof AllUsersDataSource){
                     MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
-                }else if(){
-                    else
-                } {
+                }else if(ds instanceof UserTreeDataSource){
+                    MainActivity.userTreeDataSourceGlobal.setUserTrees(MainActivity.allUsersDataSource.getUserTrees());
+                    MainActivity.banana = MainActivity.userTreeDataSourceGlobal.search(testing);
+                }else {
                     ds.initialize(Big_Red_Button.this, null);
                     MainActivity.banana = ds.search(testing);
                 }

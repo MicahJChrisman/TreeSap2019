@@ -71,6 +71,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -133,6 +135,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     Bitmap.Config conf = Bitmap.Config.ARGB_8888;
     Bitmap bmp = Bitmap.createBitmap(80, 80, conf);
     Canvas canvas1 = new Canvas(bmp);
+
+    Tree closestTree;
+    float closest1;
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        MainActivity.banana = null;
+        closestTree = null;
+        closest1 =999999999;
+    }
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -422,15 +435,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 ds = new CityOfHollandDataSource();
                             } else if (source.equals("ExtendedCoHDataSource")) {
                                 ds = new ExtendedCoHDataSource();
-                            } else if(source.equals("UserTreeDataSource")){
+                            } else if (source.equals("UserTreeDataSource")) {
                                 ds = MainActivity.userTreeDataSourceGlobal;
-                            }else if(source.equals("AllUsersDataSource")){
+                            } else if (source.equals("AllUsersDataSource")) {
                                 ds = new AllUsersDataSource();
                             } else {
                                 ds = new ITreeDataSource();
                             }
-                            if(ds instanceof AllUsersDataSource){
+                            if (ds instanceof AllUsersDataSource) {
                                 MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
+                            }else if(ds instanceof UserTreeDataSource){
+                                MainActivity.userTreeDataSourceGlobal.setUserTrees(MainActivity.allUsersDataSource.getUserTrees());
+                                MainActivity.banana = MainActivity.userTreeDataSourceGlobal.search(testing);
                             }else{
                                 ds.initialize(Maps_Activity.this, null);
                                 MainActivity.banana = ds.search(testing);
@@ -447,6 +463,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             MainActivity.banana = closestTree;
                         }
                         Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
+//                        finish();
                         startActivity(intentA);
                     }
 
@@ -544,10 +561,87 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 location42= "Holland, MI";
                 whichSource = false;
             } else if (ds instanceof UserTreeDataSource){
-                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv");
-                treeField = 1;
-                location42 = "N/A";
-                whichSource = false;
+//                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv");
+//                treeField = 1;
+//                location42 = "N/A";
+//                whichSource = false;
+                stuff = null;
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+                db.collection("acceptedTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
+                                String a = (String) document.getData().get("userID").toString();
+                                String b = user.getUid();
+                                if(a.equals(b)) {
+                                    try {
+                                        Double latitude = Double.valueOf(document.getData().get("latitude").toString());
+                                        Double longitude = Double.valueOf(document.getData().get("longitude").toString());
+                                        if (latitude != null && longitude != null) {
+                                            // if (!latitude.equals("")) {
+
+                                            //if (!longitude.equals("")) {
+                                            LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+                                            if (ds.getClass().equals(CityOfHollandDataSource.class)) {
+//                                                    location42 = record.get("Park");
+                                            }
+                                            try {
+//                                                    String name = Transform.ChangeName(record.get(treeField));
+                                                String name = "Tree";
+//                                                    if(name == ""){
+//                                                        name = "N/A";
+//                                                    }
+                                                int iconInt = randomGenerator.nextInt(8);
+                                                BitmapDescriptor icon;
+                                                switch (iconInt) {
+                                                    case 0:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                        break;
+                                                    case 1:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                                        break;
+                                                    case 2:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                                        break;
+                                                    case 3:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                                        break;
+                                                    case 4:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                                        break;
+                                                    case 5:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                                        break;
+                                                    case 6:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                                        break;
+                                                    case 7:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                                        break;
+                                                    default:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                        break;
+                                                }
+                                                mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            } catch (ArrayIndexOutOfBoundsException e) {
+
+                                            }
+                                        }
+                                    } catch (Exception e) {
+                                        continue;
+                                    }
+                                }
+                            }
+                        } else {
+                            Toast toast = Toast.makeText(parent, "Unable to load trees.", Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+
             } else if (ds instanceof AllUsersDataSource){
                 stuff = null;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -766,8 +860,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
-    Tree closestTree = null;
-    float closest1 =999999999;
+
 
     @Override
     public void onLocationChanged(Location location)

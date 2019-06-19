@@ -46,8 +46,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String commonName;
     String scientificName;
     String dbh;
-    String lat;
-    String longit;
+    Double lat;
+    Double longit;
     String barkPic;
     String leafPic;
     String fullPic;
@@ -67,8 +67,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String lat_value = extras.getString("lat_value");
-            String long_value = extras.getString("long_value");
+            Double lat_value = Double.valueOf(extras.getString("lat_value"));
+            Double long_value = Double.valueOf(extras.getString("long_value"));
             TextView kevin = (TextView) findViewById(R.id.lat_thing);
             //kevin.setText(lat_value);
             TextView carl = (TextView) findViewById(R.id.long_thing);
@@ -100,8 +100,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
             lat = lat_value;
             longit = long_value;
-            passedArray[4] = lat_value;
-            passedArray[5] = long_value;
+//            passedArray[4] = lat_value;
+//            passedArray[5] = long_value;
         }
 
         Button sumbitButton = (Button) findViewById(R.id.add_tree_submit);

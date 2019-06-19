@@ -52,6 +52,10 @@ public class AllUsersDataSource extends DataSource {
 
     public AllUsersDataSource() {}
 
+    public ArrayList<Tree> getUserTrees() {
+        return userTrees;
+    }
+
     public AllUsersDataSource(Context aParent) {
         parent = aParent;
     }
