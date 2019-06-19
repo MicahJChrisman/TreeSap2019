@@ -145,6 +145,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         MainActivity.banana = null;
         closestTree = null;
         closest1 =999999999;
+
+
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+//
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        GoogleMapOptions options = new GoogleMapOptions();
+//        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
+//        MapFragment.newInstance(options);
+//        mapFragment.getMapAsync(this);
+//        parent = (Context) getIntent().getSerializableExtra("parent");
     }
 
     public void onCreate(Bundle savedInstanceState){
