@@ -99,8 +99,9 @@ dependencies {
         // Necessary to avoid version conflicts
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    implementation 'com.lorentzos.swipecards:library:1.0.9'
+    implementation 'com.lorentzos.swipecards:library:1.0.9@aar'
 
+    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 }
 
 apply plugin: 'com.google.gms.google-services'
