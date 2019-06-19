@@ -102,6 +102,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
+
+//            @Override
+//            public void onCardExited(){
+//
+//            }
         });
 
 
@@ -139,11 +144,13 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                             }else {
                                 tree.setScientificName(scientificName);
                             }
-                            String dbh = (String) document.get("dbh");
+                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
                             if(dbh == null || dbh.equals("")){
                                 tree.setCurrentDBH(0.0);
                             }else{
-                                tree.setCurrentDBH(Double.parseDouble(dbh));
+//                                tree.setCurrentDBHetCurrentDBH(new Double(dbh));
+//                                tree.setCurrentDBH(dbh);
+                                tree.setCurrentDBH(dbh.doubleValue());
                             }
 //     TODO                       String[] otherInfo = document.get("otherInfo").get("notes");
 //                            if(otherInfo != null){
@@ -160,6 +167,26 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //                                otherInfo = new String[1];
 //                                otherInfo[0] = "";
 //                            }
+
+                            //TODO Put pics in trees
+
+                            ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
+                            //String[] pics = stringPics.split("\n?\t.*: ");
+                            int i = 0;
+                            if(stringPics!=null) {
+                                while(i<stringPics.size()){
+                                    String key;
+                                    if(i == 0){
+                                        key = "Image Bark";
+                                    }else if(i == 1){
+                                        key = "Image Leaf";
+                                    }else{
+                                        key = "Image Tree";
+                                    }
+                                    tree.addPics(key, stringPics.get(i));
+                                    i++;
+                                }
+                            }
                             penTrees.add(tree);
                         }
                     } else {

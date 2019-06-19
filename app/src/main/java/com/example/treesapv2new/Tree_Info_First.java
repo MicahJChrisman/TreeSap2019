@@ -327,7 +327,7 @@ public class Tree_Info_First extends AppCompatActivity {
             //   picAppear.setImageBitmap(imageBitmap);
 
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            BitmapDrawable dBmp = new BitmapDrawable(bmp);
+            BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_info);
             //image.setImageBitmap(bmp);
             MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));

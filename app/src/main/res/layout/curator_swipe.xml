@@ -13,11 +13,23 @@
         android:measureAllChildren="true"
         tools:foregroundGravity="bottom">
 
+        <TextView
+            android:id="@+id/empty_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No more pending trees! Good job!"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
         <com.lorentzos.flingswipe.SwipeFlingAdapterView
             android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffeee9e2"
+            android:background="#00EEE9E2"
             app:layout_constrainedHeight="true"
             app:rotation_degrees="-15.5"
             tools:context=".Curator_Swipe_Activity">
