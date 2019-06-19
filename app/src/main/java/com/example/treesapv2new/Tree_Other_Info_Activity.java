@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +54,10 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
     String commonName;
     String scientificName;
-    String dbh;
+    Double dbh;
+    Double dbh2;
+    Double dbh3;
+    Double dbh4;
     Double lat;
     Double longit;
     String barkPic;
@@ -64,6 +71,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
+//        initRecyclerView();
 
 
         findViewById(R.id.back_final_button).setOnClickListener(new View.OnClickListener() {
@@ -112,9 +120,30 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 //            passedArray[5] = long_value;
         }
 
+        ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LinearLayout) findViewById(R.id.dbh_circum_add_2)).setVisibility(View.VISIBLE);
+                ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((LinearLayout) findViewById(R.id.dbh_circum_add_3)).setVisibility(View.VISIBLE);
+                        ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ((LinearLayout) findViewById(R.id.dbh_circum_add_4)).setVisibility(View.VISIBLE);
+                                ((ImageButton) findViewById(R.id.add_more_dbh_button)).setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
         Button sumbitButton = (Button) findViewById(R.id.add_tree_submit);
         sumbitButton.setOnClickListener(new SubmitEvent());
-
+//
         ImageButton circumButton = (ImageButton) findViewById(R.id.circum_info_button);
         circumButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -131,7 +160,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 builder.show();
             }
         });
-
+//
         TextView txtclose = (TextView) findViewById(R.id.other_info_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -191,10 +220,90 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 
+        ((EditText) findViewById(R.id.dbh_edit4)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_edit4)).getText().toString();
+                if(!circumString.equals("")) {
+                    Double circumValue = Double.valueOf(circumString);
+                    Double dbhValue = circumValue / 3.1415;
+                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                    ((TextView) findViewById(R.id.dbh_textView4)).setText(dbhValue.toString());
+                }else{
+                    ((TextView) findViewById(R.id.dbh_textView4)).setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((EditText) findViewById(R.id.dbh_edit2)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_edit2)).getText().toString();
+                if(!circumString.equals("")) {
+                    Double circumValue = Double.valueOf(circumString);
+                    Double dbhValue = circumValue / 3.1415;
+                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                    ((TextView) findViewById(R.id.dbh_textView2)).setText(dbhValue.toString());
+                }else{
+                    ((TextView) findViewById(R.id.dbh_textView2)).setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((EditText) findViewById(R.id.dbh_edit3)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_edit3)).getText().toString();
+                if(!circumString.equals("")) {
+                    Double circumValue = Double.valueOf(circumString);
+                    Double dbhValue = circumValue / 3.1415;
+                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                    ((TextView) findViewById(R.id.dbh_textView3)).setText(dbhValue.toString());
+                }else{
+                    ((TextView) findViewById(R.id.dbh_textView3)).setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
+//
+//    private void initRecyclerView(){
+//        RecyclerView recyclerView = findViewById(R.id.recycler_view_tree_other_info);
+//        RecyclerViewTreeOtherInfo adapter = new RecyclerViewTreeOtherInfo(this);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//    }
 
-    private class SubmitEvent implements View.OnClickListener{
+    public class SubmitEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
             AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
@@ -212,7 +321,16 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     commonName = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
-                    dbh = ((TextView) findViewById(R.id.dbh_textView)).getText().toString();
+                    dbh = Double.valueOf(((TextView) findViewById(R.id.dbh_textView)).getText().toString());
+                    if(!(((TextView) findViewById(R.id.dbh_textView2)).getText().toString()).equals("")) {
+                        dbh2 = Double.valueOf(((TextView) findViewById(R.id.dbh_textView2)).getText().toString());
+                    }
+                    if(!(((TextView) findViewById(R.id.dbh_textView3)).getText().toString()).equals("")) {
+                        dbh3 = Double.valueOf(((TextView)findViewById(R.id.dbh_textView3)).getText().toString());
+                    }
+                    if(!(((TextView) findViewById(R.id.dbh_textView4)).getText().toString()).equals("")) {
+                        dbh4 = Double.valueOf(((TextView) findViewById(R.id.dbh_textView4)).getText().toString());
+                    }
                     notes = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
 
 
@@ -226,7 +344,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
                         passedArray[3] = t.toString();
                     }else{
-                        passedArray[3] = dbh;
+                        //passedArray[3] = dbh;
                     }
                     passedArray[6] = notes;
                     sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -247,7 +365,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("scientificName", scientificName);
                     user.put("latitude", lat);
                     user.put("longitude",longit);
-                    user.put("dbh", dbh);
+//                    user.put("dbh", dbh);
                     user.put("otherInfo", notes);
                     user.put("Date and time", currentDateandTime);
 
@@ -258,7 +376,18 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("images", picArray);
                     user.put("userID", userID);
                     user.put("Date and time", currentDateandTime);
-                    users.document(lat + ", " + longit + ", " + commonName).set(user);
+
+
+                    ArrayList<Double> dbhArray = new ArrayList<Double>();
+                    dbhArray.add(dbh);
+                    dbhArray.add(dbh2);
+                    dbhArray.add(dbh3);
+                    dbhArray.add(dbh4);
+                    user.put("dbhArray", dbhArray);
+
+//                    users.document(lat + ", " + longit + ", " + commonName).set(user);
+
+                    users.document().set(user);
 
 
                     dialog.dismiss();

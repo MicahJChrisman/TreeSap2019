@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/tree_other_info_for_recycle"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Step 5: Other Details"
+            android:textSize="32sp"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please fill in whatever other details you are able to."
+            android:textColor="@color/accent_gray"
+            android:textSize="22sp"
+            android:gravity="center_horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="55dp"
+                android:layout_marginBottom="2dp"
+                android:gravity="center_vertical"
+                android:text="Tree Type: "
+                android:textColor="@color/accent_gray"
+                android:textSize="18sp" />
+            <AutoCompleteTextView
+                android:id="@+id/common_name"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="55dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/edittext_border"
+                android:completionThreshold="1"
+                android:hint="(Optional)"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="55dp"
+                android:layout_marginBottom="2dp"
+                android:gravity="center_vertical"
+                android:text="Scientific Name: "
+                android:textColor="@color/accent_gray"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/scientific_name"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="55dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/edittext_border"
+                android:hint="(Optional)"
+                android:textSize="18sp" />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/circumferences_of_trunk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Circumferences of Trunk"
+                android:textSize="22sp"
+                android:layout_gravity="center"
+                android:textColor="@color/accent_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:id="@+id/dbh_circum_layout"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="DBH:"
+                        android:textColor="@color/accent_gray"
+                        android:textSize="18sp" />
+                    <ImageButton
+                        android:id="@+id/circum_info_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:background="@color/appBackground"
+                        android:layout_gravity="center_vertical"
+                        android:maxWidth="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/info_icon" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Circumference: "
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/circum_text"
+                    android:textColor="@color/accent_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/dbh_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:hint="(Optional)"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dbh_textView"
+                android:layout_width="0dp"
+                android:paddingStart="3dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/edittext_border"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal"
+            android:id="@+id/dbh_circum_add_2"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/dbh_edit2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:hint="(Optional)"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dbh_textView2"
+                android:layout_width="0dp"
+                android:paddingStart="3dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/edittext_border"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/dbh_circum_add_3"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/dbh_edit3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:hint="(Optional)"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dbh_textView3"
+                android:layout_width="0dp"
+                android:paddingStart="3dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/edittext_border"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/dbh_circum_add_4"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/dbh_edit4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/edittext_border"
+                android:hint="(Optional)"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:inputType="numberDecimal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/dbh_textView4"
+                android:layout_width="0dp"
+                android:paddingStart="3dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/edittext_border"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:text="Units:"
+                android:textColor="@color/accent_gray"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/units_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showText="true"
+                android:switchMinWidth="56dp"
+                android:switchTextAppearance="@style/SwitchTextAppearance"
+                android:textOff=" in. "
+                android:textOn=" cm. "
+                android:thumb="@color/new_invented_color"
+                android:track="@drawable/track" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/x_button_style"
+                android:layout_gravity="center_vertical"
+                android:maxWidth="45dp"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/add_more_dbh_button"
+                android:src="@drawable/icons8_plus_math_30" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Notes About The Tree:"
+            android:textColor="@color/accent_gray"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/notes_about_tree"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edittext_border"
+            android:hint="(Optional)"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latitude: " />
+
+            <TextView
+                android:id="@+id/lat_thing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Latitude" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Longitude: " />
+
+            <TextView
+                android:id="@+id/long_thing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Longitude" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/show_bark_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/show_leaf_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/show_tree_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
