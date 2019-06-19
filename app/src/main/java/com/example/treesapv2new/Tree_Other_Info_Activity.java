@@ -23,6 +23,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +56,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String fullPic;
     String notes;
     String userID;
+    SimpleDateFormat sdf;
+    String currentDateandTime;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -221,6 +226,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                         passedArray[3] = dbh;
                     }
                     passedArray[6] = notes;
+                    sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                    currentDateandTime = sdf.format(new Date());
+
 
 
                     //Send new tree to the database
@@ -237,6 +245,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("longitude",longit);
                     user.put("dbh", dbh);
                     user.put("otherInfo", notes);
+                    user.put("Date and time", currentDateandTime);
+
                     ArrayList<String> picArray = new ArrayList<String>();
                     picArray.add(barkPic);
                     picArray.add(leafPic);
