@@ -108,12 +108,18 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
             int picsLength = pics.length;
             int i = 0;
             while(i<picsLength && pics[i]!=null){
-                ByteArrayInputStream is = new ByteArrayInputStream(pics[i].getBytes());
-                Bitmap bmp = BitmapFactory.decodeStream(is);
-                ImageModel imageModel = new ImageModel();
-                BitmapDrawable dBmp = new BitmapDrawable(getContext().getResources(), bmp);
-                imageModel.setImage_drawable(new BitmapDrawable(getContext().getResources(), bmp));
-                picList.add(imageModel);
+                if(!pics[i].equals("")) {
+
+                    byte[] encodeByte = Base64.decode(pics[i], Base64.DEFAULT);
+                    InputStream is = new ByteArrayInputStream(encodeByte);
+
+//                    InputStream is = new ByteArrayInputStream(pics[i].getBytes());
+                    Bitmap bmp = BitmapFactory.decodeStream(is);
+                    ImageModel imageModel = new ImageModel();
+                    BitmapDrawable dBmp = new BitmapDrawable(getContext().getResources(), bmp);
+                    imageModel.setImage_drawable(new BitmapDrawable(getContext().getResources(), bmp));
+                    picList.add(imageModel);
+                }
                 i++;
             }
         }

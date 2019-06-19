@@ -27,7 +27,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.example.treesapv2new.datasource.UserTreeDataSource;
@@ -65,8 +67,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String fullPic;
     String notes;
     String userID;
-    SimpleDateFormat sdf;
-    String currentDateandTime;
+    Timestamp timestamp;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -347,12 +349,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                         //passedArray[3] = dbh;
                     }
                     passedArray[6] = notes;
-                    sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                    currentDateandTime = sdf.format(new Date());
+                    long time = System.currentTimeMillis();
+                    timestamp = new Timestamp(time);
 
-
-                    sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
-                    currentDateandTime = sdf.format(new Date());
                     //Send new tree to the database
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
@@ -367,7 +366,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("longitude",longit);
 //                    user.put("dbh", dbh);
                     user.put("otherInfo", notes);
-                    user.put("Date and time", currentDateandTime);
+                    user.put("timestamp", timestamp);
 
                     ArrayList<String> picArray = new ArrayList<String>();
                     picArray.add(barkPic);
@@ -375,7 +374,6 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     picArray.add(fullPic);
                     user.put("images", picArray);
                     user.put("userID", userID);
-                    user.put("Date and time", currentDateandTime);
 
 
                     ArrayList<Double> dbhArray = new ArrayList<Double>();
