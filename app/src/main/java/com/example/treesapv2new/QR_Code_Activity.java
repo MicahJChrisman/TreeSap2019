@@ -40,6 +40,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
+import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.vision.CameraSource;
@@ -283,14 +284,19 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                                 ds = new ExtendedCoHDataSource();
                                                             }else if(source.equals("UserTreeDataSource")){
                                                                 ds = MainActivity.userTreeDataSourceGlobal;
+                                                            }else if(source.equals("AllUsersDataSource")){
+                                                                ds = new AllUsersDataSource();
                                                             }else{
                                                                 ds = new ITreeDataSource();
                                                             }
 
 //                                                            ds.initialize(QR_Code_Activity.this, null);
 //                                                            MainActivity.banana = ds.search(testing);
-                                                            if(ds instanceof AllUsersDataSource){
+                                                            if(ds instanceof AllUsersDataSource) {
                                                                 MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
+                                                            }else if(ds instanceof UserTreeDataSource){
+                                                                MainActivity.userTreeDataSourceGlobal.setUserTrees(MainActivity.allUsersDataSource.getUserTrees());
+                                                                MainActivity.banana = MainActivity.userTreeDataSourceGlobal.search(testing);
                                                             }else {
                                                                 ds.initialize(QR_Code_Activity.this, null);
                                                                 MainActivity.banana = ds.search(testing);

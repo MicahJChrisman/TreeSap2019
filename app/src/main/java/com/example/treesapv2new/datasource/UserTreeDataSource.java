@@ -111,6 +111,7 @@ public class UserTreeDataSource extends DataSource {
 
     @Override
     public Boolean initialize(Context aParent, String initString){
+        parent = aParent;
         return true;
     }
 
@@ -147,9 +148,9 @@ public class UserTreeDataSource extends DataSource {
         float[] results = new float[1];
         float closestDistance = 999999999;
         Tree treeReturn = null;
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
-//        float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
-        float cap = 99999999;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+        float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
+//        float cap = 99999999;
         if(user !=null) {
             for (Tree tree : userTrees) {
                 String a = (String) tree.getInfo("Source");

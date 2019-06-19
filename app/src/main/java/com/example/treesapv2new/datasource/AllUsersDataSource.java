@@ -165,9 +165,9 @@ public class AllUsersDataSource extends DataSource {
         float[] results = new float[1];
         float closestDistance = 999999999;
         Tree treeReturn = new Tree();
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
-//        float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
-        float cap = 99999999;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
+        float cap = Float.valueOf(prefs.getString("distanceFromTreePref","10f"));
+//        float cap = 99999999;
         for(Tree tree : userTrees) {
             TreeLocation locOfTree = tree.getLocation();
             Double lati = locOfTree.getLatitude();
