@@ -307,6 +307,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 if(ds instanceof AllUsersDataSource){
                     MainActivity.banana = MainActivity.allUsersDataSource.search(testing);
                 }else if(ds instanceof UserTreeDataSource){
+                    MainActivity.userTreeDataSourceGlobal.initialize(Big_Red_Button.this, null);
                     MainActivity.userTreeDataSourceGlobal.setUserTrees(MainActivity.allUsersDataSource.getUserTrees());
                     MainActivity.banana = MainActivity.userTreeDataSourceGlobal.search(testing);
                 }else {

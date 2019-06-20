@@ -29,7 +29,7 @@ public class Tree {
 
     Double currentDBH;
     ArrayList<String> dbsUsed = new ArrayList<>();
-
+    ArrayList<Object> dbhArray = new ArrayList<>();
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
     HashMap<String, Object> treePics = new HashMap<String, Object>();
 
@@ -110,6 +110,10 @@ public class Tree {
 
     public void setCurrentDBH(Double currentDBH) {
         this.currentDBH = currentDBH;
+    }
+
+    public void setDBHArray(ArrayList<Object> dbhArray){
+        this.dbhArray = dbhArray;
     }
 
     public void addPics(String key, Object value) {

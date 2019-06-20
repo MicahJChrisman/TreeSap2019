@@ -105,9 +105,19 @@ public class AllUsersDataSource extends DataSource {
                                 tree.setScientificName("Unknown");
                             }
                                 tree.setLocation(new TreeLocation(lati, longi));
-                            if(document.getData().get("dbh").toString()!=null) {
-                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+
+
+                            ArrayList<Object> kevin = new ArrayList<Object>();
+//                            kevin = document.child("dbhArray").getValue();
+                            kevin = (ArrayList) document.getData().get("dbhArray");
+                            if(kevin !=null){
+                                tree.setDBHArray(kevin);
+                                tree.setCurrentDBH( (Double) kevin.get(0));
                             }
+
+//                            if(document.getData().get("dbh").toString()!=null) {
+//                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+//                            }
 
 //                                tree.setIsClosest(true);
                                 tree.addInfo("Source", document.getData().get("userID").toString());
