@@ -157,20 +157,20 @@ public class Tree_Info_First extends AppCompatActivity {
             dbhText.setVisibility(View.GONE);
         }
 
-        String latitude = MainActivity.banana.getLocation().getLatitude()+"";
+        Double latitude = MainActivity.banana.getLocation().getLatitude();
         TextView latitudeText = (TextView) findViewById(R.id.latitude);
         if(latitude != null) {
-            latitudeText.setText(latitude);
+            latitudeText.setText(latitude.toString());
         }else{
             //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.latitudeTitle).setVisibility(View.GONE);
             latitudeText.setVisibility(View.GONE);
         }
 
-        String longitude = MainActivity.banana.getLocation().getLongitude() + "";
+        Double longitude = MainActivity.banana.getLocation().getLongitude();
         TextView longitudeText = (TextView) findViewById(R.id.longitude);
         if(latitude != null) {
-            longitudeText.setText(longitude);
+            longitudeText.setText(longitude.toString());
         }else{
             //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.longitudeTitle).setVisibility(View.GONE);

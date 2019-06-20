@@ -107,12 +107,12 @@ public class AllUsersDataSource extends DataSource {
                                 tree.setLocation(new TreeLocation(lati, longi));
 
 
-                            ArrayList<Object> kevin = new ArrayList<Object>();
-//                            kevin = document.child("dbhArray").getValue();
-                            kevin = (ArrayList) document.getData().get("dbhArray");
-                            if(kevin !=null){
-                                tree.setDBHArray(kevin);
-                                tree.setCurrentDBH( (Double) kevin.get(0));
+
+                            ArrayList<Object> dbhArray= (ArrayList) document.getData().get("dbhArray");
+                            if(dbhArray !=null){
+                                tree.setDBHArray(dbhArray);
+                                Long l = (Long) dbhArray.get(0);
+                                tree.setCurrentDBH(l.doubleValue());
                             }
 
 //                            if(document.getData().get("dbh").toString()!=null) {
@@ -139,6 +139,7 @@ public class AllUsersDataSource extends DataSource {
 
                                 userTrees.add(tree);
                         } catch (Exception e) {
+                            Log.e("error", "micah messed", e);
                             continue;
                         }
                     }
