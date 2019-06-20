@@ -116,6 +116,10 @@ public class Tree {
         this.dbhArray = dbhArray;
     }
 
+    public ArrayList<Object> getDBHArray(){
+        return dbhArray;
+    }
+
     public void addPics(String key, Object value) {
         treePics.put(key, value);
     }
