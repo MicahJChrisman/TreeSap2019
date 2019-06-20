@@ -138,6 +138,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     Tree closestTree;
     float closest1;
+    SupportMapFragment mapFragment;
 
     @Override
     public void onStart(){
@@ -146,17 +147,19 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         closestTree = null;
         closest1 =999999999;
 
+        googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
+        googleApiClient.connect();
 
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-//
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        GoogleMapOptions options = new GoogleMapOptions();
-//        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
-//        MapFragment.newInstance(options);
-//        mapFragment.getMapAsync(this);
-//        parent = (Context) getIntent().getSerializableExtra("parent");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        GoogleMapOptions options = new GoogleMapOptions();
+        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
+        MapFragment.newInstance(options);
+        mapFragment.getMapAsync(this);
+        parent = (Context) getIntent().getSerializableExtra("parent");
     }
 
     public void onCreate(Bundle savedInstanceState){
@@ -167,8 +170,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
 //        pageRight.setOnTouchListener(new pageRight.);
 
-        googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
-        googleApiClient.connect();
+
 
         randomGenerator = new Random();
 
@@ -199,14 +201,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
+                        finish();
                         Intent intent1 = new Intent(Maps_Activity.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
+                        finish();
                         Intent intent2 = new Intent(Maps_Activity.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
+                        finish();
                         Intent intent3 = new Intent(Maps_Activity.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
@@ -215,6 +220,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                        startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
+                        finish();
                         Intent intent5 = new Intent(Maps_Activity.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
@@ -227,16 +233,16 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        GoogleMapOptions options = new GoogleMapOptions();
-        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
-        MapFragment.newInstance(options);
-        mapFragment.getMapAsync(this);
-        parent = (Context) getIntent().getSerializableExtra("parent");
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
+//
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        GoogleMapOptions options = new GoogleMapOptions();
+//        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
+//        MapFragment.newInstance(options);
+//        mapFragment.getMapAsync(this);
+//        parent = (Context) getIntent().getSerializableExtra("parent");
 
 
 //
@@ -476,6 +482,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                         Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
 //                        finish();
+                        mMap.clear();
                         startActivity(intentA);
                     }
 
@@ -858,9 +865,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             if(location==null){
                 location1 = defaultLocation;
             }
-            onLocationChanged(location1);
-            double latitude = location1.getLatitude();
-            double longitude = location1.getLongitude();
+            double latitude,longitude;
+            if(location1 == null){
+                onLocationChanged(location2);
+                latitude = location2.getLatitude();
+                longitude = location2.getLongitude();
+            }else {
+                onLocationChanged(location1);
+                latitude = location1.getLatitude();
+                longitude = location1.getLongitude();
+            }
+
             LatLng currentLocation = new LatLng(latitude, longitude);
             if (locMarker == true) {
                 mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation)
@@ -917,6 +932,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private class AddTreeEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+//            getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
+//            finish();
+            mMap.clear();
             Intent intentA = new Intent(Maps_Activity.this, Add_Tree_Activity.class);
             startActivity(intentA);
         }
@@ -925,8 +943,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
+//            getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
+//            finish();
+            mMap.clear();
             Intent intentA = new Intent(Maps_Activity.this, SettingsActivity.class);
             startActivity(intentA);
+            getSupportFragmentManager();
         }
     }
 
