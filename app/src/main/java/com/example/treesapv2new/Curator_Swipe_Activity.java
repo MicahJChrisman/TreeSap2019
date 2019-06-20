@@ -72,6 +72,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 Log.d("LIST", "removed object!");
                 penTrees.remove(0);
                 arrayAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -80,6 +81,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(Curator_Swipe_Activity.this, "Left!", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -126,7 +128,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         @Override
         protected Long doInBackground(URL... urls) {
 //            FirebaseFirestore db = (FirebaseFirestore) objects[0];
-            db.collection("pendingTrees").orderBy("Date and time", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection("pendingTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
@@ -144,13 +146,14 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                             }else {
                                 tree.setScientificName(scientificName);
                             }
-                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
-                            if(dbh == null || dbh.equals("")){
+                            ArrayList<Number> dbhList = ((ArrayList<Number>) document.get("dbhArray"));
+//                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
+                            if(dbhList == null || dbhList.isEmpty()){
                                 tree.setCurrentDBH(0.0);
                             }else{
 //                                tree.setCurrentDBHetCurrentDBH(new Double(dbh));
 //                                tree.setCurrentDBH(dbh);
-                                tree.setCurrentDBH(dbh.doubleValue());
+                                tree.setCurrentDBH(dbhList.get(0).doubleValue());
                             }
 //     TODO                       String[] otherInfo = document.get("otherInfo").get("notes");
 //                            if(otherInfo != null){
@@ -183,7 +186,10 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                                     }else{
                                         key = "Image Tree";
                                     }
-                                    tree.addPics(key, stringPics.get(i));
+                                    String pic = stringPics.get(i);
+                                    if(pic != null) {
+                                        tree.addPics(key, stringPics.get(i));
+                                    }
                                     i++;
                                 }
                             }
