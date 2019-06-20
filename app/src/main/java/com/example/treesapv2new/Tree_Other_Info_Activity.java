@@ -52,6 +52,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Tree_Other_Info_Activity extends AppCompatActivity {
+    private int REQUEST_EXIT = 9000;
+    private int RESULT_DONE = 4000;
     String[] passedArray = new String[10];
 
     String commonName;
@@ -79,7 +81,29 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         findViewById(R.id.back_final_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //                finish();
+                Intent intentA = new Intent(Tree_Other_Info_Activity.this, Tree_Pic_Activity.class);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    String lat_value = extras.getString("lat_value");
+                    String long_value = extras.getString("long_value");
+                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                    if (byteArray != null) {
+                        intentA.putExtra("bark_pic_byte_array", byteArray);
+                    }
+                    byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
+                    if (byteArrayLeaf != null) {
+                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+                    }
+                    byte[] byteArrayFull = extras.getByteArray("full_pic_byte_array");
+                    if (byteArrayLeaf != null) {
+                        intentA.putExtra("full_pic_byte_array", byteArrayFull);
+                    }
+                    intentA.putExtra("lat_value", lat_value);
+                    intentA.putExtra("long_value", long_value);
+                }
+//                    startActivity(intentA);
+                startActivityForResult(intentA,REQUEST_EXIT);
             }
         });
 
@@ -181,8 +205,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
-                        startActivity(intentA);
+//                        Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
+//                        startActivity(intentA);
+                        setResult(RESULT_DONE,null);
                         finish();
                     }
                 });
@@ -426,6 +451,12 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //    }
+
+    public void onStop(){
+        super.onStop();
+        setResult(RESULT_DONE,null);
+        finish();
+    }
 
     public class SubmitEvent implements View.OnClickListener{
         @Override

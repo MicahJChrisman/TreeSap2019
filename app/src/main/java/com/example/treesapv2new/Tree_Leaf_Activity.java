@@ -30,6 +30,8 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
             Manifest.permission.CAMERA,
     };
     private static final int REQUEST_ID = 1;
+    private int REQUEST_EXIT = 9000;
+    private int RESULT_DONE = 4000;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -47,7 +49,21 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         findViewById(R.id.back_leaf_pic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
+                Intent intentA = new Intent(Tree_Leaf_Activity.this, Tree_Bark_Activity.class);
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    String lat_value = extras.getString("lat_value");
+                    String long_value = extras.getString("long_value");
+                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                    if (byteArray != null) {
+                        intentA.putExtra("bark_pic_byte_array", byteArray);
+                    }
+                    intentA.putExtra("lat_value", lat_value);
+                    intentA.putExtra("long_value", long_value);
+                }
+//                    startActivity(intentA);
+                startActivityForResult(intentA,REQUEST_EXIT);
             }
         });
 
@@ -80,8 +96,9 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        Intent intentA = new Intent(Tree_Leaf_Activity.this, MainActivity.class);
-                        startActivity(intentA);
+//                        Intent intentA = new Intent(Tree_Leaf_Activity.this, MainActivity.class);
+//                        startActivity(intentA);
+                        setResult(RESULT_DONE,null);
                         finish();
                     }
                 });
@@ -117,6 +134,12 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUEST_EXIT){
+            if (resultCode == RESULT_DONE) {
+                this.finish();
+
+            }
+        }
         if(requestCode == REQUSET_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -158,11 +181,18 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                         intentA.putExtra("lat_value", lat_value);
                         intentA.putExtra("long_value", long_value);
                     }
-                    startActivity(intentA);
+//                    startActivity(intentA);
+                    startActivityForResult(intentA,REQUEST_EXIT);
                 }
             });
             builder.show();
         }
+    }
+
+    public void onStop(){
+        super.onStop();
+        setResult(RESULT_DONE,null);
+        finish();
     }
 
     private class NextEvent implements View.OnClickListener {
@@ -179,6 +209,9 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                 intentA.putExtra("long_value", long_value);
                 intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
             }
-            startActivity(intentA);
+//            startActivity(intentA);
+            startActivityForResult(intentA,REQUEST_EXIT);
         }
-    }}
+    }
+}
+

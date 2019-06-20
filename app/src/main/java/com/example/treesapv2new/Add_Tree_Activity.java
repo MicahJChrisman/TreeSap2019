@@ -41,6 +41,8 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             Manifest.permission.ACCESS_NETWORK_STATE
     };
     private static final int REQUEST_ID = 6;
+    private int REQUEST_EXIT = 9000;
+    private int RESULT_DONE = 4000;
 
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -85,7 +87,20 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         //};
     }
 
+    public void onStop(){
+        super.onStop();
+        setResult(RESULT_DONE,null);
+        finish();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == REQUEST_EXIT){
+            if (resultCode == RESULT_DONE) {
+                this.finish();
+
+            }
+        }
+
         //Authorization Stuff
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
@@ -94,8 +109,8 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         }else{
             //user is signed out
             finish();
-
         }
+
     }
 
     public void addTreesMethod(){
@@ -212,7 +227,8 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             TextView longString = (TextView) findViewById(R.id.long_putter);
             intentA.putExtra("lat_value", latString.getText().toString());
             intentA.putExtra("long_value", longString.getText().toString());
-            startActivity(intentA);
+            startActivityForResult(intentA, REQUEST_EXIT);
+//            startActivity(intentA);
         }
     }
 
