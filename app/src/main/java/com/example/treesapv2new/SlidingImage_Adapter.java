@@ -1,6 +1,7 @@
 package com.example.treesapv2new;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -19,12 +20,21 @@ public class SlidingImage_Adapter extends PagerAdapter {
     private ArrayList<ImageModel> imageModelArrayList;
     private LayoutInflater inflater;
     private Context context;
+    private ArrayList<BitmapDrawable> dBmpList;
 
 
-    public SlidingImage_Adapter(Context context, ArrayList<ImageModel> imageModelArrayList) {
+//    public SlidingImage_Adapter(Context context, ArrayList<ImageModel> imageModelArrayList) {
+//        this.context = context;
+//        this.imageModelArrayList = imageModelArrayList;
+//        inflater = LayoutInflater.from(context);
+//        dBmpList = new ArrayList<>();
+//    }
+
+    public SlidingImage_Adapter(Context context, ArrayList<BitmapDrawable> dBmpList){
         this.context = context;
-        this.imageModelArrayList = imageModelArrayList;
+        this.imageModelArrayList = new ArrayList<>();
         inflater = LayoutInflater.from(context);
+        this.dBmpList = dBmpList;
     }
 
     @Override
@@ -46,7 +56,8 @@ public class SlidingImage_Adapter extends PagerAdapter {
                 .findViewById(R.id.image);
 
 
-        imageView.setImageDrawable(imageModelArrayList.get(position).getImage_drawable());
+        //imageView.setImageDrawable(imageModelArrayList.get(position).getImage_drawable());
+        imageView.setImageDrawable(dBmpList.get(position));
 
         view.addView(imageLayout, 0);
 
@@ -66,6 +77,5 @@ public class SlidingImage_Adapter extends PagerAdapter {
     public Parcelable saveState() {
         return null;
     }
-
 
 }

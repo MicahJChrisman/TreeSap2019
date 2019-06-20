@@ -25,6 +25,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+
+
+
+/**
+ * https://www.youtube.com/watch?v=Q2FPDI99-as
+ */
+
+
+
 public class Curator_Swipe_Activity extends AppCompatActivity {
     private NewArrayAdapter arrayAdapter;
     private int i;
@@ -35,6 +44,8 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
     List<Tree> penTrees;
     FirebaseFirestore db;
     SwipeFlingAdapterView flingContainer;
+
+
 
 
     @Override
@@ -55,11 +66,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //        tree.setScientificName("Testus treeus");
 //        tree.setCurrentDBH(50.0);
 //        penTrees.add(tree);
-        Object[] objects = {db};
+        //Object[] objects = {db};
         //new DownloadFilesTask();
         new DownloadFilesTask().execute();
         try {
-            Thread.sleep(1500);
+            Thread.sleep(1600);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -204,7 +215,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Long result) {
-            arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees);
+            arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees, getSupportFragmentManager());
             flingContainer.setAdapter(arrayAdapter);
         }
     }

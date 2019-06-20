@@ -5,6 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +21,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
+
 
 import com.example.treesapv2new.model.Tree;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -38,10 +47,15 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
     Context context;
     View convertView;
     private static ViewPager mPager;
+    private PagerAdapter pagerAdapter;
     private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
+    private static int NUM_PAGES = 1;
     private ArrayList<ImageModel> imageModelArrayList;
     private Tree tree;
+    FragmentManager fm;
+
+    private ArrayList<BitmapDrawable> dBmpList;
+
 
     private BitmapDrawable[] myImageList = new BitmapDrawable[10];
 //            {R.drawable.harley2, R.drawable.benz2,
@@ -49,17 +63,23 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 //            R.drawable.bikess,R.drawable.img1
 //    };
 
-    public NewArrayAdapter(Context context, int resourceId, List<Tree> trees){
+    public NewArrayAdapter(Context context, int resourceId, List<Tree> trees, FragmentManager fm){
         super(context, resourceId, trees);
         this.context = context;
+        this.fm = fm;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
         tree = this.getItem(position);
 
         imageModelArrayList = new ArrayList<>();
-        imageModelArrayList = populateList();
-
+        dBmpList = new ArrayList<>();
+        //imageModelArrayList = populateList();
+        dBmpList = new ArrayList<BitmapDrawable>();
+        dBmpList = populateList();
+        if(dBmpList.size()!=0) {
+            NUM_PAGES = imageModelArrayList.size();
+        }
 
 
         if(convertView == null) {
@@ -69,13 +89,19 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         else{
             this.convertView = convertView;
         }
-        init();
+        //init();
+        mPager = (ViewPager) convertView.findViewById(R.id.pager);
+        pagerAdapter = new ScreenSlidePagerAdapter(fm, dBmpList);
+        mPager.setAdapter(pagerAdapter);
+        mPager.setCurrentItem(pagerAdapter.getItem());
+
+
 
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
         TextView scientificName = (TextView) convertView.findViewById(R.id.scientific_name);
         TextView dbh = (TextView) convertView.findViewById(R.id.dbh);
         TextView notes = (TextView) convertView.findViewById(R.id.notes);
-        ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
+        //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
 
         commonName.setText(tree.getCommonName());
         scientificName.setText(tree.getScientificName());
@@ -98,9 +124,10 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         return convertView;
     }
 
-    private ArrayList<ImageModel> populateList(){
+    private ArrayList<BitmapDrawable> populateList(){
 
         ArrayList<ImageModel> picList = new ArrayList<>();
+        ArrayList<BitmapDrawable> dBmpList = new ArrayList<>();
 
         String picsString = tree.getAllPics();
         if(picsString != null) {
@@ -109,22 +136,19 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
             int i = 0;
             while(i<picsLength && pics[i]!=null){
                 if(!pics[i].equals("")) {
-
                     byte[] encodeByte = Base64.decode(pics[i], Base64.DEFAULT);
                     InputStream is = new ByteArrayInputStream(encodeByte);
 
 //                    InputStream is = new ByteArrayInputStream(pics[i].getBytes());
                     Bitmap bmp = BitmapFactory.decodeStream(is);
-                    ImageModel imageModel = new ImageModel();
+//                    ImageModel imageModel = new ImageModel();
                     BitmapDrawable dBmp = new BitmapDrawable(getContext().getResources(), bmp);
-                    imageModel.setImage_drawable(new BitmapDrawable(getContext().getResources(), bmp));
-                    picList.add(imageModel);
+                    dBmpList.add(dBmp);
+//                    imageModel.setImage_drawable(dBmp);
+//                    picList.add(imageModel);
                 }
                 i++;
             }
-        }
-        else{
-
         }
 
 //        for(int i = 0; i < 6; i++){
@@ -133,24 +157,25 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 //            list.add(imageModel);
 //        }
 
-        return picList;
+        return dBmpList;
     }
 
-    private void init() {
-
-        mPager = (ViewPager) convertView.findViewById(R.id.pager);
-        mPager.setAdapter(new SlidingImage_Adapter(context, imageModelArrayList));
-
-        CirclePageIndicator indicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
-
-        indicator.setViewPager(mPager);
-
-        final float density = convertView.getResources().getDisplayMetrics().density;
-
-//Set circle indicator radius
-        indicator.setRadius(5 * density);
-
-        NUM_PAGES =imageModelArrayList.size();
+//    private void init() {
+//
+//        mPager = (ViewPager) convertView.findViewById(R.id.pager);
+//        //mPager.setAdapter(new SlidingImage_Adapter(context, imageModelArrayList));
+//        mPager.setAdapter(new SlidingImage_Adapter(context, dBmpList));
+//
+//        CirclePageIndicator indicator = (CirclePageIndicator) convertView.findViewById(R.id.indicator);
+//
+//        indicator.setViewPager(mPager);
+//
+//        final float density = convertView.getResources().getDisplayMetrics().density;
+//
+////Set circle indicator radius
+//        indicator.setRadius(5 * density);
+//
+//        NUM_PAGES =imageModelArrayList.size();
 
         // Auto start of viewpager
 //        final Handler handler = new Handler();
@@ -169,28 +194,28 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 //                handler.post(Update);
 //            }
 //        }, 3000, 3000);
-
-        // Pager listener over indicator
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPage = position;
-
-            }
-
-            @Override
-            public void onPageScrolled(int pos, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int pos) {
-
-            }
-        });
-
-    }
+//
+//        // Pager listener over indicator
+//        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                currentPage = position;
+//
+//            }
+//
+//            @Override
+//            public void onPageScrolled(int pos, float arg1, int arg2) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int pos) {
+//
+//            }
+//        });
+//
+//    }
 //    private void initRecyclerView(){
 //        Log.d(TAG, "initRecyclerView: init recyclerview.");
 //        RecyclerView recyclerView = convertView.findViewById(R.id.recycler_view_curator);
@@ -198,5 +223,26 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //    }
+    private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+        private ArrayList<BitmapDrawable> dBmpList;
 
+        public ScreenSlidePagerAdapter(FragmentManager fm, ArrayList<BitmapDrawable> dBmpList) {
+            super(fm);
+            this.dBmpList = dBmpList;
+        }
+        @Override
+        public Fragment getItem(int i) {
+            i--;
+            ScreenSlidePageFragment screen = new ScreenSlidePageFragment();
+            if (i >= 0) {
+                ImageView pic = screen.getImageView();
+                pic.setImageDrawable(dBmpList.get(i));
+            }
+            return screen;
+        }
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
 }
