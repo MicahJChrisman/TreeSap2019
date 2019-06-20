@@ -112,7 +112,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
 
     Random randomGenerator;
-//    float zoom = 18-(2*PrefManager.getFloat("zoom", (float)1));
     float zoom = 16;
     boolean whichSource = false;
     Double longitude, latitude;
@@ -201,17 +200,17 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
-                        finish();
+                        mMap.clear();
                         Intent intent1 = new Intent(Maps_Activity.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
-                        finish();
+                        mMap.clear();
                         Intent intent2 = new Intent(Maps_Activity.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
-                        finish();
+                        mMap.clear();
                         Intent intent3 = new Intent(Maps_Activity.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
@@ -220,7 +219,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                        startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
-                        finish();
+                        mMap.clear();
                         Intent intent5 = new Intent(Maps_Activity.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
@@ -610,10 +609,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                             }
                                             try {
 //                                                    String name = Transform.ChangeName(record.get(treeField));
-                                                String name = "Tree";
-//                                                    if(name == ""){
-//                                                        name = "N/A";
-//                                                    }
+
+//                                                String name = "Tree";
+                                                String name = document.getData().get("commonName").toString();
                                                 int iconInt = randomGenerator.nextInt(8);
                                                 BitmapDescriptor icon;
                                                 switch (iconInt) {
@@ -645,7 +643,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                                         icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
                                                         break;
                                                 }
-                                                mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                                mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("Your tree").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                             } catch (ArrayIndexOutOfBoundsException e) {
 
                                             }
@@ -685,7 +683,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                         }
                                         try {
 //                                                    String name = Transform.ChangeName(record.get(treeField));
-                                            String name = "Tree";
+                                            String name = document.getData().get("commonName").toString();
 //                                                    if(name == ""){
 //                                                        name = "N/A";
 //                                                    }
@@ -720,7 +718,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                                     icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
                                                     break;
                                             }
-                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("User Submitted").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                         } catch (ArrayIndexOutOfBoundsException e) {
 
                                         }

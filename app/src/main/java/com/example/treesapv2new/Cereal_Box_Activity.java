@@ -110,7 +110,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cereal_box);
+//        setContentView(R.layout.activity_cereal_box);
+        setContentView(R.layout.cereal_box_new);
 
 
 
@@ -164,7 +165,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         if(sources.size()>0) {
             //patchTreeData();
-            display(MainActivity.banana);
+//            display(MainActivity.banana);
         }else{
             finish();
             Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
@@ -174,11 +175,11 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
 //        button.setOnClickListener(new AddNotesEvent());
 
-        BottomNavigationView navView = findViewById(R.id.cereal_box_menu);
+        BottomNavigationView navView = findViewById(R.id.cereal_box_menu_1);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.setSelectedItemId(R.id.cereal_box_menu);
+        navView.setSelectedItemId(R.id.cereal_box_menu_1);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.cereal_box_menu);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.cereal_box_menu_1);
 
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem1 = menu.getItem(0);
