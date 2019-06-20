@@ -206,13 +206,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit)).getText().toString();
-                if(!circumString.equals("")) {
-                    Double circumValue = Double.valueOf(circumString);
-                    Double dbhValue = circumValue / 3.1415;
-                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
-                    ((TextView) findViewById(R.id.dbh_textView)).setText(dbhValue.toString());
-                }else{
-                    ((TextView) findViewById(R.id.dbh_textView)).setText("");
+                if(((EditText) findViewById(R.id.dbh_edit)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue / 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_textView)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_textView)).setText("");
+                    }
                 }
             }
 
@@ -231,13 +233,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit4)).getText().toString();
-                if(!circumString.equals("")) {
-                    Double circumValue = Double.valueOf(circumString);
-                    Double dbhValue = circumValue / 3.1415;
-                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
-                    ((TextView) findViewById(R.id.dbh_textView4)).setText(dbhValue.toString());
-                }else{
-                    ((TextView) findViewById(R.id.dbh_textView4)).setText("");
+                if(((EditText) findViewById(R.id.dbh_edit4)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue / 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_textView4)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_textView4)).setText("");
+                    }
                 }
             }
 
@@ -256,13 +260,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit2)).getText().toString();
-                if(!circumString.equals("")) {
-                    Double circumValue = Double.valueOf(circumString);
-                    Double dbhValue = circumValue / 3.1415;
-                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
-                    ((TextView) findViewById(R.id.dbh_textView2)).setText(dbhValue.toString());
-                }else{
-                    ((TextView) findViewById(R.id.dbh_textView2)).setText("");
+                if(((EditText) findViewById(R.id.dbh_edit2)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue / 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_textView2)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_textView2)).setText("");
+                    }
                 }
             }
 
@@ -280,14 +286,18 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String circumString = ((EditText) findViewById(R.id.dbh_edit3)).getText().toString();
-                if(!circumString.equals("")) {
-                    Double circumValue = Double.valueOf(circumString);
-                    Double dbhValue = circumValue / 3.1415;
-                    dbhValue = Math.round(dbhValue * 100.0) / 100.0;
-                    ((TextView) findViewById(R.id.dbh_textView3)).setText(dbhValue.toString());
-                }else{
-                    ((TextView) findViewById(R.id.dbh_textView3)).setText("");
+                if(((EditText) findViewById(R.id.dbh_edit3)).hasFocus()) {
+                    String circumString = ((EditText) findViewById(R.id.dbh_edit3)).getText().toString();
+                    if (((EditText) findViewById(R.id.dbh_edit3)).hasFocus()) {
+                        if (!circumString.equals("")) {
+                            Double circumValue = Double.valueOf(circumString);
+                            Double dbhValue = circumValue / 3.1415;
+                            dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                            ((EditText) findViewById(R.id.dbh_textView3)).setText(dbhValue.toString());
+                        } else {
+                            ((EditText) findViewById(R.id.dbh_textView3)).setText("");
+                        }
+                    }
                 }
             }
 
@@ -296,6 +306,118 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
             }
         });
+
+        ((EditText) findViewById(R.id.dbh_textView)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_textView)).getText().toString();
+                if(((EditText) findViewById(R.id.dbh_textView)).hasFocus()) {
+                    if (!s.equals(circumString)) {
+                        if (!circumString.equals("")) {
+                            Double circumValue = Double.valueOf(circumString);
+                            Double dbhValue = circumValue * 3.1415;
+                            dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                            ((EditText) findViewById(R.id.dbh_edit)).setText(dbhValue.toString());
+                        } else {
+                            ((EditText) findViewById(R.id.dbh_edit)).setText("");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((EditText) findViewById(R.id.dbh_textView2)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_textView2)).getText().toString();
+                if(((EditText) findViewById(R.id.dbh_textView2)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue * 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_edit2)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_edit2)).setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((EditText) findViewById(R.id.dbh_textView3)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_textView3)).getText().toString();
+                if(((EditText) findViewById(R.id.dbh_textView3)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue * 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_edit3)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_edit3)).setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((EditText) findViewById(R.id.dbh_textView4)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String circumString = ((EditText) findViewById(R.id.dbh_textView4)).getText().toString();
+                if(((EditText) findViewById(R.id.dbh_textView4)).hasFocus()) {
+                    if (!circumString.equals("")) {
+                        Double circumValue = Double.valueOf(circumString);
+                        Double dbhValue = circumValue * 3.1415;
+                        dbhValue = Math.round(dbhValue * 100.0) / 100.0;
+                        ((EditText) findViewById(R.id.dbh_edit4)).setText(dbhValue.toString());
+                    } else {
+                        ((EditText) findViewById(R.id.dbh_edit4)).setText("");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 //
 //    private void initRecyclerView(){
@@ -323,17 +445,17 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     commonName = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
-                    dbh = Double.valueOf(((TextView) findViewById(R.id.dbh_textView)).getText().toString());
-                    if(!(((TextView) findViewById(R.id.dbh_textView2)).getText().toString()).equals("")) {
-                        dbh2 = Double.valueOf(((TextView) findViewById(R.id.dbh_textView2)).getText().toString());
+                    dbh = Double.valueOf(((EditText) findViewById(R.id.dbh_textView)).getText().toString());
+                    if(!(((EditText) findViewById(R.id.dbh_textView2)).getText().toString()).equals("")) {
+                        dbh2 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView2)).getText().toString());
                     }
-                    if(!(((TextView) findViewById(R.id.dbh_textView3)).getText().toString()).equals("")) {
-                        dbh3 = Double.valueOf(((TextView)findViewById(R.id.dbh_textView3)).getText().toString());
+                    if(!(((EditText) findViewById(R.id.dbh_textView3)).getText().toString()).equals("")) {
+                        dbh3 = Double.valueOf(((EditText)findViewById(R.id.dbh_textView3)).getText().toString());
                     }
-                    if(!(((TextView) findViewById(R.id.dbh_textView4)).getText().toString()).equals("")) {
-                        dbh4 = Double.valueOf(((TextView) findViewById(R.id.dbh_textView4)).getText().toString());
+                    if(!(((EditText) findViewById(R.id.dbh_textView4)).getText().toString()).equals("")) {
+                        dbh4 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView4)).getText().toString());
                     }
-                    notes = ((TextView) findViewById(R.id.notes_about_tree)).getText().toString();
+                    notes = ((EditText) findViewById(R.id.notes_about_tree)).getText().toString();
 
 
 

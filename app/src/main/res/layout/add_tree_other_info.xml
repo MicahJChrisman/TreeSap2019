@@ -121,11 +121,24 @@
                     android:orientation="horizontal"
                     android:padding="5dp">
 
+                    <TextView
+                        android:id="@+id/circum_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Circumference: "
+                        android:textColor="@color/accent_gray"
+                        android:textSize="18sp" />
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center">
+
+
 
                         <TextView
                             android:layout_width="70dp"
@@ -147,16 +160,7 @@
                             android:src="@drawable/info_icon" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/circum_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Circumference: "
-                        android:textColor="@color/accent_gray"
-                        android:textSize="18sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -180,7 +184,7 @@
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/dbh_textView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -188,6 +192,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
                     android:paddingStart="3dp" />
@@ -214,7 +219,7 @@
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/dbh_textView2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -222,6 +227,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
                     android:paddingStart="3dp" />
@@ -248,7 +254,7 @@
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/dbh_textView3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -256,6 +262,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
                     android:paddingStart="3dp" />
@@ -282,7 +289,7 @@
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/dbh_textView4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -291,6 +298,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
+                    android:inputType="numberDecimal"
                     android:gravity="center_vertical"
                     android:paddingStart="3dp" />
             </LinearLayout>
