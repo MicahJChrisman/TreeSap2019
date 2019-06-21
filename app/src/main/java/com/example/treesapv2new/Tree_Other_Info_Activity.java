@@ -64,10 +64,10 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     Double dbh4;
     Double lat;
     Double longit;
-    String barkPic;
-    String leafPic;
-    String fullPic;
-    String notes;
+    String barkPic = "";
+    String leafPic = "";
+    String fullPic = "";
+    String notes = "";
     String userID;
     Timestamp timestamp;
 

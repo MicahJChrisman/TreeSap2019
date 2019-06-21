@@ -32,6 +32,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
     private static final int REQUEST_ID = 1;
     private int REQUEST_EXIT = 9000;
     private int RESULT_DONE = 4000;
+    private boolean CAMERA_ACTIVITY = false;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -133,6 +134,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
+                CAMERA_ACTIVITY = true;
                 startActivityForResult(imageTakeIntent, REQUSET_IMGAGE_CAPTURE);
             }
         }else{
@@ -203,8 +205,10 @@ public class Tree_Pic_Activity extends AppCompatActivity {
 
     public void onStop(){
         super.onStop();
-        setResult(RESULT_DONE,null);
-        finish();
+        if(!CAMERA_ACTIVITY) {
+            setResult(RESULT_DONE, null);
+            finish();
+        }
     }
 
     private class NextEvent implements View.OnClickListener {
