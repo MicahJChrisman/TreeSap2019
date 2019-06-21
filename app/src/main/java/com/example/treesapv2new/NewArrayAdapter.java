@@ -3,6 +3,7 @@ package com.example.treesapv2new;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -43,14 +44,13 @@ import static android.content.ContentValues.TAG;
 //import static android.support.v4.graphics.drawable.IconCompat.getResources;
 
 public class NewArrayAdapter extends ArrayAdapter<Tree>{
-
     Context context;
     View convertView;
     private static ViewPager mPager;
-    private PagerAdapter pagerAdapter;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 1;
-    private ArrayList<ImageModel> imageModelArrayList;
+//    private PagerAdapter pagerAdapter;
+//    private static int currentPage = 0;
+    //private static int NUM_PAGES = 1;
+    //private ArrayList<ImageModel> imageModelArrayList;
     private Tree tree;
     FragmentManager fm;
 
@@ -72,14 +72,14 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
     public View getView(int position, View convertView, ViewGroup parent){
         tree = this.getItem(position);
 
-        imageModelArrayList = new ArrayList<>();
+        //imageModelArrayList = new ArrayList<>();
         dBmpList = new ArrayList<>();
         //imageModelArrayList = populateList();
         dBmpList = new ArrayList<BitmapDrawable>();
         dBmpList = populateList();
-        if(dBmpList.size()!=0) {
-            NUM_PAGES = imageModelArrayList.size();
-        }
+//        if(dBmpList.size()!=0) {
+//            NUM_PAGES = dBmpList.size();
+//        }
 
 
         if(convertView == null) {
@@ -91,10 +91,13 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         }
         //init();
         mPager = (ViewPager) convertView.findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fm, dBmpList);
-        mPager.setAdapter(pagerAdapter);
-        mPager.setCurrentItem(pagerAdapter.getItem());
+//        mPager.setBackgroundColor(Color.YELLOW);
+       // pagerAdapter = new ScreenSlidePagerAdapter(fm, dBmpList);
+//        mPager.setAdapter(pagerAdapter);
+//        mPager.setCurrentItem(pagerAdapter.getItem());
 
+        ImageAdapter adapter = new ImageAdapter(context, dBmpList, this);
+        mPager.setAdapter(adapter);
 
 
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
@@ -126,7 +129,7 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 
     private ArrayList<BitmapDrawable> populateList(){
 
-        ArrayList<ImageModel> picList = new ArrayList<>();
+//        ArrayList<ImageModel> picList = new ArrayList<>();
         ArrayList<BitmapDrawable> dBmpList = new ArrayList<>();
 
         String picsString = tree.getAllPics();
@@ -242,7 +245,7 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         }
         @Override
         public int getCount() {
-            return NUM_PAGES;
+            return dBmpList.size();
         }
     }
 }

@@ -1,9 +1,13 @@
 package com.example.treesapv2new;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -19,6 +23,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +204,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                                         key = "Image Tree";
                                     }
                                     String pic = stringPics.get(i);
+//                                    byte[] encodeByte = Base64.decode(pic, Base64.DEFAULT);
+//                                    InputStream is = new ByteArrayInputStream(encodeByte);
+//
+//                                    Bitmap bmp = BitmapFactory.decodeStream(is);
+//                                    BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
+
                                     if(pic != null) {
                                         tree.addPics(key, stringPics.get(i));
                                     }
