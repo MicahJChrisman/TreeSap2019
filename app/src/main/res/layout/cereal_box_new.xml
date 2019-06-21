@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/transparent_rect"
+        android:layout_above="@id/cereal_box_menu_1"
         android:background="@color/white"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/transparent_rect"
+        android:layout_above="@id/cereal_box_menu_1"
         android:background="@color/black"
         android:layout_margin="10dp"/>
 
@@ -22,16 +24,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/transparent_rect"
+        android:layout_above="@id/cereal_box_menu_1"
         android:background="@color/white"
         android:layout_margin="12dp"/>
 
     <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/cereal_box_menu_1"
-        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp">
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,17 +47,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Tree Facts"
                 android:textColor="@color/black"
                 android:textSize="36sp"
-                android:text="Tree Facts"
-                android:textStyle="bold"
-                android:layout_gravity="center"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:src="@drawable/transparent_rect" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,94 +65,97 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/common_name_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Common Name"
-                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:id="@+id/common_name_cereal"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="10dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/scientific_name_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
                     android:text="Scientific Name"
-                    android:id="@+id/scientific_name_cereal"/>
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/dbh_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/dbh_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DBH"
-                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:id="@+id/dbh_cereal"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="10dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/dbh_meas_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
                     android:text="0in"
-                    android:id="@+id/dbh_meas_cereal"/>
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
 
             <LinearLayout
+                android:id="@+id/native_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/native_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Native"
-                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:id="@+id/native_cereal"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="10dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/native_yn_cereal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="italic"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
                     android:text="yes"
-                    android:id="@+id/native_yn_cereal"/>
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black"/>
+                android:background="@color/black"
+                android:src="@drawable/transparent_rect" />
 
             <LinearLayout
+                android:id="@+id/annual_linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -156,36 +165,38 @@
                     android:text="Annual Benefits"
                     android:textColor="@color/black"
                     android:textSize="30sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/annual_benefits_val"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="30sp"
-                    android:textColor="@color/black"
                     android:text="$0.00"
-                    android:id="@+id/annual_benefits_val"/>
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/thick_bar_2"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:src="@drawable/transparent_rect" />
 
             <LinearLayout
+                android:id="@+id/carbon_dioxide_sequestered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/carbon_dioxide_sequestered">
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/annual_co2_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -195,28 +206,22 @@
                         android:text="Carbon Dioxide (CO2) Sequestered"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/carbon_dioxide_sequestered_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$NaN"
-                        android:textSize="18sp"
                         android:textColor="@color/black"
-                        android:id="@+id/carbon_dioxide_sequestered_val"/>
+                        android:textSize="18sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"
-                    android:layout_marginStart="25dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -226,37 +231,37 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Annual CO2 equivalent of carbon"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Annual CO2 equivalent of carbon"/>
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/annual_co2_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0.00 gal"
+                        android:text="0.00 lbs"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:id="@+id/annual_co2_val"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black"
+                    android:src="@drawable/transparent_rect" />
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black" />
-
             <LinearLayout
+                android:id="@+id/water_runnoff_avoided"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/water_runnoff_avoided">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -268,30 +273,25 @@
                         android:text="Storm Water Runoff Avoided"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/storm_water_runoff_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$NaN"
-                        android:textSize="18sp"
                         android:textColor="@color/black"
-                        android:id="@+id/storm_water_runoff_val"/>
+                        android:textSize="18sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"
-                    android:layout_marginStart="25dp"/>
 
                 <LinearLayout
+                    android:id="@+id/runoff_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -299,32 +299,27 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Runoff avaoided"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Runoff avaoided"/>
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/runoff_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.00 gal"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:id="@+id/runoff_val"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"
-                    android:layout_marginStart="25dp"/>
 
                 <LinearLayout
+                    android:id="@+id/rainfall_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -332,31 +327,31 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Rainfall intercepted"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Rainfall intercepted"/>
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/rainfall_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.00 gal"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:id="@+id/rainfall_val"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black"
+                    android:src="@drawable/transparent_rect" />
 
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black" />
 
             <LinearLayout
                 android:id="@+id/air_pollution_removed"
@@ -390,14 +385,9 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/black"
-                    android:src="@drawable/transparent_rect" />
 
                 <LinearLayout
+                    android:id="@+id/co_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -423,14 +413,9 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/black"
-                    android:src="@drawable/transparent_rect" />
 
                 <LinearLayout
+                    android:id="@+id/ozone_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -456,14 +441,9 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/black"
-                    android:src="@drawable/transparent_rect" />
 
                 <LinearLayout
+                    android:id="@+id/no2_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -489,14 +469,9 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/black"
-                    android:src="@drawable/transparent_rect" />
 
                 <LinearLayout
+                    android:id="@+id/so2_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -522,14 +497,9 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginStart="25dp"
-                    android:background="@color/black"
-                    android:src="@drawable/transparent_rect" />
 
                 <LinearLayout
+                    android:id="@+id/pm_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -558,16 +528,16 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black" />
+                    android:background="@color/black"
+                    android:src="@drawable/transparent_rect" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/energy_usage_annual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/energy_usage_annual">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -580,30 +550,25 @@
                         android:text="Energy Useage Each Year"
                         android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/energy_usage_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$NaN"
-                        android:textSize="18sp"
                         android:textColor="@color/black"
-                        android:id="@+id/energy_usage_val"/>
+                        android:textSize="18sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"
-                    android:layout_marginStart="25dp"/>
 
                 <LinearLayout
+                    android:id="@+id/electricity_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -611,32 +576,27 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Electricity savings (A/C)"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Electricity savings (A/C)"/>
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/electricity_savings_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0 kWh"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:id="@+id/electricity_savings_val"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"
-                    android:layout_marginStart="25dp"/>
 
                 <LinearLayout
+                    android:id="@+id/fuel_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp">
@@ -644,275 +604,254 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Fuel savings (Natural gas, Oil)"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Fuel savings (Natural gas, Oil)"/>
+                        android:textSize="16sp" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/fuel_savings_val"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0 MMBtu"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:id="@+id/fuel_savings_val"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"/>
+                    android:background="@color/black"
+                    android:src="@drawable/transparent_rect" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/avoided_energy_emissions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/avoided_energy_emissions">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Avoided Energy Emissions"
-                            android:textColor="@color/black"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/energy_emissions_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$NaN"
-                            android:textColor="@color/black"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="25dp"
-                        android:background="@color/black"
-                        android:src="@drawable/transparent_rect" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Carbon dioxide"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/carbon_dioxide_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00 lbs"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="25dp"
-                        android:background="@color/black"
-                        android:src="@drawable/transparent_rect" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Carbon monoxide"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/carbon_monoxide_emissions_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00 oz"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="25dp"
-                        android:background="@color/black"
-                        android:src="@drawable/transparent_rect" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nitrogen dioxide"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/nitrogen_dioxide_emissions_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00 oz"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="25dp"
-                        android:background="@color/black"
-                        android:src="@drawable/transparent_rect" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sulfur dioxide"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/sulfur_dioxide_emissions_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00 oz"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginStart="25dp"
-                        android:background="@color/black"
-                        android:src="@drawable/transparent_rect" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Particulate matter &lt; 2.5 microns"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/particulate_matter_emissions_val"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.00 oz"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:src="@drawable/transparent_rect"
-                        android:background="@color/black" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:src="@drawable/transparent_rect"
-                    android:background="@color/black"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/co2_stored_to_date">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:text="Avoided Energy Emissions"
                         android:textColor="@color/black"
-                        android:text="Carbon Dioxide Stored to Date"/>
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/energy_emissions_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$NaN"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/co2_emissions_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$0.00"
+                        android:text="Carbon dioxide"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/carbon_dioxide_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 lbs"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:id="@+id/co_emissions_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Carbon monoxide"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/carbon_monoxide_emissions_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 oz"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/no2_emissions_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nitrogen dioxide"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/nitrogen_dioxide_emissions_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 oz"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/so2_emissions_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sulfur dioxide"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/sulfur_dioxide_emissions_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 oz"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/pm_emissions_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Particulate matter &lt; 2.5 microns"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/particulate_matter_emissions_val"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 oz"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black"
+                    android:src="@drawable/transparent_rect" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/thick_bar_3"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/black"
+                android:src="@drawable/transparent_rect" />
+
+            <LinearLayout
+                android:id="@+id/co2_stored_to_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carbon Dioxide Stored to Date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/co2_total_val"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
-                android:src="@drawable/transparent_rect"
-                android:background="@color/black"/>
+                android:background="@color/black"
+                android:src="@drawable/transparent_rect" />
+
 
         </LinearLayout>
 

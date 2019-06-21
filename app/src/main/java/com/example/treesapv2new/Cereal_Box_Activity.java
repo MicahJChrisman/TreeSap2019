@@ -1,10 +1,9 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -15,18 +14,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
@@ -35,18 +28,18 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,11 +49,7 @@ import com.example.treesapv2new.datasource.DataSource;
 import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
-import com.example.treesapv2new.display.AddNotesActivity;
-import com.example.treesapv2new.display.AddNotesDisplay;
-import com.example.treesapv2new.display.DisplayMethod;
 import com.example.treesapv2new.model.Tree;
-import com.example.treesapv2new.model.TreeLocation;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -70,9 +59,7 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static com.example.treesapv2new.Pie_Chart_Activity.CARBON_LBS;
@@ -101,17 +88,78 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     private static final int[] PERMISSION_ALL = new int[0];
 
 
+
+
+
+
 //    public Cereal_Box_Activity(String sentString){
 //        this.sentString = sentString;
 //    }
 
     private GestureDetectorCompat gestureObject;
+//    private ActivitySwipeDetector activitySwipeDetector;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_cereal_box);
         setContentView(R.layout.cereal_box_new);
+
+//        activitySwipeDetector = new ActivitySwipeDetector(this);
+//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView1);
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            float downX, downY, upX, upY;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+//                downX =event.getX();
+                switch(event.getAction()){
+
+                    case MotionEvent.ACTION_DOWN:{
+                        downX = event.getX();
+                        downY = event.getY();
+                    }
+                    case MotionEvent.ACTION_UP:{
+                        upX = event.getX();
+                        upY = event.getY();
+
+                        float deltaX = downX - upX;
+                        float deltaY = downY - upY;
+
+                        if(Math.abs(deltaX)>100 && Math.abs(deltaX) > Math.abs(deltaY)){
+                            if(deltaX<=0){
+
+                                Intent intent1 = new Intent(Cereal_Box_Activity.this, Tree_Info_First.class);
+                                finish();
+                                startActivity(intent1);
+
+                                return true;
+                            }else{
+                                //right to left swipe
+                                Intent intent2 = new Intent(Cereal_Box_Activity.this, Pie_Chart_Activity.class);
+                                finish();
+                                startActivity(intent2);
+                                return  true;
+                            }
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+        });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -148,8 +196,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             }
         };
 
-
-
 //        TextView eventer = (TextView) findViewById(R.id.treeNamePlease);
 //        eventer.setText(MainActivity.banana.getCommonName());
 //
@@ -165,7 +211,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         if(sources.size()>0) {
             //patchTreeData();
-//            display(MainActivity.banana);
+            display(MainActivity.banana);
         }else{
             finish();
             Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
@@ -184,8 +230,208 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem1 = menu.getItem(0);
         menuItem1.setCheckable(false);
-
     }
+
+    public void display(Tree tree){
+        String COMMON_NAME;
+        String SCIENTIFIC_NAME;
+        String DBH;
+        String NATIVE;
+        String ANNUAL_BENEFITS;
+        String CO2_SEQUESTERED_$;
+        String CO2_SEQUESTERED_lbs;
+        String STORM_WATER_RUNOFF_AVOIDED;
+        String RUNOFF_AVOIDED;
+        String RAINFALL_INTERCEPTED;
+        String AIR_POLLUTION_ANNUAL;
+        String CARBON_MONOXIDE;
+        String OZONE;
+        String NITROGEN_DIOXIDE;
+        String SULFUR_DIOXIDE;
+        String PARTICULATE_MATTER;
+        String ENERGY_USAGE_ANNUAL;
+        String ELECTRICITY_SAVINGS;
+        String FUEL_SAVINGS;
+        String AVOIDED_EMISSIONS;
+        String CARBON_DIOXIDE_EMISSIONS;
+        String CARBON_MONOXIDE_EMISSIONS;
+        String NITROGEN_DIOXIDE_EMISSIONS;
+        String SULFUR_DIOXIDE_EMISSIONS;
+        String PARTICULATE_MATTER_EMISSIONS;
+        String CO2_TO_DATE;
+
+        try {
+            findInfo(tree);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String ds = tree.getDataSource();
+        Benefits_Columns_Enum benefits_columns_enum = new Benefits_Columns_Enum(Benefits_Columns_Enum.database.valueOf(ds));
+
+
+
+        try {
+            COMMON_NAME = allInfo.split(",")[benefits_columns_enum.commonNameIndex()];
+            ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
+        }catch (Exception e){
+            try {
+                ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
+            }catch (Exception i){
+                ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
+            }
+        }
+
+        try {
+            SCIENTIFIC_NAME = allInfo.split(",")[benefits_columns_enum.scientificNameIndex()];
+            ((TextView) findViewById(R.id.scientific_name_cereal)).setText(SCIENTIFIC_NAME);
+        }catch (Exception e){
+            ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
+        }
+
+        try {
+            DBH = allInfo.split(",")[benefits_columns_enum.dbh1Index()];
+            ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            NATIVE = allInfo.split(",")[benefits_columns_enum.nativeIndex()];
+            ((TextView) findViewById(R.id.native_yn_cereal)).setText(NATIVE);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.native_linear_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
+            ((TextView) findViewById(R.id.annual_benefits_val)).setText("$"+ANNUAL_BENEFITS);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
+            ((ImageView) findViewById(R.id.thick_bar_2)).setVisibility(View.GONE);
+        }
+
+        try {
+            CO2_SEQUESTERED_$ = allInfo.split(",")[benefits_columns_enum.carbonSequestrationDollarsIndex()];
+            ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText("$"+CO2_SEQUESTERED_$);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.carbon_dioxide_sequestered)).setVisibility(View.GONE);
+        }
+
+        try {
+            CO2_SEQUESTERED_lbs = allInfo.split(",")[benefits_columns_enum.carbonSequestrationPoundsIndex()];
+            ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText(CO2_SEQUESTERED_lbs + " lbs");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.annual_co2_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            STORM_WATER_RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffDollarsIndex()];
+            ((TextView) findViewById(R.id.storm_water_runoff_val)).setText("$"+STORM_WATER_RUNOFF_AVOIDED);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.water_runnoff_avoided)).setVisibility(View.GONE);
+        }
+
+        try {
+            RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffCubicFeetIndex()];
+            ((TextView) findViewById(R.id.runoff_val)).setText(RUNOFF_AVOIDED+ " gal");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.runoff_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            RAINFALL_INTERCEPTED = allInfo.split(",")[benefits_columns_enum.waterInterceptedCubicFeetIndex()];
+            ((TextView) findViewById(R.id.rainfall_val)).setText(RAINFALL_INTERCEPTED + " gal");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.rainfall_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            AIR_POLLUTION_ANNUAL = allInfo.split(",")[benefits_columns_enum.pollutionRemovalDollarsIndex()];
+            ((TextView) findViewById(R.id.air_pollution_val)).setText("$" +AIR_POLLUTION_ANNUAL);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.air_pollution_removed)).setVisibility(View.GONE);
+        }
+
+        try {
+            CARBON_MONOXIDE = allInfo.split(",")[benefits_columns_enum.coOuncesIndex()];
+            ((TextView) findViewById(R.id.carbon_monoxide_val)).setText(CARBON_MONOXIDE + " oz");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.co_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            OZONE = allInfo.split(",")[benefits_columns_enum.o3OuncesIndex()];
+            ((TextView) findViewById(R.id.ozone_val)).setText(OZONE + " oz");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.ozone_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            NITROGEN_DIOXIDE = allInfo.split(",")[benefits_columns_enum.no2OuncesIndex()];
+            ((TextView) findViewById(R.id.nitrogen_dioxide_val)).setText(NITROGEN_DIOXIDE + " oz");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.no2_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            SULFUR_DIOXIDE = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+            ((TextView) findViewById(R.id.sulfur_dioxide_val)).setText(SULFUR_DIOXIDE + " oz");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.so2_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            PARTICULATE_MATTER = allInfo.split(",")[benefits_columns_enum.pm25OuncesIndex()];
+            ((TextView) findViewById(R.id.particulate_matter_val)).setText(PARTICULATE_MATTER + " oz");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.pm_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+            ((TextView) findViewById(R.id.energy_usage_val)).setText("$"+ ENERGY_USAGE_ANNUAL);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
+        }
+
+        try {
+            ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+            ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+            ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS+" MMBtu");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            AVOIDED_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+            ((TextView) findViewById(R.id.energy_emissions_val)).setText("$"+AVOIDED_EMISSIONS);
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.avoided_energy_emissions)).setVisibility(View.GONE);
+        }
+
+        try {
+            CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
+            ((TextView) findViewById(R.id.co2_total_val)).setText(CARBON_DIOXIDE_EMISSIONS+" lbs");
+        }catch (Exception e){
+            ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
+        }
+
+        try {
+            CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+            ((TextView) findViewById(R.id.co2_total_val)).setText("$"+CO2_TO_DATE);
+        }catch (Exception e){
+            ((ImageView)findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.co2_stored_to_date)).setVisibility(View.GONE);
+        }
+    }
+
     public void patchTreeData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
@@ -304,566 +550,566 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                 }
             }
         }
-        if (allInfo.equals("")) {
-            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
-        }
+//        if (allInfo.equals("")) {
+//            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
+//        }
     }
 
-    public void display(Tree tree) {
-        try {
-            findInfo(tree);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(displayMetrics);
-
-        cerealBoxWidth = displayMetrics.widthPixels+125;
-        right = cerealBoxWidth - 90;
-        cerealBoxHeight = displayMetrics.heightPixels+250;
-        Bitmap bitmap = Bitmap.createBitmap(cerealBoxWidth, cerealBoxHeight, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        final Paint paint = new Paint();
-
-        DisplayMetrics displaymetrics = this.getResources().getDisplayMetrics();
-        Paint textPaint = new Paint();
-        Paint rightPaint = new Paint();
-        rightPaint.setTextAlign(Paint.Align.RIGHT);
-        rightPaint.setColor(Color.BLACK);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        rightPaint.setTextSize(dpToPx(subtitleTextSize, displaymetrics));
-
-        String str;
-        float y;
-
-        // Compute real width and height
-
-
-        // Draw on the canvas
-        paint.setColor(Color.BLACK);
-        //canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin, paint);
-        canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-200, paint);
-        paint.setColor(Color.WHITE);
-        //canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth, paint);
-        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-200-boxLineWidth, paint);
-        // Title
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(dpToPx(titleTextSize, displaymetrics));
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText(commonName,
-                boxMargin + boxLineWidth + 10, boxMargin + boxLineWidth + dpToPx(titleTextSize, displaymetrics) + 10,
-                textPaint);
-        if(tree.getScientificName()==null||tree.getScientificName().equals("")){
-            y = boxMargin+boxLineWidth+dpToPx(titleTextSize, displaymetrics)+10;
-        }
-        else {
-            y = boxMargin+boxLineWidth+dpToPx(titleTextSize, displaymetrics)+90;
-            canvas.drawText("(" + tree.getScientificName() + ")",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-        }
-        testY = y;
-
-
-        // Subtitle
-        if (tree.getCurrentDBH() != null) {
-            str = "Serving size: " + ((int) (tree.getCurrentDBH() * 100) / 100.0) + "\" DBH";
-        }else{
-            str = ("Serving size: N/A"+ "\" DBH");
-        }
-        String condition;
-        if(tree.getInfo("Condition") != null) {
-            condition = (String) tree.getInfo("Condition");
-        }else{
-            condition = "N/A";
-        }
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        textPaint.setTextSize(dpToPx(subtitleTextSize, displaymetrics));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 15;
-        if (condition!=null) {
-            canvas.drawText(str+", "+condition+" condition", boxMargin + boxLineWidth + 10, y, textPaint);
-        }
-        else {
-            canvas.drawText(str, boxMargin + boxLineWidth + 10, y, textPaint);
-        }
-        // Thick line
-        y += 30;
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(20);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-        y += 15;
-
-        // Make some computations
-
-
-
-        if(!tree.getDataSource().equals("ExtendedCoH")) {
-
-
-            // And report the computations
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
-            canvas.drawText("Total benefits for this year:",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[TOTAL], right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Carbon Dioxide Sequestered",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            canvas.drawText("$" + allInfo.split(",")[CO2], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("CO2 absorbed each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[CARBON_LBS] + " " +
-                    "lbs", right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Storm Water",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[STORM_WATER], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Rainfall intercepted each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            String ft = allInfo.split(",")[WATER_GAL];
-            if (!ft.equals("N/A")) {
-                double gal = Double.parseDouble(ft) * 7.48052;
-                DecimalFormat df = new DecimalFormat("0.00");
-                ft = df.format(gal);
-            }
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(ft + " gal.", right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Pollution",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[POLLUTION], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Air Pollution removed each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[POLLUTION_OZ] + " oz", right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(15);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-        }else{
-            // And report the computations
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
-            canvas.drawText("Total benefits for this year:",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[28], right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Carbon Dioxide Sequestered",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            canvas.drawText("$" + allInfo.split(",")[20], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("CO2 absorbed each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[19] + " " +
-                    "lbs", right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Storm Water",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[22], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Rainfall intercepted each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            String ft = allInfo.split(",")[21];
-            if (!ft.equals("N/A")) {
-                double gal = Double.parseDouble(ft) * 7.48052;
-                DecimalFormat df = new DecimalFormat("0.00");
-                ft = df.format(gal);
-            }
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(ft + " gal.", right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Pollution",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[26], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Air Pollution removed each year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[25] + " oz", right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
+//    public void display(Tree tree) {
+//        try {
+//            findInfo(tree);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+//        wm.getDefaultDisplay().getMetrics(displayMetrics);
+//
+//        cerealBoxWidth = displayMetrics.widthPixels+125;
+//        right = cerealBoxWidth - 90;
+//        cerealBoxHeight = displayMetrics.heightPixels+250;
+//        Bitmap bitmap = Bitmap.createBitmap(cerealBoxWidth, cerealBoxHeight, Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(bitmap);
+//        final Paint paint = new Paint();
+//
+//        DisplayMetrics displaymetrics = this.getResources().getDisplayMetrics();
+//        Paint textPaint = new Paint();
+//        Paint rightPaint = new Paint();
+//        rightPaint.setTextAlign(Paint.Align.RIGHT);
+//        rightPaint.setColor(Color.BLACK);
+//        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        rightPaint.setTextSize(dpToPx(subtitleTextSize, displaymetrics));
+//
+//        String str;
+//        float y;
+//
+//        // Compute real width and height
+//
+//
+//        // Draw on the canvas
+//        paint.setColor(Color.BLACK);
+//        //canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-2*boxMargin, paint);
+//        canvas.drawRect(boxMargin, boxMargin, cerealBoxWidth-2*boxMargin, cerealBoxHeight-200, paint);
+//        paint.setColor(Color.WHITE);
+//        //canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-2*boxMargin-boxLineWidth, paint);
+//        canvas.drawRect(boxMargin+boxLineWidth, boxMargin+boxLineWidth, cerealBoxWidth-2*boxMargin-boxLineWidth, cerealBoxHeight-200-boxLineWidth, paint);
+//        // Title
+//        textPaint.setColor(Color.BLACK);
+//        textPaint.setTextSize(dpToPx(titleTextSize, displaymetrics));
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//        canvas.drawText(commonName,
+//                boxMargin + boxLineWidth + 10, boxMargin + boxLineWidth + dpToPx(titleTextSize, displaymetrics) + 10,
+//                textPaint);
+//        if(tree.getScientificName()==null||tree.getScientificName().equals("")){
+//            y = boxMargin+boxLineWidth+dpToPx(titleTextSize, displaymetrics)+10;
+//        }
+//        else {
+//            y = boxMargin+boxLineWidth+dpToPx(titleTextSize, displaymetrics)+90;
+//            canvas.drawText("(" + tree.getScientificName() + ")",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//        }
+//        testY = y;
+//
+//
+//        // Subtitle
+//        if (tree.getCurrentDBH() != null) {
+//            str = "Serving size: " + ((int) (tree.getCurrentDBH() * 100) / 100.0) + "\" DBH";
+//        }else{
+//            str = ("Serving size: N/A"+ "\" DBH");
+//        }
+//        String condition;
+//        if(tree.getInfo("Condition") != null) {
+//            condition = (String) tree.getInfo("Condition");
+//        }else{
+//            condition = "N/A";
+//        }
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        textPaint.setTextSize(dpToPx(subtitleTextSize, displaymetrics));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 15;
+//        if (condition!=null) {
+//            canvas.drawText(str+", "+condition+" condition", boxMargin + boxLineWidth + 10, y, textPaint);
+//        }
+//        else {
+//            canvas.drawText(str, boxMargin + boxLineWidth + 10, y, textPaint);
+//        }
+//        // Thick line
+//        y += 30;
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(20);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//        y += 15;
+//
+//        // Make some computations
+//
+//
+//
+//        if(!tree.getDataSource().equals("ExtendedCoH")) {
+//
+//
+//            // And report the computations
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
+//            canvas.drawText("Total benefits for this year:",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[TOTAL], right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Carbon Dioxide Sequestered",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            canvas.drawText("$" + allInfo.split(",")[CO2], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("CO2 absorbed each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[CARBON_LBS] + " " +
+//                    "lbs", right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Storm Water",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[STORM_WATER], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Rainfall intercepted each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            String ft = allInfo.split(",")[WATER_GAL];
+//            if (!ft.equals("N/A")) {
+//                double gal = Double.parseDouble(ft) * 7.48052;
+//                DecimalFormat df = new DecimalFormat("0.00");
+//                ft = df.format(gal);
+//            }
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(ft + " gal.", right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Pollution",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[POLLUTION], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Air Pollution removed each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[POLLUTION_OZ] + " oz", right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
 //            paint.setColor(Color.BLACK);
 //            paint.setStrokeWidth(15);
 //            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
 //                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
 //                    paint);
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-
-
-            //Energy
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Energy",
-                    boxMargin + boxLineWidth + 10, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText("$" + allInfo.split(",")[59], right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Heating costs saved this year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[55] + " Kwh.", right, y, rightPaint);
-
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(5);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-            canvas.drawText("Cooling costs saved this year",
-                    boxMargin + boxLineWidth + 70, y,
-                    textPaint);
-            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-            canvas.drawText(allInfo.split(",")[57] + " Kwh.", right, y, rightPaint);
-            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
-
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(15);
-            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
-                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
-                    paint);
-        }
-
-        /*textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Energy Usage each year",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText("$" + allInfo.split(",")[14], right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Electricity savings (A/C)",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        canvas.drawText( "21.95"+ " kWh", right, y, rightPaint);
-       // canvas.drawText(allInfo.split(",")[6]+"lbs", boxMargin+boxLineWidth+760, y, textPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Fuel savings (NG, Oil)",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-
-        canvas.drawText( "-2.74"+ " therms", right, y, rightPaint);
-        // canvas.drawText(allInfo.split(",")[6]+"lbs", boxMargin+boxLineWidth+760, y, textPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Avoided Emissions",
-                boxMargin+boxLineWidth+10, y,
-                textPaint);
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Carbon dioxide",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        canvas.drawText( "-17.36"+ " lbs", right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Nitrogen dioxide",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        canvas.drawText( "-0.06"+ " oz", right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Sulfur dioxide",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        canvas.drawText( "-1.02"+ " oz", right, y, rightPaint);
-
-        y += dpToPx(subtitleTextSize, displaymetrics)-5;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(5);
-        canvas.drawLine(boxMargin+boxLineWidth+10, y,
-                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
-                paint);
-
-
-        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
-        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
-        canvas.drawText("Large particulate matter",
-                boxMargin+boxLineWidth+70, y,
-                textPaint);
-        canvas.drawText( "<0.1"+ " oz", right, y, rightPaint);*/
-
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View customView = inflater.inflate(R.layout.activity_cereal_box, null);
-
-
-        ImageButton button = (ImageButton) customView.findViewById(R.id.add_notes);
-        button.setOnClickListener(new AddNotesEvent());
-//        TextView okay = (TextView) customView.findViewById(R.id.okay_cereal);
-//        okay.bringToFront();
-//        okay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                popupWindow.dismiss();
-//                popupWindow = null;
-//            }
-//        });
-
-
-
-        ImageView imageView = (ImageView) customView.findViewById(R.id.cereal_image);
-        imageView.setImageBitmap(bitmap);
-        noData = (TextView) customView.findViewById(R.id.no_ben);
-        noData.setVisibility(View.GONE);
-        if(!hasValues){
-            imageView.setVisibility(View.GONE);
-            noData.setVisibility(View.VISIBLE);
-            noData.setText("There is no data to display on this "+ commonName);
-        }
-
-
-        setContentView(customView);
-        gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
-//        if (popupWindow != null) {
-//            popupWindow.dismiss();
-//        }
-//        popupWindow = new PopupWindow(
-//                customView,
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.MATCH_PARENT
-//        );
+//        }else{
+//            // And report the computations
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 15;
+//            canvas.drawText("Total benefits for this year:",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[28], right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 10;
 //
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            popupWindow.setElevation(5.0f);
-//        }
-////        View rootView = ((Activity)getParent()).getWindow().getDecorView().findViewById(R.id.drawer_layout);
-////        View rootView = findViewById(R.layout.activity_cereal_box)
-////        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-//        final View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
-//        gestureObject = new GestureDetectorCompat(rootView.getContext(), new LearnGesture());
-//        rootView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
 //
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Carbon Dioxide Sequestered",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            canvas.drawText("$" + allInfo.split(",")[20], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("CO2 absorbed each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[19] + " " +
+//                    "lbs", right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Storm Water",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[22], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Rainfall intercepted each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            String ft = allInfo.split(",")[21];
+//            if (!ft.equals("N/A")) {
+//                double gal = Double.parseDouble(ft) * 7.48052;
+//                DecimalFormat df = new DecimalFormat("0.00");
+//                ft = df.format(gal);
 //            }
-//        });
-
-    }
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(ft + " gal.", right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Pollution",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[26], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Air Pollution removed each year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[25] + " oz", right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+////            paint.setColor(Color.BLACK);
+////            paint.setStrokeWidth(15);
+////            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+////                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+////                    paint);
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//
+//
+//            //Energy
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Energy",
+//                    boxMargin + boxLineWidth + 10, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText("$" + allInfo.split(",")[59], right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Heating costs saved this year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[55] + " Kwh.", right, y, rightPaint);
+//
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(5);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//            textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//            canvas.drawText("Cooling costs saved this year",
+//                    boxMargin + boxLineWidth + 70, y,
+//                    textPaint);
+//            rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//            canvas.drawText(allInfo.split(",")[57] + " Kwh.", right, y, rightPaint);
+//            y += dpToPx(subtitleTextSize, displaymetrics) - 5;
+//
+//            paint.setColor(Color.BLACK);
+//            paint.setStrokeWidth(15);
+//            canvas.drawLine(boxMargin + boxLineWidth + 10, y,
+//                    cerealBoxWidth - 2 * boxMargin - boxLineWidth - 20, y,
+//                    paint);
+//        }
+//
+//        /*textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Energy Usage each year",
+//                boxMargin+boxLineWidth+10, y,
+//                textPaint);
+//        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        canvas.drawText("$" + allInfo.split(",")[14], right, y, rightPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Electricity savings (A/C)",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//        rightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        canvas.drawText( "21.95"+ " kWh", right, y, rightPaint);
+//       // canvas.drawText(allInfo.split(",")[6]+"lbs", boxMargin+boxLineWidth+760, y, textPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Fuel savings (NG, Oil)",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//
+//        canvas.drawText( "-2.74"+ " therms", right, y, rightPaint);
+//        // canvas.drawText(allInfo.split(",")[6]+"lbs", boxMargin+boxLineWidth+760, y, textPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Avoided Emissions",
+//                boxMargin+boxLineWidth+10, y,
+//                textPaint);
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Carbon dioxide",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//        canvas.drawText( "-17.36"+ " lbs", right, y, rightPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Nitrogen dioxide",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//        canvas.drawText( "-0.06"+ " oz", right, y, rightPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Sulfur dioxide",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//        canvas.drawText( "-1.02"+ " oz", right, y, rightPaint);
+//
+//        y += dpToPx(subtitleTextSize, displaymetrics)-5;
+//
+//        paint.setColor(Color.BLACK);
+//        paint.setStrokeWidth(5);
+//        canvas.drawLine(boxMargin+boxLineWidth+10, y,
+//                cerealBoxWidth-2*boxMargin-boxLineWidth-20, y,
+//                paint);
+//
+//
+//        textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+//        y += dpToPx(subtitleTextSize, displaymetrics) + 20;
+//        canvas.drawText("Large particulate matter",
+//                boxMargin+boxLineWidth+70, y,
+//                textPaint);
+//        canvas.drawText( "<0.1"+ " oz", right, y, rightPaint);*/
+//
+//        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+//        View customView = inflater.inflate(R.layout.activity_cereal_box, null);
+//
+//
+//        ImageButton button = (ImageButton) customView.findViewById(R.id.add_notes);
+//        button.setOnClickListener(new AddNotesEvent());
+////        TextView okay = (TextView) customView.findViewById(R.id.okay_cereal);
+////        okay.bringToFront();
+////        okay.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View v) {
+////                popupWindow.dismiss();
+////                popupWindow = null;
+////            }
+////        });
+//
+//
+//
+//        ImageView imageView = (ImageView) customView.findViewById(R.id.cereal_image);
+//        imageView.setImageBitmap(bitmap);
+//        noData = (TextView) customView.findViewById(R.id.no_ben);
+//        noData.setVisibility(View.GONE);
+//        if(!hasValues){
+//            imageView.setVisibility(View.GONE);
+//            noData.setVisibility(View.VISIBLE);
+//            noData.setText("There is no data to display on this "+ commonName);
+//        }
+//
+//
+//        setContentView(customView);
+//        gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
+////        if (popupWindow != null) {
+////            popupWindow.dismiss();
+////        }
+////        popupWindow = new PopupWindow(
+////                customView,
+////                ViewGroup.LayoutParams.MATCH_PARENT,
+////                ViewGroup.LayoutParams.MATCH_PARENT
+////        );
+////
+////        if (Build.VERSION.SDK_INT >= 21) {
+////            popupWindow.setElevation(5.0f);
+////        }
+//////        View rootView = ((Activity)getParent()).getWindow().getDecorView().findViewById(R.id.drawer_layout);
+//////        View rootView = findViewById(R.layout.activity_cereal_box)
+//////        popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+////        final View rootView = this.getWindow().getDecorView().findViewById(R.id.drawer_layout);
+////        gestureObject = new GestureDetectorCompat(rootView.getContext(), new LearnGesture());
+////        rootView.post(new Runnable() {
+////            @Override
+////            public void run() {
+////                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
+////
+////            }
+////        });
+//
+//    }
 
 
     public PopupWindow getPopupWindow(){
@@ -884,7 +1130,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        this.gestureObject.onTouchEvent(event);
+//        this.gestureObject.onTouchEvent(event);
+//        this.activitySwipeDetector.onTouch(findViewById(android.R.id.content), event);
         return super.onTouchEvent(event);
     }
 
@@ -905,6 +1152,91 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             return true;
         }
     }
+
+//    class ActivitySwipeDetector implements View.OnTouchListener {
+//
+//        private AppCompatActivity activity;
+//        static final int MIN_DISTANCE = 100;
+//        private float downX, downY, upX, upY;
+//
+//        public ActivitySwipeDetector(final AppCompatActivity activity) {
+//            this.activity = activity;
+//        }
+//
+//        public final void onRightToLeftSwipe() {
+//            Intent intent2 = new Intent(Cereal_Box_Activity.this, Pie_Chart_Activity.class);
+//            finish();
+//            startActivity(intent2);
+//        }
+//
+//        public void onLeftToRightSwipe(){
+//            Intent intent1 = new Intent(Cereal_Box_Activity.this, Tree_Info_First.class);
+//            finish();
+//            startActivity(intent1);
+//        }
+//
+//        public void onTopToBottomSwipe(){
+//
+//        }
+//
+//        public void onBottomToTopSwipe(){
+//
+//        }
+//
+//        public boolean onTouch(View v, MotionEvent event) {
+//
+//            v.getParent().requestDisallowInterceptTouchEvent(false);
+//
+//
+//            switch(event.getAction()){
+//                case MotionEvent.ACTION_MOVE:
+//                    if (Math.abs(downX - upX) > Math.abs(downY - upY))
+//                        v.getParent().requestDisallowInterceptTouchEvent(true);
+//                    break;
+//
+//                case MotionEvent.ACTION_DOWN: {
+//                    downX = event.getX();
+//                    downY = event.getY();
+//                    //   return true;
+//                }
+//                case MotionEvent.ACTION_UP: {
+//                    upX = event.getX();
+//                    upY = event.getY();
+//
+//                    float deltaX = downX - upX;
+//                    float deltaY = downY - upY;
+//
+//                    // swipe horizontal?
+//                    if(Math.abs(deltaX) > MIN_DISTANCE){
+//                        // left or right
+//                        if(deltaX < 0) {
+////                            v.getParent().requestDisallowInterceptTouchEvent(true);
+//                            this.onLeftToRightSwipe();
+//                            return true;
+//                        }
+//                        if(deltaX > 0) {
+////                            v.getParent().requestDisallowInterceptTouchEvent(true);
+//                            this.onRightToLeftSwipe();
+//                            return true;
+//                        }
+//                    }
+//
+//                    // swipe vertical?
+//                    if(Math.abs(deltaY) < MIN_DISTANCE){
+//                        // top or down
+//                        if(deltaY < 0) { this.onTopToBottomSwipe(); return true; }
+//                        if(deltaY > 0) { this.onBottomToTopSwipe(); return true; }
+//                    }
+//                }
+//            }
+//            return false;
+//        }
+//    }
+
+
+
+
+
 
     private class AddNotesEvent implements View.OnClickListener{
         @Override
@@ -988,4 +1320,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
         }
     }
+
+
 }

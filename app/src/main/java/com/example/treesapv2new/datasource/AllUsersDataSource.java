@@ -111,7 +111,7 @@ public class AllUsersDataSource extends DataSource {
                             ArrayList<Object> dbhArray= (ArrayList) document.getData().get("dbhArray");
                             if(dbhArray !=null){
                                 tree.setDBHArray(dbhArray);
-                                Long l = (Long) dbhArray.get(0);
+                                Double l = (Double) dbhArray.get(0);
                                 tree.setCurrentDBH(l.doubleValue());
                             }
 
