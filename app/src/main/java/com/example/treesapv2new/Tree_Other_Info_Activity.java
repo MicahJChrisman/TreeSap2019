@@ -530,10 +530,18 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
 
                     ArrayList<Double> dbhArray = new ArrayList<Double>();
-                    dbhArray.add(dbh);
-                    dbhArray.add(dbh2);
-                    dbhArray.add(dbh3);
-                    dbhArray.add(dbh4);
+                    if(dbh != null) {
+                        dbhArray.add(dbh);
+                    }
+                    if(dbh2 != null) {
+                        dbhArray.add(dbh2);
+                    }
+                    if(dbh3 != null) {
+                        dbhArray.add(dbh3);
+                    }
+                    if(dbh4 != null) {
+                        dbhArray.add(dbh4);
+                    }
                     user.put("dbhArray", dbhArray);
 
 //                    users.document(lat + ", " + longit + ", " + commonName).set(user);
