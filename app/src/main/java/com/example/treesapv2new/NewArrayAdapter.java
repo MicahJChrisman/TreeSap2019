@@ -68,11 +68,12 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         super(context, resourceId, trees);
         this.context = (Curator_Swipe_Activity) context;
         this.fm = fm;
+        //this.context.setCurrentTree();
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
         tree = this.getItem(position);
-        context.setCurrentTree(tree);
+        context.setCurrentTree();
 
 
         //imageModelArrayList = new ArrayList<>();

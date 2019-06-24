@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -16,18 +17,25 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.model.Tree;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -50,13 +58,15 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
     List<Tree> rowItems;
     List<Tree> penTrees;
     FirebaseFirestore db;
+    CollectionReference treesRef;
     SwipeFlingAdapterView flingContainer;
     Tree currentTree;
-    Button undoButton;
-    Button skipButton;
-    Button rejectButton;
-    Button acceptButton;
-    Button mapButton;
+    Tree previousTree;
+    FloatingActionButton undoButton;
+    FloatingActionButton skipButton;
+    FloatingActionButton rejectButton;
+    FloatingActionButton acceptButton;
+    FloatingActionButton mapButton;
 
 
 
@@ -71,7 +81,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //                List<Tree> rowItems;
         //FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
-        CollectionReference treesRef = db.collection("pendingTrees");
+        treesRef = db.collection("pendingTrees");
 
 
 //        Tree tree = new Tree();
@@ -104,13 +114,22 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                Toast.makeText(Curator_Swipe_Activity.this, "Left!", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(Curator_Swipe_Activity.this, "Rejected!", Toast.LENGTH_SHORT).show();
+                rejectTree();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+//                setCurrentTree();
+                //removeFirstObjectInAdapter();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(Curator_Swipe_Activity.this, "Right!", Toast.LENGTH_SHORT).show();
+                acceptTree();
+//                setCurrentTree();
             }
 
             @Override
@@ -145,19 +164,120 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         });
 
        //arrayAdapter = new NewArrayAdapter(this, R.layout.item, penTrees);
-        //rejectButton = findViewById()
+        rejectButton = findViewById(R.id.reject_button);
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rejectTree();
+                FlingCardListener listener = flingContainer.getTopCardListener();
+                penTrees.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+//                listener.onTouch(flingContainer.getSelectedView(), new ))
+//                flingContainer.dispatchNestedFling(Float.valueOf(10000), Float.valueOf(10000), true);
+            }
+        });
+
+        acceptButton = findViewById(R.id.accept_button);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                acceptTree();
+            }
+        });
+        //setCurrentTree();
 
     }
 
-    public void setCurrentTree(Tree tree){
-        currentTree = tree;
+    public void setCurrentTree(){
+        if(penTrees.size() > 0) {
+            previousTree = currentTree;
+            currentTree = penTrees.get(0);
+        }
+    }
+
+    public void rejectTree(){
+        DocumentReference doc = treesRef.document(currentTree.getID());
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("commonName", FieldValue.delete());
+        updates.put("dbhArray", FieldValue.delete());
+        updates.put("images", FieldValue.delete());
+        updates.put("latitude", FieldValue.delete());
+        updates.put("longitude", FieldValue.delete());
+        updates.put("otherInfo", FieldValue.delete());
+        updates.put("scientificName", FieldValue.delete());
+        updates.put("timestamp", FieldValue.delete());
+        updates.put("userID", FieldValue.delete());
+        doc.update(updates);
+        doc.delete();
+        arrayAdapter.notifyDataSetChanged();
+//        flingContainer.
+        setCurrentTree();
+    }
+
+    public void acceptTree(){
+        DocumentReference doc = treesRef.document(currentTree.getID());
+//        Map<String, Object> updates = new HashMap<>();
+//        updates.put("commonName", currentTree.getCommonName());
+//        updates.put("dbhArray", currentTree.getScientificName());
+//        updates.put("images", currentTree.getPicList());
+//        updates.put("latitude", currentTree.getLocation().getLatitude());
+//        updates.put("longitude", currentTree.getLocation().getLongitude());
+//        updates.put("otherInfo", currentTree.getInfoList());
+//        updates.put("scientificName", currentTree.getScientificName());
+//        //updates.put("timestamp", FieldValue.delete());
+//        updates.put("userID", FieldValue.delete());
+
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        db.collection("acceptedTrees").document().set(document.getData())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        //Log.d(TAG, "DocumentSnapshot successfully written!");
+//                                        rejectTree();//just to delete currentTree
+                                        Map<String, Object> updates = new HashMap<>();
+                                        updates.put("commonName", FieldValue.delete());
+                                        updates.put("dbhArray", FieldValue.delete());
+                                        updates.put("images", FieldValue.delete());
+                                        updates.put("latitude", FieldValue.delete());
+                                        updates.put("longitude", FieldValue.delete());
+                                        updates.put("otherInfo", FieldValue.delete());
+                                        updates.put("scientificName", FieldValue.delete());
+                                        updates.put("timestamp", FieldValue.delete());
+                                        updates.put("userID", FieldValue.delete());
+                                        doc.update(updates);
+                                        doc.delete();
+                                        arrayAdapter.notifyDataSetChanged();
+//        flingContainer.
+                                        setCurrentTree();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+//                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
+                    } else {
+//                        Log.d(TAG, "No such document");
+                    }
+                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+        //rejectTree(); //just to delete currentTree
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
         @Override
         protected Long doInBackground(URL... urls) {
 //            FirebaseFirestore db = (FirebaseFirestore) objects[0];
-            db.collection("pendingTrees").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection("pendingTrees").orderBy("timestamp", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
@@ -184,6 +304,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //                                tree.setCurrentDBH(dbh);
                                 tree.setCurrentDBH(dbhList.get(0).doubleValue());
                             }
+                            tree.setID(document.getId());
 //                            Map<String, String> otherInfo = (Map<String, String>) document.get("otherInfo");
 //                            if(otherInfo != null){
 //                                String notes = otherInfo.get("Notes");
@@ -238,6 +359,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         protected void onPostExecute(Long result) {
             arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees, getSupportFragmentManager());
             flingContainer.setAdapter(arrayAdapter);
+            //setCurrentTree();
         }
     }
 }
