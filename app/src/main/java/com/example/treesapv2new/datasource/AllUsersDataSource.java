@@ -173,6 +173,7 @@ public class AllUsersDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location) {
+        MainActivity.treesNearby.clear();
         float[] results = new float[1];
         float closestDistance = 999999999;
         Tree treeReturn = new Tree();
@@ -190,7 +191,7 @@ public class AllUsersDataSource extends DataSource {
                 closestDistance = results[0];
             }
 
-            if(results[0] < 10){
+            if(results[0] < 1000){
                 if(results[0]==closestDistance) {
                     treeReturn.setCommonName(tree.getCommonName());
 //                                tree.setScientificName(document.getData().get("scientificName").toString());

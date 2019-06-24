@@ -143,6 +143,7 @@ public class UserTreeDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location){
+        MainActivity.treesNearby.clear();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         float[] results = new float[1];

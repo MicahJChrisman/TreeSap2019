@@ -122,6 +122,7 @@ public class ExtendedCoHDataSource extends DataSource {
     float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
+        MainActivity.treesNearby.clear();
         float[] results = new float[1];
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);
@@ -146,6 +147,22 @@ public class ExtendedCoHDataSource extends DataSource {
                 if (results[0] < closestDistance) {
                     closestDistance = results[0];
                     closestRecord = record;
+                }
+
+                if(results[0] < 10){
+                    Tree tree = new Tree();
+                    Double lat2 = new Double(closestRecord.get("y_coord"));
+                    Double longi2 = new Double(closestRecord.get("x_coord"));
+                    tree.setCommonName(closestRecord.get("species_name"));
+                    //tree.setScientificName(closestRecord.get("Scientific"));
+                    tree.setLocation(new TreeLocation(lat2, longi2));
+                    tree.setID(closestRecord.get(Tree.TREE_ID));
+                    tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
+//            if (closestRecord.get("Park").length() > 0)
+//                tree.addInfo("Park", closestRecord.get("Park"));
+                    tree.setFound(true);
+                    tree.setDataSource("ExtendedCoH");
+                    MainActivity.treesNearby.add(tree);
                 }
                  /*   continue;
                 //}

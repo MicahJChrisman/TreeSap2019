@@ -27,9 +27,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.util.Base64;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.model.Tree;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -198,6 +201,21 @@ public class Tree_Info_First extends AppCompatActivity {
             otherInfoText.setVisibility(View.GONE);
 
         }
+
+        if(MainActivity.treesNearby !=null){
+            ((Spinner) findViewById(R.id.nearby_trees_spinner)).setVisibility(View.VISIBLE);
+            ArrayList<String> commonNameNearby = new ArrayList<String>();
+            for(Tree t : MainActivity.treesNearby){
+                commonNameNearby.add(t.getCommonName());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, commonNameNearby);
+            Spinner spinNearbyTrees = (Spinner) findViewById(R.id.nearby_trees_spinner);
+            spinNearbyTrees.setAdapter(adapter);
+        }
+
+
+
+
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 

@@ -134,6 +134,7 @@ public class HopeCollegeDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location) {
+        MainActivity.treesNearby.clear();
         float[] results = new float[1];
         float closestDistance;
 //        float close = PrefManager.getFloat("tree result", 10f);

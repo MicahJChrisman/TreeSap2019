@@ -124,6 +124,7 @@ public class CityOfHollandDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location) {
+        MainActivity.treesNearby.clear();
         float[] results = new float[1];
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(parent);

@@ -2,7 +2,7 @@ package com.example.treesapv2new;
 
 public class Benefits_Columns_Enum {
     enum database{
-        HopeCollegeData, iTreeData, CoHdatabase, ExtendedCoH;
+        HopeCollegeData, iTreeData, CoHdatabase, ExtendedCoH, AllUserDB, User;
 //        private String dataSource;
 //
 //        database(String dataSource){

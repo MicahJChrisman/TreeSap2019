@@ -130,6 +130,7 @@ public class ITreeDataSource extends DataSource {
     float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
+        MainActivity.treesNearby.clear();
         float[] results = new float[1];
 
 //        float cap = PrefManager.getFloat("tree result", 10f);

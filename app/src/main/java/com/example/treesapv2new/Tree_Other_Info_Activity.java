@@ -67,7 +67,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     String barkPic = "";
     String leafPic = "";
     String fullPic = "";
-    String notes = "";
+    String notes;
     String userID;
     Timestamp timestamp;
 
@@ -476,7 +476,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     commonName = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
-                    dbh = Double.valueOf(((EditText) findViewById(R.id.dbh_textView)).getText().toString());
+                    if(!(((EditText) findViewById(R.id.dbh_textView)).getText().toString()).equals("")) {
+                        dbh = Double.valueOf(((EditText) findViewById(R.id.dbh_textView)).getText().toString());
+                    }
                     if(!(((EditText) findViewById(R.id.dbh_textView2)).getText().toString()).equals("")) {
                         dbh2 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView2)).getText().toString());
                     }
@@ -486,8 +488,9 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     if(!(((EditText) findViewById(R.id.dbh_textView4)).getText().toString()).equals("")) {
                         dbh4 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView4)).getText().toString());
                     }
-                    notes = ((EditText) findViewById(R.id.notes_about_tree)).getText().toString();
-
+                    if(!(((EditText) findViewById(R.id.notes_about_tree)).getText().toString()).equals("")) {
+                        notes = ((EditText) findViewById(R.id.notes_about_tree)).getText().toString();
+                    }
 
 
                     passedArray[0] = "0";
@@ -518,7 +521,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("latitude", lat);
                     user.put("longitude",longit);
 //                    user.put("dbh", dbh);
-                    user.put("otherInfo", notes);
+//                    user.put("otherInfo", notes);
                     user.put("timestamp", timestamp);
 
                     ArrayList<String> picArray = new ArrayList<String>();
@@ -526,6 +529,13 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     picArray.add(leafPic);
                     picArray.add(fullPic);
                     user.put("images", picArray);
+
+                    ArrayList<String> otherInfoArray = new ArrayList<String>();
+                    if(notes !=null) {
+                        otherInfoArray.add(notes);
+                    }
+                    user.put("otherInfo", otherInfoArray);
+
                     user.put("userID", userID);
 
 
