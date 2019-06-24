@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,6 +51,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
     List<Tree> penTrees;
     FirebaseFirestore db;
     SwipeFlingAdapterView flingContainer;
+    Tree currentTree;
+    Button undoButton;
+    Button skipButton;
+    Button rejectButton;
+    Button acceptButton;
+    Button mapButton;
 
 
 
@@ -138,7 +145,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         });
 
        //arrayAdapter = new NewArrayAdapter(this, R.layout.item, penTrees);
+        //rejectButton = findViewById()
 
+    }
+
+    public void setCurrentTree(Tree tree){
+        currentTree = tree;
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
@@ -172,23 +184,20 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //                                tree.setCurrentDBH(dbh);
                                 tree.setCurrentDBH(dbhList.get(0).doubleValue());
                             }
-//     TODO                       String[] otherInfo = document.get("otherInfo").get("notes");
+//                            Map<String, String> otherInfo = (Map<String, String>) document.get("otherInfo");
 //                            if(otherInfo != null){
-//                                int i = (otherInfo.length-1);
-//                                String notes = "";
-//                                while(i>=0) {
-////    TODO                            String notes = (String) tree.getInfo("Notes");
-//                                    notes = notes + "/n" + otherInfo[i];
-//                                }
-//                                if(!notes.equals("")){
+//                                String notes = otherInfo.get("Notes");
+////                                while(i>=0) {
+////                                String notes = (String) tree.getInfo("Notes");
+////                                    notes = notes + "/n" + otherInfo[i];
+////                                }
+//                                if(notes != null && !notes.equals("")){
 //                                    tree.addInfo("Notes", notes);
 //                                }
 //                            }else{
 //                                otherInfo = new String[1];
 //                                otherInfo[0] = "";
 //                            }
-
-                            //TODO Put pics in trees
 
                             ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
                             //String[] pics = stringPics.split("\n?\t.*: ");

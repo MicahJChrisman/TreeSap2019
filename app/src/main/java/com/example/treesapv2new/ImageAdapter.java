@@ -41,20 +41,14 @@ public class ImageAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageDrawable((BitmapDrawable) dBmpList[position]);
-        imageView.getDrawable().setBounds(0,0,-1242, 1242);
+        //imageView.getDrawable().setBounds(0,0,-1242, 1242);
        // imageView.getDrawable().setColorFilter(Color.CYAN, PorterDuff.Mode.ADD);
         BitmapDrawable dBmp = (BitmapDrawable) dBmpList[position];
-        dBmp.setBounds(0,0,-1242,1242);
-        //imageView.setBackgroundColor(Color.CYAN);
-        //container.setBackground(dBmp);
-        imageView.setVisibility(View.VISIBLE);
+        //dBmp.setBounds(0,0,-1242,1242);
+//        imageView.setVisibility(View.VISIBLE);
         container.addView(imageView);
-        container.setVisibility(View.VISIBLE);
-        container.setBackgroundColor(Color.YELLOW);
-        //arrayAdapter.notifyDataSetChanged();
-        //notifyDataSetChanged();
-//        startUpdate(container);
-        //otifyDataSetChanged();
+//        container.setVisibility(View.VISIBLE);
+//        container.setBackgroundColor(Color.YELLOW);
 
        setPrimaryItem(container, position, imageView);
 

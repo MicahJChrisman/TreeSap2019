@@ -85,7 +85,9 @@
                         android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        tools:text="Common name:  " />
+                        android:text="Common name:  " />
+
+                    <!--tools:text="Common name:  "-->
 
                     <TextView
                         android:id="@+id/common_name"
