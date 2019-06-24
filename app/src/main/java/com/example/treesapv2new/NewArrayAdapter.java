@@ -98,6 +98,7 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 
         ImageAdapter adapter = new ImageAdapter(context, dBmpList, this);
         mPager.setAdapter(adapter);
+        mPager.setOffscreenPageLimit(2);
 
 
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
