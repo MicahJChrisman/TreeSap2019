@@ -165,6 +165,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(null);
         MainActivity.banana=null;
         setContentView(R.layout.activity_map_new);
+        MainActivity.treesNearby.clear();
 
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
 //        pageRight.setOnTouchListener(new pageRight.);
@@ -407,6 +408,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                            }
 //                        }
                         ds.initialize(Maps_Activity.this, null);
+                        MainActivity.treesNearby.clear();
                         Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
                         if(newTree != null && !newTree.getCommonName().equals("Unknown")){
                             marker.setTitle(newTree.getCommonName());
@@ -421,6 +423,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 if(marker.getSnippet().equals("Holland, MI")){
                     DataSource ds = new CityOfHollandDataSource();
                     ds.initialize(Maps_Activity.this, null);
+                    MainActivity.treesNearby.clear();
                     Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
                     if(newTree.getInfo("Park") != null){
                         marker.setSnippet(newTree.getInfo("Park").toString());
@@ -466,6 +469,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                 MainActivity.banana = MainActivity.userTreeDataSourceGlobal.search(testing);
                             }else{
                                 ds.initialize(Maps_Activity.this, null);
+                                MainActivity.treesNearby.clear();
                                 MainActivity.banana = ds.search(testing);
                             }
                             if (MainActivity.banana != null) {
@@ -554,6 +558,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //        whichSource = true;
 
             ds.initialize(Maps_Activity.this, null);
+            MainActivity.treesNearby.clear();
             Iterable<CSVRecord> stuff = null;
             int treeField = 0;
             String location42 = "";
@@ -594,7 +599,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
                                 String a = (String) document.getData().get("userID").toString();
-                                String b = user.getUid();
+                                String b = "";
+                                try{
+                                     b = user.getUid();
+                                }catch (NullPointerException e){
+
+                                }
                                 if(a.equals(b)) {
                                     try {
                                         Double latitude = Double.valueOf(document.getData().get("latitude").toString());

@@ -530,11 +530,11 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     picArray.add(fullPic);
                     user.put("images", picArray);
 
-                    ArrayList<String> otherInfoArray = new ArrayList<String>();
+                    ArrayList<String> notesArray = new ArrayList<String>();
                     if(notes !=null) {
-                        otherInfoArray.add(notes);
+                        notesArray.add(notes);
                     }
-                    user.put("otherInfo", otherInfoArray);
+                    user.put("notes", notesArray);
 
                     user.put("userID", userID);
 

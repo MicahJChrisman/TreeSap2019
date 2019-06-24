@@ -143,7 +143,6 @@ public class UserTreeDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location){
-        MainActivity.treesNearby.clear();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         float[] results = new float[1];
@@ -181,6 +180,7 @@ public class UserTreeDataSource extends DataSource {
                             treeReturn.setCurrentDBH(tree.getCurrentDBH());
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
                             treeReturn.addInfo("Source", user.getUid());
+                            treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -220,6 +220,7 @@ public class UserTreeDataSource extends DataSource {
                             treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
                             treeReturn.addInfo("Source", user.getUid());
+                            treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -241,7 +242,7 @@ public class UserTreeDataSource extends DataSource {
 
             }
         }
-
+//        userTrees.clear();
         return treeReturn;
     }
 

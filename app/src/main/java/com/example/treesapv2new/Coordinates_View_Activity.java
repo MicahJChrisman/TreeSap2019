@@ -72,6 +72,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activit_coordinates_view);
+        MainActivity.treesNearby.clear();
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 

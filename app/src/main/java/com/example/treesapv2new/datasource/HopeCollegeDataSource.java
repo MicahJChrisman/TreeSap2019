@@ -195,7 +195,6 @@ public class HopeCollegeDataSource extends DataSource {
                 continue;
             }
         }
-
         if (closestDistance > close)
             return null;
         else {

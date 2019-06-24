@@ -39,6 +39,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SplittableRandom;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class AllUsersDataSource extends DataSource {
 
@@ -104,7 +106,7 @@ public class AllUsersDataSource extends DataSource {
                             }else{
                                 tree.setScientificName("Unknown");
                             }
-                                tree.setLocation(new TreeLocation(lati, longi));
+                            tree.setLocation(new TreeLocation(lati, longi));
 
 
 
@@ -121,6 +123,10 @@ public class AllUsersDataSource extends DataSource {
 
 //                                tree.setIsClosest(true);
                                 tree.addInfo("Source", document.getData().get("userID").toString());
+                                ArrayList<String> notes = (ArrayList<String>) document.getData().get("notes");
+                                for(int  i = 0; i<notes.size(); i++) {
+                                    tree.addInfo("Notes", notes.get(i).toString());
+                                }
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -148,7 +154,7 @@ public class AllUsersDataSource extends DataSource {
                 }
             }
         });
-
+        finishedBoolean = true;
         return true;
     }
 
@@ -173,7 +179,7 @@ public class AllUsersDataSource extends DataSource {
 
     @Override
     public Tree search(TreeLocation location) {
-        MainActivity.treesNearby.clear();
+
         float[] results = new float[1];
         float closestDistance = 999999999;
         Tree treeReturn = new Tree();
@@ -202,6 +208,7 @@ public class AllUsersDataSource extends DataSource {
                     treeReturn.setCurrentDBH(tree.getCurrentDBH());
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
                     treeReturn.addInfo("Source", tree.getInfo("Source"));
+                    treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -239,6 +246,7 @@ public class AllUsersDataSource extends DataSource {
                     treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
                     treeReturn.addInfo("Source", tree.getInfo("Source"));
+                    treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -258,7 +266,7 @@ public class AllUsersDataSource extends DataSource {
             }
 
         }
-
+//        userTrees.clear();
         return treeReturn;
 
 

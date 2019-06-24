@@ -173,9 +173,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_main_new);
+        MainActivity.treesNearby.clear();
 
 //        AllUsersDataSource allUsersDataSource = new AllUsersDataSource();
-        allUsersDataSource.initialize(this,null);
+        if(!allUsersDataSource.finishedBoolean) {
+            allUsersDataSource.initialize(this, null);
+        }
 
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());

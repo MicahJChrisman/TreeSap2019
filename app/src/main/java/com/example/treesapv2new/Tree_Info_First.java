@@ -63,6 +63,7 @@ public class Tree_Info_First extends AppCompatActivity {
     private static final int REQUEST_ID = 1;
     private static final int[] PERMISSION_ALL = new int[0];
 
+    ArrayAdapter<String> adapter;
     //private GestureDetectorCompat gestureObject;
 
 
@@ -208,13 +209,10 @@ public class Tree_Info_First extends AppCompatActivity {
             for(Tree t : MainActivity.treesNearby){
                 commonNameNearby.add(t.getCommonName());
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, commonNameNearby);
+            adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, commonNameNearby);
             Spinner spinNearbyTrees = (Spinner) findViewById(R.id.nearby_trees_spinner);
             spinNearbyTrees.setAdapter(adapter);
         }
-
-
-
 
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
@@ -359,6 +357,19 @@ public class Tree_Info_First extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event){
         this.gestureObject.onTouchEvent(event);
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        adapter.clear();
+        try {
+            if (!MainActivity.banana.getDataSource().equals("AllUserDB")) {
+                MainActivity.treesNearby.clear();
+            }
+        }catch (Exception e){
+
+        }
     }
 
     class LearnGesture extends GestureDetector.SimpleOnGestureListener{

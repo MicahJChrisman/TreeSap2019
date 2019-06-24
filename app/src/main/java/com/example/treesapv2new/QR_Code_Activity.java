@@ -87,6 +87,7 @@ public class QR_Code_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_qr_code);
+        MainActivity.treesNearby.clear();
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 

@@ -102,6 +102,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         super.onCreate(null);
         setContentView(R.layout.big_red_button_page);
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+        MainActivity.treesNearby.clear();
 
 
 
