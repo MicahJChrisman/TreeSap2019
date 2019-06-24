@@ -149,6 +149,22 @@ public class CityOfHollandDataSource extends DataSource {
                         closestDistance = results[0];
                         closestRecord = record;
                     }
+
+                    if(results[0] < 10){
+                        Tree tree = new Tree();
+                        Double lat2 = new Double(closestRecord.get("Latitude"));
+                        Double longi2 = new Double(closestRecord.get("Longitude"));
+                        tree.setCommonName(closestRecord.get("CommonName"));
+                        tree.setScientificName(closestRecord.get("Scientific"));
+                        tree.setLocation(new TreeLocation(lat2, longi2));
+                        tree.setID(closestRecord.get(Tree.TREE_ID));
+                        tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
+                        if (closestRecord.get("Park").length() > 0)
+                            tree.addInfo("Park", closestRecord.get("Park"));
+                        tree.setFound(true);
+                        tree.setDataSource("CoHdatabase");
+                        MainActivity.treesNearby.add(tree);
+                    }
                  /*   continue;
                 //}
 

@@ -115,6 +115,7 @@ import javax.annotation.Nonnull;
 public class MainActivity extends AppCompatActivity {
     public static Tree banana = null;
     public static UserTreeDataSource userTreeDataSourceGlobal = new UserTreeDataSource();
+    public static ArrayList<Tree> treesNearby = new ArrayList<>();
     private TextView mTextMessage;
     private GestureDetectorCompat gestureObject;
 

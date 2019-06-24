@@ -155,6 +155,23 @@ public class ITreeDataSource extends DataSource {
                         closestDistance = results[0];
                         closestRecord = record;
                     }
+
+                    if(results[0] < 10){
+                        Tree tree = new Tree();
+                        Double lat2 = new Double(closestRecord.get(Tree.LATITUDE));
+                        Double longi2 = new Double(closestRecord.get(Tree.LONGITUDE));
+                        tree.setCommonName(closestRecord.get(Tree.NAME));
+                        tree.setLocation(new TreeLocation(lat2, longi2));
+                        tree.setID(closestRecord.get(Tree.TREE_ID));
+                        tree.setCurrentDBH(new Double(closestRecord.get(Tree.DBH)));
+                        tree.addInfo("Age class", closestRecord.get(Tree.AGE_CLASS));
+                        tree.addInfo("Condition", closestRecord.get(Tree.CONDITION));
+                        tree.addInfo("Tree asset value", closestRecord.get(Tree.TREE_ASSET_VALUE));
+                        tree.addInfo("Root infringement", closestRecord.get(Tree.ROOT_INFRINGEMENT));
+                        tree.setFound(true);
+                        tree.setDataSource("iTreeData");
+                        MainActivity.treesNearby.add(tree);
+                    }
 //                    continue;
 //                }
 //
