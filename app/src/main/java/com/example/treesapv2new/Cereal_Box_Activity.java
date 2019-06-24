@@ -290,7 +290,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         }
 
         try {
-            DBH = allInfo.split(",")[benefits_columns_enum.dbh1Index()];
+            DBH = allInfo.split(",")[benefits_columns_enum.dbhIndex()];
             ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
         }catch (Exception e){
             ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
