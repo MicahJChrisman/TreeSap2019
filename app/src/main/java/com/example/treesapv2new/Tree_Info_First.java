@@ -27,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -109,8 +111,21 @@ public class Tree_Info_First extends AppCompatActivity {
         };
 
         myDialog = new Dialog(this);
-
         patchTreeData();
+        updateTree();
+
+
+        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+
+        ImageButton button = (ImageButton) findViewById(R.id.add3);
+        button.setOnClickListener(new AddNotesEvent());
+
+        BottomNavigationView navView = findViewById(R.id.tree_info_first_menu);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navView.setSelectedItemId(R.id.tree_info_first_menu);
+    }
+
+    public void updateTree(){
 
         if(MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
             byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
@@ -191,38 +206,54 @@ public class Tree_Info_First extends AppCompatActivity {
 //            assetValueText.setVisibility(View.GONE);
 ////        }
 
-        String otherInfo = MainActivity.banana.getAllInfo();
-        TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
-        if(otherInfo != null) {
-            otherInfoText.setVisibility(View.VISIBLE);
-            otherInfoText.setText(otherInfo);
-        }else{
-            //otherInfoText.setText("Other info: \n" + "\tNo other information");
+        try {
+            String otherInfo = MainActivity.banana.getAllInfo();
+            TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
+            if (otherInfo != null) {
+                otherInfoText.setVisibility(View.VISIBLE);
+                otherInfoText.setText(otherInfo);
+            } else {
+                //otherInfoText.setText("Other info: \n" + "\tNo other information");
+                findViewById(R.id.otherTitle).setVisibility(View.GONE);
+                otherInfoText.setVisibility(View.GONE);
+            }
+        }catch (Exception e){
             findViewById(R.id.otherTitle).setVisibility(View.GONE);
-            otherInfoText.setVisibility(View.GONE);
-
+            ((TextView) findViewById(R.id.otherInfo)).setVisibility(View.GONE);
         }
 
         if(MainActivity.treesNearby !=null){
             ((Spinner) findViewById(R.id.nearby_trees_spinner)).setVisibility(View.VISIBLE);
             ArrayList<String> commonNameNearby = new ArrayList<String>();
+            commonNameNearby.add("Not the tree you wanted?");
             for(Tree t : MainActivity.treesNearby){
                 commonNameNearby.add(t.getCommonName());
             }
             adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, commonNameNearby);
             Spinner spinNearbyTrees = (Spinner) findViewById(R.id.nearby_trees_spinner);
             spinNearbyTrees.setAdapter(adapter);
+
+            spinNearbyTrees.setOnItemSelectedListener(new SwitchTreeEvent());
         }
+    }
 
+    private class SwitchTreeEvent implements AdapterView.OnItemSelectedListener{
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String selectedItem = parent.getItemAtPosition(position).toString();
+            int spinPosition = parent.getSelectedItemPosition();
+            if(spinPosition > 0) {
+                Tree spinTree = MainActivity.treesNearby.get(spinPosition - 1);
+                MainActivity.banana = spinTree;
+//            patchTreeData();
+//                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
+                updateTree();
+            }
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
 
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
-
-        ImageButton button = (ImageButton) findViewById(R.id.add3);
-        button.setOnClickListener(new AddNotesEvent());
-
-        BottomNavigationView navView = findViewById(R.id.tree_info_first_menu);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.setSelectedItemId(R.id.tree_info_first_menu);
+        }
     }
 
     public void patchTreeData(){

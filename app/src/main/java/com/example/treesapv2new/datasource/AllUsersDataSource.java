@@ -197,18 +197,17 @@ public class AllUsersDataSource extends DataSource {
                 closestDistance = results[0];
             }
 
-            if(results[0] < 1000){
-                if(results[0]==closestDistance) {
-                    treeReturn.setCommonName(tree.getCommonName());
+            if(results[0] < 10){
+                treeReturn.setCommonName(tree.getCommonName());
 //                                tree.setScientificName(document.getData().get("scientificName").toString());
-                    treeReturn.setScientificName(tree.getScientificName());
+                treeReturn.setScientificName(tree.getScientificName());
 //                                tree.setLocation(new TreeLocation(lati, longi));
-                    treeReturn.setLocation(locOfTree);
+                treeReturn.setLocation(locOfTree);
 //                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
-                    treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                treeReturn.setCurrentDBH(tree.getCurrentDBH());
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
-                    treeReturn.addInfo("Source", tree.getInfo("Source"));
-                    treeReturn.addInfo("Notes", tree.getInfo("Notes"));
+                treeReturn.addInfo("Source", tree.getInfo("Source"));
+                treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
 //                                }
@@ -222,10 +221,9 @@ public class AllUsersDataSource extends DataSource {
 //                                if(closestRecord.get("Image Tree")!="") {
 //                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
 //                                }
-                    treeReturn.setDataSource("AllUserDB");
-                    treeReturn.setFound(true);
-                    MainActivity.treesNearby.add(tree);
-                }
+                treeReturn.setDataSource("AllUserDB");
+                treeReturn.setFound(true);
+                MainActivity.treesNearby.add(tree);
             }
             if (closestDistance > cap)
                 break;
