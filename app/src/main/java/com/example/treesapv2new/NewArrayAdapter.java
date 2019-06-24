@@ -1,5 +1,6 @@
 package com.example.treesapv2new;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,7 +45,7 @@ import static android.content.ContentValues.TAG;
 //import static android.support.v4.graphics.drawable.IconCompat.getResources;
 
 public class NewArrayAdapter extends ArrayAdapter<Tree>{
-    Context context;
+    Curator_Swipe_Activity context;
     View convertView;
     private static ViewPager mPager;
 //    private PagerAdapter pagerAdapter;
@@ -65,12 +66,14 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 
     public NewArrayAdapter(Context context, int resourceId, List<Tree> trees, FragmentManager fm){
         super(context, resourceId, trees);
-        this.context = context;
+        this.context = (Curator_Swipe_Activity) context;
         this.fm = fm;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
         tree = this.getItem(position);
+        context.setCurrentTree(tree);
+
 
         //imageModelArrayList = new ArrayList<>();
         dBmpList = new ArrayList<>();
