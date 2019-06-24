@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -121,7 +122,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-//                setCurrentTree();
+                setCurrentTree();
                 //removeFirstObjectInAdapter();
             }
 
@@ -170,9 +171,13 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 rejectTree();
                 FlingCardListener listener = flingContainer.getTopCardListener();
+                flingContainer.getSelectedView().setVisibility(View.GONE);
                 penTrees.remove(0);
                 arrayAdapter.notifyDataSetChanged();
-//                listener.onTouch(flingContainer.getSelectedView(), new ))
+                setCurrentTree();
+//                penTrees.remove(0);
+//                arrayAdapter.notifyDataSetChanged();
+                listener.onTouch(flingContainer.getSelectedView(), MotionEvent.obtain);
 //                flingContainer.dispatchNestedFling(Float.valueOf(10000), Float.valueOf(10000), true);
             }
         });
@@ -182,9 +187,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 acceptTree();
+                penTrees.remove(0);
+                flingContainer.getSelectedView().setVisibility(View.GONE);
+                arrayAdapter.notifyDataSetChanged();
             }
         });
-        //setCurrentTree();
 
     }
 
@@ -211,21 +218,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         doc.delete();
         arrayAdapter.notifyDataSetChanged();
 //        flingContainer.
-        setCurrentTree();
+        //setCurrentTree();
     }
 
     public void acceptTree(){
         DocumentReference doc = treesRef.document(currentTree.getID());
-//        Map<String, Object> updates = new HashMap<>();
-//        updates.put("commonName", currentTree.getCommonName());
-//        updates.put("dbhArray", currentTree.getScientificName());
-//        updates.put("images", currentTree.getPicList());
-//        updates.put("latitude", currentTree.getLocation().getLatitude());
-//        updates.put("longitude", currentTree.getLocation().getLongitude());
-//        updates.put("otherInfo", currentTree.getInfoList());
-//        updates.put("scientificName", currentTree.getScientificName());
-//        //updates.put("timestamp", FieldValue.delete());
-//        updates.put("userID", FieldValue.delete());
 
         doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -252,7 +249,6 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                                         doc.update(updates);
                                         doc.delete();
                                         arrayAdapter.notifyDataSetChanged();
-//        flingContainer.
                                         setCurrentTree();
                                     }
                                 })
@@ -270,7 +266,6 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 }
             }
         });
-        //rejectTree(); //just to delete currentTree
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
