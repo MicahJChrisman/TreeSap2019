@@ -111,7 +111,7 @@ public class AllUsersDataSource extends DataSource {
 
 
                             ArrayList<Object> dbhArray= (ArrayList) document.getData().get("dbhArray");
-                            if(dbhArray !=null){
+                            if(dbhArray !=null && dbhArray.size() > 0){
                                 tree.setDBHArray(dbhArray);
                                 Double l = (Double) dbhArray.get(0);
                                 tree.setCurrentDBH(l.doubleValue());
@@ -124,8 +124,10 @@ public class AllUsersDataSource extends DataSource {
 //                                tree.setIsClosest(true);
                                 tree.addInfo("Source", document.getData().get("userID").toString());
                                 ArrayList<String> notes = (ArrayList<String>) document.getData().get("notes");
-                                for(int  i = 0; i<notes.size(); i++) {
-                                    tree.addInfo("Notes", notes.get(i).toString());
+                                if(notes != null) {
+                                    for (int i = 0; i < notes.size(); i++) {
+                                        tree.addInfo("Notes", notes.get(i).toString());
+                                    }
                                 }
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));

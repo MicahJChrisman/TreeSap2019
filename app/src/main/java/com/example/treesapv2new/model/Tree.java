@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Tree {
@@ -142,6 +143,10 @@ public class Tree {
         return out;
     }
 
+    public Collection getPicList(){
+        return treePics.values();
+    }
+
     public Boolean isOtherPicsPresent() {
         return treePics.size() > 0;
     }
@@ -175,6 +180,10 @@ public class Tree {
 
         if (out.length() > 0) out = out.substring(0, out.length()-1);
         return out;
+    }
+
+    public Collection getInfoList(){
+        return otherInfo.values();
     }
 
     public Boolean isOtherInfoPresent() {
