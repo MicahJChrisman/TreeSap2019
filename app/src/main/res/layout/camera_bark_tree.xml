@@ -104,36 +104,143 @@
             android:textSize="22sp"
             android:id="@+id/bark_text"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.shivam.library.imageslider.ImageSlider
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/add_bark_pic"
             android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true">
+            android:id="@+id/pager"/>
 
-            <ImageView
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:id="@+id/camera_appear"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pager"
+            android:text="&lt;Swipe to view other images&gt;"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            android:id="@+id/swipe_for_pics"
+            android:layout_centerHorizontal="true"
+            android:textSize="14sp"/>
 
-            <TextView
-                android:id="@+id/camera_disappear"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/cerclebackground"
-                android:gravity="center"
-                android:text="X"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="2dp"
-                android:layout_marginStart="-62dp"
-                android:visibility="gone" />
-        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_below="@+id/add_bark_pic"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_centerHorizontal="true">-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:id="@+id/camera_appear"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:visibility="gone" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/camera_disappear"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:background="@drawable/cerclebackground"-->
+                <!--android:gravity="center"-->
+                <!--android:text="X"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textStyle="bold"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:layout_marginStart="-62dp"-->
+                <!--android:visibility="gone" />-->
+        <!--</LinearLayout>-->
+        <!--<HorizontalScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_marginStart="15dp"-->
+            <!--android:layout_marginEnd="15dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_below="@+id/add_bark_pic">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center_horizontal">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:layout_weight="1"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--android:id="@+id/camera_appear"-->
+                <!--android:visibility="gone" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/camera_disappear"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:background="@drawable/cerclebackground"-->
+                <!--android:gravity="center"-->
+                <!--android:text="X"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textStyle="bold"-->
+                <!--android:layout_marginStart="-32dp"-->
+                <!--android:layout_marginTop="2dp"-->
+                <!--android:visibility="gone" />-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:adjustViewBounds="true"-->
+                    <!--android:id="@+id/camera_appear2"-->
+                    <!--android:layout_marginStart="2dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:visibility="gone" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/camera_disappear2"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:background="@drawable/cerclebackground"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="X"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="-32dp"-->
+                    <!--android:layout_marginTop="2dp"-->
+                    <!--android:visibility="gone" />-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:adjustViewBounds="true"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:id="@+id/camera_appear3"-->
+                    <!--android:layout_marginStart="2dp"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--android:visibility="gone" />-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/camera_disappear3"-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:background="@drawable/cerclebackground"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="X"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_marginStart="-32dp"-->
+                    <!--android:layout_marginTop="2dp"-->
+                    <!--android:visibility="gone" />-->
+            <!--</LinearLayout>-->
+
+        <!--</HorizontalScrollView>-->
 
 
     </RelativeLayout>
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

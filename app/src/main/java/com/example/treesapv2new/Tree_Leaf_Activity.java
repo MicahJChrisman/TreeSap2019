@@ -5,20 +5,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shivam.library.imageslider.ImageSlider;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class Tree_Leaf_Activity extends AppCompatActivity {
     private ImageView mimagesView;
@@ -33,6 +42,10 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
     private int REQUEST_EXIT = 9000;
     private int RESULT_DONE = 4000;
     private boolean CAMERA_ACTIVITY = false;
+
+    ImageSlider slider;
+    SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    private ArrayList<byte[]> images = new ArrayList<byte[]>();
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -108,11 +121,71 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         });
     }
 
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+
+        }
+
+        public static Tree_Bark_Activity.PlaceholderFragment newInstance(byte[] pic) {
+
+            Tree_Bark_Activity.PlaceholderFragment fragment = new Tree_Bark_Activity.PlaceholderFragment();
+//            Bundle args = new Bundle();
+//            args.putInt("index", pic);
+//            fragment.setArguments(args);
+
+            Bundle args1 = new Bundle();
+            args1.putByteArray("index",pic);
+            fragment.setArguments(args1);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_main3, container, false);
+            Bundle args = getArguments();
+            int index = args.getInt("index", 0);
+            byte[] index1 = args.getByteArray("index");
+            ImageView imageView=(ImageView)rootView.findViewById(R.id.image);
+//            imageView.setImageResource(index1);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(index1,0,index1.length);
+
+            imageView.setImageBitmap(bitmap);
+
+            return rootView;
+        }
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {   // adapter to set in ImageSlider
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return Tree_Bark_Activity.PlaceholderFragment.newInstance(images.get(position));
+        }
+
+        @Override
+        public int getCount() {
+            return images.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return null;
+        }
+    }
+
     private class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
             mimagesView = findViewById(R.id.camera_appear_leaf);
-            findViewById(R.id.camera_appear_leaf).setVisibility(View.VISIBLE);
+//            findViewById(R.id.camera_appear_leaf).setVisibility(View.VISIBLE);
             //findViewById(R.id.next_pic_leaf).setVisibility(View.VISIBLE);
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -150,7 +223,25 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
             byteArrayLeaf = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
             findViewById(R.id.next_pic_leaf).setVisibility(View.VISIBLE);
-            findViewById(R.id.camera_disappear_leaf).setVisibility(View.VISIBLE);
+//            findViewById(R.id.camera_disappear_leaf).setVisibility(View.VISIBLE);
+
+
+            byteArrayLeaf = stream.toByteArray();
+            images.add(byteArrayLeaf);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+
+
+            if(images.size() ==1) {
+                slider = (ImageSlider) findViewById(R.id.pager);
+
+                slider.setAdapter(mSectionsPagerAdapter);
+            }
+
+            slider.setIndicatorsSize(0);
+
+            if(images.size() > 1){
+                findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
+            }
         }
     }
 

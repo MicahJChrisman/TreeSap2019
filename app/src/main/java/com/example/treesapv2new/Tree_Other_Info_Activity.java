@@ -525,9 +525,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("timestamp", timestamp);
 
                     ArrayList<String> picArray = new ArrayList<String>();
-                    picArray.add(barkPic);
-                    picArray.add(leafPic);
-                    picArray.add(fullPic);
+                    if(!barkPic.equals("")) {
+                        picArray.add(barkPic);
+                    }
+                    if(!barkPic.equals("")) {
+                        picArray.add(leafPic);
+                    }
+                    if(!barkPic.equals("")) {
+                        picArray.add(fullPic);
+                    }
                     user.put("images", picArray);
 
                     ArrayList<String> notesArray = new ArrayList<String>();

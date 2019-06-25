@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +21,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import com.shivam.library.imageslider.ImageSlider;
+import com.shivam.library.imageslider.ImageSlider.PageAnimation;
+
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class Tree_Bark_Activity extends AppCompatActivity {
     private ImageView mimagesView;
@@ -36,11 +52,22 @@ public class Tree_Bark_Activity extends AppCompatActivity {
     private int RESULT_DONE = 4000;
     private boolean CAMERA_ACTIVITY = false;
 
+//    private int[] images={R.drawable.big_green_button,R.drawable.add,R.drawable.accept,R.drawable.bigredbutton};
+//    private ArrayList<Bitmap> images = new ArrayList<byte[]>();
+    private ArrayList<byte[]> images = new ArrayList<byte[]>();
+    ImageSlider slider;
+    SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.camera_bark_tree);
 
 
+
+//        ImageSlider slider = (ImageSlider) findViewById(R.id.pager);
+//        SectionsPagerAdapter  mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+//        slider.setAdapter(mSectionsPagerAdapter);
 
         Button b = (Button) findViewById(R.id.next_pic_bark);
         b.setOnClickListener(new NextEvent());
@@ -68,16 +95,16 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             }
         });
 
-        ((TextView) findViewById(R.id.camera_disappear)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                findViewById(R.id.camera_disappear).setVisibility(View.GONE);
-                findViewById(R.id.camera_appear).setVisibility(View.GONE);
-                findViewById(R.id.next_pic_bark).setVisibility(View.GONE);
-                byteArray = null;
-                findViewById(R.id.skip_bark_tree).setVisibility(View.VISIBLE);
-            }
-        });
+//        ((TextView) findViewById(R.id.camera_disappear)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                findViewById(R.id.camera_disappear).setVisibility(View.GONE);
+//                findViewById(R.id.camera_appear).setVisibility(View.GONE);
+//                findViewById(R.id.next_pic_bark).setVisibility(View.GONE);
+//                byteArray = null;
+//                findViewById(R.id.skip_bark_tree).setVisibility(View.VISIBLE);
+//            }
+//        });
 
         TextView txtclose = (TextView) findViewById(R.id.bark_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
@@ -108,11 +135,74 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         });
     }
 
+
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() {
+
+        }
+
+        public static PlaceholderFragment newInstance(byte[] pic) {
+
+            PlaceholderFragment fragment = new PlaceholderFragment();
+//            Bundle args = new Bundle();
+//            args.putInt("index", pic);
+//            fragment.setArguments(args);
+
+            Bundle args1 = new Bundle();
+            args1.putByteArray("index",pic);
+            fragment.setArguments(args1);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            View rootView = inflater.inflate(R.layout.fragment_main3, container, false);
+            Bundle args = getArguments();
+            int index = args.getInt("index", 0);
+            byte[] index1 = args.getByteArray("index");
+            ImageView imageView=(ImageView)rootView.findViewById(R.id.image);
+//            imageView.setImageResource(index1);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(index1,0,index1.length);
+
+            imageView.setImageBitmap(bitmap);
+
+            return rootView;
+        }
+    }
+
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {   // adapter to set in ImageSlider
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return PlaceholderFragment.newInstance(images.get(position));
+        }
+
+        @Override
+        public int getCount() {
+            return images.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return null;
+        }
+    }
+
+
+
     private class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            mimagesView = findViewById(R.id.camera_appear);
-            findViewById(R.id.camera_appear).setVisibility(View.VISIBLE);
+//            mimagesView = findViewById(R.id.camera_appear);
+//            findViewById(R.id.camera_appear).setVisibility(View.VISIBLE);
             //findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -154,11 +244,61 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//            mimagesView.setImageBitmap(imageBitmap);
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArray = stream.toByteArray();
-            mimagesView.setImageBitmap(imageBitmap);
+            images.add(byteArray);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+
+//            images.add(imageBitmap);
+//            images.add(imageBitmap);
+//            images.add(imageBitmap);
+//            images.add(imageBitmap);
+//            ImageSlider slider = (ImageSlider) findViewById(R.id.pager);
+//            slider.setAdapter(mSectionsPagerAdapter);
+//            if(images.size() ==1){
+
+//                int steve = mSectionsPagerAdapter.getCount();
+//                slider.removeAllViewsInLayout();
+
+//                slider.removeAllViews();
+                if(images.size() ==1) {
+                    slider = (ImageSlider) findViewById(R.id.pager);
+
+                    slider.setAdapter(mSectionsPagerAdapter);
+                }
+//                if(images.size() ==2) {
+////                    slider.removeViewsInLayout(0, 1);
+////                    slider.setVisibility(View.GONE);
+////                    ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.VISIBLE);
+////                    ImageSlider slider1 = (ImageSlider) findViewById(R.id.pager2);
+//                    int steve = mSectionsPagerAdapter.getCount();
+//
+////                    slider.setAdapter(mSectionsPagerAdapter);
+////                    mSectionsPagerAdapter.notifyDataSetChanged();
+//
+                slider.setIndicatorsSize(0);
+//
+//                }
+//            }else if(images.size() ==2){
+//                ((ImageSlider) findViewById(R.id.pager)).setVisibility(View.GONE);
+//                ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.VISIBLE);
+//                ImageSlider slider = (ImageSlider) findViewById(R.id.pager2);
+//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+//                slider.setAdapter(mSectionsPagerAdapter);
+//            }else if(images.size() ==3){
+//                ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.GONE);
+//                ((ImageSlider) findViewById(R.id.pager3)).setVisibility(View.VISIBLE);
+//                ImageSlider slider = (ImageSlider) findViewById(R.id.pager3);
+//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+//                slider.setAdapter(mSectionsPagerAdapter);
+//            }
+
             findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
-            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
+            if(images.size() > 1){
+                findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
+            }
+//            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
         }
     }
 
