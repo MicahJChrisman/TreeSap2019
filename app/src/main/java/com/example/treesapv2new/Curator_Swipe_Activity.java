@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -170,14 +171,37 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rejectTree();
-                FlingCardListener listener = flingContainer.getTopCardListener();
-                flingContainer.getSelectedView().setVisibility(View.GONE);
+//                FlingCardListener listener = flingContainer.getTopCardListener();
+//                //flingContainer.dispatchNestedFling(400,400, false);
+//                // Obtain MotionEvent object
+//                long downTime = SystemClock.uptimeMillis();
+//                long eventTime = SystemClock.uptimeMillis() + 100;
+//                float x = 0.0f;
+//                float y = -50.0f;
+//// List of meta states found here:     developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
+//                int metaState = 0;
+//                MotionEvent motionEvent = MotionEvent.obtain(
+//                        downTime,
+//                        eventTime,
+//                        MotionEvent.ACTION_MOVE,
+//                        x,
+//                        y,
+//                        metaState
+//                );
+
+// Dispatch touch event to view
+               //flingContainer.getSelectedView().dispatchTouchEvent(motionEvent);
+
+                //flingContainer.getSelectedView().getRootView()..getDisplay();
                 penTrees.remove(0);
                 arrayAdapter.notifyDataSetChanged();
-                setCurrentTree();
+                if(penTrees.size()>0) {
+                    arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                    setCurrentTree();
+                }
 //                penTrees.remove(0);
 //                arrayAdapter.notifyDataSetChanged();
-                listener.onTouch(flingContainer.getSelectedView(), MotionEvent.obtain);
+                //listener.onTouch(flingContainer.getSelectedView(), MotionEvent.obtain);
 //                flingContainer.dispatchNestedFling(Float.valueOf(10000), Float.valueOf(10000), true);
             }
         });
@@ -187,9 +211,17 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 acceptTree();
+
                 penTrees.remove(0);
-                flingContainer.getSelectedView().setVisibility(View.GONE);
                 arrayAdapter.notifyDataSetChanged();
+                if(penTrees.size()>0) {
+                    arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                    setCurrentTree();
+                }
+//                
+//                penTrees.remove(0);
+//                flingContainer.getSelectedView().setVisibility(View.GONE);
+//                arrayAdapter.notifyDataSetChanged();
             }
         });
 
