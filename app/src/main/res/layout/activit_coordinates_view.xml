@@ -58,15 +58,15 @@
 
             <TextView
                 android:id="@+id/coordinates_instructions"
-                android:layout_width="325dp"
+                android:layout_width="307dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
-                android:text="Enter GPS coordinates of a tree. In order to recieve the best results, its is important to enter 11 significant digits."
+                android:text="Enter GPS coordinates below to get information on the nearest tree. For best results, please use at least 10 decimal places."
                 android:textAlignment="center"
                 android:textColor="@color/accent_gray"
-                android:textSize="15sp" />
+                android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
 
                 <EditText
                     android:id="@+id/lat_edit"
-                    android:layout_width="150dp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_border"
                     android:hint="Latitude:"
@@ -109,7 +109,7 @@
 
                 <EditText
                     android:id="@+id/long_edit"
-                    android:layout_width="150dp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_border"
@@ -121,13 +121,13 @@
 
             <Button
                 android:id="@+id/sub_coord_but"
-                android:layout_width="wrap_content"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:clickable="true"
-                android:text="Submit"
-                android:textColor="@color/accent_gray"
-                android:textSize="15sp" />
+                android:background="@color/colorPrimaryDark"
+                android:text="Get Tree Data"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white" />
         </LinearLayout>
 
 

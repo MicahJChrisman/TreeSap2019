@@ -2,6 +2,7 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -119,6 +121,23 @@ public class Tree_Info_First extends AppCompatActivity {
 
         ImageButton button = (ImageButton) findViewById(R.id.add3);
         button.setOnClickListener(new AddNotesEvent());
+
+        ImageButton circumButton = (ImageButton) findViewById(R.id.circum_info_button);
+        circumButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Info_First.this);
+                builder.setTitle("What does DBH mean?");
+                builder.setMessage("DBH is an acronym for Diameter at Breast Height, where breast height is 4.5 feet above the ground. If multiple numbers are listed, it means that the tree splits below breast height.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         BottomNavigationView navView = findViewById(R.id.tree_info_first_menu);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

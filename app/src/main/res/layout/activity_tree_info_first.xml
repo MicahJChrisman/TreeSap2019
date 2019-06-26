@@ -134,6 +134,24 @@
                 android:layout_marginStart="8dp"
                 android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/accent_gray"
+                android:text='\" '/>
+
+            <ImageButton
+                android:id="@+id/circum_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:maxWidth="25dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/info_icon" />
         </LinearLayout>
 
         <LinearLayout
@@ -256,6 +274,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nearby_trees_spinner"
+        android:popupBackground="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="30dp"

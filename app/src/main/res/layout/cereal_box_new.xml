@@ -547,7 +547,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Energy Useage Each Year"
+                        android:text="Energy Usage Each Year"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />

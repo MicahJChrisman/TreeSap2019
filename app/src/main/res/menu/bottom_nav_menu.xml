@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/navigation_brb"
-        android:icon="@drawable/icons8_final_state_filled_30"
-        android:title="Button" />
+        android:icon="@drawable/icons8_oak_tree_30"
+        android:title="Identify" />
 
     <item
         android:id="@+id/navigation_coordinates"

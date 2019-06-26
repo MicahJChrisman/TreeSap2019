@@ -42,10 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:text="Enter GPS coordinates of the tree. In order to recieve the best results, its is important to enter 11 significant digits."
+        android:text="Enter GPS coordinates below to get information on the nearest tree. For best results, please use at least 10 decimal places."
+        android:textSize="22sp"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/coordinates_title"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/coordinates_title"/>
 
     <TextView
         android:id="@+id/coordinates_title"

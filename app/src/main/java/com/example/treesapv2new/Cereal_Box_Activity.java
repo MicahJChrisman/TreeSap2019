@@ -322,6 +322,9 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
             try {
                 ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
+                if(ANNUAL_BENEFITS.length() < 4){
+                    ANNUAL_BENEFITS += "0";
+                }
                 ((TextView) findViewById(R.id.annual_benefits_val)).setText("$" + ANNUAL_BENEFITS);
             } catch (Exception e) {
                 ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
@@ -406,21 +409,21 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             }
 
             try {
-                ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.energySavingsDollarsIndex()];
                 ((TextView) findViewById(R.id.energy_usage_val)).setText("$" + ENERGY_USAGE_ANNUAL);
             } catch (Exception e) {
                 ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
             }
 
             try {
-                ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.coolingKWHIndex()];
                 ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
             } catch (Exception e) {
                 ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
             }
 
             try {
-                FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.heatingMBTUIndex()];
                 ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS + " MMBtu");
             } catch (Exception e) {
                 ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
@@ -435,13 +438,40 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
             try {
                 CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
-                ((TextView) findViewById(R.id.co2_total_val)).setText(CARBON_DIOXIDE_EMISSIONS + " lbs");
+                ((TextView) findViewById(R.id.carbon_dioxide_val)).setText(CARBON_DIOXIDE_EMISSIONS + " lbs");
             } catch (Exception e) {
                 ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
             }
 
             try {
-                CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+                CARBON_MONOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+                ((TextView) findViewById(R.id.carbon_monoxide_emissions_val)).setText(CARBON_MONOXIDE_EMISSIONS + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.co_emissions_layout)).setVisibility(View.GONE);
+            }
+
+            try {
+                NITROGEN_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+                ((TextView) findViewById(R.id.nitrogen_dioxide_emissions_val)).setText(NITROGEN_DIOXIDE_EMISSIONS + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.no2_emissions_layout)).setVisibility(View.GONE);
+            }
+
+            try {
+                SULFUR_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+                ((TextView) findViewById(R.id.sulfur_dioxide_emissions_val)).setText(SULFUR_DIOXIDE_EMISSIONS + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.so2_emissions_layout)).setVisibility(View.GONE);
+            }
+            try {
+                PARTICULATE_MATTER_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+                ((TextView) findViewById(R.id.particulate_matter_emissions_val)).setText(PARTICULATE_MATTER_EMISSIONS + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.pm_emissions_layout)).setVisibility(View.GONE);
+            }
+
+            try {
+                CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
                 ((TextView) findViewById(R.id.co2_total_val)).setText("$" + CO2_TO_DATE);
             } catch (Exception e) {
                 ((ImageView) findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);

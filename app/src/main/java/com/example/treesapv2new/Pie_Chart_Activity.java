@@ -471,12 +471,16 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         pieChart.setCenterText(commonName +" Annual Benefits equals "+ entry);
         pieChart.setCenterTextSize(20);
         pieChart.setHoleColor(Color.TRANSPARENT);
+        pieChart.setDrawSliceText(false);
         Description description = new Description();
         description.setText("");
         pieChart.setDescription(description);
         dataset.setColors(COLORFUL_COLORS);
         Legend legend = pieChart.getLegend();
-        legend.setTextSize(14);
+        legend.setTextSize(20);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setYOffset(30f);
         pieChart.getLegend().setWordWrapEnabled(true);
 //        if ( PrefManager.getInteger("lastIDMethod", -1)==3) {
 //

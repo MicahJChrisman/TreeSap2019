@@ -718,4 +718,11 @@ public class Benefits_Columns_Enum {
 
     }
 
+    public int thingsThatDoNotExist(){
+        switch (db){
+            default:
+                return -1;
+        }
+    }
+
 }

@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Step 5: Other Details"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="32sp" />
 
