@@ -13,6 +13,12 @@
         android:measureAllChildren="true"
         tools:foregroundGravity="bottom">
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/empty_message"
             android:layout_width="match_parent"

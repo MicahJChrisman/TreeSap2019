@@ -1,13 +1,18 @@
 package com.example.treesapv2new;
 
+import android.Manifest;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -15,13 +20,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.model.Tree;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.collect.Maps;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -41,6 +57,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.ExecutionException;
 
@@ -53,7 +70,7 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class Curator_Swipe_Activity extends AppCompatActivity {
+public class Curator_Swipe_Activity extends AppCompatActivity {  //implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private NewArrayAdapter arrayAdapter;
     private int i;
 
@@ -280,6 +297,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
                     }
+                    Toast.makeText(Curator_Swipe_Activity.this, "Undone", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Curator_Swipe_Activity.this, "No previous trees", Toast.LENGTH_SHORT).show();
                 }
@@ -303,6 +321,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                         arrayAdapter.notifyDataSetChanged();
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
+                        Toast.makeText(Curator_Swipe_Activity.this, "Skipped!", Toast.LENGTH_SHORT).show();
                     }
                     });
                 }else{
@@ -311,7 +330,17 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             }
         });
 
+        mapButton = findViewById(R.id.map_button);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GMap gMap = new GMap();
+                GoogleMap map = gMap.getMap();
+                findViewById(R.id.map).setVisibility(View.VISIBLE);
+            }
+        });
     }
+
 
     public void setCurrentTree(){
         if(penTrees.size() > 0) {
@@ -494,6 +523,74 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees, getSupportFragmentManager());
             flingContainer.setAdapter(arrayAdapter);
             //setCurrentTree();
+        }
+    }
+
+    private class GMap extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+        GoogleMap mMap;
+        SupportMapFragment mapFragment;
+        private final String[] PERMS = {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.INTERNET,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_NETWORK_STATE
+        };
+        private static final int REQUEST_ID = 6;
+        Location mLastLocation;
+        Marker mCurrLocationMarker;
+        Context parent;
+        float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
+        float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
+
+        Random randomGenerator;
+        float zoom = 16;
+        boolean whichSource = false;
+        Double longitude, latitude;
+
+
+        private Location location;
+        private TextView locationTv;
+        private GoogleApiClient googleApiClient;
+        private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+        private LocationRequest locationRequest;
+
+        public GMap(){
+            super();
+            //TODO permmissions
+            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+        }
+
+        @Override
+        public void onConnected(@Nullable Bundle bundle) {
+
+        }
+
+        @Override
+        public void onConnectionSuspended(int i) {
+
+        }
+
+        @Override
+        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            mMap = googleMap;
+        }
+
+        public GoogleMap getMap(){
+            return mMap;
         }
     }
 }

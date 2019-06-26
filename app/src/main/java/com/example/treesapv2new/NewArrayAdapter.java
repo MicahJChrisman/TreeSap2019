@@ -104,7 +104,9 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         TextView noPicsMessage = convertView.findViewById(R.id.no_pics_message);
         if(dBmpList.size()==0) {
             //noPicsMessage.setVisibility(View.VISIBLE);
+
             mPager.setBackgroundResource(R.drawable.new_logo);
+
         }else{
             //noPicsMessage.setVisibility(View.GONE);
             mPager.setBackground(null);
