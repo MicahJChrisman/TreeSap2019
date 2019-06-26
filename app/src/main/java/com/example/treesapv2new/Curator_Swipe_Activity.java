@@ -425,20 +425,21 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             tree.setCurrentDBH(dbhList.get(0).doubleValue());
         }
         tree.setID(document.getId());
-//                            Map<String, String> otherInfo = (Map<String, String>) document.get("otherInfo");
-//                            if(otherInfo != null){
-//                                String notes = otherInfo.get("Notes");
-////                                while(i>=0) {
-////                                String notes = (String) tree.getInfo("Notes");
-////                                    notes = notes + "/n" + otherInfo[i];
-////                                }
-//                                if(notes != null && !notes.equals("")){
-//                                    tree.addInfo("Notes", notes);
-//                                }
-//                            }else{
-//                                otherInfo = new String[1];
-//                                otherInfo[0] = "";
-//                            }
+        ArrayList<String> notes = (ArrayList<String>) document.get("notes");
+        if(notes != null && !notes.isEmpty()) {
+            String finalNote = "";
+            for (String note : notes) {
+                finalNote += note + "\n";
+            }
+            //String note = otherInfo.get("Notes");
+//          while(i>=0) {
+//          String notes = (String) tree.getInfo("Notes");
+//          notes = notes + "/n" + otherInfo[i];
+//          }
+            if (!finalNote.equals("")) {
+                tree.addInfo("Notes", finalNote);
+            }
+        }
 
         ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
         //String[] pics = stringPics.split("\n?\t.*: ");
