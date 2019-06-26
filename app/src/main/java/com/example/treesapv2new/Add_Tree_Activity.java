@@ -16,6 +16,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,6 +124,16 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         Button getGPSbutton = (Button) findViewById(R.id.get_location_button);
         getGPSbutton.setOnClickListener(new getGpsEvent());
 
+        TextView manualCoordinates = (TextView) findViewById(R.id.manual_coordinates_text);
+        manualCoordinates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LinearLayout) findViewById(R.id.lat_layout)).setVisibility(View.VISIBLE);
+                ((LinearLayout) findViewById(R.id.long_layout)).setVisibility(View.VISIBLE);
+                findViewById(R.id.man_coords_layout).setVisibility(View.GONE);
+            }
+        });
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
         }
@@ -215,6 +227,7 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             findViewById(R.id.lat_layout).setVisibility(View.VISIBLE);
             findViewById(R.id.long_layout).setVisibility(View.VISIBLE);
             findViewById(R.id.next_add_tree).setVisibility(View.VISIBLE);
+            findViewById(R.id.man_coords_layout).setVisibility(View.GONE);
         }
     }
 

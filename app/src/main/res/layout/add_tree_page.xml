@@ -39,16 +39,18 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Next>"
+        android:background="@color/new_invented_color"
+        android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeLayout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/textView2"
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:text="Step 1: Location"
             android:textSize="32sp"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_above="@id/addtreemessage"
             android:layout_marginBottom="10dp"
@@ -67,39 +70,59 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="15dp"
-            android:text="Hold your phone near the tree you want to add and press the button below to gets its location."
+            android:text="Hold your phone near the tree you want to add and press the button below to gets its location, or enter its coordinates manually."
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
             android:textSize="22sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/get_location_button"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/addtreemessage"
+            android:text="Use Current Locaiton"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <LinearLayout
             android:id="@+id/lat_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/get_location_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="15dp"
             android:visibility="gone">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Latitude: " />
 
-            <TextView
+            <EditText
                 android:id="@+id/lat_putter"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:textSize="18sp"
+                android:inputType="numberDecimal|numberSigned|number"
+                android:background="@drawable/edittext_border"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/long_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lat_layout"
             android:layout_centerHorizontal="true"
@@ -107,29 +130,54 @@
             android:visibility="gone">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="Longitude: " />
 
-            <TextView
+            <EditText
                 android:id="@+id/long_putter"
                 android:textSize="18sp"
-                android:layout_width="wrap_content"
+                android:inputType="numberDecimal|numberSigned|number"
+                android:background="@drawable/edittext_border"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/get_location_button"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/get_location_button"
+            android:layout_marginTop="6dp"
+            android:id="@+id/man_coords_layout"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/addtreemessage"
-            android:text="Get Tree Location"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </RelativeLayout>
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Or: "
+                android:textColor="@color/accent_gray"
+                android:textAlignment="center"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manually enter coordinates "
+                android:textColor="#00278F"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:id="@+id/manual_coordinates_text"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 
