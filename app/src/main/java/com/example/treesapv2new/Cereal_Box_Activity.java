@@ -260,176 +260,220 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         String PARTICULATE_MATTER_EMISSIONS;
         String CO2_TO_DATE;
 
+
+        if(!tree.getDataSource().equals("ExtendedCoH")){
+            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
+            ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
+            extendedCoHDataSource.initialize(this, null);
+            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            if(bestMatchTree == null){
+
+            }else {
+                tree = bestMatchTree;
+                tree.setDataSource("ExtendedCoH");
+            }
+        }
+
         try {
             findInfo(tree);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+
+
+
         String ds = tree.getDataSource();
         Benefits_Columns_Enum benefits_columns_enum = new Benefits_Columns_Enum(Benefits_Columns_Enum.database.valueOf(ds));
 
 
-
-        try {
-            COMMON_NAME = allInfo.split(",")[benefits_columns_enum.commonNameIndex()];
-            ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
-        }catch (Exception e){
+//        if(tree.getDataSource().equals("ExtendedCoH")) {
             try {
-                ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
-            }catch (Exception i){
-                ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
+                COMMON_NAME = allInfo.split(",")[benefits_columns_enum.commonNameIndex()];
+                ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
+            } catch (Exception e) {
+                try {
+                    ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
+                } catch (Exception i) {
+                    ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
+                }
             }
-        }
 
-        try {
-            SCIENTIFIC_NAME = allInfo.split(",")[benefits_columns_enum.scientificNameIndex()];
-            ((TextView) findViewById(R.id.scientific_name_cereal)).setText(SCIENTIFIC_NAME);
-        }catch (Exception e){
-            ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
-        }
+            try {
+                SCIENTIFIC_NAME = allInfo.split(",")[benefits_columns_enum.scientificNameIndex()];
+                ((TextView) findViewById(R.id.scientific_name_cereal)).setText(SCIENTIFIC_NAME);
+            } catch (Exception e) {
+                ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
+            }
 
-        try {
-            DBH = allInfo.split(",")[benefits_columns_enum.dbhIndex()];
-            ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
-        }
+            try {
+                DBH = allInfo.split(",")[benefits_columns_enum.dbhIndex()];
+                ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            NATIVE = allInfo.split(",")[benefits_columns_enum.nativeIndex()];
-            ((TextView) findViewById(R.id.native_yn_cereal)).setText(NATIVE);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.native_linear_layout)).setVisibility(View.GONE);
-        }
+            try {
+                NATIVE = allInfo.split(",")[benefits_columns_enum.nativeIndex()];
+                ((TextView) findViewById(R.id.native_yn_cereal)).setText(NATIVE);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.native_linear_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
-            ((TextView) findViewById(R.id.annual_benefits_val)).setText("$"+ANNUAL_BENEFITS);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
-            ((ImageView) findViewById(R.id.thick_bar_2)).setVisibility(View.GONE);
-        }
+            try {
+                ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
+                ((TextView) findViewById(R.id.annual_benefits_val)).setText("$" + ANNUAL_BENEFITS);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
+                ((ImageView) findViewById(R.id.thick_bar_2)).setVisibility(View.GONE);
+            }
 
-        try {
-            CO2_SEQUESTERED_$ = allInfo.split(",")[benefits_columns_enum.carbonSequestrationDollarsIndex()];
-            ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText("$"+CO2_SEQUESTERED_$);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.carbon_dioxide_sequestered)).setVisibility(View.GONE);
-        }
+            try {
+                CO2_SEQUESTERED_$ = allInfo.split(",")[benefits_columns_enum.carbonSequestrationDollarsIndex()];
+                ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText("$" + CO2_SEQUESTERED_$);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.carbon_dioxide_sequestered)).setVisibility(View.GONE);
+            }
 
-        try {
-            CO2_SEQUESTERED_lbs = allInfo.split(",")[benefits_columns_enum.carbonSequestrationPoundsIndex()];
-            ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText(CO2_SEQUESTERED_lbs + " lbs");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.annual_co2_layout)).setVisibility(View.GONE);
-        }
+            try {
+                CO2_SEQUESTERED_lbs = allInfo.split(",")[benefits_columns_enum.carbonSequestrationPoundsIndex()];
+                ((TextView) findViewById(R.id.annual_co2_val)).setText(CO2_SEQUESTERED_lbs + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.annual_co2_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            STORM_WATER_RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffDollarsIndex()];
-            ((TextView) findViewById(R.id.storm_water_runoff_val)).setText("$"+STORM_WATER_RUNOFF_AVOIDED);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.water_runnoff_avoided)).setVisibility(View.GONE);
-        }
+            try {
+                STORM_WATER_RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffDollarsIndex()];
+                ((TextView) findViewById(R.id.storm_water_runoff_val)).setText("$" + STORM_WATER_RUNOFF_AVOIDED);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.water_runnoff_avoided)).setVisibility(View.GONE);
+            }
 
-        try {
-            RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffCubicFeetIndex()];
-            ((TextView) findViewById(R.id.runoff_val)).setText(RUNOFF_AVOIDED+ " gal");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.runoff_layout)).setVisibility(View.GONE);
-        }
+            try {
+                RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffCubicFeetIndex()];
+                ((TextView) findViewById(R.id.runoff_val)).setText(RUNOFF_AVOIDED + " gal");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.runoff_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            RAINFALL_INTERCEPTED = allInfo.split(",")[benefits_columns_enum.waterInterceptedCubicFeetIndex()];
-            ((TextView) findViewById(R.id.rainfall_val)).setText(RAINFALL_INTERCEPTED + " gal");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.rainfall_layout)).setVisibility(View.GONE);
-        }
+            try {
+                RAINFALL_INTERCEPTED = allInfo.split(",")[benefits_columns_enum.waterInterceptedCubicFeetIndex()];
+                ((TextView) findViewById(R.id.rainfall_val)).setText(RAINFALL_INTERCEPTED + " gal");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.rainfall_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            AIR_POLLUTION_ANNUAL = allInfo.split(",")[benefits_columns_enum.pollutionRemovalDollarsIndex()];
-            ((TextView) findViewById(R.id.air_pollution_val)).setText("$" +AIR_POLLUTION_ANNUAL);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.air_pollution_removed)).setVisibility(View.GONE);
-        }
+            try {
+                AIR_POLLUTION_ANNUAL = allInfo.split(",")[benefits_columns_enum.pollutionRemovalDollarsIndex()];
+                ((TextView) findViewById(R.id.air_pollution_val)).setText("$" + AIR_POLLUTION_ANNUAL);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.air_pollution_removed)).setVisibility(View.GONE);
+            }
 
-        try {
-            CARBON_MONOXIDE = allInfo.split(",")[benefits_columns_enum.coOuncesIndex()];
-            ((TextView) findViewById(R.id.carbon_monoxide_val)).setText(CARBON_MONOXIDE + " oz");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.co_layout)).setVisibility(View.GONE);
-        }
+            try {
+                CARBON_MONOXIDE = allInfo.split(",")[benefits_columns_enum.coOuncesIndex()];
+                ((TextView) findViewById(R.id.carbon_monoxide_val)).setText(CARBON_MONOXIDE + " oz");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.co_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            OZONE = allInfo.split(",")[benefits_columns_enum.o3OuncesIndex()];
-            ((TextView) findViewById(R.id.ozone_val)).setText(OZONE + " oz");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.ozone_layout)).setVisibility(View.GONE);
-        }
+            try {
+                OZONE = allInfo.split(",")[benefits_columns_enum.o3OuncesIndex()];
+                ((TextView) findViewById(R.id.ozone_val)).setText(OZONE + " oz");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.ozone_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            NITROGEN_DIOXIDE = allInfo.split(",")[benefits_columns_enum.no2OuncesIndex()];
-            ((TextView) findViewById(R.id.nitrogen_dioxide_val)).setText(NITROGEN_DIOXIDE + " oz");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.no2_layout)).setVisibility(View.GONE);
-        }
+            try {
+                NITROGEN_DIOXIDE = allInfo.split(",")[benefits_columns_enum.no2OuncesIndex()];
+                ((TextView) findViewById(R.id.nitrogen_dioxide_val)).setText(NITROGEN_DIOXIDE + " oz");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.no2_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            SULFUR_DIOXIDE = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
-            ((TextView) findViewById(R.id.sulfur_dioxide_val)).setText(SULFUR_DIOXIDE + " oz");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.so2_layout)).setVisibility(View.GONE);
-        }
+            try {
+                SULFUR_DIOXIDE = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ((TextView) findViewById(R.id.sulfur_dioxide_val)).setText(SULFUR_DIOXIDE + " oz");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.so2_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            PARTICULATE_MATTER = allInfo.split(",")[benefits_columns_enum.pm25OuncesIndex()];
-            ((TextView) findViewById(R.id.particulate_matter_val)).setText(PARTICULATE_MATTER + " oz");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.pm_layout)).setVisibility(View.GONE);
-        }
+            try {
+                PARTICULATE_MATTER = allInfo.split(",")[benefits_columns_enum.pm25OuncesIndex()];
+                ((TextView) findViewById(R.id.particulate_matter_val)).setText(PARTICULATE_MATTER + " oz");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.pm_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
-            ((TextView) findViewById(R.id.energy_usage_val)).setText("$"+ ENERGY_USAGE_ANNUAL);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
-        }
+            try {
+                ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ((TextView) findViewById(R.id.energy_usage_val)).setText("$" + ENERGY_USAGE_ANNUAL);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
+            }
 
-        try {
-            ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
-            ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
-        }
+            try {
+                ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
-            ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS+" MMBtu");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
-        }
+            try {
+                FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+                ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS + " MMBtu");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            AVOIDED_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
-            ((TextView) findViewById(R.id.energy_emissions_val)).setText("$"+AVOIDED_EMISSIONS);
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.avoided_energy_emissions)).setVisibility(View.GONE);
-        }
+            try {
+                AVOIDED_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+                ((TextView) findViewById(R.id.energy_emissions_val)).setText("$" + AVOIDED_EMISSIONS);
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.avoided_energy_emissions)).setVisibility(View.GONE);
+            }
 
-        try {
-            CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
-            ((TextView) findViewById(R.id.co2_total_val)).setText(CARBON_DIOXIDE_EMISSIONS+" lbs");
-        }catch (Exception e){
-            ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
-        }
+            try {
+                CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
+                ((TextView) findViewById(R.id.co2_total_val)).setText(CARBON_DIOXIDE_EMISSIONS + " lbs");
+            } catch (Exception e) {
+                ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
+            }
 
-        try {
-            CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
-            ((TextView) findViewById(R.id.co2_total_val)).setText("$"+CO2_TO_DATE);
-        }catch (Exception e){
-            ((ImageView)findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);
-            ((LinearLayout) findViewById(R.id.co2_stored_to_date)).setVisibility(View.GONE);
-        }
+            try {
+                CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+                ((TextView) findViewById(R.id.co2_total_val)).setText("$" + CO2_TO_DATE);
+            } catch (Exception e) {
+                ((ImageView) findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);
+                ((LinearLayout) findViewById(R.id.co2_stored_to_date)).setVisibility(View.GONE);
+            }
+//        }else{
+//            if(bestMatchTree != null) {
+//                ((TextView) findViewById(R.id.common_name_cereal)).setText(bestMatchTree.getCommonName());
+//                ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(String.valueOf(bestMatchTree.getCurrentDBH()));
+//            }
+
+//            try {
+//                COMMON_NAME = allInfo.split(",")[1];
+//                ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
+//            } catch (Exception e) {
+//                try {
+//                    ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
+//                } catch (Exception i) {
+//                    ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
+//                }
+//            }
+//
+//                ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
+//
+//            try {
+//                DBH = allInfo.split(",")[2];
+//                ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
+//            } catch (Exception e) {
+//                ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
+//            }
+
+//        }
     }
 
     public void patchTreeData(){
@@ -458,6 +502,26 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
     }
 
+    public Tree estimateTreeNearest(Double maxDistance, float maxDBHDifference){
+        Tree bestTree = new Tree();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        // sources.remove(MainActivity.banana.getDataSource());
+        for (String source : sources) {
+            DataSource ds;
+            if(source.equals("HopeCollegeDataSource")){
+                ds = new HopeCollegeDataSource();
+            }else if(source.equals("CityOfHollandDataSource")) {
+                ds = new CityOfHollandDataSource();
+            }else if(source.equals("ExtendedCoHDataSource")){
+                ds = new ExtendedCoHDataSource();
+            }else{
+                ds = new ITreeDataSource();
+            }
+
+        }
+        return bestTree;
+    }
 
     private String allInfo;
     private String commonName;
@@ -534,14 +598,22 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             treeDbh = 0;
         }
         BigDecimal bd = new BigDecimal(treeDbh);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        if(tree.getDataSource().equals("ExtendedCoH")) {
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+        }else{
+            bd = bd.setScale(0, RoundingMode.DOWN);
+        }
         while ((line = reader.readLine()) != null) {
             String treeName = line.split(",")[1];
             if (treeName.equals(commonName)) {
                 String dbh = line.split(",")[2];
                 Double diameter = Double.parseDouble(dbh);
                 BigDecimal bd1 = new BigDecimal(diameter);
-                bd1 = bd1.setScale(2, RoundingMode.HALF_UP);
+                if(tree.getDataSource().equals("ExtendedCoH")) {
+                    bd1 = bd1.setScale(2, RoundingMode.HALF_UP);
+                }else{
+                    bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                }
                 if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
                 if (bd1.doubleValue() == bd.doubleValue()) {
                     allInfo = line;

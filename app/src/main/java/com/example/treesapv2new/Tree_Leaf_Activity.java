@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -267,7 +268,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                     if (extras != null) {
                         String lat_value = extras.getString("lat_value");
                         String long_value = extras.getString("long_value");
-                        byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
                         if (byteArray != null) {
                             intentA.putExtra("bark_pic_byte_array", byteArray);
                         }
@@ -298,11 +299,17 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
             if (extras != null) {
                 String lat_value = extras.getString("lat_value");
                 String long_value = extras.getString("long_value");
-                byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
                 intentA.putExtra("bark_pic_byte_array", byteArray);
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
-                intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+                ArrayList<String> images_to_String = new ArrayList<String>();
+                for(byte[] image : images){
+                    String temp= Base64.encodeToString(image, Base64.DEFAULT);
+                    images_to_String.add(temp);
+//                    images_to_String.add(new String(image));
+                }
+                intentA.putExtra("leaf_pic_byte_array", images_to_String);
             }
 //            startActivity(intentA);
             startActivityForResult(intentA,REQUEST_EXIT);

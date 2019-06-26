@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -350,7 +351,13 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 String long_value = extras.getString("long_value");
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
-                intentA.putExtra("bark_pic_byte_array", byteArray);
+                ArrayList<String> images_to_String = new ArrayList<String>();
+                for(byte[] image : images){
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
+                    String temp=Base64.encodeToString(image, Base64.DEFAULT);
+                    images_to_String.add(temp);
+                }
+                intentA.putExtra("bark_pic_byte_array", images_to_String);
             }
 //            startActivity(intentA);
             startActivityForResult(intentA,REQUEST_EXIT);

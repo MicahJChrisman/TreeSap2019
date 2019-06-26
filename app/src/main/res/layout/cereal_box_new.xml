@@ -852,6 +852,19 @@
                 android:background="@color/black"
                 android:src="@drawable/transparent_rect" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/chart"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="Note: The benefit information displayed for this tree was estimated based on a nearby tree of the same type"
+                android:textAlignment="center"
+                android:textColor="@color/accent_gray"
+                android:textSize="12sp"
+                android:id="@+id/not_exact_text"
+                android:visibility="gone"/>
+
 
         </LinearLayout>
 

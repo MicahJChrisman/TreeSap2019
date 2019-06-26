@@ -87,15 +87,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 if (extras != null) {
                     String lat_value = extras.getString("lat_value");
                     String long_value = extras.getString("long_value");
-                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+                    ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
                     if (byteArray != null) {
                         intentA.putExtra("bark_pic_byte_array", byteArray);
                     }
-                    byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
+                    ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
                     if (byteArrayLeaf != null) {
                         intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
                     }
-                    byte[] byteArrayFull = extras.getByteArray("full_pic_byte_array");
+                    ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
                     if (byteArrayLeaf != null) {
                         intentA.putExtra("full_pic_byte_array", byteArrayFull);
                     }
@@ -107,44 +107,53 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Double lat_value = Double.valueOf(extras.getString("lat_value"));
-            Double long_value = Double.valueOf(extras.getString("long_value"));
-            TextView kevin = (TextView) findViewById(R.id.lat_thing);
-            //kevin.setText(lat_value);
-            TextView carl = (TextView) findViewById(R.id.long_thing);
-            //carl.setText(long_value);
-
-            byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
-            if(byteArray != null) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
-                //image.setImageBitmap(bmp);
-                barkPic = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                passedArray[7] = barkPic;
-            }
-            byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
-            if(byteArrayLeaf != null) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArrayLeaf, 0, byteArrayLeaf.length);
-                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
-                //image.setImageBitmap(bmp);
-                leafPic = Base64.encodeToString(byteArrayLeaf, Base64.DEFAULT);
-                passedArray[8] = leafPic;
-            }
-            byte[] byteArrayFull = extras.getByteArray("full_pic_byte_array");
-            if(byteArrayFull != null) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArrayFull, 0, byteArrayFull.length);
-                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
-                //image.setImageBitmap(bmp);
-                fullPic = Base64.encodeToString(byteArrayFull, Base64.DEFAULT);
-                passedArray[9] = fullPic;
-            }
-            lat = lat_value;
-            longit = long_value;
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            Double lat_value = Double.valueOf(extras.getString("lat_value"));
+//            Double long_value = Double.valueOf(extras.getString("long_value"));
+//            TextView kevin = (TextView) findViewById(R.id.lat_thing);
+//            //kevin.setText(lat_value);
+//            TextView carl = (TextView) findViewById(R.id.long_thing);
+//            //carl.setText(long_value);
+//
+//            ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+//            if(byteArray != null) {
+//                for(String byter: byteArray) {
+//                    byte[] byter1 = byter.getBytes();
+//                    Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                    ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
+//                    //image.setImageBitmap(bmp);
+//                    barkPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                    passedArray[7] = barkPic;
+//                }
+//            }
+//            ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+//            if(byteArrayLeaf != null) {
+//                for(String byter: byteArrayLeaf) {
+//                    byte[] byter1 = byter.getBytes();
+//                    Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                    ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
+//                    //image.setImageBitmap(bmp);
+//                    leafPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                    passedArray[8] = leafPic;
+//                }
+//            }
+//            ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
+//            if(byteArrayFull != null) {
+//                for(String byter: byteArrayFull) {
+//                    byte[] byter1 = byter.getBytes();
+//                    Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                    ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
+//                    //image.setImageBitmap(bmp);
+//                    fullPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                    passedArray[9] = fullPic;
+//                }
+//            }
+//            lat = lat_value;
+//            longit = long_value;
 //            passedArray[4] = lat_value;
 //            passedArray[5] = long_value;
-        }
+//        }
 
         ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -518,23 +527,81 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("commonName",commonName);
                     user.put("scientificName", scientificName);
-                    user.put("latitude", lat);
-                    user.put("longitude",longit);
 //                    user.put("dbh", dbh);
 //                    user.put("otherInfo", notes);
                     user.put("timestamp", timestamp);
 
                     ArrayList<String> picArray = new ArrayList<String>();
-                    if(!barkPic.equals("")) {
-                        picArray.add(barkPic);
+//                    if(!barkPic.equals("")) {
+//                        picArray.add(barkPic);
+//                    }
+//                    if(!leafPic.equals("")) {
+//                        picArray.add(leafPic);
+//                    }
+//                    if(!fullPic.equals("")) {
+//                        picArray.add(fullPic);
+//                    }
+
+
+                    Bundle extras = getIntent().getExtras();
+                    if (extras != null) {
+                        Double lat_value = Double.valueOf(extras.getString("lat_value"));
+                        Double long_value = Double.valueOf(extras.getString("long_value"));
+                        TextView kevin = (TextView) findViewById(R.id.lat_thing);
+                        //kevin.setText(lat_value);
+                        TextView carl = (TextView) findViewById(R.id.long_thing);
+                        //carl.setText(long_value);
+
+                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+                        if(byteArray != null) {
+                            for(String byter: byteArray) {
+                                byte[] byter1 = byter.getBytes();
+                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+                                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
+                                //image.setImageBitmap(bmp);
+                                barkPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+                                passedArray[7] = barkPic;
+                                picArray.add(byter);
+                            }
+                        }
+                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+                        if(byteArrayLeaf != null) {
+                            for(String byter: byteArrayLeaf) {
+                                byte[] byter1 = byter.getBytes();
+                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+                                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
+                                //image.setImageBitmap(bmp);
+                                leafPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+                                passedArray[8] = leafPic;
+                                picArray.add(byter);
+                            }
+                        }
+                        ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
+                        if(byteArrayFull != null) {
+                            for(String byter: byteArrayFull) {
+                                byte[] byter1 = byter.getBytes();
+                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+                                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
+                                //image.setImageBitmap(bmp);
+                                fullPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+                                passedArray[9] = fullPic;
+                                picArray.add(byter);
+                            }
+                        }
+                        lat = lat_value;
+                        longit = long_value;
+//            passedArray[4] = lat_value;
+//            passedArray[5] = long_value;
+                        user.put("images", picArray);
                     }
-                    if(!barkPic.equals("")) {
-                        picArray.add(leafPic);
-                    }
-                    if(!barkPic.equals("")) {
-                        picArray.add(fullPic);
-                    }
-                    user.put("images", picArray);
+                    user.put("latitude", lat);
+                    user.put("longitude",longit);
+
+
+
+
+
+
 
                     ArrayList<String> notesArray = new ArrayList<String>();
                     if(notes !=null) {

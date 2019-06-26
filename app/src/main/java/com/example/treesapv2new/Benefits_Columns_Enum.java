@@ -22,9 +22,9 @@ public class Benefits_Columns_Enum {
             case HopeCollegeData:
                 return 1;
             case iTreeData:
-                return 2;
+                return 1;
             case CoHdatabase:
-                return 2;
+                return 1;
             case ExtendedCoH:
                 return 1;
             default:
@@ -38,11 +38,11 @@ public class Benefits_Columns_Enum {
     public int scientificNameIndex() {
         switch(db) {
             case CoHdatabase:
-                return 2;
+                return -1;
             case iTreeData:
-                return 1;
+                return -1;
             case HopeCollegeData:
-                return 1;
+                return -1;
             case ExtendedCoH:
                 return -1;
             default:
@@ -59,11 +59,11 @@ public class Benefits_Columns_Enum {
 
         switch(db) {
             case CoHdatabase:
-                return 15;
+                return 17;
             case iTreeData:
-                return 4;
+                return 17;
             case HopeCollegeData:
-                return 4;
+                return 17;
             case ExtendedCoH:
                 return 4;
             default:
@@ -80,9 +80,9 @@ public class Benefits_Columns_Enum {
             case CoHdatabase:
                 return 16;
             case iTreeData:
-                return 5;
+                return 16;
             case HopeCollegeData:
-                return 5;
+                return 16;
             case ExtendedCoH:
                 return 3;
             default:
@@ -97,11 +97,11 @@ public class Benefits_Columns_Enum {
     public int dbhIndex(){
         switch(db) {
             case CoHdatabase:
-                return 3;
+                return 2;
             case iTreeData:
-                return 10;
+                return 2;
             case HopeCollegeData:
-                return 10;
+                return 2;
             case ExtendedCoH:
                 return 2;
             default:
@@ -124,11 +124,11 @@ public class Benefits_Columns_Enum {
 
             case iTreeData:
 
-                return 11;
+                return -1;
 
             case HopeCollegeData:
 
-                return 11;
+                return -1;
 
             default:
 
@@ -152,11 +152,11 @@ public class Benefits_Columns_Enum {
 
             case iTreeData:
 
-                return 12;
+                return -1;
 
             case HopeCollegeData:
 
-                return 12;
+                return -1;
 
             default:
 
@@ -180,11 +180,11 @@ public class Benefits_Columns_Enum {
 
             case iTreeData:
 
-                return 13;
+                return -1;
 
             case HopeCollegeData:
 
-                return 13;
+                return -1;
 
             default:
 
@@ -225,15 +225,16 @@ public class Benefits_Columns_Enum {
     public int carbonSequestrationPoundsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 19;
-
+            case HopeCollegeData:
+                return 6;
+            case iTreeData:
+                return 6;
+            case CoHdatabase:
+                return 6;
             default:
-
                 return -1;
-
         }
 
     }
@@ -245,15 +246,16 @@ public class Benefits_Columns_Enum {
     public int carbonSequestrationDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 20;
-
+            case HopeCollegeData:
+                return 7;
+            case iTreeData:
+                return 7;
+            case CoHdatabase:
+                return 7;
             default:
-
                 return -1;
-
         }
 
     }
@@ -265,15 +267,10 @@ public class Benefits_Columns_Enum {
     public int waterInterceptedCubicFeetIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 33;
-
             default:
-
                 return -1;
-
         }
 
     }
@@ -285,15 +282,16 @@ public class Benefits_Columns_Enum {
     public int aintedRunoffCubicFeetIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 21;
-
+            case HopeCollegeData:
+                return 8;
+            case iTreeData:
+                return 8;
+            case CoHdatabase:
+                return 8;
             default:
-
                 return -1;
-
         }
 
     }
@@ -305,15 +303,16 @@ public class Benefits_Columns_Enum {
     public int aintedRunoffDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 22;
-
+            case HopeCollegeData:
+                return 9;
+            case iTreeData:
+                return 9;
+            case CoHdatabase:
+                return 9;
             default:
-
                 return -1;
-
         }
 
     }
@@ -325,15 +324,10 @@ public class Benefits_Columns_Enum {
     public int carbonAintedPoundsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 23;
-
             default:
-
                 return -1;
-
         }
 
     }
@@ -345,15 +339,10 @@ public class Benefits_Columns_Enum {
     public int carbonAintedDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 24;
-
             default:
-
                 return -1;
-
         }
 
     }
@@ -365,15 +354,16 @@ public class Benefits_Columns_Enum {
     public int pollutionRemovalOuncesIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 25;
-
+            case HopeCollegeData:
+                return 12;
+            case iTreeData:
+                return 12;
+            case CoHdatabase:
+                return 12;
             default:
-
                 return -1;
-
         }
 
     }
@@ -385,15 +375,16 @@ public class Benefits_Columns_Enum {
     public int pollutionRemovalDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 26;
-
+            case HopeCollegeData:
+                return 13;
+            case iTreeData:
+                return 13;
+            case CoHdatabase:
+                return 13;
             default:
-
                 return -1;
-
         }
 
     }
@@ -405,15 +396,10 @@ public class Benefits_Columns_Enum {
     public int energySavingsDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 27;
-
             default:
-
                 return -1;
-
         }
 
     }
@@ -425,15 +411,16 @@ public class Benefits_Columns_Enum {
     public int totalAnnualBenefitsDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 28;
-
+            case HopeCollegeData:
+                return 15;
+            case iTreeData:
+                return 15;
+            case CoHdatabase:
+                return 15;
             default:
-
                 return -1;
-
         }
 
     }
@@ -449,17 +436,11 @@ public class Benefits_Columns_Enum {
     public int coDollarsIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 41;
-
             default:
-
                 return -1;
-
         }
-
     }
 
 
@@ -469,15 +450,10 @@ public class Benefits_Columns_Enum {
     public int coOuncesIndex() {
 
         switch (db) {
-
             case ExtendedCoH:
-
                 return 36;
-
             default:
-
                 return -1;
-
         }
 
     }

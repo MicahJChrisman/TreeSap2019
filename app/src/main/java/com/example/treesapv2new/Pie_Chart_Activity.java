@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
+import com.example.treesapv2new.datasource.ExtendedCoHDataSource;
 import com.example.treesapv2new.display.AddNotesActivity;
 import com.example.treesapv2new.display.PieChartDisplay;
 import com.example.treesapv2new.model.Tree;
@@ -186,6 +187,20 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         myDialog = new Dialog(this);
 
         tree = MainActivity.banana;
+        String dsOrig = tree.getDataSource();
+
+        if(!tree.getDataSource().equals("ExtendedCoH")){
+//            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
+            ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
+            extendedCoHDataSource.initialize(this, null);
+            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            if(bestMatchTree == null){
+
+            }else {
+                tree = bestMatchTree;
+                tree.setDataSource("ExtendedCoH");
+            }
+        }
         try {
             findInfo(tree);
         } catch (IOException e) {
@@ -206,41 +221,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         //noData.setVisibility(View.GONE);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
-        if(!tree.getDataSource().equals("ExtendedCoH")){
-            float stormWater;
-            if (hasValues) {
-                stormWater = Float.valueOf(allInfo.split(",")[STORM_WATER]);
-                entries.add(new PieEntry(stormWater, "Storm Water"));
-            } else {
-                stormWater = 5f;
-            }
-            //entries.add(new PieEntry(stormWater, "Storm Water"));
-            float electricity;
-            //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
-            //else{electricity = 2.54f;}
-            //entries.add(new PieEntry(2.54f, "Energy"));
-            final float pollution;
-            if (hasValues) {
-                pollution = Float.valueOf(allInfo.split(",")[POLLUTION]);
-                entries.add(new PieEntry(pollution, "Air Quality"));
-
-            } else {
-                pollution = 5;
-            }
-//            entries.add(new PieEntry(pollution, "Air Quality"));
-            //entries.add(new PieEntry(1.23f, "Property Value"));
-            //entries.add(new PieEntry(0.45f, "Natural Gas"));
-            float co2;
-            if (hasValues) {
-                co2 = Float.valueOf(allInfo.split(",")[CO2]);
-                entries.add(new PieEntry(co2, "CO2"));
-
-            } else {
-                co2 = 5f;
-            }
-//            entries.add(new PieEntry(co2, "CO2"));
-
-        }else{
+        if(tree.getDataSource().equals("ExtendedCoH")){
             float stormWater;
             if (hasValues) {
                 stormWater = Float.valueOf(allInfo.split(",")[22]);
@@ -280,6 +261,39 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             if(co2!=0) {
                 entries.add(new PieEntry(co2, "CO2"));
             }
+        }else{
+            float stormWater;
+            if (hasValues) {
+                stormWater = Float.valueOf(allInfo.split(",")[STORM_WATER]);
+                entries.add(new PieEntry(stormWater, "Storm Water"));
+            } else {
+                stormWater = 5f;
+            }
+            //entries.add(new PieEntry(stormWater, "Storm Water"));
+            float electricity;
+            //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
+            //else{electricity = 2.54f;}
+            //entries.add(new PieEntry(2.54f, "Energy"));
+            final float pollution;
+            if (hasValues) {
+                pollution = Float.valueOf(allInfo.split(",")[POLLUTION]);
+                entries.add(new PieEntry(pollution, "Air Quality"));
+
+            } else {
+                pollution = 5;
+            }
+//            entries.add(new PieEntry(pollution, "Air Quality"));
+            //entries.add(new PieEntry(1.23f, "Property Value"));
+            //entries.add(new PieEntry(0.45f, "Natural Gas"));
+            float co2;
+            if (hasValues) {
+                co2 = Float.valueOf(allInfo.split(",")[CO2]);
+                entries.add(new PieEntry(co2, "CO2"));
+
+            } else {
+                co2 = 5f;
+            }
+//            entries.add(new PieEntry(co2, "CO2"));
         }
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -474,12 +488,17 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
         setContentView(customView);
         gestureObject = new GestureDetectorCompat(customView.getContext(), new LearnGesture());
+
         if(!hasValues){
             pieChart.setVisibility(View.GONE);
             TextView noData = (TextView) findViewById(R.id.no_data_1);
             noData.setVisibility(View.VISIBLE);
             noData.setText("There is no data to display on this "+ commonName);
             ((TextView) findViewById(R.id.pie_chart_text)).setVisibility(View.GONE);
+        }else{
+            if(!dsOrig.equals("ExtendedCoH")) {
+                ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
+            }
         }
         //customView/setContentView();
 
@@ -510,7 +529,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //
 //            }
 //        });
-
 
         BottomNavigationView navView = findViewById(R.id.pie_chart_menu);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -581,14 +599,18 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             treeDbh = 0;
         }
         BigDecimal bd = new BigDecimal(treeDbh);
-        //bd = bd.setScale(0, RoundingMode.DOWN);
+        if(!tree.getDataSource().equals("ExtendedCoH")) {
+            bd = bd.setScale(0, RoundingMode.DOWN);
+        }
         while ((line = reader.readLine()) != null) {
             String treeName = line.split(",")[1];
             if (treeName.equals(commonName)) {
                 String dbh = line.split(",")[2];
                 Double diameter = Double.parseDouble(dbh);
                 BigDecimal bd1 = new BigDecimal(diameter);
-                //bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                if(!tree.getDataSource().equals("ExtendedCoH")) {
+                    bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                }
                 if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
                 if (bd1.doubleValue() == bd.doubleValue()) {
                     allInfo = line;

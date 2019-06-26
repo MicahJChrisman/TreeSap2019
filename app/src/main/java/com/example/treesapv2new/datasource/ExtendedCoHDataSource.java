@@ -119,6 +119,69 @@ public class ExtendedCoHDataSource extends DataSource {
         alreadyRead = true;
         return true;
     }
+
+
+    public Tree bestMatchFinder(Double dbh, TreeLocation treeLocation, String commonName){
+        int entry, closestEntry;
+        float[] results = new float[1];
+        readData();
+        float closestDistance1 = 999999999;
+        float cap = 100000;
+        closestEntry = 0;
+        entry = -1;
+        for (CSVRecord record : records) {
+            entry++;
+            try {
+                String commonNameRecord = record.get("species_name");
+                if(commonName.equals(commonNameRecord)){
+                    Double dbhRecord = Double.valueOf(record.get("dbh_in"));
+                    if(Math.abs(dbhRecord - dbh) < 0.5){
+                        Double lati = Double.valueOf(record.get("y_coord"));
+                        Double longi = Double.valueOf(record.get("x_coord"));
+
+                        Location.distanceBetween(lati, longi,
+                                treeLocation.getLatitude(), treeLocation.getLongitude(),
+                                results);
+                        if (results[0] < closestDistance1) {
+                            closestDistance1 = results[0];
+                            closestRecord = record;
+                        }
+
+                    }else{
+
+                    }
+                }else{
+
+                }
+            } catch (Exception e) {
+                continue;
+            }
+        }
+
+        if (closestDistance1 > cap)
+            return null;
+        else {
+            //MATCH!  Build tree and return it.
+            Tree tree = new Tree();
+            tree.setClosest(closestDistance1);
+            Double lat = new Double(closestRecord.get("y_coord"));
+            Double longi = new Double(closestRecord.get("x_coord"));
+            tree.setCommonName(closestRecord.get("species_name"));
+            //tree.setScientificName(closestRecord.get("Scientific"));
+            tree.setLocation(new TreeLocation(lat, longi));
+            tree.setID(closestRecord.get(Tree.TREE_ID));
+            tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
+//            if (closestRecord.get("Park").length() > 0)
+//                tree.addInfo("Park", closestRecord.get("Park"));
+            tree.setFound(true);
+            tree.setIsClosest(true);
+            tree.setDataSource("ExtendedCoH");
+
+            return tree;
+        }
+    }
+
+
     float closestDistance;
     @Override
     public Tree search(TreeLocation location) {
