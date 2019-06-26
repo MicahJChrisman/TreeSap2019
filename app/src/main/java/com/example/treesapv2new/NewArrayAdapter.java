@@ -74,8 +74,6 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
     public View getView(int position, View convertView, ViewGroup parent){
         tree = this.getItem(position);
         context.setCurrentTree();
-
-
         //imageModelArrayList = new ArrayList<>();
         dBmpList = new ArrayList<>();
         //imageModelArrayList = populateList();
@@ -103,7 +101,14 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
         ImageAdapter adapter = new ImageAdapter(context, dBmpList, this);
         mPager.setAdapter(adapter);
         mPager.setOffscreenPageLimit(2);
-
+        TextView noPicsMessage = convertView.findViewById(R.id.no_pics_message);
+        if(dBmpList.size()==0) {
+            //noPicsMessage.setVisibility(View.VISIBLE);
+            mPager.setBackgroundResource(R.drawable.new_logo);
+        }else{
+            //noPicsMessage.setVisibility(View.GONE);
+            mPager.setBackground(null);
+        }
 
         TextView commonName = (TextView) convertView.findViewById(R.id.common_name);
         TextView scientificName = (TextView) convertView.findViewById(R.id.scientific_name);

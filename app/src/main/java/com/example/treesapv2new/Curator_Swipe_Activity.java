@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ExecutionException;
 
 
@@ -61,9 +63,11 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
     List<Tree> penTrees;
     FirebaseFirestore db;
     CollectionReference treesRef;
+    CollectionReference apprRef;
     SwipeFlingAdapterView flingContainer;
     Tree currentTree;
     Tree previousTree;
+    Stack<DocSnap> previousTrees;
     FloatingActionButton undoButton;
     FloatingActionButton skipButton;
     FloatingActionButton rejectButton;
@@ -84,8 +88,9 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         //FirebaseFirestore db;
         db = FirebaseFirestore.getInstance();
         treesRef = db.collection("pendingTrees");
+        apprRef = db.collection("approvedTrees");
 
-
+        previousTrees = new Stack<>();
 //        Tree tree = new Tree();
 //        tree.setCommonName("Test tree");
 //        tree.setScientificName("Testus treeus");
@@ -118,18 +123,17 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(Curator_Swipe_Activity.this, "Rejected!", Toast.LENGTH_SHORT).show();
                 rejectTree();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 setCurrentTree();
                 //removeFirstObjectInAdapter();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(Curator_Swipe_Activity.this, "Right!", Toast.LENGTH_SHORT).show();
                 acceptTree();
 //                setCurrentTree();
             }
@@ -171,6 +175,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 rejectTree();
+                Toast.makeText(Curator_Swipe_Activity.this, "Rejected!", Toast.LENGTH_SHORT).show();
 //                FlingCardListener listener = flingContainer.getTopCardListener();
 //                //flingContainer.dispatchNestedFling(400,400, false);
 //                // Obtain MotionEvent object
@@ -211,17 +216,98 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 acceptTree();
-
+                Toast.makeText(Curator_Swipe_Activity.this, "Accepted!", Toast.LENGTH_SHORT).show();
                 penTrees.remove(0);
                 arrayAdapter.notifyDataSetChanged();
                 if(penTrees.size()>0) {
                     arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                     setCurrentTree();
                 }
-//                
+//
 //                penTrees.remove(0);
 //                flingContainer.getSelectedView().setVisibility(View.GONE);
 //                arrayAdapter.notifyDataSetChanged();
+            }
+        });
+
+        undoButton = findViewById(R.id.undo_button);
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!previousTrees.isEmpty()) {
+                    DocSnap document = previousTrees.pop();
+                    if(document.wasDeleted()) {
+                        DocumentReference docum = db.collection("pendingTrees").document();
+                        docum.set(document.getDoc().getData()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                if (document.wasApproved()) {
+                                    DocumentReference doc = apprRef.document(document.getId());
+                                    if (doc != null) {
+                                        Map<String, Object> updates = new HashMap<>();
+                                        updates.put("commonName", FieldValue.delete());
+                                        updates.put("dbhArray", FieldValue.delete());
+                                        updates.put("images", FieldValue.delete());
+                                        updates.put("latitude", FieldValue.delete());
+                                        updates.put("longitude", FieldValue.delete());
+                                        updates.put("otherInfo", FieldValue.delete());
+                                        updates.put("scientificName", FieldValue.delete());
+                                        updates.put("timestamp", FieldValue.delete());
+                                        updates.put("userID", FieldValue.delete());
+                                        doc.update(updates);
+                                        doc.delete();
+                                    }
+                                }
+                                penTrees.add(0, makeTree(document.getDoc()));
+                                penTrees.get(0).setID(docum.getId());
+                                arrayAdapter.notifyDataSetChanged();
+                                arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                                setCurrentTree();
+                            }
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                previousTrees.push(document);
+                                Log.w("error", "Error writing document. Tree file has been pushed back on stack", e);
+                            }
+                        });
+                    }else{
+                        penTrees.add(0, makeTree(document.getDoc()));
+//                        penTrees.get(0).setID(docum.getId());
+                        arrayAdapter.notifyDataSetChanged();
+                        arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                        setCurrentTree();
+                    }
+                } else {
+                    Toast.makeText(Curator_Swipe_Activity.this, "No previous trees", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        skipButton = findViewById(R.id.skip_button);
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (penTrees.size() > 1){
+                    DocumentReference doc = treesRef.document(currentTree.getID());
+                    doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        DocSnap docSnap = new DocSnap(false, documentSnapshot.getId(), documentSnapshot, false);
+                        previousTrees.push(docSnap);
+                        penTrees.remove(0);
+                        arrayAdapter.notifyDataSetChanged();
+                        arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                        setCurrentTree();
+                    }
+                    });
+                }else{
+                    Toast.makeText(Curator_Swipe_Activity.this, "No more trees", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -229,33 +315,46 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 
     public void setCurrentTree(){
         if(penTrees.size() > 0) {
-            previousTree = currentTree;
             currentTree = penTrees.get(0);
         }
     }
 
     public void rejectTree(){
         DocumentReference doc = treesRef.document(currentTree.getID());
-        Map<String, Object> updates = new HashMap<>();
-        updates.put("commonName", FieldValue.delete());
-        updates.put("dbhArray", FieldValue.delete());
-        updates.put("images", FieldValue.delete());
-        updates.put("latitude", FieldValue.delete());
-        updates.put("longitude", FieldValue.delete());
-        updates.put("otherInfo", FieldValue.delete());
-        updates.put("scientificName", FieldValue.delete());
-        updates.put("timestamp", FieldValue.delete());
-        updates.put("userID", FieldValue.delete());
-        doc.update(updates);
-        doc.delete();
-        arrayAdapter.notifyDataSetChanged();
+        doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        previousTrees.push(new DocSnap(false, doc.getId(), document, true));
+                        Map<String, Object> updates = new HashMap<>();
+                        updates.put("commonName", FieldValue.delete());
+                        updates.put("dbhArray", FieldValue.delete());
+                        updates.put("images", FieldValue.delete());
+                        updates.put("latitude", FieldValue.delete());
+                        updates.put("longitude", FieldValue.delete());
+                        updates.put("otherInfo", FieldValue.delete());
+                        updates.put("scientificName", FieldValue.delete());
+                        updates.put("timestamp", FieldValue.delete());
+                        updates.put("userID", FieldValue.delete());
+                        doc.update(updates);
+                        doc.delete();
+                        arrayAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("problem:", "No such document in rejectTree()");
+                    }
+                } else {
+//                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
 //        flingContainer.
         //setCurrentTree();
+        });
     }
 
     public void acceptTree(){
         DocumentReference doc = treesRef.document(currentTree.getID());
-
         doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -268,6 +367,8 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         //Log.d(TAG, "DocumentSnapshot successfully written!");
 //                                        rejectTree();//just to delete currentTree
+                                        DocumentSnapshot document = task.getResult();
+                                        previousTrees.push(new DocSnap(true, document.getId(), document, true));
                                         Map<String, Object> updates = new HashMap<>();
                                         updates.put("commonName", FieldValue.delete());
                                         updates.put("dbhArray", FieldValue.delete());
@@ -300,38 +401,30 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
         });
     }
 
-    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
-        @Override
-        protected Long doInBackground(URL... urls) {
-//            FirebaseFirestore db = (FirebaseFirestore) objects[0];
-            db.collection("pendingTrees").orderBy("timestamp", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Tree tree = new Tree();
-                            String commonName = (String) document.get("commonName");
-                            if(commonName == null || commonName.equals("")){
-                                tree.setCommonName("N/A");
-                            }else {
-                                tree.setCommonName(commonName);
-                            }
-                            String scientificName = (String) document.get("scientificName");
-                            if(scientificName == null || scientificName.equals("")){
-                                tree.setScientificName("N/A");
-                            }else {
-                                tree.setScientificName(scientificName);
-                            }
-                            ArrayList<Number> dbhList = ((ArrayList<Number>) document.get("dbhArray"));
+    public Tree makeTree(DocumentSnapshot document){
+        Tree tree = new Tree();
+        String commonName = (String) document.get("commonName");
+        if(commonName == null || commonName.equals("")){
+            tree.setCommonName("N/A");
+        }else {
+            tree.setCommonName(commonName);
+        }
+        String scientificName = (String) document.get("scientificName");
+        if(scientificName == null || scientificName.equals("")){
+            tree.setScientificName("N/A");
+        }else {
+            tree.setScientificName(scientificName);
+        }
+        ArrayList<Number> dbhList = ((ArrayList<Number>) document.get("dbhArray"));
 //                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
-                            if(dbhList == null || dbhList.isEmpty()){
-                                tree.setCurrentDBH(0.0);
-                            }else{
+        if(dbhList == null || dbhList.isEmpty()){
+            tree.setCurrentDBH(0.0);
+        }else{
 //                                tree.setCurrentDBHetCurrentDBH(new Double(dbh));
 //                                tree.setCurrentDBH(dbh);
-                                tree.setCurrentDBH(dbhList.get(0).doubleValue());
-                            }
-                            tree.setID(document.getId());
+            tree.setCurrentDBH(dbhList.get(0).doubleValue());
+        }
+        tree.setID(document.getId());
 //                            Map<String, String> otherInfo = (Map<String, String>) document.get("otherInfo");
 //                            if(otherInfo != null){
 //                                String notes = otherInfo.get("Notes");
@@ -347,32 +440,45 @@ public class Curator_Swipe_Activity extends AppCompatActivity {
 //                                otherInfo[0] = "";
 //                            }
 
-                            ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
-                            //String[] pics = stringPics.split("\n?\t.*: ");
-                            int i = 0;
-                            if(stringPics!=null) {
-                                while(i<stringPics.size()){
-                                    String key;
-                                    if(i == 0){
-                                        key = "Image Bark";
-                                    }else if(i == 1){
-                                        key = "Image Leaf";
-                                    }else{
-                                        key = "Image Tree";
-                                    }
-                                    String pic = stringPics.get(i);
+        ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
+        //String[] pics = stringPics.split("\n?\t.*: ");
+        int i = 0;
+        if(stringPics!=null) {
+            while(i<stringPics.size()){
+                String key;
+                if(i == 0){
+                    key = "Image Bark";
+                }else if(i == 1){
+                    key = "Image Leaf";
+                }else{
+                    key = "Image Tree";
+                }
+                String pic = stringPics.get(i);
 //                                    byte[] encodeByte = Base64.decode(pic, Base64.DEFAULT);
 //                                    InputStream is = new ByteArrayInputStream(encodeByte);
 //
 //                                    Bitmap bmp = BitmapFactory.decodeStream(is);
 //                                    BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
 
-                                    if(pic != null) {
-                                        tree.addPics(key, stringPics.get(i));
-                                    }
-                                    i++;
-                                }
-                            }
+                if(pic != null) {
+                    tree.addPics(key, stringPics.get(i));
+                }
+                i++;
+            }
+        }
+        return tree;
+    }
+
+    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+        @Override
+        protected Long doInBackground(URL... urls) {
+//            FirebaseFirestore db = (FirebaseFirestore) objects[0];
+            db.collection("pendingTrees").orderBy("timestamp", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Tree tree = makeTree(document);
                             penTrees.add(tree);
                         }
                     } else {

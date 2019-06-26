@@ -178,6 +178,18 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/no_pics_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="There are no pictures to display for this tree"
+                android:textAlignment="center"
+                android:textColor="#FF000000"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="There are no pictures available for this tree" />
+
         </FrameLayout>
 
 
