@@ -55,7 +55,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
         Button b = (Button) findViewById(R.id.next_pic_leaf);
         b.setOnClickListener(new NextEvent());
 
-        ImageButton imageClickedbutton = (ImageButton) findViewById(R.id.add_leaf_pic);
+        Button imageClickedbutton = (Button) findViewById(R.id.add_leaf_pic);
         imageClickedbutton.setOnClickListener(new addImageEvent());
 
         TextView skip = (TextView) findViewById(R.id.skip_leaf_tree);

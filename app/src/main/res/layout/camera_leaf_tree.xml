@@ -37,17 +37,20 @@
         android:layout_marginBottom="8dp"
         android:text="Next>"
         android:id="@+id/next_pic_leaf"
+        android:textColor="@color/white"
+        android:background="@color/new_invented_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"/>
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:text="&lt;Back"
         android:id="@+id/back_leaf_pic"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="visible"/>
@@ -59,12 +62,14 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:text="Skip"
-        android:textSize="25dp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeLayout2"
+        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -76,19 +81,9 @@
             android:layout_above="@+id/leaf_text"
             android:layout_marginBottom="10dp"
             android:text="Step 3: Leaves"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="32sp"/>
-
-        <ImageButton
-            android:id="@+id/add_leaf_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:adjustViewBounds="true"
-            android:background="@drawable/button_style_black"
-            android:maxWidth="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/camera_logo" />
 
 
         <TextView
@@ -96,13 +91,20 @@
             android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Please provide a clear photo of the tree's leaves or needles."
+            android:text="Please take a close-up phote of the leaves or needles. Make sure to include multiple leaves in the photo as well as any fruits, flowers, or other unique characteristics."
             android:layout_above="@+id/add_leaf_pic"
             android:layout_marginBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
             android:textSize="22sp" />
 
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Take Picture"
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/add_leaf_pic"/>
 
 
         <LinearLayout
@@ -151,7 +153,7 @@
             android:id="@+id/swipe_for_pics"
             android:layout_centerHorizontal="true"
             android:textSize="14sp"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

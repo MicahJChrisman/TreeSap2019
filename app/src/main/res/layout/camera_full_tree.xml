@@ -35,6 +35,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Next>"
+        android:background="@color/new_invented_color"
+        android:textColor="@color/white"
         android:id="@+id/next_pic_full"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,62 +53,57 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:text="&lt;Back"
+        android:textSize="25sp"
         android:id="@+id/back_full_pic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:visibility="visible"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Step 4: Entire Tree"
-            android:layout_above="@id/full_text"
+            android:textStyle="bold"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"
-            android:textSize="32sp"
-            android:layout_centerHorizontal="true"/>
+            android:textSize="32sp"/>
 
-        <ImageButton
-            android:id="@+id/add_full_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/camera_logo"
-            android:scaleType="centerCrop"
-            android:maxWidth="100dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/button_style_black"
-            />
 
         <TextView
             android:layout_width="325dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Please provide a clear photo of the entire tree."
-            android:layout_above="@id/add_full_pic"
+            android:text="Please stand back to capture the entire tree in one photo. The shape of the tree and its branching pattern can often aid in identification."
             android:layout_marginBottom="15dp"
             android:textAlignment="center"
             android:textColor="@color/accent_gray"
             android:textSize="22sp"
             android:id="@+id/full_text"/>
 
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="Take Picture"
+            android:id="@+id/add_full_pic"
+            android:textColor="@color/white"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/add_full_pic"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true">
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="250dp"
@@ -132,22 +129,18 @@
         <com.shivam.library.imageslider.ImageSlider
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/add_full_pic"
             android:layout_marginTop="10dp"
             android:id="@+id/pager"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pager"
             android:text="&lt;Swipe to view other images&gt;"
             android:visibility="gone"
             android:textColor="@color/black"
             android:id="@+id/swipe_for_pics"
-            android:layout_centerHorizontal="true"
             android:textSize="14sp"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

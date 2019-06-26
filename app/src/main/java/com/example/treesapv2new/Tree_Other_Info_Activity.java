@@ -184,8 +184,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
-                builder.setTitle("This is necessary to calculate the benefits of a tree.");
-                builder.setMessage("Please measure the circumference at chest height.");
+                builder.setTitle("What does DBH mean?");
+                builder.setMessage("DBH is an acronym for Diameter at Breast Height, where breast height is 4.5 feet above the ground. Entering a DBH or circumference will help us to calculate the benefits that the tree provides.");
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

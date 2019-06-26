@@ -65,8 +65,8 @@
                     android:layout_weight="1.5"
                     android:background="@drawable/edittext_border"
                     android:completionThreshold="1"
-                    android:hint="(Optional)"
-                    android:textSize="18sp" />
+                    android:hint="e.g. American Sycamore"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -93,8 +93,8 @@
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1.5"
                     android:background="@drawable/edittext_border"
-                    android:hint="(Optional)"
-                    android:textSize="18sp" />
+                    android:hint="e.g. Platanus occidentalis"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
@@ -104,14 +104,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/circumferences_of_trunk"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Circumferences of Trunk"
-                    android:textColor="@color/accent_gray"
-                    android:textSize="22sp" />
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal">
+                    <TextView
+                        android:id="@+id/circumferences_of_trunk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
+                        android:text="Circumferences of Trunk"
+                        android:textColor="@color/accent_gray"
+                        android:textSize="22sp" />
+
+                    <ImageButton
+                        android:id="@+id/circum_info_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:adjustViewBounds="true"
+                        android:background="@color/appBackground"
+                        android:maxWidth="25dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/info_icon" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/dbh_circum_layout"
@@ -132,33 +150,14 @@
                         android:textColor="@color/accent_gray"
                         android:textSize="18sp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-
-
                         <TextView
-                            android:layout_width="70dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="DBH:"
                             android:textColor="@color/accent_gray"
                             android:textSize="18sp" />
-
-                        <ImageButton
-                            android:id="@+id/circum_info_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:adjustViewBounds="true"
-                            android:background="@color/appBackground"
-                            android:maxWidth="25dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/info_icon" />
-                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -180,7 +179,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
-                    android:hint="(Optional)"
+                    android:hint="e.g. 27.0"
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
@@ -192,6 +191,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:hint="e.g. 9.4"
                     android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
@@ -215,7 +215,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
-                    android:hint="(Optional)"
+                    android:hint="e.g. 27.0"
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
@@ -227,6 +227,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:hint="e.g. 9.4"
                     android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
@@ -250,7 +251,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
-                    android:hint="(Optional)"
+                    android:hint="e.g. 27.0"
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
@@ -262,6 +263,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:hint="e.g. 9.4"
                     android:inputType="numberDecimal"
                     android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
@@ -285,7 +287,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/edittext_border"
-                    android:hint="(Optional)"
+                    android:hint="e.g. 27.0"
                     android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
@@ -297,6 +299,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:hint="e.g. 9.4"
                     android:background="@drawable/edittext_border"
                     android:inputType="numberDecimal"
                     android:gravity="center_vertical"
@@ -428,12 +431,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
+                <TextView
                     android:id="@+id/back_final_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="25sp"
                     android:text="&lt;Back" />
 
                 <View
@@ -445,8 +449,10 @@
                     android:id="@+id/add_tree_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/white"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@color/colorPrimaryDark"
                     android:text="Submit" />
             </LinearLayout>
 

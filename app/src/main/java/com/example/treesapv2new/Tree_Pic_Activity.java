@@ -58,7 +58,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         Button b = (Button) findViewById(R.id.next_pic_full);
         b.setOnClickListener(new NextEvent());
 
-        ImageButton imageClickedbutton = (ImageButton) findViewById(R.id.add_full_pic);
+        Button imageClickedbutton = (Button) findViewById(R.id.add_full_pic);
         imageClickedbutton.setOnClickListener(new addImageEvent());
 
         TextView skip = (TextView) findViewById(R.id.skip_full_tree);

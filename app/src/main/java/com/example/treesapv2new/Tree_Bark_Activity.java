@@ -73,7 +73,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         Button b = (Button) findViewById(R.id.next_pic_bark);
         b.setOnClickListener(new NextEvent());
 
-        ImageButton imageClickedbutton = (ImageButton) findViewById(R.id.add_bark_pic);
+        Button imageClickedbutton = (Button) findViewById(R.id.add_bark_pic);
         imageClickedbutton.setOnClickListener(new addImageEvent());
 
 
