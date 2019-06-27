@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     public static Tree banana = null;
     public static UserTreeDataSource userTreeDataSourceGlobal = new UserTreeDataSource();
     public static ArrayList<Tree> treesNearby = new ArrayList<>();
+    public static HashMap<String, ArrayList<String>> storedImages = new HashMap<String, ArrayList<String>>();
     private TextView mTextMessage;
     private GestureDetectorCompat gestureObject;
 
@@ -199,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
         addTreeButton.setOnClickListener(new AddTreeEvent());
+
+        findViewById(R.id.notifications_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
+            }
+        });
 
         Button curatorButton = (Button) findViewById(R.id.curator_button);
         curatorButton.setOnClickListener(new View.OnClickListener() {

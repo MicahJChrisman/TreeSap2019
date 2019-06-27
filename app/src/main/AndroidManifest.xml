@@ -133,6 +133,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>
+        <activity
+            android:name=".NotificationsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label="TreeSapV2New"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
