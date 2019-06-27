@@ -100,11 +100,13 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 
         ImageAdapter adapter = new ImageAdapter(context, dBmpList, this);
         mPager.setAdapter(adapter);
-        mPager.setOffscreenPageLimit(2);
+        mPager.setOffscreenPageLimit(dBmpList.size()-1);
         TextView noPicsMessage = convertView.findViewById(R.id.no_pics_message);
         if(dBmpList.size()==0) {
             //noPicsMessage.setVisibility(View.VISIBLE);
+
             mPager.setBackgroundResource(R.drawable.new_logo);
+
         }else{
             //noPicsMessage.setVisibility(View.GONE);
             mPager.setBackground(null);
@@ -144,7 +146,7 @@ public class NewArrayAdapter extends ArrayAdapter<Tree>{
 
         String picsString = tree.getAllPics();
         if(picsString != null) {
-            String[] pics = picsString.split("\n?\t.*: ");
+            String[] pics = picsString.split("\n?\t?.*: ");
             int picsLength = pics.length;
             int i = 0;
             while(i<picsLength && pics[i]!=null){

@@ -32,7 +32,7 @@ public class Tree {
     ArrayList<String> dbsUsed = new ArrayList<>();
     ArrayList<Object> dbhArray = new ArrayList<>();
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
-    HashMap<String, Object> treePics = new HashMap<String, Object>();
+    HashMap<String, ArrayList<Object>> treePics = new HashMap<String, ArrayList<Object>>();
 
 
 
@@ -122,7 +122,12 @@ public class Tree {
     }
 
     public void addPics(String key, Object value) {
-        treePics.put(key, value);
+        if(treePics.get(key) == null){
+            ArrayList<Object> arrayList = new ArrayList<>();
+            arrayList.add(value);
+            treePics.put(key, arrayList);
+        }
+        treePics.get(key).add(value);
     }
 
     public Object getPics(String key) {
@@ -136,7 +141,10 @@ public class Tree {
         String out = "";
 
         for (String key : treePics.keySet()) {
-            out += "\t" + key + ": " + treePics.get(key).toString() + "\n";
+            out += "\t" + key;// + ": " + treePics.get(key).toString() + "\n";
+            for(Object pic : treePics.get(key)){
+                out += ": " + pic + "\n";
+            }
         }
 
         if (out.length() > 0) out = out.substring(0, out.length()-1);
