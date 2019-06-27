@@ -296,7 +296,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                         intentA.putExtra("long_value", long_value);
                     }
 //                    startActivity(intentA);
-                    imagesString.add("");
                     MainActivity.storedImages.put("bark",imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }

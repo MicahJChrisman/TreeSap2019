@@ -288,7 +288,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                         intentA.putExtra("long_value", long_value);
                     }
 //                    startActivity(intentA);
-                    imagesString.add("");
                     MainActivity.storedImages.put("full", imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }

@@ -277,7 +277,6 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
                         intentA.putExtra("long_value", long_value);
                     }
 //                    startActivity(intentA);
-                    imagesString.add("");
                     MainActivity.storedImages.put("leaf", imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }
