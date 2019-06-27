@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SplittableRandom;
@@ -90,7 +91,7 @@ public class AllUsersDataSource extends DataSource {
                 if(task.isSuccessful()){
 
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("images");
+                        HashMap<String, ArrayList<String>> pic = (HashMap<String, ArrayList<String>>) document.getData().get("images");
 
                         try {
                             Tree tree = new Tree();
