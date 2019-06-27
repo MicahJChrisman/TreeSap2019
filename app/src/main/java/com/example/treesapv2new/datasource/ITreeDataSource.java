@@ -159,16 +159,16 @@ public class ITreeDataSource extends DataSource {
 
                     if(results[0] < 10){
                         Tree tree = new Tree();
-                        Double lat2 = new Double(closestRecord.get(Tree.LATITUDE));
-                        Double longi2 = new Double(closestRecord.get(Tree.LONGITUDE));
-                        tree.setCommonName(closestRecord.get(Tree.NAME));
+                        Double lat2 = new Double(record.get(Tree.LATITUDE));
+                        Double longi2 = new Double(record.get(Tree.LONGITUDE));
+                        tree.setCommonName(record.get(Tree.NAME));
                         tree.setLocation(new TreeLocation(lat2, longi2));
-                        tree.setID(closestRecord.get(Tree.TREE_ID));
-                        tree.setCurrentDBH(new Double(closestRecord.get(Tree.DBH)));
-                        tree.addInfo("Age class", closestRecord.get(Tree.AGE_CLASS));
-                        tree.addInfo("Condition", closestRecord.get(Tree.CONDITION));
-                        tree.addInfo("Tree asset value", closestRecord.get(Tree.TREE_ASSET_VALUE));
-                        tree.addInfo("Root infringement", closestRecord.get(Tree.ROOT_INFRINGEMENT));
+                        tree.setID(record.get(Tree.TREE_ID));
+                        tree.setCurrentDBH(new Double(record.get(Tree.DBH)));
+                        tree.addInfo("Age class", record.get(Tree.AGE_CLASS));
+                        tree.addInfo("Condition", record.get(Tree.CONDITION));
+                        tree.addInfo("Tree asset value", record.get(Tree.TREE_ASSET_VALUE));
+                        tree.addInfo("Root infringement", record.get(Tree.ROOT_INFRINGEMENT));
                         tree.setFound(true);
                         tree.setDataSource("iTreeData");
                         MainActivity.treesNearby.add(tree);

@@ -159,20 +159,20 @@ public class HopeCollegeDataSource extends DataSource {
                 }
 
                 if(results[0] < 10){
-                    Tree tree = new Tree();
-                    Double lat2 = Double.valueOf(closestRecord.get(Tree.LATITUDE));
-                    Double longi2 = Double.valueOf(closestRecord.get(Tree.LONGITUDE));
-                    tree.setCommonName(closestRecord.get(Tree.NAME));
-                    tree.setLocation(new TreeLocation(lat2, longi2));
-                    tree.setID(closestRecord.get(Tree.TREE_ID));
-                    tree.setCurrentDBH(Double.valueOf(closestRecord.get(Tree.DBH)));
-                    tree.addInfo("Age class", closestRecord.get(Tree.AGE_CLASS));
-                    tree.addInfo("Condition", closestRecord.get(Tree.CONDITION));
-                    tree.addInfo("Tree asset value", closestRecord.get(Tree.TREE_ASSET_VALUE));
-                    tree.addInfo("Root infringement", closestRecord.get(Tree.ROOT_INFRINGEMENT));
-                    tree.setFound(true);
-                    tree.setDataSource("HopeCollegeData");
-                    MainActivity.treesNearby.add(tree);
+                    Tree treeNear = new Tree();
+                    Double lat2 = Double.valueOf(record.get(Tree.LATITUDE));
+                    Double longi2 = Double.valueOf(record.get(Tree.LONGITUDE));
+                    treeNear.setCommonName(record.get(Tree.NAME));
+                    treeNear.setLocation(new TreeLocation(lat2, longi2));
+                    treeNear.setID(record.get(Tree.TREE_ID));
+                    treeNear.setCurrentDBH(Double.valueOf(record.get(Tree.DBH)));
+                    treeNear.addInfo("Age class", record.get(Tree.AGE_CLASS));
+                    treeNear.addInfo("Condition", record.get(Tree.CONDITION));
+                    treeNear.addInfo("Tree asset value", record.get(Tree.TREE_ASSET_VALUE));
+                    treeNear.addInfo("Root infringement", record.get(Tree.ROOT_INFRINGEMENT));
+                    treeNear.setFound(true);
+                    treeNear.setDataSource("HopeCollegeData");
+                    MainActivity.treesNearby.add(treeNear);
                 }
 //                    continue;
 //                }

@@ -167,33 +167,33 @@ public class UserTreeDataSource extends DataSource {
                     }
 
                     if(results[0] < 10){
-                        treeReturn = new Tree();
-//                                tree.setCommonName(document.getData().get("commonName").toString());
-                        treeReturn.setCommonName(tree.getCommonName());
-//                                tree.setScientificName(document.getData().get("scientificName").toString());
-                        treeReturn.setScientificName(tree.getScientificName());
-//                                tree.setLocation(new TreeLocation(lati, longi));
-                        treeReturn.setLocation(locOfTree);
-//                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
-                        treeReturn.setCurrentDBH(tree.getCurrentDBH());
-//                                tree.addInfo("Source", document.getData().get("userID").toString());
-                        treeReturn.addInfo("Source", user.getUid());
-                        treeReturn.addInfo("Notes", tree.getInfo("Notes"));
-//                                if(closestRecord.get("Notes")!="") {
-//                                    tree.addInfo("Notes", closestRecord.get("Notes"));
-//                                }
-//
-//                                if(closestRecord.get("Image Leaf")!="") {
-//                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
-//                                }
-//                                if(closestRecord.get("Image Bark")!="") {
-//                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
-//                                }
-//                                if(closestRecord.get("Image Tree")!="") {
-//                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
-//                                }
-                        treeReturn.setDataSource("User");
-                        treeReturn.setFound(true);
+                        Tree nearTree = new Tree();
+////                                tree.setCommonName(document.getData().get("commonName").toString());
+//                        nearTree.setCommonName(tree.getCommonName());
+////                                tree.setScientificName(document.getData().get("scientificName").toString());
+//                        nearTree.setScientificName(tree.getScientificName());
+////                                tree.setLocation(new TreeLocation(lati, longi));
+//                        nearTree.setLocation(locOfTree);
+////                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+//                        nearTree.setCurrentDBH(tree.getCurrentDBH());
+////                                tree.addInfo("Source", document.getData().get("userID").toString());
+//                        nearTree.addInfo("Source", user.getUid());
+//                        nearTree.addInfo("Notes", tree.getInfo("Notes"));
+////                                if(closestRecord.get("Notes")!="") {
+////                                    tree.addInfo("Notes", closestRecord.get("Notes"));
+////                                }
+////
+////                                if(closestRecord.get("Image Leaf")!="") {
+////                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+////                                }
+////                                if(closestRecord.get("Image Bark")!="") {
+////                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+////                                }
+////                                if(closestRecord.get("Image Tree")!="") {
+////                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+////                                }
+//                        nearTree.setDataSource("User");
+//                        nearTree.setFound(true);
                         MainActivity.treesNearby.add(tree);
                     }
 

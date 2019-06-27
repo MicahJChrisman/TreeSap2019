@@ -153,15 +153,15 @@ public class CityOfHollandDataSource extends DataSource {
 
                     if(results[0] < 10){
                         Tree tree = new Tree();
-                        Double lat2 = new Double(closestRecord.get("Latitude"));
-                        Double longi2 = new Double(closestRecord.get("Longitude"));
-                        tree.setCommonName(closestRecord.get("CommonName"));
-                        tree.setScientificName(closestRecord.get("Scientific"));
+                        Double lat2 = new Double(record.get("Latitude"));
+                        Double longi2 = new Double(record.get("Longitude"));
+                        tree.setCommonName(record.get("CommonName"));
+                        tree.setScientificName(record.get("Scientific"));
                         tree.setLocation(new TreeLocation(lat2, longi2));
-                        tree.setID(closestRecord.get(Tree.TREE_ID));
-                        tree.setCurrentDBH(new Double(closestRecord.get("DBH")));
-                        if (closestRecord.get("Park").length() > 0)
-                            tree.addInfo("Park", closestRecord.get("Park"));
+                        tree.setID(record.get(Tree.TREE_ID));
+                        tree.setCurrentDBH(new Double(record.get("DBH")));
+                        if (record.get("Park").length() > 0)
+                            tree.addInfo("Park", record.get("Park"));
                         tree.setFound(true);
                         tree.setDataSource("CoHdatabase");
                         MainActivity.treesNearby.add(tree);

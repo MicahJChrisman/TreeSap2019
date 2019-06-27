@@ -214,13 +214,13 @@ public class ExtendedCoHDataSource extends DataSource {
 
                 if(results[0] < 10){
                     Tree tree = new Tree();
-                    Double lat2 = new Double(closestRecord.get("y_coord"));
-                    Double longi2 = new Double(closestRecord.get("x_coord"));
-                    tree.setCommonName(closestRecord.get("species_name"));
+                    Double lat2 = new Double(record.get("y_coord"));
+                    Double longi2 = new Double(record.get("x_coord"));
+                    tree.setCommonName(record.get("species_name"));
                     //tree.setScientificName(closestRecord.get("Scientific"));
                     tree.setLocation(new TreeLocation(lat2, longi2));
-                    tree.setID(closestRecord.get(Tree.TREE_ID));
-                    tree.setCurrentDBH(new Double(closestRecord.get("dbh_in")));
+                    tree.setID(record.get(Tree.TREE_ID));
+                    tree.setCurrentDBH(new Double(record.get("dbh_in")));
 //            if (closestRecord.get("Park").length() > 0)
 //                tree.addInfo("Park", closestRecord.get("Park"));
                     tree.setFound(true);

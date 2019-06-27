@@ -200,31 +200,31 @@ public class AllUsersDataSource extends DataSource {
             }
 
             if(results[0] < 10){
-                treeReturn.setCommonName(tree.getCommonName());
-//                                tree.setScientificName(document.getData().get("scientificName").toString());
-                treeReturn.setScientificName(tree.getScientificName());
-//                                tree.setLocation(new TreeLocation(lati, longi));
-                treeReturn.setLocation(locOfTree);
-//                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
-                treeReturn.setCurrentDBH(tree.getCurrentDBH());
-//                                tree.addInfo("Source", document.getData().get("userID").toString());
-                treeReturn.addInfo("Source", tree.getInfo("Source"));
-                treeReturn.addInfo("Notes", tree.getInfo("Notes"));
-//                                if(closestRecord.get("Notes")!="") {
-//                                    tree.addInfo("Notes", closestRecord.get("Notes"));
-//                                }
-//
-//                                if(closestRecord.get("Image Leaf")!="") {
-//                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
-//                                }
-//                                if(closestRecord.get("Image Bark")!="") {
-//                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
-//                                }
-//                                if(closestRecord.get("Image Tree")!="") {
-//                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
-//                                }
-                treeReturn.setDataSource("AllUserDB");
-                treeReturn.setFound(true);
+//                treeReturn.setCommonName(tree.getCommonName());
+////                                tree.setScientificName(document.getData().get("scientificName").toString());
+//                treeReturn.setScientificName(tree.getScientificName());
+////                                tree.setLocation(new TreeLocation(lati, longi));
+//                treeReturn.setLocation(locOfTree);
+////                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+//                treeReturn.setCurrentDBH(tree.getCurrentDBH());
+////                                tree.addInfo("Source", document.getData().get("userID").toString());
+//                treeReturn.addInfo("Source", tree.getInfo("Source"));
+//                treeReturn.addInfo("Notes", tree.getInfo("Notes"));
+////                                if(closestRecord.get("Notes")!="") {
+////                                    tree.addInfo("Notes", closestRecord.get("Notes"));
+////                                }
+////
+////                                if(closestRecord.get("Image Leaf")!="") {
+////                                    tree.addPics("Image Leaf", closestRecord.get("Image Leaf"));
+////                                }
+////                                if(closestRecord.get("Image Bark")!="") {
+////                                    tree.addPics("Image Bark", closestRecord.get("Image Bark"));
+////                                }
+////                                if(closestRecord.get("Image Tree")!="") {
+////                                    tree.addPics("Image Tree", closestRecord.get("Image Tree"));
+////                                }
+//                treeReturn.setDataSource("AllUserDB");
+//                treeReturn.setFound(true);
                 MainActivity.treesNearby.add(tree);
             }
             if (closestDistance > cap)

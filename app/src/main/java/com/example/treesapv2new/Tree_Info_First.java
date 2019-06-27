@@ -294,6 +294,7 @@ public class Tree_Info_First extends AppCompatActivity {
             ds = MainActivity.userTreeDataSourceGlobal;
         }
         ds.initialize(Tree_Info_First.this,null);
+        MainActivity.treesNearby.clear();
         Tree tree = ds.search(MainActivity.banana.getLocation());
         if(tree != null && tree.isFound()){
             ds.patchData(tree);
