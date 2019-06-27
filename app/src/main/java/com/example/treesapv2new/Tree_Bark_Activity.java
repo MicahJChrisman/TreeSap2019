@@ -56,6 +56,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
 //    private int[] images={R.drawable.big_green_button,R.drawable.add,R.drawable.accept,R.drawable.bigredbutton};
 //    private ArrayList<Bitmap> images = new ArrayList<byte[]>();
     private ArrayList<byte[]> images = new ArrayList<byte[]>();
+    private ArrayList<String> imagesString = new ArrayList<String>();
     ImageSlider slider;
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -146,9 +147,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
         public static PlaceholderFragment newInstance(byte[] pic) {
 
             PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt("index", pic);
-//            fragment.setArguments(args);
 
             Bundle args1 = new Bundle();
             args1.putByteArray("index",pic);
@@ -182,12 +180,12 @@ public class Tree_Bark_Activity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(images.get(position));
+            return PlaceholderFragment.newInstance(Base64.decode(imagesString.get(position), Base64.DEFAULT));
         }
 
         @Override
         public int getCount() {
-            return images.size();
+            return imagesString.size();
         }
 
         @Override
@@ -245,58 +243,27 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            mimagesView.setImageBitmap(imageBitmap);
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArray = stream.toByteArray();
-            images.add(byteArray);
+
+
+
+            String imageBase64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            imagesString.add(imageBase64);
             mSectionsPagerAdapter.notifyDataSetChanged();
 
-//            images.add(imageBitmap);
-//            images.add(imageBitmap);
-//            images.add(imageBitmap);
-//            images.add(imageBitmap);
-//            ImageSlider slider = (ImageSlider) findViewById(R.id.pager);
-//            slider.setAdapter(mSectionsPagerAdapter);
-//            if(images.size() ==1){
 
-//                int steve = mSectionsPagerAdapter.getCount();
-//                slider.removeAllViewsInLayout();
 
-//                slider.removeAllViews();
-                if(images.size() ==1) {
+                if(imagesString.size() ==1) {
                     slider = (ImageSlider) findViewById(R.id.pager);
 
                     slider.setAdapter(mSectionsPagerAdapter);
                 }
-//                if(images.size() ==2) {
-////                    slider.removeViewsInLayout(0, 1);
-////                    slider.setVisibility(View.GONE);
-////                    ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.VISIBLE);
-////                    ImageSlider slider1 = (ImageSlider) findViewById(R.id.pager2);
-//                    int steve = mSectionsPagerAdapter.getCount();
-//
-////                    slider.setAdapter(mSectionsPagerAdapter);
-////                    mSectionsPagerAdapter.notifyDataSetChanged();
-//
+
                 slider.setIndicatorsSize(0);
-//
-//                }
-//            }else if(images.size() ==2){
-//                ((ImageSlider) findViewById(R.id.pager)).setVisibility(View.GONE);
-//                ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.VISIBLE);
-//                ImageSlider slider = (ImageSlider) findViewById(R.id.pager2);
-//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-//                slider.setAdapter(mSectionsPagerAdapter);
-//            }else if(images.size() ==3){
-//                ((ImageSlider) findViewById(R.id.pager2)).setVisibility(View.GONE);
-//                ((ImageSlider) findViewById(R.id.pager3)).setVisibility(View.VISIBLE);
-//                ImageSlider slider = (ImageSlider) findViewById(R.id.pager3);
-//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-//                slider.setAdapter(mSectionsPagerAdapter);
-//            }
 
             findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
-            if(images.size() > 1){
+            if(imagesString.size() > 1){
                 findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
             }
 //            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
@@ -329,6 +296,8 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                         intentA.putExtra("long_value", long_value);
                     }
 //                    startActivity(intentA);
+                    imagesString.add("");
+                    MainActivity.storedImages.put("bark",imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }
             });
@@ -351,15 +320,10 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 String long_value = extras.getString("long_value");
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
-                ArrayList<String> images_to_String = new ArrayList<String>();
-                for(byte[] image : images){
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
-                    String temp=Base64.encodeToString(image, Base64.DEFAULT);
-                    images_to_String.add(temp);
-                }
-                intentA.putExtra("bark_pic_byte_array", images_to_String);
+
             }
 //            startActivity(intentA);
+            MainActivity.storedImages.put("bark",imagesString);
             startActivityForResult(intentA,REQUEST_EXIT);
         }
     }}

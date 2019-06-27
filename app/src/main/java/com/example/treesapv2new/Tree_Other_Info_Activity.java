@@ -87,18 +87,18 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 if (extras != null) {
                     String lat_value = extras.getString("lat_value");
                     String long_value = extras.getString("long_value");
-                    ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-                    if (byteArray != null) {
-                        intentA.putExtra("bark_pic_byte_array", byteArray);
-                    }
-                    ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-                    if (byteArrayLeaf != null) {
-                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-                    }
-                    ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
-                    if (byteArrayLeaf != null) {
-                        intentA.putExtra("full_pic_byte_array", byteArrayFull);
-                    }
+//                    ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+//                    if (byteArray != null) {
+//                        intentA.putExtra("bark_pic_byte_array", byteArray);
+//                    }
+//                    ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+//                    if (byteArrayLeaf != null) {
+//                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+//                    }
+//                    ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
+//                    if (byteArrayLeaf != null) {
+//                        intentA.putExtra("full_pic_byte_array", byteArrayFull);
+//                    }
                     intentA.putExtra("lat_value", lat_value);
                     intentA.putExtra("long_value", long_value);
                 }
@@ -547,55 +547,56 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     if (extras != null) {
                         Double lat_value = Double.valueOf(extras.getString("lat_value"));
                         Double long_value = Double.valueOf(extras.getString("long_value"));
-                        TextView kevin = (TextView) findViewById(R.id.lat_thing);
-                        //kevin.setText(lat_value);
-                        TextView carl = (TextView) findViewById(R.id.long_thing);
-                        //carl.setText(long_value);
-
-                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-                        if(byteArray != null) {
-                            for(String byter: byteArray) {
-                                byte[] byter1 = byter.getBytes();
-                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-                                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
-                                //image.setImageBitmap(bmp);
-                                barkPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-                                passedArray[7] = barkPic;
-                                picArray.add(byter);
-                            }
-                        }
-                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-                        if(byteArrayLeaf != null) {
-                            for(String byter: byteArrayLeaf) {
-                                byte[] byter1 = byter.getBytes();
-                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-                                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
-                                //image.setImageBitmap(bmp);
-                                leafPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-                                passedArray[8] = leafPic;
-                                picArray.add(byter);
-                            }
-                        }
-                        ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
-                        if(byteArrayFull != null) {
-                            for(String byter: byteArrayFull) {
-                                byte[] byter1 = byter.getBytes();
-                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-                                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
-                                //image.setImageBitmap(bmp);
-                                fullPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-                                passedArray[9] = fullPic;
-                                picArray.add(byter);
-                            }
-                        }
+//                        TextView kevin = (TextView) findViewById(R.id.lat_thing);
+//                        //kevin.setText(lat_value);
+//                        TextView carl = (TextView) findViewById(R.id.long_thing);
+//                        //carl.setText(long_value);
+//
+//                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+//                        if(byteArray != null) {
+//                            for(String byter: byteArray) {
+//                                byte[] byter1 = byter.getBytes();
+//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
+//                                //image.setImageBitmap(bmp);
+//                                barkPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                                passedArray[7] = barkPic;
+//                                picArray.add(byter);
+//                            }
+//                        }
+//                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+//                        if(byteArrayLeaf != null) {
+//                            for(String byter: byteArrayLeaf) {
+//                                byte[] byter1 = byter.getBytes();
+//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
+//                                //image.setImageBitmap(bmp);
+//                                leafPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                                passedArray[8] = leafPic;
+//                                picArray.add(byter);
+//                            }
+//                        }
+//                        ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
+//                        if(byteArrayFull != null) {
+//                            for(String byter: byteArrayFull) {
+//                                byte[] byter1 = byter.getBytes();
+//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
+//                                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
+//                                //image.setImageBitmap(bmp);
+//                                fullPic = Base64.encodeToString(byter1, Base64.DEFAULT);
+//                                passedArray[9] = fullPic;
+//                                picArray.add(byter);
+//                            }
+//                        }
                         lat = lat_value;
                         longit = long_value;
 //            passedArray[4] = lat_value;
 //            passedArray[5] = long_value;
-                        user.put("images", picArray);
+//                        user.put("images", picArray);
                     }
                     user.put("latitude", lat);
                     user.put("longitude",longit);
+                    user.put("images", MainActivity.storedImages);
 
 
 

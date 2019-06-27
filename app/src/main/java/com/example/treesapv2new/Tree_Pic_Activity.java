@@ -47,6 +47,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
     ImageSlider slider;
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     private ArrayList<byte[]> images = new ArrayList<byte[]>();
+    private ArrayList<String> imagesString = new ArrayList<String>();
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -73,14 +74,14 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                 if (extras != null) {
                     String lat_value = extras.getString("lat_value");
                     String long_value = extras.getString("long_value");
-                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
-                    if (byteArray != null) {
-                        intentA.putExtra("bark_pic_byte_array", byteArray);
-                    }
-                    byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
-                    if (byteArrayLeaf != null) {
-                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-                    }
+//                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
+//                    if (byteArray != null) {
+//                        intentA.putExtra("bark_pic_byte_array", byteArray);
+//                    }
+//                    byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
+//                    if (byteArrayLeaf != null) {
+//                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+//                    }
                     intentA.putExtra("lat_value", lat_value);
                     intentA.putExtra("long_value", long_value);
                 }
@@ -175,12 +176,12 @@ public class Tree_Pic_Activity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return Tree_Bark_Activity.PlaceholderFragment.newInstance(images.get(position));
+            return Tree_Bark_Activity.PlaceholderFragment.newInstance(Base64.decode(imagesString.get(position), Base64.DEFAULT));
         }
 
         @Override
         public int getCount() {
-            return images.size();
+            return imagesString.size();
         }
 
         @Override
@@ -232,14 +233,14 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             byteArrayFull = stream.toByteArray();
             mimagesView.setImageBitmap(imageBitmap);
             findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
-//            findViewById(R.id.camera_appear_full).setVisibility(View.VISIBLE);
-//            findViewById(R.id.camera_disappear_full).setVisibility(View.VISIBLE);
 
-            images.add(byteArrayFull);
+            String imageBase64 = Base64.encodeToString(byteArrayFull, Base64.DEFAULT);
+            imagesString.add(imageBase64);
             mSectionsPagerAdapter.notifyDataSetChanged();
 
 
-            if(images.size() ==1) {
+
+            if(imagesString.size() ==1) {
                 slider = (ImageSlider) findViewById(R.id.pager);
 
                 slider.setAdapter(mSectionsPagerAdapter);
@@ -247,7 +248,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
 
             slider.setIndicatorsSize(0);
 
-            if(images.size() > 1){
+            if(imagesString.size() > 1){
                 findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
             }
         }
@@ -275,18 +276,20 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                     if (extras != null) {
                         String lat_value = extras.getString("lat_value");
                         String long_value = extras.getString("long_value");
-                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-                        if (byteArray != null) {
-                            intentA.putExtra("bark_pic_byte_array", byteArray);
-                        }
-                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-                        if (byteArrayLeaf != null) {
-                            intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-                        }
+//                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+//                        if (byteArray != null) {
+//                            intentA.putExtra("bark_pic_byte_array", byteArray);
+//                        }
+//                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+//                        if (byteArrayLeaf != null) {
+//                            intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+//                        }
                         intentA.putExtra("lat_value", lat_value);
                         intentA.putExtra("long_value", long_value);
                     }
 //                    startActivity(intentA);
+                    imagesString.add("");
+                    MainActivity.storedImages.put("full", imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }
             });
@@ -310,25 +313,26 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             if (extras != null) {
                 String lat_value = extras.getString("lat_value");
                 String long_value = extras.getString("long_value");
-                ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-                if (byteArray != null) {
-                    intentA.putExtra("bark_pic_byte_array", byteArray);
-                }
-                ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-                if (byteArrayLeaf != null) {
-                    intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-                }
-                ArrayList<String> images_to_String = new ArrayList<String>();
-                for(byte[] image : images){
-                    String temp= Base64.encodeToString(image, Base64.DEFAULT);
-                    images_to_String.add(temp);
-//                    images_to_String.add(new String(image));
-                }
-                intentA.putExtra("full_pic_byte_array", images_to_String);
+//                ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
+//                if (byteArray != null) {
+//                    intentA.putExtra("bark_pic_byte_array", byteArray);
+//                }
+//                ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
+//                if (byteArrayLeaf != null) {
+//                    intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
+//                }
+//                ArrayList<String> images_to_String = new ArrayList<String>();
+//                for(byte[] image : images){
+//                    String temp= Base64.encodeToString(image, Base64.DEFAULT);
+//                    images_to_String.add(temp);
+////                    images_to_String.add(new String(image));
+//                }
+//                intentA.putExtra("full_pic_byte_array", images_to_String);
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
             }
 //            startActivity(intentA);
+            MainActivity.storedImages.put("full",imagesString);
             startActivityForResult(intentA,REQUEST_EXIT);
         }
     }}
