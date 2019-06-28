@@ -74,7 +74,12 @@ public class NotificationsActivity extends AppCompatActivity {
 
         };
 
-
+        findViewById(R.id.notifications_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         findViewById(R.id.trash_notifications).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,7 +313,18 @@ public class NotificationsActivity extends AppCompatActivity {
             });
         }
     }
-    
+
+    @Override
+    public void onBackPressed(){
+        try{
+            findViewById(R.id.notification_specific_close).getVisibility();
+            finish();
+            startActivity(new Intent(NotificationsActivity.this, NotificationsActivity.class));
+        }catch (Exception e){
+            finish();
+        }
+    }
+
 
     public static class PlaceholderFragment extends Fragment {
 
