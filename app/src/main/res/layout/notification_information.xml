@@ -297,6 +297,10 @@
                 android:textColor="@color/black"
                 android:id="@+id/notification_info_curator_comments"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
+
         </LinearLayout>
     </ScrollView>
 

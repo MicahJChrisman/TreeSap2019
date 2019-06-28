@@ -49,5 +49,36 @@
 
     </ScrollView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click and hold to delete"
+            android:id="@+id/selector_notification"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:textSize="22sp"
+            android:layout_marginStart="10dp"/>
+
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:id="@+id/trash_notifications"
+            android:src="@drawable/icons8_trash_30"
+            android:background="@color/transparent"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>
