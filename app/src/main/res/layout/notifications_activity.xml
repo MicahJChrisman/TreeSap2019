@@ -25,11 +25,19 @@
         android:textSize="30sp"
         android:textStyle="bold"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:src="@drawable/transparent_rect"
+        android:background="@color/accent_gray"
+        android:layout_below="@id/notificaitons_header"
+        android:id="@+id/bar_in_notif"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/notificaitons_scroller"
-        android:layout_below="@+id/notificaitons_header">
+        android:layout_below="@+id/bar_in_notif">
 
         <LinearLayout
             android:layout_width="match_parent"

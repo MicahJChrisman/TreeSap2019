@@ -137,9 +137,9 @@ public class Tree_Pic_Activity extends AppCompatActivity {
 
         }
 
-        public static Tree_Bark_Activity.PlaceholderFragment newInstance(byte[] pic) {
+        public static PlaceholderFragment newInstance(byte[] pic) {
 
-            Tree_Bark_Activity.PlaceholderFragment fragment = new Tree_Bark_Activity.PlaceholderFragment();
+            PlaceholderFragment fragment = new PlaceholderFragment();
 //            Bundle args = new Bundle();
 //            args.putInt("index", pic);
 //            fragment.setArguments(args);
