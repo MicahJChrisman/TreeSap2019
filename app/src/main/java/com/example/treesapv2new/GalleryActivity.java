@@ -42,7 +42,7 @@ public class GalleryActivity extends AppCompatActivity {
 
 
     private void setImage(String imageUrl, String imageName){
-        Log.d(TAG, "setImage: setting te image and name to widgets.");
+        Log.d(TAG, "setImage: setting the image and name to widgets.");
 
         TextView name = findViewById(R.id.image_description);
         name.setText(imageName);
