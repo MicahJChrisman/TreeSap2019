@@ -13,12 +13,6 @@
         android:measureAllChildren="true"
         tools:foregroundGravity="bottom">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-
         <TextView
             android:id="@+id/empty_message"
             android:layout_width="match_parent"
@@ -41,6 +35,19 @@
             tools:context=".Curator_Swipe_Activity">
 
         </com.lorentzos.flingswipe.SwipeFlingAdapterView>
+
+        <!--<fragment-->
+            <!--android:id="@+id/map"-->
+            <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:visibility="gone"-->
+            <!--tools:context=".Curator_Swipe_Activity" />-->
+        <FrameLayout
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

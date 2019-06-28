@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class CuratorApproveActivity extends AppCompatActivity {
     private static final String TAG = "CuratorApproveActivity";
@@ -57,21 +58,21 @@ public class CuratorApproveActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ArrayList<String> pic = (ArrayList<String>) document.getData().get("images");
-                        try{
-                            String b = "";
-                            for(String a : pic){
-                                if(a!=null){
-                                    b = a;
-                                }else{
-                                    b = "";
-                                }
-                            }
-                            mImageUrls.add(b);
-                        }catch(Exception e){
-                            e.getMessage();
-                            mImageUrls.add("");
-                        }
+//                        ArrayList<String> pic = (ArrayList<String>) ((Map<Object, Object>) document.getData().get("images")).get("full");
+//                        try{
+//                            String b = "";
+//                            for(String a : pic){
+//                                if(a!=null){
+//                                    b = a;
+//                                }else{
+//                                    b = "";
+//                                }
+//                            }
+//                            mImageUrls.add(b);
+//                        }catch(Exception e){
+//                            e.getMessage();
+//                            mImageUrls.add("");
+//                        }
                         mNames.add((String) document.getData().get("commonName"));
                     }
                     initRecyclerView();

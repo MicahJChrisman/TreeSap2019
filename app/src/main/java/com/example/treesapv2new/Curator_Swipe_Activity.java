@@ -2,17 +2,27 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -24,15 +34,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.model.Tree;
+import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -61,7 +77,7 @@ import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.ExecutionException;
 
-
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
 
 
 /**
@@ -70,9 +86,39 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class Curator_Swipe_Activity extends AppCompatActivity {  //implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {  //implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private NewArrayAdapter arrayAdapter;
     private int i;
+    GoogleMap mMap;
+    SupportMapFragment mapFragment;
+    private final String[] PERMS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.INTERNET,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_NETWORK_STATE
+    };
+    private static final int REQUEST_ID = 6;
+
+    private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+    Context parent;
+    float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
+    float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
+    LatLng coordinates;
+
+    float zoom = 16;
+    boolean whichSource = false;
+    //Double longitude, latitude;
+    //LatLng coords;
+
+    private Location location;
+    private TextView locationTv;
+    private GoogleApiClient googleApiClient;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private LocationRequest locationRequest;
 
 
     ListView listView;
@@ -93,6 +139,8 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
 
 
 
+    //https://www.youtube.com/watch?v=118wylgD_ig
+    //yt: "show and hide map fragment android tutorial"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +171,35 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
         }
         flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
+
+        googleApiClient = new GoogleApiClient.Builder(Curator_Swipe_Activity.this).addApi(LocationServices.API).addConnectionCallbacks(Curator_Swipe_Activity.this).addOnConnectionFailedListener(Curator_Swipe_Activity.this::onConnectionFailed).build();
+        googleApiClient.connect();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        //mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+        FragmentManager fm = getSupportFragmentManager();
+        if(mapFragment == null){
+            fm = getSupportFragmentManager();
+            mapFragment = SupportMapFragment.newInstance();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.placeholder, mapFragment);
+            ft.hide(mapFragment);
+            ft.commit();
+        }
+
+        fm.beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .hide(mapFragment)
+//                .addToBackStack(null)
+                .commit();
+//(R.id.map).setVisibility(View.VISIBLE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(PERMS, REQUEST_ID);
+        }
+
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -145,6 +222,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(mapFragment)
+                        .commit();
+                fm.popBackStack();
                 setCurrentTree();
                 //removeFirstObjectInAdapter();
             }
@@ -152,7 +235,13 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
             @Override
             public void onRightCardExit(Object dataObject) {
                 acceptTree();
-//                setCurrentTree();
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(mapFragment)
+                        .commit();
+                fm.popBackStack();
+                setCurrentTree();
             }
 
             @Override
@@ -221,6 +310,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
                     arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                     setCurrentTree();
                 }
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(mapFragment)
+                        .commit();
+                fm.popBackStack();
 //                penTrees.remove(0);
 //                arrayAdapter.notifyDataSetChanged();
                 //listener.onTouch(flingContainer.getSelectedView(), MotionEvent.obtain);
@@ -240,6 +335,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
                     arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                     setCurrentTree();
                 }
+                FragmentManager fm = getSupportFragmentManager();
+                fm.beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                        .hide(mapFragment)
+                        .commit();
+                fm.popBackStack();
 //
 //                penTrees.remove(0);
 //                flingContainer.getSelectedView().setVisibility(View.GONE);
@@ -287,7 +388,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 previousTrees.push(document);
-                                Log.w("error", "Error writing document. Tree file has been pushed back on stack", e);
+                                Log.w("error", "Error writing document. Tree file has been pushed back on stack of previous trees", e);
                             }
                         });
                     }else{
@@ -297,6 +398,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
                     }
+                    FragmentManager fm = getSupportFragmentManager();
+                    fm.beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .hide(mapFragment)
+                            .commit();
+                    fm.popBackStack();
                     Toast.makeText(Curator_Swipe_Activity.this, "Undone", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Curator_Swipe_Activity.this, "No previous trees", Toast.LENGTH_SHORT).show();
@@ -322,6 +429,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
                         Toast.makeText(Curator_Swipe_Activity.this, "Skipped!", Toast.LENGTH_SHORT).show();
+                        FragmentManager fm = getSupportFragmentManager();
+                        fm.beginTransaction()
+                                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                                .hide(mapFragment)
+                                .commit();
+                        fm.popBackStack();
                     }
                     });
                 }else{
@@ -334,9 +447,27 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GMap gMap = new GMap();
-                GoogleMap map = gMap.getMap();
-                findViewById(R.id.map).setVisibility(View.VISIBLE);
+//                mapButton.setActivated(false);
+//                mapButton.setClickable(false);
+                FragmentManager fm = getSupportFragmentManager();
+                if(mapFragment.isVisible()){
+                    fm.beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .hide(mapFragment)
+                            .commit();
+                    fm.popBackStack();
+                }else {
+                    coordinates = new LatLng(currentTree.getLocation().getLatitude(), currentTree.getLocation().getLongitude());
+//                GMap gMap = new GMap(coords);
+                    fm.beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                            .show(mapFragment)
+                            .addToBackStack(null)
+                            .commit();
+
+                    //mapFragment.getView().setVisibility(View.VISIBLE);
+                    mapFragment.getMapAsync(Curator_Swipe_Activity.this::onMapReady);
+                }
             }
         });
     }
@@ -470,33 +601,177 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
             }
         }
 
-        ArrayList<String> stringPics = (ArrayList<String>) document.get("images");
-        //String[] pics = stringPics.split("\n?\t.*: ");
-        int i = 0;
-        if(stringPics!=null) {
-            while(i<stringPics.size()){
-                String key;
-                if(i == 0){
-                    key = "Image Bark";
-                }else if(i == 1){
-                    key = "Image Leaf";
-                }else{
-                    key = "Image Tree";
-                }
-                String pic = stringPics.get(i);
-//                                    byte[] encodeByte = Base64.decode(pic, Base64.DEFAULT);
-//                                    InputStream is = new ByteArrayInputStream(encodeByte);
+//        ArrayList<Object> stringPics = (ArrayList<Object>) ((Map<Object, Object>) document.get("images")).get("full");
 //
-//                                    Bitmap bmp = BitmapFactory.decodeStream(is);
-//                                    BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
-
-                if(pic != null) {
-                    tree.addPics(key, stringPics.get(i));
-                }
-                i++;
-            }
-        }
+//        //String[] pics = stringPics.split("\n?\t.*: ");
+//        int i = 0;
+//        if(stringPics!=null) {
+//            while(i<stringPics.size()){
+//                String key;
+//                if(i == 0){
+//                    key = "Image Bark";
+//                }else if(i == 1){
+//                    key = "Image Leaf";
+//                }else{
+//                    key = "Image Tree";
+//                }
+//                String pic = (String) stringPics.get(i);
+////                                    byte[] encodeByte = Base64.decode(pic, Base64.DEFAULT);
+////                                    InputStream is = new ByteArrayInputStream(encodeByte);
+////
+////                                    Bitmap bmp = BitmapFactory.decodeStream(is);
+////                                    BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
+//
+//                if(pic != null) {
+//                    tree.addPics(key, stringPics.get(i));
+//                }
+//                i++;
+//            }
+//        }
+        TreeLocation location = new TreeLocation(Double.valueOf(document.get("latitude").toString()), Double.valueOf(document.get("longitude").toString()));
+        tree.setLocation(location);
         return tree;
+    }
+
+//    @Override
+//    public void onB
+
+//    @Override
+//    public void onAttach()
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        mapFragment.getView().setVisibility(View.GONE);
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                &&  ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        // Permissions ok, we get last location
+        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+//        if (location != null) {
+//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+//        }
+
+        startLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                &&  ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        googleApiClient.disconnect();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+        mMap.addMarker(new MarkerOptions().position(coordinates).title(currentTree.getCommonName()).snippet(coordinates.toString()).icon(icon));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
+        mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+
+        LatLng hope = new LatLng(42.788002, -86.105971);
+
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(PERMS, REQUEST_ID);
+            }
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(hope, zoom));
+            return;
+        } else {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            boolean isGPSEnabled = locationManager
+                    .isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager
+                    .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            Criteria criteria = new Criteria();
+            Location location1 = null;
+            Location defaultLocation = new Location("");
+            defaultLocation.setLatitude(42.788002);
+            defaultLocation.setLongitude(-86.105971);
+            List<String> provs = locationManager.getAllProviders();
+
+
+
+            //LocationListener locationListenerGps = new LocationListener();
+            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
+            String a = LocationManager.GPS_PROVIDER;
+            location1 = locationManager.getLastKnownLocation(a);
+            //locationManager.removeUpdates(this);
+            Location location2 = location;
+            for(String prov : provs) {
+                if (locationManager.getLastKnownLocation(prov) != null) {
+                    if (!prov.equals("gps")) {
+                        defaultLocation = locationManager.getLastKnownLocation(prov);
+                    } else {
+                        location1 = locationManager.getLastKnownLocation(prov);
+                    }
+                    if (location1 != null) {
+                        break;
+                    }
+                }
+            }
+            if(location==null){
+                location1 = defaultLocation;
+            }
+            double latitude,longitude;
+            if(location1 == null){
+                onLocationChanged(location2);
+                latitude = location2.getLatitude();
+                longitude = location2.getLongitude();
+            }else {
+                onLocationChanged(location1);
+                latitude = location1.getLatitude();
+                longitude = location1.getLongitude();
+            }
+
+            LatLng currentLocation = new LatLng(latitude, longitude);
+            if (locMarker == true) {
+                mCurrLocationMarker = mMap.addMarker(new MarkerOptions().position(currentLocation)
+                        .title("Current Position").snippet("This is you!")
+                        .icon(defaultMarker(personalMarker)));
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom));
+        }
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
@@ -522,75 +797,65 @@ public class Curator_Swipe_Activity extends AppCompatActivity {  //implements On
         protected void onPostExecute(Long result) {
             arrayAdapter = new NewArrayAdapter(Curator_Swipe_Activity.this, R.layout.item, penTrees, getSupportFragmentManager());
             flingContainer.setAdapter(arrayAdapter);
-            //setCurrentTree();
+            setCurrentTree();
         }
     }
 
-    private class GMap extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-        GoogleMap mMap;
-        SupportMapFragment mapFragment;
-        private final String[] PERMS = {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.INTERNET,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_NETWORK_STATE
-        };
-        private static final int REQUEST_ID = 6;
-        Location mLastLocation;
-        Marker mCurrLocationMarker;
-        Context parent;
-        float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
-        float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
-
-        Random randomGenerator;
-        float zoom = 16;
-        boolean whichSource = false;
-        Double longitude, latitude;
 
 
-        private Location location;
-        private TextView locationTv;
-        private GoogleApiClient googleApiClient;
-        private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-        private LocationRequest locationRequest;
-
-        public GMap(){
-            super();
-            //TODO permmissions
-            mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-        }
-
-        @Override
-        public void onConnected(@Nullable Bundle bundle) {
-
-        }
-
-        @Override
-        public void onConnectionSuspended(int i) {
-
-        }
-
-        @Override
-        public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-
-        }
-
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            mMap = googleMap;
-        }
-
-        public GoogleMap getMap(){
-            return mMap;
-        }
-    }
+//    private class GMap extends FragmentActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+//
+//        GoogleMap mMap;
+//        SupportMapFragment mapFragment;
+//        private final String[] PERMS = {
+//                Manifest.permission.ACCESS_FINE_LOCATION,
+//                Manifest.permission.ACCESS_COARSE_LOCATION,
+//                Manifest.permission.INTERNET,
+//                Manifest.permission.READ_EXTERNAL_STORAGE,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//                Manifest.permission.ACCESS_NETWORK_STATE
+//        };
+//        private static final int REQUEST_ID = 6;
+//        Location mLastLocation;
+//        Marker mCurrLocationMarker;
+//        Context parent;
+//        float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
+//        float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
+//
+//        float zoom = 16;
+//        boolean whichSource = false;
+//        //Double longitude, latitude;
+//        LatLng coords;
+//
+//        private Location location;
+//        private TextView locationTv;
+//        private GoogleApiClient googleApiClient;
+//        private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+//        private LocationRequest locationRequest;
+//
+//        public GMap(LatLng coords){
+//            super();
+//            //TODO permissions
+//
+////            googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
+////            googleApiClient.connect();
+////
+////            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+////            StrictMode.setThreadPolicy(policy);
+////            mapFragment = (SupportMapFragment) getSupportFragmentManager()
+////                    .findFragmentById(R.id.map);
+////            mapFragment.getMapAsync(this);
+////            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+////                requestPermissions(PERMS, REQUEST_ID);
+////            }
+//            this.coords = coords;
+//        }
+//
+//
+//
+//
+//        public GoogleMap getMap(){
+//            return mMap;
+//        }
+//    }
 }
