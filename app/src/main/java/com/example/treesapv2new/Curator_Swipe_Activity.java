@@ -2,6 +2,7 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -136,6 +139,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
     FloatingActionButton rejectButton;
     FloatingActionButton acceptButton;
     FloatingActionButton mapButton;
+    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton directionsButton;
 
 
 
@@ -194,7 +198,31 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                 .hide(mapFragment)
 //                .addToBackStack(null)
                 .commit();
-//(R.id.map).setVisibility(View.VISIBLE);
+        directionsButton = findViewById(R.id.directions_button);
+        directionsButton.setVisibility(View.GONE);
+        directionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
+                if(locMarker == true){
+                    //TODO get directions
+                    // Create a Uri from an intent string. Use the result to create an Intent.
+                    double latitude = currentTree.getLocation().getLatitude();
+                    double longitude = currentTree.getLocation().getLongitude();
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+latitude+ ",+" + longitude);
+                    // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    // Make the Intent explicit by setting the Google Maps package
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    //Makes sure Google Maps is installed
+                    if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                        // Attempt to start an activity that can handle the Intent
+                        startActivity(mapIntent);
+                    }
+                }
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
@@ -222,26 +250,14 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(mapFragment)
-                        .commit();
-                fm.popBackStack();
-                setCurrentTree();
+                hideMap();
                 //removeFirstObjectInAdapter();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 acceptTree();
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(mapFragment)
-                        .commit();
-                fm.popBackStack();
-                setCurrentTree();
+                hideMap();
             }
 
             @Override
@@ -310,12 +326,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                     arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                     setCurrentTree();
                 }
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(mapFragment)
-                        .commit();
-                fm.popBackStack();
+                hideMap();
 //                penTrees.remove(0);
 //                arrayAdapter.notifyDataSetChanged();
                 //listener.onTouch(flingContainer.getSelectedView(), MotionEvent.obtain);
@@ -335,12 +346,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                     arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                     setCurrentTree();
                 }
-                FragmentManager fm = getSupportFragmentManager();
-                fm.beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                        .hide(mapFragment)
-                        .commit();
-                fm.popBackStack();
+                hideMap();
 //
 //                penTrees.remove(0);
 //                flingContainer.getSelectedView().setVisibility(View.GONE);
@@ -398,12 +404,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
                     }
-                    FragmentManager fm = getSupportFragmentManager();
-                    fm.beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                            .hide(mapFragment)
-                            .commit();
-                    fm.popBackStack();
+                    hideMap();
                     Toast.makeText(Curator_Swipe_Activity.this, "Undone", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(Curator_Swipe_Activity.this, "No previous trees", Toast.LENGTH_SHORT).show();
@@ -429,12 +430,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                         arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                         setCurrentTree();
                         Toast.makeText(Curator_Swipe_Activity.this, "Skipped!", Toast.LENGTH_SHORT).show();
-                        FragmentManager fm = getSupportFragmentManager();
-                        fm.beginTransaction()
-                                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                                .hide(mapFragment)
-                                .commit();
-                        fm.popBackStack();
+                        hideMap();
                     }
                     });
                 }else{
@@ -451,11 +447,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
 //                mapButton.setClickable(false);
                 FragmentManager fm = getSupportFragmentManager();
                 if(mapFragment.isVisible()){
-                    fm.beginTransaction()
-                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                            .hide(mapFragment)
-                            .commit();
-                    fm.popBackStack();
+                    hideMap();
                 }else {
                     coordinates = new LatLng(currentTree.getLocation().getLatitude(), currentTree.getLocation().getLongitude());
 //                GMap gMap = new GMap(coords);
@@ -464,7 +456,7 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                             .show(mapFragment)
                             .addToBackStack(null)
                             .commit();
-
+                    directionsButton.setVisibility(View.VISIBLE);
                     //mapFragment.getView().setVisibility(View.VISIBLE);
                     mapFragment.getMapAsync(Curator_Swipe_Activity.this::onMapReady);
                 }
@@ -472,6 +464,15 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
         });
     }
 
+    public void hideMap(){
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .hide(mapFragment)
+                .commit();
+        fm.popBackStack();
+        directionsButton.setVisibility(View.GONE);
+    }
 
     public void setCurrentTree(){
         if(penTrees.size() > 0) {
@@ -770,6 +771,12 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                         .title("Current Position").snippet("This is you!")
                         .icon(defaultMarker(personalMarker)));
             }
+            UiSettings uiSettings = mMap.getUiSettings();
+            //uiSettings.setZoomControlsEnabled(true);
+//            uiSettings.setTiltGesturesEnabled(true);
+            uiSettings.setMyLocationButtonEnabled(true);
+            uiSettings.setMapToolbarEnabled(true);
+            uiSettings.setTiltGesturesEnabled(true);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom));
         }
     }

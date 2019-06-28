@@ -104,6 +104,8 @@ dependencies {
     implementation 'com.lorentzos.swipecards:library:1.0.9@aar'
 
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
+    implementation 'com.robertlevonyan.view:CustomFloatingActionButton:2.1.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

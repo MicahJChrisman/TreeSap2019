@@ -25,6 +25,13 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
+        <!--<fragment-->
+        <!--android:id="@+id/map"-->
+        <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone"-->
+        <!--tools:context=".Curator_Swipe_Activity" />-->
         <com.lorentzos.flingswipe.SwipeFlingAdapterView
             android:id="@+id/frame"
             android:layout_width="match_parent"
@@ -36,18 +43,32 @@
 
         </com.lorentzos.flingswipe.SwipeFlingAdapterView>
 
-        <!--<fragment-->
-            <!--android:id="@+id/map"-->
-            <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:visibility="gone"-->
-            <!--tools:context=".Curator_Swipe_Activity" />-->
         <FrameLayout
             android:id="@+id/placeholder"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|top"
+            android:orientation="vertical"
+            tools:visibility="visible">
+
+            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+                android:id="@+id/directions_button"
+                android:layout_width="230dp"
+                android:layout_height="62dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/directions_button1"
+                android:text="Directions"
+                app:fabText="Directions"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,6 +148,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/map_new" />
             </android.support.constraint.ConstraintLayout>
+
         </LinearLayout>
 
     </FrameLayout>
