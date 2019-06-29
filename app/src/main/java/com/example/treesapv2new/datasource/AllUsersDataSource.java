@@ -126,9 +126,14 @@ public class AllUsersDataSource extends DataSource {
                                 tree.addInfo("Source", document.getData().get("userID").toString());
                                 ArrayList<String> notes = (ArrayList<String>) document.getData().get("notes");
                                 if(notes != null) {
-                                    for (int i = 0; i < notes.size(); i++) {
-                                        tree.addInfo("Notes", notes.get(i).toString());
-                                    }
+//                                    for (int i = 0; i < notes.size(); i++) {
+//                                        tree.addInfo("Notes", notes.get(i).toString());
+//                                    }
+                                    tree.setNotesArray(notes);
+                                }
+                                HashMap<String, ArrayList<String>> photos = (HashMap<String, ArrayList<String>>) document.getData().get("images");
+                                if(photos != null) {
+                                    tree.setTreePhotos(photos);
                                 }
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));
@@ -228,9 +233,9 @@ public class AllUsersDataSource extends DataSource {
 //                treeReturn.setFound(true);
                 MainActivity.treesNearby.add(tree);
             }
-            if (closestDistance > cap)
-                break;
-            else {
+            if (closestDistance > cap) {
+//                break;
+            }else {
                 //MATCH!  Build tree and return it.
 
                 if(results[0]==closestDistance) {
@@ -242,6 +247,9 @@ public class AllUsersDataSource extends DataSource {
 //                                tree.setLocation(new TreeLocation(lati, longi));
                     treeReturn.setLocation(locOfTree);
 //                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+                    treeReturn.setDBHArray(tree.getDBHArray());
+                    treeReturn.setNotesArray(tree.getNotesArray());
+                    treeReturn.setTreePhotos(tree.getTreePhotos());
                     treeReturn.setCurrentDBH(tree.getCurrentDBH());
 
                     treeReturn.setIsClosest(true);

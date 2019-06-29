@@ -31,8 +31,10 @@ public class Tree {
     Double currentDBH;
     ArrayList<String> dbsUsed = new ArrayList<>();
     ArrayList<Object> dbhArray = new ArrayList<>();
+    ArrayList<String> notesArray = new ArrayList<>();
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
     HashMap<String, ArrayList<Object>> treePics = new HashMap<String, ArrayList<Object>>();
+    HashMap<String, ArrayList<String>> treePhotos = new HashMap<String, ArrayList<String>>();
 
 
 
@@ -77,6 +79,18 @@ public class Tree {
         this.location = location;
     }
 
+    public ArrayList<String> getNotesArray(){
+        return notesArray;
+    }
+
+    public void setNotesArray(ArrayList<String> notesArray){
+        this.notesArray = notesArray;
+    }
+
+    public void clearNotesArray(){
+        notesArray.clear();
+    }
+
     public String getID() {
         return treeID;
     }
@@ -87,6 +101,18 @@ public class Tree {
 
     public void setID(String treeID) {
         this.treeID = treeID;
+    }
+
+    public void setTreePhotos(HashMap<String, ArrayList<String>> treePhotos){
+        this.treePhotos = treePhotos;
+    }
+
+    public HashMap<String, ArrayList<String>> getTreePhotos(){
+        return treePhotos;
+    }
+
+    public void clearTreePhotos(){
+        treePhotos.clear();
     }
 
     public void setFound(Boolean wasFound) {

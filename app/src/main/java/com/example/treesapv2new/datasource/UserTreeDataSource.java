@@ -197,9 +197,9 @@ public class UserTreeDataSource extends DataSource {
                         MainActivity.treesNearby.add(tree);
                     }
 
-                    if (closestDistance > cap)
-                        break;
-                    else {
+                    if (closestDistance > cap) {
+//                        break;
+                    }else {
                         //MATCH!  Build tree and return it.
 
                         if (results[0] == closestDistance) {
@@ -212,11 +212,14 @@ public class UserTreeDataSource extends DataSource {
 //                                tree.setLocation(new TreeLocation(lati, longi));
                             treeReturn.setLocation(locOfTree);
 //                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
+                            treeReturn.setDBHArray(tree.getDBHArray());
                             treeReturn.setCurrentDBH(tree.getCurrentDBH());
 
                             treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
                             treeReturn.addInfo("Source", user.getUid());
+                            treeReturn.setNotesArray(tree.getNotesArray());
+                            treeReturn.setTreePhotos(tree.getTreePhotos());
                             treeReturn.addInfo("Notes", tree.getInfo("Notes"));
 //                                if(closestRecord.get("Notes")!="") {
 //                                    tree.addInfo("Notes", closestRecord.get("Notes"));

@@ -127,6 +127,18 @@
                 android:textSize="20sp"
                 android:textStyle="italic" />
 
+            <ImageButton
+                android:id="@+id/circum_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:layout_marginTop="5dp"
+                android:maxWidth="20dp"
+                android:scaleType="centerCrop"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/info_icon" />
+
             <TextView
                 android:id="@+id/dbh"
                 android:layout_width="wrap_content"
@@ -135,23 +147,8 @@
                 android:textColor="@color/accent_gray"
                 android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/accent_gray"
-                android:text='\" '/>
 
-            <ImageButton
-                android:id="@+id/circum_info_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:adjustViewBounds="true"
-                android:background="@color/transparent"
-                android:maxWidth="25dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/info_icon" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -229,6 +226,60 @@
                 android:textSize="20sp"
                 android:visibility="visible" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" View Notes "
+                android:textColor="@color/white"
+                android:id="@+id/view_notes_button"
+                android:background="@color/new_invented_color"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text=" View Photos "
+                android:layout_marginStart="5dp"
+                android:background="@color/new_invented_color"
+                android:id="@+id/view_photos_button"/>
+
+        </LinearLayout>
+
+        <com.shivam.library.imageslider.ImageSlider
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/view_photos_slider"
+            android:visibility="gone"/>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="200dp"
+            android:id="@+id/notes_scroller"
+            android:background="#CCA8A7A7"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/notes_linear"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+
+
 
     </LinearLayout>
     <ImageButton
