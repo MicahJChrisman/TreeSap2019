@@ -69,6 +69,9 @@ import com.google.firebase.firestore.model.Document;
 import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.util.Date;
+import java.sql.Timestamp;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -522,6 +525,25 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
+                        CollectionReference notifications = db.collection("notifications");
+                        Map<String, Object> dataMap = new HashMap<String,Object>();
+//                        for(DocumentSnapshot docs : document){
+//
+//                        }
+                        Map<String, Object> documentData = document.getData();
+                        dataMap.put("treeData", documentData);
+                        dataMap.put("accepted", true);
+                        dataMap.put("message", "");
+                        dataMap.put("read", false);
+                        Date date= new Date();
+                        Timestamp ts = new Timestamp(date.getTime());
+                        dataMap.put("timestamp", ts);
+                        notifications.document().set(dataMap);
+
+
+
+
+
                         db.collection("acceptedTrees").document().set(document.getData())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
