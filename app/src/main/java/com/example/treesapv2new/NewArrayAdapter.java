@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentActivity;
 import com.example.treesapv2new.model.Tree;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.viewpagerindicator.CirclePageIndicator;
+//import com.viewpagerindicator.CirclePageIndicator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
