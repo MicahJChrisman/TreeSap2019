@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         android:key="settings"
-        android:title="Settings">
-        <EditTextPreference
-            android:dialogTitle="Enter a distance (meters)"
-            android:key="@string/distanceFromTreePref"
-            android:numeric="decimal"
-            android:defaultValue="100000"
-            android:summary="Change max distance away to get tree results."
-            android:title="Maximum Distance From Tree" />
+        android:title="Basic Settings">
+
         <MultiSelectListPreference
             android:dialogTitle="Choose databases"
             android:entries="@array/settings_list_preference_titles"
             android:entryValues="@array/settings_list_preference_values"
             android:key="@string/databasesUsedSelector"
-            android:summary="Select which tree databases to use"
-            android:title="Databases" />
+            android:summary="Select which data sources will be displayed on the map and included in coordinate searches"
+            android:title="Active data sources" />
+
+        <EditTextPreference
+            android:dialogTitle="Max identification distance"
+            android:dialogMessage="Trees will be identified only if your coordinates are within this many meters of the tree."
+            android:key="@string/distanceFromTreePref"
+            android:numeric="decimal"
+            android:defaultValue="100000"
+            android:title="Max identification distance (meters)" />
+
         <SwitchPreference
             android:id="@+id/location_toggle"
             android:defaultValue="true"
             android:key="@string/locationMarkerSwitch"
             android:summary="See your marker on the map"
             android:title="Location Marker" />
-        <SwitchPreference
-            android:id="@+id/teaching_toggle"
-            android:defaultValue="false"
-            android:key="teachingSwitch"
-            android:summary="Placeholder text"
-            android:title="Teaching tool/education mode"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="account_header"
+        android:title="Account">
         <PreferenceScreen
             android:key="account_screen"
             android:title="Account Info"
@@ -69,32 +72,39 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="acknowledgements"
-        android:title="Acknowledgements">
-        <Preference
-            android:enabled="true"
-            android:key="itree_ack"
-            android:selectable="false"
-            android:summary=""
-            android:title="iTree Web Tools" />
-        <Preference
-            android:enabled="true"
-            android:key="benefit_calc_ack"
-            android:selectable="false"
-            android:summary=""
-            android:title="National Tree Benefit Calculator" />
-        <Preference
-            android:enabled="true"
-            android:key="iNaturalist_ack"
-            android:selectable="false"
-            android:summary=""
-            android:title="iNaturalist" />
-        <Preference
-            android:enabled="true"
-            android:key="creators_ack"
-            android:selectable="false"
-            android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
-            android:title="Copyright of Hope College" />
+        android:key="other"
+        android:title="Other">
+        <PreferenceScreen
+            android:key="acknowledgements"
+            android:title="More Information"
+            android:widgetLayout="@layout/next_button_settings"
+            android:selectable="true">
+            <Preference
+                android:enabled="true"
+                android:key="itree_ack"
+                android:selectable="false"
+                android:summary=""
+                android:title="iTree Web Tools" />
+            <Preference
+                android:enabled="true"
+                android:key="benefit_calc_ack"
+                android:selectable="false"
+                android:summary=""
+                android:title="National Tree Benefit Calculator" />
+            <Preference
+                android:enabled="true"
+                android:key="iNaturalist_ack"
+                android:selectable="false"
+                android:summary=""
+                android:title="iNaturalist" />
+            <Preference
+                android:enabled="true"
+                android:key="creators_ack"
+                android:selectable="false"
+                android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
+                android:title="Copyright of Hope College" />
+
+        </PreferenceScreen>
 
     </PreferenceCategory>
 

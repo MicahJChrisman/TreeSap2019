@@ -22,7 +22,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -81,6 +83,22 @@ public class SettingsActivity extends PreferenceActivity {
 
 
         addPreferencesFromResource(R.xml.preferences);
+        setContentView(R.layout.activity_settings);
+
+        findViewById(R.id.settings_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.notification_button_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
         if(Login_Activity.mAuth.getCurrentUser()!=null) {
             PreferenceCategory b = (PreferenceCategory) findPreference("account");
@@ -131,6 +149,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         // gallery EditText change listener
         bindPreferenceSummaryToValue(findPreference(getString(R.string.distanceFromTreePref)));
+//        ((EditText) findViewById(R.id.max_meters_edittext)).setText(getString(R.string.distanceFromTreePref));
 
 
 
@@ -197,18 +216,6 @@ public class SettingsActivity extends PreferenceActivity {
                 int index = multiSelectListPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index>= 0 ? multiSelectListPreference.getEntries()[index] : null);
 
-//thing thing
-
-//                // For list preferences, look up the correct display value in
-//                // the preference's 'entries' list.
-//                ListPreference listPreference = (ListPreference) preference;
-//                int index = listPreference.findIndexOfValue(stringValue);
-//
-//                // Set the summary to reflect the new value.
-//                preference.setSummary(
-//                        index >= 0
-//                                ? listPreference.getEntries()[index]
-//                                : null);
 
             } else if (preference instanceof EditTextPreference) {
                 if (preference.getKey().equals("distanceFromTreePref")) {
