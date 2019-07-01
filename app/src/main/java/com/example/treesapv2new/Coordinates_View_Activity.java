@@ -12,16 +12,19 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -47,6 +50,8 @@ import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.common.util.NumberUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashSet;
 import java.util.List;
@@ -67,11 +72,32 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             Manifest.permission.ACCESS_NETWORK_STATE
     };
     private static final int REQUEST_ID = 6;
+    String emailAddress = "jipping@hope.edu";
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        NavigationView hamMenu = findViewById(R.id.hamburger_menu);
+        if(user != null) {
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
+            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
+                //user is curator
+                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
+            } else {
+                //user is not curator
+            }
+        }else{
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+        }
+    }
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
-        setContentView(R.layout.activit_coordinates_view);
+        setContentView(R.layout.acitivity_coordinates_drawer);
         MainActivity.treesNearby.clear();
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
@@ -84,7 +110,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         addTreeButton.setOnClickListener(new Coordinates_View_Activity.AddTreeEvent());
 
         ImageButton settingsButton = (ImageButton) findViewById(R.id.setting_button);
-        settingsButton.setOnClickListener(new Coordinates_View_Activity.AddSettingsEvent());
+        settingsButton.setOnClickListener(new AddSettingsEvent());
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
 
@@ -123,6 +149,44 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             }
         };
 
+        NavigationView hamburgerView = findViewById(R.id.hamburger_menu);
+        hamburgerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        Intent intent1 = new Intent(Coordinates_View_Activity.this, Login_Activity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent2 = new Intent(Coordinates_View_Activity.this, SettingsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_curator:
+                        Intent intent3 = new Intent(Coordinates_View_Activity.this, CuratorApproveActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_send:
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
+                        startActivity(Intent.createChooser(intent4, "Send Email"));
+                        break;
+                    case R.id.nav_more_info:
+                        Intent intent5 = new Intent(Coordinates_View_Activity.this, MoreInformation.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_notifications:
+                        Intent intent6 = new Intent(Coordinates_View_Activity.this, NotificationsActivity.class);
+                        startActivity(intent6);
+                        break;
+
+                }
+                DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.coord_container);
+                mDrawerLayout.closeDrawer(Gravity.LEFT, false);
+                return false;
+            }
+        });
+
         Button b = (Button) findViewById(R.id.sub_coord_but);
         b.setOnClickListener(new NextEvent());
 
@@ -149,8 +213,11 @@ public class Coordinates_View_Activity extends AppCompatActivity {
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            Intent intentA = new Intent(Coordinates_View_Activity.this, SettingsActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(Coordinates_View_Activity.this, SettingsActivity.class);
+//            startActivity(intentA);
+            DrawerLayout mDrawerLayout = findViewById(R.id.coord_container);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 

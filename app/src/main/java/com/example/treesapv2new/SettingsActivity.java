@@ -68,9 +68,6 @@ public class SettingsActivity extends PreferenceActivity {
             if(findPreference("change_username") !=null) {
                 ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", changeUsername.newUsername));
             }
-//            }else{
-//                ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", Login_Activity.mAuth.getCurrentUser().toString()));
-//            }
         }
 
     }
@@ -89,13 +86,6 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-        findViewById(R.id.notification_button_settings).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 

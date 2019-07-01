@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,13 +17,16 @@ import android.preference.PreferenceManager;
 import android.service.autofill.FieldClassification;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -48,6 +52,8 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.w3c.dom.Text;
 
@@ -74,6 +80,8 @@ public class QR_Code_Activity extends AppCompatActivity {
     Double latD;
     Double longD;
     final Object synchLock = new Object();
+    String emailAddress = "jipping@hope.edu";
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     private static final String[] PERMS = {
@@ -83,10 +91,29 @@ public class QR_Code_Activity extends AppCompatActivity {
 
     private static final int REQUEST_ID = 2;
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        NavigationView hamMenu = findViewById(R.id.hamburger_menu);
+        if(user != null) {
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
+            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
+                //user is curator
+                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
+            } else {
+                //user is not curator
+            }
+        }else{
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+        }
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
-        setContentView(R.layout.activity_qr_code);
+        setContentView(R.layout.qr_code_drawer);
         MainActivity.treesNearby.clear();
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
@@ -141,6 +168,44 @@ public class QR_Code_Activity extends AppCompatActivity {
                 return false;
             }
         };
+
+        NavigationView hamburgerView = findViewById(R.id.hamburger_menu);
+        hamburgerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        Intent intent1 = new Intent(QR_Code_Activity.this, Login_Activity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent2 = new Intent(QR_Code_Activity.this, SettingsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_curator:
+                        Intent intent3 = new Intent(QR_Code_Activity.this, CuratorApproveActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_send:
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
+                        startActivity(Intent.createChooser(intent4, "Send Email"));
+                        break;
+                    case R.id.nav_more_info:
+                        Intent intent5 = new Intent(QR_Code_Activity.this, MoreInformation.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_notifications:
+                        Intent intent6 = new Intent(QR_Code_Activity.this, NotificationsActivity.class);
+                        startActivity(intent6);
+                        break;
+
+                }
+                DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.qr_code_container);
+                mDrawerLayout.closeDrawer(Gravity.LEFT, false);
+                return false;
+            }
+        });
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -400,8 +465,11 @@ public class QR_Code_Activity extends AppCompatActivity {
     private class AddSettingsEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentA = new Intent(QR_Code_Activity.this, SettingsActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(QR_Code_Activity.this, SettingsActivity.class);
+//            startActivity(intentA);
+            DrawerLayout mDrawerLayout = findViewById(R.id.qr_code_container);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 

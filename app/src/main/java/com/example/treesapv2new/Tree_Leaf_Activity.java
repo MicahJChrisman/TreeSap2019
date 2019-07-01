@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -94,7 +95,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
             }
         });
 
-        TextView txtclose = (TextView) findViewById(R.id.leaf_pic_close);
+        ImageView txtclose = (ImageView) findViewById(R.id.leaf_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

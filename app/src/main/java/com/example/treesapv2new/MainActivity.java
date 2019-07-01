@@ -11,6 +11,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -156,16 +157,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
+        NavigationView hamMenu = findViewById(R.id.hamburger_menu);
         if(user != null) {
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
-                //user is signed in
-                findViewById(R.id.curator_button).setVisibility(View.VISIBLE);
+                //user is curator
+                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
             } else {
-                //user is signed out
-                findViewById(R.id.curator_button).setVisibility(View.GONE);
+                //user is not curator
             }
         }else{
-            findViewById(R.id.curator_button).setVisibility(View.GONE);
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
         }
     }
 
@@ -197,25 +201,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ImageButton settingsButton = (ImageButton) findViewById(R.id.settings);
-        settingsButton.setOnClickListener(new NextEvent());
+        settingsButton.setOnClickListener(new SettingsEvent());
 
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
         addTreeButton.setOnClickListener(new AddTreeEvent());
-
-        findViewById(R.id.notifications_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NotificationsActivity.class));
-            }
-        });
-
-        Button curatorButton = (Button) findViewById(R.id.curator_button);
-        curatorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CuratorApproveActivity.class));
-            }
-        });
 
 
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -248,6 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         };
+
+
 //        prefs.edit().putString("HopeCollegeDataSource", "");
 //        prefs.edit().putString("CityOfHollandDataSource", "");
 //        prefs.edit().putString("ExtendedCoHDataSource", "");
@@ -256,9 +247,46 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
+
+        NavigationView hamburgerView = findViewById(R.id.hamburger_menu);
+        hamburgerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        Intent intent1 = new Intent(MainActivity.this, Login_Activity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent2 = new Intent(MainActivity.this, SettingsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_curator:
+                        Intent intent3 = new Intent(MainActivity.this, CuratorApproveActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_send:
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
+                        startActivity(Intent.createChooser(intent4, "Send Email"));
+                        break;
+                    case R.id.nav_more_info:
+                        Intent intent5 = new Intent(MainActivity.this, MoreInformation.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_notifications:
+                        Intent intent6 = new Intent(MainActivity.this, NotificationsActivity.class);
+                        startActivity(intent6);
+                        break;
+
+                }
+                DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.container);
+                mDrawerLayout.closeDrawer(Gravity.LEFT, false);
+                return false;
+            }
+        });
         //sharedPreferences = getSharedPreferences("com.example.treesapv2new", MODE_PRIVATE);
         //checkFirstRun();
-
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -271,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
             dbs.add("ExtendedCoHDataSource");
             dbs.add("ITreeDataSource");
             dbs.add("UserTreeDataSource");
+            dbs.add("AllUsersDataSource");
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }
@@ -300,11 +329,37 @@ public class MainActivity extends AppCompatActivity {
 //        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
 //
 //    }
-    private class NextEvent implements View.OnClickListener {
+    private class SettingsEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intentA = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(MainActivity.this, SettingsActivity.class);
+//            startActivity(intentA);
+            DrawerLayout mDrawerLayout = findViewById(R.id.container);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+//            mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+//                @Override
+//                public void onDrawerSlide(@NonNull View view, float v) {
+//
+//                }
+//
+//                @Override
+//                public void onDrawerOpened(@NonNull View view) {
+//
+//                }
+//
+//                @Override
+//                public void onDrawerClosed(@NonNull View view) {
+//                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//                }
+//
+//                @Override
+//                public void onDrawerStateChanged(int i) {
+//
+//                }
+//            });
+
         }
     }
 
@@ -327,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
             if(event2.getX()>event1.getX()){
                 //left to right swipe
+
             }else if(event2.getX()<event1.getX()){
                 //right to left swipe
                 Intent intent1 = new Intent(MainActivity.this, Big_Red_Button.class);
@@ -616,7 +672,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.container);
+        DrawerLayout layout = (DrawerLayout) findViewById(R.id.container);
         if(selectedDisplayMethod!=null) {
             if (selectedDisplayMethod.getPopupWindow() != null) {
                 selectedDisplayMethod.dismiss();

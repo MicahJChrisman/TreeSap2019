@@ -23,12 +23,15 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -67,6 +70,8 @@ import com.example.treesapv2new.model.TreeLocation;
 import com.example.treesapv2new.view.BulletedWebView;
 import com.example.treesapv2new.view.MapsActivity;
 import com.example.treesapv2new.view.UserViewAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.auth.User;
 
 import java.io.File;
@@ -82,6 +87,8 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 //    public static Tree banana = null;
     public static String sendString = "Big_Red_Button.banana";
+    String emailAddress = "jipping@hope.edu";
+
 
     Double longitude, latitude;
     LocationManager locationManager;
@@ -96,11 +103,32 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             Manifest.permission.ACCESS_NETWORK_STATE
     };
     private static final int REQUEST_ID = 6;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        NavigationView hamMenu = findViewById(R.id.hamburger_menu);
+        if(user != null) {
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
+            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
+                //user is curator
+                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
+            } else {
+                //user is not curator
+            }
+        }else{
+            hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
-        setContentView(R.layout.big_red_button_page);
+        setContentView(R.layout.big_red_button_drawer);
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         MainActivity.treesNearby.clear();
 
@@ -150,6 +178,44 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 return false;
             }
         };
+
+        NavigationView hamburgerView = findViewById(R.id.hamburger_menu);
+        hamburgerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_login:
+                        Intent intent1 = new Intent(Big_Red_Button.this, Login_Activity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent2 = new Intent(Big_Red_Button.this, SettingsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_curator:
+                        Intent intent3 = new Intent(Big_Red_Button.this, CuratorApproveActivity.class);
+                        startActivity(intent3);
+                        break;
+                    case R.id.nav_send:
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
+                        startActivity(Intent.createChooser(intent4, "Send Email"));
+                        break;
+                    case R.id.nav_more_info:
+                        Intent intent5 = new Intent(Big_Red_Button.this, MoreInformation.class);
+                        startActivity(intent5);
+                        break;
+                    case R.id.nav_notifications:
+                        Intent intent6 = new Intent(Big_Red_Button.this, NotificationsActivity.class);
+                        startActivity(intent6);
+                        break;
+
+                }
+                DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.brb_container);
+                mDrawerLayout.closeDrawer(Gravity.LEFT, false);
+                return false;
+            }
+        });
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -247,8 +313,11 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-            Intent intentA = new Intent(Big_Red_Button.this, SettingsActivity.class);
-            startActivity(intentA);
+//            Intent intentA = new Intent(Big_Red_Button.this, SettingsActivity.class);
+//            startActivity(intentA);
+            DrawerLayout mDrawerLayout = findViewById(R.id.brb_container);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 

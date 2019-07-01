@@ -101,7 +101,7 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             }
         });
 
-        TextView txtclose = (TextView) findViewById(R.id.full_pic_close);
+        ImageView txtclose = (ImageView) findViewById(R.id.full_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

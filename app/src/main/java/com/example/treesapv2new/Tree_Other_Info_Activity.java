@@ -196,7 +196,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 //
-        TextView txtclose = (TextView) findViewById(R.id.other_info_close);
+        ImageView txtclose = (ImageView) findViewById(R.id.other_info_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

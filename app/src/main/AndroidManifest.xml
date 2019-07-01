@@ -134,6 +134,11 @@
             android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>
         <activity
+            android:name=".MoreInformation"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label=".TreeSapV2New"/>
+        <activity
             android:name=".NotificationsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"

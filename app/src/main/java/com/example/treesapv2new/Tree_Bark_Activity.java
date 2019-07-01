@@ -108,7 +108,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
 //            }
 //        });
 
-        TextView txtclose = (TextView) findViewById(R.id.bark_pic_close);
+        ImageView txtclose = (ImageView) findViewById(R.id.bark_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

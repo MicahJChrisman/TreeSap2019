@@ -489,17 +489,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <TextView
+        <ImageView
             android:id="@+id/other_info_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginStart="8dp"
-            android:gravity="center"
-            android:text="X"
-            android:textColor="@color/accent_gray"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/icons8_multiply_30"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
