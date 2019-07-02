@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.io.Resources;
@@ -67,6 +68,12 @@ public class SettingsActivity extends PreferenceActivity {
         if(Login_Activity.mAuth.getCurrentUser() !=null) {
             if(findPreference("change_username") !=null) {
                 ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", changeUsername.newUsername));
+            }
+            if(findPreference("account_info") != null){
+                ((Preference) findPreference("account_info")).setTitle(Login_Activity.mAuth.getCurrentUser().getDisplayName());
+                ((Preference) findPreference("account_info")).setSummary(Login_Activity.mAuth.getCurrentUser().getEmail());
+//                ((TextView) findViewById(R.id.display_name_head)).setText(Login_Activity.mAuth.getCurrentUser().getDisplayName());
+//                ((TextView) findViewById(R.id.email_address_sub)).setText(Login_Activity.mAuth.getCurrentUser().getEmail());
             }
         }
 
@@ -207,7 +214,7 @@ public class SettingsActivity extends PreferenceActivity {
                 preference.setSummary(index>= 0 ? multiSelectListPreference.getEntries()[index] : null);
 
 
-            } else if (preference instanceof EditTextPreference) {
+            }else if (preference instanceof EditTextPreference) {
                 if (preference.getKey().equals("distanceFromTreePref")) {
                     // update the changed gallery name to summary filed
                     preference.setSummary(stringValue);

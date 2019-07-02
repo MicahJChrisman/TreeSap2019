@@ -43,10 +43,10 @@
             <PreferenceCategory
                 android:key="account"
                 android:title="Account">
+
                 <Preference
-                    android:key="logout_pref"
-                    android:title="Logout:"
-                    android:widgetLayout="@layout/logout_button">
+                    android:key="account_info"
+                    android:layout="@layout/account_info">
                 </Preference>
 
                 <Preference
@@ -65,47 +65,17 @@
                     android:widgetLayout="@layout/login_button">
                 </Preference>
 
+                <Preference
+                    android:key="logout_pref"
+                    android:title="Logout:"
+                    android:widgetLayout="@layout/logout_button">
+                </Preference>
+
             </PreferenceCategory>
 
         </PreferenceScreen>
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="other"
-        android:title="Other">
-        <PreferenceScreen
-            android:key="acknowledgements"
-            android:title="More Information"
-            android:widgetLayout="@layout/next_button_settings"
-            android:selectable="true">
-            <Preference
-                android:enabled="true"
-                android:key="itree_ack"
-                android:selectable="false"
-                android:summary=""
-                android:title="iTree Web Tools" />
-            <Preference
-                android:enabled="true"
-                android:key="benefit_calc_ack"
-                android:selectable="false"
-                android:summary=""
-                android:title="National Tree Benefit Calculator" />
-            <Preference
-                android:enabled="true"
-                android:key="iNaturalist_ack"
-                android:selectable="false"
-                android:summary=""
-                android:title="iNaturalist" />
-            <Preference
-                android:enabled="true"
-                android:key="creators_ack"
-                android:selectable="false"
-                android:summary="Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
-                android:title="Copyright of Hope College" />
-
-        </PreferenceScreen>
-
-    </PreferenceCategory>
 
 </PreferenceScreen>
