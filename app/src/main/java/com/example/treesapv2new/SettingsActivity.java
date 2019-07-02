@@ -1,5 +1,6 @@
 package com.example.treesapv2new;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Ringtone;
@@ -66,25 +67,24 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         if(Login_Activity.mAuth.getCurrentUser() !=null) {
-            if(findPreference("change_username") !=null) {
-                ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", changeUsername.newUsername));
-            }
+//            if(findPreference("change_username") !=null) {
+//                ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", changeUsername.newUsername));
+//            }
             if(findPreference("account_info") != null){
                 ((Preference) findPreference("account_info")).setTitle(Login_Activity.mAuth.getCurrentUser().getDisplayName());
                 ((Preference) findPreference("account_info")).setSummary(Login_Activity.mAuth.getCurrentUser().getEmail());
-//                ((TextView) findViewById(R.id.display_name_head)).setText(Login_Activity.mAuth.getCurrentUser().getDisplayName());
-//                ((TextView) findViewById(R.id.email_address_sub)).setText(Login_Activity.mAuth.getCurrentUser().getEmail());
             }
         }
 
     }
 
+    public static Activity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
 
-
+        activity = this;
 
         addPreferencesFromResource(R.xml.preferences);
         setContentView(R.layout.activity_settings);
@@ -93,6 +93,22 @@ public class SettingsActivity extends PreferenceActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        ((Preference) findPreference("logout_pref")).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                logOut();
+                return false;
+            }
+        });
+
+        ((Preference) findPreference("login_pref")).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                logIn();
+                return false;
             }
         });
 
@@ -118,49 +134,8 @@ public class SettingsActivity extends PreferenceActivity {
             b.addPreference(findPreference("login_pref"));
         }
 
-
-
-
-//        String sp = getPreferenceScreen().getSharedPreferences().getString("change_username","No user logged in.");
-
-
-
-//        FragmentTransaction fragmentTransaction;
-//        FragmentManager fragmentManager;
-//        Fragment fragment = new MainSettingsFragment();
-//        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.commit();
-//        getSupportFragmentManager().beginTransaction().replace(findViewById(R.id.fragment), new MainSettingsFragment()).commit();
-//        setContentView(R.layout.activity_settings);
-//
-//        showLocationMarker = (SwitchCompat) findViewById(R.id.showLocationSwitch);
-//        showLocationMarker.setChecked(stateShowLocationMarker);
-//        showLocationMarker.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                stateShowLocationMarker =!stateShowLocationMarker;
-//                showLocationMarker.setChecked(stateShowLocationMarker);
-//            }
-//        });
-//  Thing to test thing
-
-        // gallery EditText change listener
         bindPreferenceSummaryToValue(findPreference(getString(R.string.distanceFromTreePref)));
-//        ((EditText) findViewById(R.id.max_meters_edittext)).setText(getString(R.string.distanceFromTreePref));
 
-
-
-
-        // notification preference change listener
-
-        // feedback preference click listener
-//        Preference myPref = findPreference(getString(R.string.key_send_feedback));
-//        myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            public boolean onPreferenceClick(Preference preference) {
-//                //sendFeedback(getActivity());
-//                return true;
-//            }
-//        });
     }
 
     @Override
@@ -171,7 +146,7 @@ public class SettingsActivity extends PreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void logOut(View v){
+    public void logOut(){
         Login_Activity.mAuth.signOut();
 //        SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
         ((Preference) findPreference("change_username")).setSummary( getPreferenceScreen().getSharedPreferences().getString("change_username", "No user logged in"));
@@ -182,7 +157,7 @@ public class SettingsActivity extends PreferenceActivity {
         startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
     }
 
-    public void logIn(View v){
+    public void logIn(){
         finish();
         startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
         startActivity(new Intent(SettingsActivity.this, Login_Activity.class));
@@ -212,8 +187,6 @@ public class SettingsActivity extends PreferenceActivity {
                 MultiSelectListPreference multiSelectListPreference = (MultiSelectListPreference) preference;
                 int index = multiSelectListPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index>= 0 ? multiSelectListPreference.getEntries()[index] : null);
-
-
             }else if (preference instanceof EditTextPreference) {
                 if (preference.getKey().equals("distanceFromTreePref")) {
                     // update the changed gallery name to summary filed

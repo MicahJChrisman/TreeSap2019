@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 //user is not curator
             }
         }else{
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
         }

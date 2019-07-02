@@ -61,14 +61,13 @@
 
                 <Preference
                     android:key="login_pref"
-                    android:title="Login"
-                    android:widgetLayout="@layout/login_button">
+                    android:title="Login">
                 </Preference>
 
                 <Preference
                     android:key="logout_pref"
                     android:title="Logout:"
-                    android:widgetLayout="@layout/logout_button">
+                    android:layout="@layout/logout_text">
                 </Preference>
 
             </PreferenceCategory>
