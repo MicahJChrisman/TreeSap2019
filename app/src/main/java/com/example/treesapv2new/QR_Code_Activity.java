@@ -80,7 +80,6 @@ public class QR_Code_Activity extends AppCompatActivity {
     Double latD;
     Double longD;
     final Object synchLock = new Object();
-    String emailAddress = "jipping@hope.edu";
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
@@ -187,7 +186,7 @@ public class QR_Code_Activity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.nav_send:
-                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",getResources().getString(R.string.emailFeedback), null));
                         intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
                         startActivity(Intent.createChooser(intent4, "Send Email"));
                         break;

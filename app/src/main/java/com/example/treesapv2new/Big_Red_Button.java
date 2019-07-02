@@ -87,8 +87,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
 //    public static Tree banana = null;
     public static String sendString = "Big_Red_Button.banana";
-    String emailAddress = "jipping@hope.edu";
-
 
     Double longitude, latitude;
     LocationManager locationManager;
@@ -197,7 +195,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                         startActivity(intent3);
                         break;
                     case R.id.nav_send:
-                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",getResources().getString(R.string.emailFeedback), null));
                         intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
                         startActivity(Intent.createChooser(intent4, "Send Email"));
                         break;

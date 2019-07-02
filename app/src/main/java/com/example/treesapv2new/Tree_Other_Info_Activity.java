@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -155,23 +156,46 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 //            passedArray[5] = long_value;
 //        }
 
+        ((Switch) findViewById(R.id.units_switch)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    ((TextView) findViewById(R.id.circum_text)).setText("Circumference (cm)");
+                    ((TextView) findViewById(R.id.dbh_text)).setText("DBH (cm)");
+                }else{
+                    ((TextView) findViewById(R.id.circum_text)).setText("Circumference (in)");
+                    ((TextView) findViewById(R.id.dbh_text)).setText("DBH (in)");
+                }
+            }
+        });
+
         ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((LinearLayout) findViewById(R.id.dbh_circum_add_2)).setVisibility(View.VISIBLE);
-                ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((LinearLayout) findViewById(R.id.dbh_circum_add_3)).setVisibility(View.VISIBLE);
-                        ((ImageButton) findViewById(R.id.add_more_dbh_button)).setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ((LinearLayout) findViewById(R.id.dbh_circum_add_4)).setVisibility(View.VISIBLE);
-                                ((ImageButton) findViewById(R.id.add_more_dbh_button)).setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                });
+                if(findViewById(R.id.dbh_circum_add_2).getVisibility() == View.GONE){
+                    findViewById(R.id.dbh_circum_add_2).setVisibility(View.VISIBLE);
+                    findViewById(R.id.remove_dbh_button).setVisibility(View.VISIBLE);
+                }else if(findViewById(R.id.dbh_circum_add_3).getVisibility() == View.GONE){
+                    findViewById(R.id.dbh_circum_add_3).setVisibility(View.VISIBLE);
+                }else if(findViewById(R.id.dbh_circum_add_4).getVisibility() == View.GONE){
+                    findViewById(R.id.dbh_circum_add_4).setVisibility(View.VISIBLE);
+                    findViewById(R.id.add_more_dbh_button).setVisibility(View.GONE);
+                }
+            }
+        });
+
+        ((ImageButton) findViewById(R.id.remove_dbh_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(findViewById(R.id.dbh_circum_add_4).getVisibility() == View.VISIBLE){
+                    findViewById(R.id.dbh_circum_add_4).setVisibility(View.GONE);
+                    findViewById(R.id.add_more_dbh_button).setVisibility(View.VISIBLE);
+                }else if(findViewById(R.id.dbh_circum_add_3).getVisibility() == View.VISIBLE){
+                    findViewById(R.id.dbh_circum_add_3).setVisibility(View.GONE);
+                }else if(findViewById(R.id.dbh_circum_add_2).getVisibility() == View.VISIBLE){
+                    findViewById(R.id.dbh_circum_add_2).setVisibility(View.GONE);
+                    findViewById(R.id.remove_dbh_button).setVisibility(View.GONE);
+                }
             }
         });
 
@@ -485,34 +509,63 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     commonName = ((AutoCompleteTextView) findViewById(R.id.common_name)).getText().toString();
                     scientificName = ((TextView) findViewById(R.id.scientific_name)).getText().toString();
+
                     if(!(((EditText) findViewById(R.id.dbh_textView)).getText().toString()).equals("")) {
                         dbh = Double.valueOf(((EditText) findViewById(R.id.dbh_textView)).getText().toString());
+                        if(((Switch) findViewById(R.id.units_switch)).isChecked()) {
+                            Double t = Double.valueOf(dbh);
+                            t=t*0.393701;
+                            dbh = t;
+                        }
                     }
                     if(!(((EditText) findViewById(R.id.dbh_textView2)).getText().toString()).equals("")) {
                         dbh2 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView2)).getText().toString());
+                        if(((Switch) findViewById(R.id.units_switch)).isChecked()) {
+                            Double t = Double.valueOf(dbh2);
+                            t=t*0.393701;
+                            dbh2 = t;
+                        }
                     }
                     if(!(((EditText) findViewById(R.id.dbh_textView3)).getText().toString()).equals("")) {
                         dbh3 = Double.valueOf(((EditText)findViewById(R.id.dbh_textView3)).getText().toString());
+                        if(((Switch) findViewById(R.id.units_switch)).isChecked()) {
+                            Double t = Double.valueOf(dbh3);
+                            t=t*0.393701;
+                            dbh3 = t;
+                        }
                     }
                     if(!(((EditText) findViewById(R.id.dbh_textView4)).getText().toString()).equals("")) {
                         dbh4 = Double.valueOf(((EditText) findViewById(R.id.dbh_textView4)).getText().toString());
+                        if(((Switch) findViewById(R.id.units_switch)).isChecked()) {
+                            Double t = Double.valueOf(dbh4);
+                            t=t*0.393701;
+                            dbh4 = t;
+                        }
                     }
                     if(!(((EditText) findViewById(R.id.notes_about_tree)).getText().toString()).equals("")) {
                         notes = ((EditText) findViewById(R.id.notes_about_tree)).getText().toString();
                     }
 
 
+                    ArrayList<Double> dbhArray = new ArrayList<Double>();
+                    if(dbh != null) {
+                        dbhArray.add(dbh);
+                    }
+                    if(dbh2 != null) {
+                        dbhArray.add(dbh2);
+                    }
+                    if(dbh3 != null) {
+                        dbhArray.add(dbh3);
+                    }
+                    if(dbh4 != null) {
+                        dbhArray.add(dbh4);
+                    }
+
+
                     passedArray[0] = "0";
                     passedArray[1] = commonName;
                     passedArray[2] = scientificName;
-                    if(((Switch) findViewById(R.id.units_switch)).isChecked()) {
-                        Double t = Double.valueOf(dbh);
-                        t=t*0.393701;
 
-                        passedArray[3] = t.toString();
-                    }else{
-                        //passedArray[3] = dbh;
-                    }
                     passedArray[6] = notes;
                     long time = System.currentTimeMillis();
                     timestamp = new Timestamp(time);
@@ -597,6 +650,8 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("latitude", lat);
                     user.put("longitude",longit);
                     user.put("images", MainActivity.storedImages);
+                    user.put("dbhArray", dbhArray);
+
 
 
 
@@ -613,20 +668,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     user.put("userID", userID);
 
 
-                    ArrayList<Double> dbhArray = new ArrayList<Double>();
-                    if(dbh != null) {
-                        dbhArray.add(dbh);
-                    }
-                    if(dbh2 != null) {
-                        dbhArray.add(dbh2);
-                    }
-                    if(dbh3 != null) {
-                        dbhArray.add(dbh3);
-                    }
-                    if(dbh4 != null) {
-                        dbhArray.add(dbh4);
-                    }
-                    user.put("dbhArray", dbhArray);
+
 
 //                    users.document(lat + ", " + longit + ", " + commonName).set(user);
 

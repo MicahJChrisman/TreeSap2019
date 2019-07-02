@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
     CardViewListAdapter idMethodsAdapter;
     static final int REQUEST_IMAGE_CAPTURE = 5;
     private String newLog;
-    String emailAddress = "jipping@hope.edu";
     String sharingLink = "https://play.google.com/store";
 
     SharedPreferences sharedPreferences = null;
@@ -267,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.nav_send:
-                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",emailAddress, null));
+                        Intent intent4 = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",getResources().getString(R.string.emailFeedback), null));
                         intent4.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
                         startActivity(Intent.createChooser(intent4, "Send Email"));
                         break;

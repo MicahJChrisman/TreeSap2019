@@ -21,6 +21,7 @@
     <string name="itree_link"><a href="https://www.itreetools.org">i-Tree Web Tools</a></string>
     <string name="natural_tree_link"><a href="http://www.treebenefits.com/calculator/">National Tree Benefit Calculator</a></string>
     <string name="inaturalist_link"><a href="https://www.inaturalist.org">iNaturalist</a></string>
+    <string name="emailFeedback">feedback@treesap.info</string>
 
     <string-array name="zoom_array">
         <item>Very Close</item>
