@@ -37,6 +37,16 @@
             android:icon="@drawable/info_icon"/>
     </group>
 
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Log out"
+            android:visible="false"
+            android:icon="@drawable/icons8_user_30"/>
+    </group>
+
 
 
 

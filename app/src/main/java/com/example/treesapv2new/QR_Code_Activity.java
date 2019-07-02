@@ -98,6 +98,7 @@ public class QR_Code_Activity extends AppCompatActivity {
         if(user != null) {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
+            hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
             if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
                 //user is curator
                 hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
@@ -107,6 +108,7 @@ public class QR_Code_Activity extends AppCompatActivity {
         }else{
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
     }
 
@@ -198,6 +200,16 @@ public class QR_Code_Activity extends AppCompatActivity {
                         Intent intent6 = new Intent(QR_Code_Activity.this, NotificationsActivity.class);
                         startActivity(intent6);
                         break;
+                    case R.id.nav_logout:
+                        mAuth.signOut();
+                        Toast toast = Toast.makeText(QR_Code_Activity.this, "You have been logged out.", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0,0);
+                        toast.show();
+                        NavigationView hamMenu = findViewById(R.id.hamburger_menu);
+                        hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
+                        hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
+                        hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+                        hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.qr_code_container);
