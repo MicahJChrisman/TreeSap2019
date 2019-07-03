@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class ImageAdapter extends PagerAdapter {
     private Context context;
     private Object[] dBmpList;
-    NewArrayAdapter arrayAdapter;
+    ArrayAdapter arrayAdapter;
 
-    ImageAdapter(Context context, ArrayList<BitmapDrawable>  dBmpList, NewArrayAdapter arrayAdapter){
+    ImageAdapter(Context context, ArrayList<BitmapDrawable>  dBmpList, ArrayAdapter arrayAdapter){
         this.context = context;
         this.dBmpList = (Object[]) dBmpList.toArray();
         this.arrayAdapter = arrayAdapter;

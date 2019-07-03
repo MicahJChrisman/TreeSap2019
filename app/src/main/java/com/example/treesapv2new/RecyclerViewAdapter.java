@@ -55,7 +55,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //
 //                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(mContext, Curator_Swipe_Activity.class);
+                Intent intent = new Intent(mContext, CuratorActivity.class);
+//                Intent intent = new Intent(mContext, Curator_Swipe_Activity.class);
 //                intent.putExtra("image_url", mImages.get(position));
 //                intent.putExtra("image_name", mImageNames.get(position));
                 mContext.startActivity(intent);

@@ -180,6 +180,7 @@ public class Tree {
             for(Object pic : treePics.get(key)){
                 out += ": " + pic + "\n";
             }
+//            out = out.substring(0, out.length()-2);
         }
 
         if (out.length() > 0) out = out.substring(0, out.length()-1);
