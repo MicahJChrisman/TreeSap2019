@@ -31,7 +31,7 @@ public class AddCurator extends AppCompatActivity {
         findViewById(R.id.add_curator_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText) findViewById(R.id.add_curator_email)).getText().toString();
+                String email = ((EditText) findViewById(R.id.add_curator_email)).getText().toString().toLowerCase();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

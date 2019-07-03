@@ -137,7 +137,7 @@ public class Login_Activity extends AppCompatActivity {
 
     private class register implements View.OnClickListener{
         public void onClick(View v){
-            String email = ((TextView)findViewById(R.id.edittext_username_reg)).getText().toString();
+            String email = ((TextView)findViewById(R.id.edittext_username_reg)).getText().toString().toLowerCase();
             String password = ((TextView)findViewById(R.id.edittext_password_reg)).getText().toString();
             String passwordCnf = ((TextView)findViewById(R.id.edittext_cnf_password)).getText().toString();
 
