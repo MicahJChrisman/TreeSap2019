@@ -232,59 +232,59 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
             requestPermissions(PERMS, REQUEST_ID);
         }
 
-//        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+            @Override
+            public void removeFirstObjectInAdapter() {
+                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+                Log.d("LIST", "removed object!");
+                penTrees.remove(0);
+                arrayAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onLeftCardExit(Object dataObject) {
+                //Do something on the left!
+                //You also have access to the original object.
+                //If you want to use it just cast it (String) dataObject
+                Toast.makeText(Curator_Swipe_Activity.this, "Rejected!", Toast.LENGTH_SHORT).show();
+                rejectTree();
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                hideMap();
+                //removeFirstObjectInAdapter();
+            }
+
+            @Override
+            public void onRightCardExit(Object dataObject) {
+                acceptTree();
+                hideMap();
+            }
+
+            @Override
+            public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                // Ask for more data here
+                //rowItems.add("XML ".concat(String.valueOf(i)));
+                arrayAdapter.notifyDataSetChanged();
+                Log.d("LIST", "notified");
+                i++;
+            }
+
+            @Override
+            public void onScroll(float scrollProgressPercent) {
+                View view = flingContainer.getSelectedView();
+               //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+            }
+
 //            @Override
-//            public void removeFirstObjectInAdapter() {
-//                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-//                Log.d("LIST", "removed object!");
-//                penTrees.remove(0);
-//                arrayAdapter.notifyDataSetChanged();
+//            public void onCardExited(){
 //
 //            }
-//
-//            @Override
-//            public void onLeftCardExit(Object dataObject) {
-//                //Do something on the left!
-//                //You also have access to the original object.
-//                //If you want to use it just cast it (String) dataObject
-//                Toast.makeText(Curator_Swipe_Activity.this, "Rejected!", Toast.LENGTH_SHORT).show();
-//                rejectTree();
-////                try {
-////                    Thread.sleep(1000);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-//                hideMap();
-//                //removeFirstObjectInAdapter();
-//            }
-//
-//            @Override
-//            public void onRightCardExit(Object dataObject) {
-//                acceptTree();
-//                hideMap();
-//            }
-//
-//            @Override
-//            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//                // Ask for more data here
-//                //rowItems.add("XML ".concat(String.valueOf(i)));
-//                arrayAdapter.notifyDataSetChanged();
-//                Log.d("LIST", "notified");
-//                i++;
-//            }
-//
-//            @Override
-//            public void onScroll(float scrollProgressPercent) {
-//                View view = flingContainer.getSelectedView();
-//               //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-//                //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
-//            }
-//
-////            @Override
-////            public void onCardExited(){
-////
-////            }
-//        });
+        });
 
 
         // Optionally add an OnItemClickListener
