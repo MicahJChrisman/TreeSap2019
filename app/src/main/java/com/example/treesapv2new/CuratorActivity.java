@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,6 +26,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -177,7 +179,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         googleApiClient.connect();
 
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        NestedScrollView scrollView = (NestedScrollView) findViewById (R.id.nested_scrolll_view);
+        scrollView.setFillViewport (true);
 
         FragmentManager fm = getSupportFragmentManager();
         if(mapFragment == null){
@@ -358,7 +361,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             }
         };
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        navView.setSelectedItemId(R.id.nav_view);
+//        navView.setSelectedItemId(R.id.nav_view)
+//        navView.setLabelVisibilityMode(View.GONE);
+       // TODO make all labels white navView.setItemTextColor(new ColorStateList());
 //        rejectButton = findViewById(R.id.reject_button);
 //        rejectButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -513,7 +518,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     public void setView(){
-        dBmpList = populateList();
+        if(penTrees.isEmpty()){
+            findViewById(R.id.empty_message).setVisibility(View.VISIBLE);
+            findViewById(R.id.cardView).setVisibility(View.GONE);
+
+        }else {
+            dBmpList = populateList();
 //        if(convertView == null) {
 //            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
 //            this.convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
@@ -521,63 +531,64 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        else{
 //            this.convertView = convertView;
 //        }
-        viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager = (ViewPager) findViewById(R.id.pager);
 
-        ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(dBmpList.size()-1);
-        TextView noPicsMessage = findViewById(R.id.no_pics_message);
-        if(dBmpList.size()==0) {
-            //noPicsMessage.setVisibility(View.VISIBLE);
-            viewPager.setBackgroundResource(R.drawable.new_logo);
+            ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
+            viewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
+            TextView noPicsMessage = findViewById(R.id.no_pics_message);
+            if (dBmpList.size() == 0) {
+                //noPicsMessage.setVisibility(View.VISIBLE);
+                viewPager.setBackgroundResource(R.drawable.new_logo);
 
-        }else{
-            //noPicsMessage.setVisibility(View.GONE);
-            viewPager.setBackground(null);
-        }
-
-        //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
-        String cName = (String) currentTree.getCommonName();
-        if(cName != null && cName != ""){
-            commonName.setText(cName);
-        }else{
-            commonName.setText("N/A");
-        }
-        String sName = (String) currentTree.getScientificName();
-        if(cName != null && cName != ""){
-            scientificName.setText(sName);
-        }else{
-            scientificName.setText("N/A");
-        }
-        ArrayList<Double> dbhList = currentTree.getAllDBHs();
-        String dbhText = "";
-        if(dbhList != null && !dbhList.isEmpty()){
-            dbhText += dbhList.get(0);
-            if(dbhList.size() > 1){
-                for(int i = 1; i<dbhList.size(); i++){
-                    dbhText += "\n" + dbhList.get(i);
-                }
+            } else {
+                //noPicsMessage.setVisibility(View.GONE);
+                viewPager.setBackground(null);
             }
-            dbhs.setText(dbhText);
-        }else{
-            dbhs.setText("N/A");
-        }
 
-        ArrayList<String> notesList = (ArrayList<String>) currentTree.getNotesArray();
-        if(notesList != null && !notesList.isEmpty()){
-            String finalNote = notesList.get(0);
-            if(notesList.size() > 1){
-                for(int i = 1; i<notesList.size(); i++){
-                    finalNote += "\n" + notesList.get(i);
-                }
+            //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
+            String cName = (String) currentTree.getCommonName();
+            if (cName != null && cName != "") {
+                commonName.setText(cName);
+            } else {
+                commonName.setText("N/A");
             }
-            if(!finalNote.equals("")){
-                notes.setText(finalNote);
-            }else{
+            String sName = (String) currentTree.getScientificName();
+            if (cName != null && cName != "") {
+                scientificName.setText(sName);
+            } else {
+                scientificName.setText("N/A");
+            }
+            ArrayList<Object> dbhList = currentTree.getDBHArray();
+            String dbhText = "";
+            if (dbhList != null && !dbhList.isEmpty()) {
+                dbhText += dbhList.get(0);
+                if (dbhList.size() > 1) {
+                    for (int i = 1; i < dbhList.size(); i++) {
+                        dbhText += "\n" + dbhList.get(i);
+                    }
+                }
+                dbhs.setText(dbhText);
+            } else {
+                dbhs.setText("N/A");
+            }
+
+            ArrayList<String> notesList = (ArrayList<String>) currentTree.getNotesArray();
+            if (notesList != null && !notesList.isEmpty()) {
+                String finalNote = notesList.get(0);
+                if (notesList.size() > 1) {
+                    for (int i = 1; i < notesList.size(); i++) {
+                        finalNote += "\n" + notesList.get(i);
+                    }
+                }
+                if (!finalNote.equals("")) {
+                    notes.setText(finalNote);
+                } else {
+                    notes.setText("N/A");
+                }
+            } else {
                 notes.setText("N/A");
             }
-        }else{
-            notes.setText("N/A");
         }
     }
 
@@ -767,31 +778,32 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         }else {
             tree.setScientificName(scientificName);
         }
-        ArrayList<Number> dbhList = ((ArrayList<Number>) document.get("dbhArray"));
+        ArrayList<Object> dbhList = (ArrayList<Object>) document.get("dbhArray");
 //                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
-        if(dbhList == null || dbhList.isEmpty()){
-            tree.setCurrentDBH(0.0);
-        }else{
+        if(dbhList != null && !dbhList.isEmpty()){
+            tree.setDBHArray(dbhList);
 //                                tree.setCurrentDBHetCurrentDBH(new Double(dbh));
 //                                tree.setCurrentDBH(dbh);
-            tree.setCurrentDBH(dbhList.get(0).doubleValue());
+//            tree.setCurrentDBH(dbhList.get(0).doubleValue());
+
         }
         tree.setID(document.getId());
         ArrayList<String> notes = (ArrayList<String>) document.get("notes");
-        if(notes != null && !notes.isEmpty()) {
-            String finalNote = "";
-            for (String note : notes) {
-                finalNote += note + "\n";
-            }
-            //String note = otherInfo.get("Notes");
-//          while(i>=0) {
-//          String notes = (String) tree.getInfo("Notes");
-//          notes = notes + "/n" + otherInfo[i];
-//          }
-            if (!finalNote.equals("")) {
-                tree.addInfo("Notes", finalNote);
-            }
-        }
+        tree.setNotesArray(notes);
+//        if(notes != null && !notes.isEmpty()) {
+//            String finalNote = "";
+//            for (String note : notes) {
+//                finalNote += note + "\n";
+//            }
+//            //String note = otherInfo.get("Notes");
+////          while(i>=0) {
+////          String notes = (String) tree.getInfo("Notes");
+////          notes = notes + "/n" + otherInfo[i];
+////          }
+//            if (!finalNote.equals("")) {
+//                tree.addInfo("Notes", finalNote.substring(0, finalNote.length()-1));
+//            }
+//        }
 
         HashMap<String, ArrayList<String>> stringPics = (HashMap<String, ArrayList<String>>) document.get("images");
         tree.setTreePhotos(stringPics);
