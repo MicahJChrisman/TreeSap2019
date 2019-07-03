@@ -59,14 +59,15 @@
 
             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
                 android:id="@+id/directions_button"
-                android:layout_width="230dp"
-                android:layout_height="62dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/directions_button1"
                 android:text="Directions"
-                app:fabText="Directions"/>
+                app:fabColor="#1a73e8"
+                app:fabIconPosition="start"
+                app:fabText="Directions" />
 
         </LinearLayout>
 

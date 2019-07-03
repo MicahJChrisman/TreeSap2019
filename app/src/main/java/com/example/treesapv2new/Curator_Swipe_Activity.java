@@ -69,6 +69,7 @@ import com.google.firebase.firestore.model.Document;
 import com.lorentzos.flingswipe.FlingCardListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.sql.Array;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -624,9 +625,18 @@ public class Curator_Swipe_Activity extends AppCompatActivity implements OnMapRe
             }
         }
 
-//        ArrayList<Object> stringPics = (ArrayList<Object>) ((Map<Object, Object>) document.get("images")).get("full");
-//
-//        //String[] pics = stringPics.split("\n?\t.*: ");
+        Map<Object, Object> stringPics = (Map<Object, Object>) document.get("images");
+        ArrayList<Object> fullPics = (ArrayList<Object>) ((Map<Object, Object>) document.get("images")).get("full");
+        ArrayList<Object> pics;
+        //String[] pics = stringPics.split("\n?\t.*: ");
+        for(Object key : stringPics.keySet()){
+            pics = (ArrayList<Object>) stringPics.get(key);
+            for(Object pic : pics){
+                if(pic != null){
+                    tree.addPics((String)key, pic);
+                }
+            }
+        }
 //        int i = 0;
 //        if(stringPics!=null) {
 //            while(i<stringPics.size()){

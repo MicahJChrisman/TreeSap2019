@@ -28,7 +28,7 @@ public class Tree {
     public static final int TREE_ASSET_VALUE = 20;
     public static final int ROOT_INFRINGEMENT = 23;
 
-    Double currentDBH;
+    ArrayList<Double> currentDBH;
     ArrayList<String> dbsUsed = new ArrayList<>();
     ArrayList<Object> dbhArray = new ArrayList<>();
     ArrayList<String> notesArray = new ArrayList<>();
@@ -140,11 +140,20 @@ public class Tree {
     }
 
     public Double getCurrentDBH() {
-        return currentDBH;
+        return currentDBH.get(0);
     }
 
+    public ArrayList<Double> getAllDBHs(){return currentDBH;}
+
     public void setCurrentDBH(Double currentDBH) {
-        this.currentDBH = currentDBH;
+        if(this.currentDBH == null){
+            this.currentDBH = new ArrayList<>();
+        }
+        this.currentDBH.add(currentDBH);
+    }
+
+    public void setCurrentDBH(ArrayList<Double> dbhs){
+        this.currentDBH = dbhs;
     }
 
     public void setDBHArray(ArrayList<Object> dbhArray){
@@ -179,9 +188,10 @@ public class Tree {
             for(Object pic : treePics.get(key)){
                 out += ": " + pic + "\n";
             }
+            out = out.substring(0, out.length()-1);
         }
 
-        if (out.length() > 0) out = out.substring(0, out.length()-1);
+//        if (out.length() > 0) out = out.substring(0, out.length()-1);
         return out;
     }
 

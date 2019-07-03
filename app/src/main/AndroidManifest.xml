@@ -159,6 +159,12 @@
             android:screenOrientation="portrait"
             android:label="@string/title_activity_maps" />
         <activity android:name=".view.Settings" />
+
+        <activity
+            android:name=".CuratorActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label="TreeSapV2new"/>
     </application>
 
 </manifest>
