@@ -206,7 +206,9 @@ public class CityOfHollandDataSource extends DataSource {
             tree.setIsClosest(true);
             tree.setDataSource("CoHdatabase");
 
-
+            for(Tree tree1 : MainActivity.treesNearby) {
+                tree.addNearbyTrees(tree1);
+            }
             return tree;
         }
 

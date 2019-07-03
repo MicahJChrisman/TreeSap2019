@@ -232,6 +232,7 @@ public class AllUsersDataSource extends DataSource {
 //                treeReturn.setDataSource("AllUserDB");
 //                treeReturn.setFound(true);
                 MainActivity.treesNearby.add(tree);
+//                MainActivity.banana.addNearbyTrees(tree);
             }
             if (closestDistance > cap) {
 //                break;
@@ -276,6 +277,9 @@ public class AllUsersDataSource extends DataSource {
 
         }
 //        userTrees.clear();
+        for(Tree tree1 : MainActivity.treesNearby) {
+            treeReturn.addNearbyTrees(tree1);
+        }
         return treeReturn;
 
 
@@ -536,6 +540,11 @@ public class AllUsersDataSource extends DataSource {
         }
         if(MainActivity.banana.getDataSource() == null){
             MainActivity.banana.setDataSource("AllUserDB");
+        }
+        if(MainActivity.banana.getNearbyTrees() == null){
+            for(Tree tree1 : tree.getNearbyTrees()) {
+                MainActivity.banana.addNearbyTrees(tree1);
+            }
         }
     }
 

@@ -243,6 +243,9 @@ public class UserTreeDataSource extends DataSource {
             }
         }
 //        userTrees.clear();
+        for(Tree tree1 : MainActivity.treesNearby) {
+            treeReturn.addNearbyTrees(tree1);
+        }
         return treeReturn;
     }
 

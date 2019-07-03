@@ -343,11 +343,12 @@ public class Tree_Info_First extends AppCompatActivity {
             ((TextView) findViewById(R.id.otherInfo)).setVisibility(View.GONE);
         }
 
-        if(MainActivity.treesNearby !=null){
+//        if(MainActivity.treesNearby !=null){
+        if(MainActivity.banana.getNearbyTrees() != null){
             ((Spinner) findViewById(R.id.nearby_trees_spinner)).setVisibility(View.VISIBLE);
             ArrayList<String> commonNameNearby = new ArrayList<String>();
             commonNameNearby.add("Not the tree you wanted?");
-            for(Tree t : MainActivity.treesNearby){
+            for(Tree t : MainActivity.banana.getNearbyTrees()){
                 commonNameNearby.add(t.getCommonName());
             }
             adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, commonNameNearby);
@@ -355,6 +356,8 @@ public class Tree_Info_First extends AppCompatActivity {
             spinNearbyTrees.setAdapter(adapter);
 
             spinNearbyTrees.setOnItemSelectedListener(new SwitchTreeEvent());
+        }else{
+            findViewById(R.id.nearby_trees_spinner).setVisibility(View.GONE);
         }
     }
 
@@ -364,17 +367,74 @@ public class Tree_Info_First extends AppCompatActivity {
             String selectedItem = parent.getItemAtPosition(position).toString();
             int spinPosition = parent.getSelectedItemPosition();
             if(spinPosition > 0) {
-                Tree spinTree = MainActivity.treesNearby.get(spinPosition - 1);
+                Tree spinTree = MainActivity.banana.getNearbyTrees().get(spinPosition - 1);
                 MainActivity.banana = spinTree;
-//            patchTreeData();
-//                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
-                updateTree();
+
+////                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
+//                ImageSlider imageSlider = findViewById(R.id.view_photos_slider);
+//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+////                Object a = new Object();
+//////                mSectionsPagerAdapter.destroyItem(view,0, mSectionsPagerAdapter.getItem(0));
+//                imageSlider.setAdapter(mSectionsPagerAdapter);
+//                patchTreeDataSwitch();
+//                updateTree();
+//                finish();
+                startActivity(new Intent(Tree_Info_First.this, Tree_Info_First.class));
             }
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
+    }
+
+    public void patchTreeDataSwitch(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        // sources.remove(MainActivity.banana.getDataSource());
+        DataSource ds;
+        if(MainActivity.banana.getDataSource() == "ExtendedCoH"){
+            ds = new ExtendedCoHDataSource();
+        }else if(MainActivity.banana.getDataSource() == "iTreeData"){
+            ds = new ITreeDataSource();
+        }else if(MainActivity.banana.getDataSource()=="HopeCollegeData" ){
+            ds = new HopeCollegeDataSource();
+        }else if (MainActivity.banana.getDataSource()== "CoHdatabase") {
+            ds = new CityOfHollandDataSource();
+        }else if(MainActivity.banana.getDataSource()== "AllUserDB"){
+            ds = new AllUsersDataSource();
+        }else{
+            ds = MainActivity.userTreeDataSourceGlobal;
+        }
+        ds.initialize(Tree_Info_First.this,null);
+        Tree tree = ds.search(MainActivity.banana.getLocation());
+        if(tree != null && tree.isFound()){
+            ds.patchData(tree);
+        }
+
+
+//        for (String source : sources) {
+//            Log.d("MainActivity", "Searching.  Trying: "+source);
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else if (source.equals("UserTreeDataSource")) {
+//                ds = MainActivity.userTreeDataSourceGlobal;
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//            ds.initialize(Tree_Info_First.this,null);
+//            Tree tree = ds.search(MainActivity.banana.getLocation());
+//
+//            if(tree != null && tree.isFound()){
+//                ds.patchData(tree);
+//            }
+//        }
+
     }
 
     public void patchTreeData(){

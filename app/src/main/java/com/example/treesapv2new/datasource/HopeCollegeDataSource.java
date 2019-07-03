@@ -215,7 +215,9 @@ public class HopeCollegeDataSource extends DataSource {
             tree.setIsClosest(true);
             tree.setDataSource("HopeCollegeData");
 
-
+            for(Tree tree1 : MainActivity.treesNearby) {
+                tree.addNearbyTrees(tree1);
+            }
             return tree;
         }
 

@@ -267,6 +267,9 @@ public class ExtendedCoHDataSource extends DataSource {
             tree.setIsClosest(true);
             tree.setDataSource("ExtendedCoH");
 
+            for(Tree tree1 : MainActivity.treesNearby) {
+                tree.addNearbyTrees(tree1);
+            }
             return tree;
         }
 

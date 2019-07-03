@@ -215,7 +215,9 @@ public class ITreeDataSource extends DataSource {
             tree.setIsClosest(true);
             tree.setDataSource("iTreeData");
 
-
+            for(Tree tree1 : MainActivity.treesNearby) {
+                tree.addNearbyTrees(tree1);
+            }
             return tree;
         }
 

@@ -35,8 +35,16 @@ public class Tree {
     HashMap<String, Object> otherInfo = new HashMap<String, Object>();
     HashMap<String, ArrayList<Object>> treePics = new HashMap<String, ArrayList<Object>>();
     HashMap<String, ArrayList<String>> treePhotos = new HashMap<String, ArrayList<String>>();
+    ArrayList<Tree> nearbyTrees = new ArrayList<Tree>();
 
 
+    public ArrayList<Tree> getNearbyTrees(){
+        return nearbyTrees;
+    }
+
+    public void addNearbyTrees(Tree tree){
+        nearbyTrees.add(tree);
+    }
 
     public void addDb(String dbName){
         dbsUsed.add(dbName);
