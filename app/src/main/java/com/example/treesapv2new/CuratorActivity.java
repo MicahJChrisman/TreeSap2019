@@ -148,7 +148,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         //treeSnaps = new ArrayList<DocumentSnapshot>();
         db = FirebaseFirestore.getInstance();
         treesRef = db.collection("pendingTrees");
-        apprRef = db.collection("approvedTrees");
+        apprRef = db.collection("acceptedTrees");
 
         previousTrees = new Stack<>();
         new CuratorActivity.DownloadFilesTask().execute();
@@ -256,7 +256,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         if (!previousTrees.isEmpty()) {
                             DocSnap document = previousTrees.pop();
                             if(document.wasDeleted()) {
-                                DocumentReference docum = db.collection("pendingTrees").document();
+                                DocumentReference docum = db.collection("pendingTrees").document(document.getId());
                                 docum.set(document.getDoc().getData()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -269,7 +269,6 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                                 updates.put("images", FieldValue.delete());
                                                 updates.put("latitude", FieldValue.delete());
                                                 updates.put("longitude", FieldValue.delete());
-                                                updates.put("notes", FieldValue.delete());
                                                 updates.put("otherInfo", FieldValue.delete());
                                                 updates.put("scientificName", FieldValue.delete());
                                                 updates.put("timestamp", FieldValue.delete());
@@ -279,7 +278,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                             }
                                         }
                                         penTrees.add(0, makeTree(document.getDoc()));
-                                        penTrees.get(0).setID(docum.getId());
+                                        //penTrees.get(0).setID(docum.getId());
                                         //arrayAdapter.notifyDataSetChanged();
                                         //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
                                         setCurrentTree();
@@ -350,14 +349,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         break;
                     case R.id.accept_button:
                         acceptTree();
-                        Toast.makeText(CuratorActivity.this, "Accepted!", Toast.LENGTH_SHORT).show();
-                        penTrees.remove(0);
-                        //arrayAdapter.notifyDataSetChanged();
-                        if(penTrees.size()>0) {
-                            //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                            setCurrentTree();
-                            setView();
-                        }
+
                         hideMap();
         //                penTrees.remove(0);
                         break;
@@ -366,7 +358,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             }
         };
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.setSelectedItemId(R.id.nav_view);
+//        navView.setSelectedItemId(R.id.nav_view);
 //        rejectButton = findViewById(R.id.reject_button);
 //        rejectButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -713,7 +705,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         dataMap.put("timestamp", ts);
                         notifications.document().set(dataMap);
 
-                        db.collection("acceptedTrees").document().set(document.getData())
+                        db.collection("acceptedTrees").document(currentTree.getID()).set(document.getData())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -727,14 +719,22 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         updates.put("images", FieldValue.delete());
                                         updates.put("latitude", FieldValue.delete());
                                         updates.put("longitude", FieldValue.delete());
-                                        updates.put("otherInfo", FieldValue.delete());
+//                                        updates.put("otherInfo", FieldValue.delete());
+                                        updates.put("notes", FieldValue.delete());
                                         updates.put("scientificName", FieldValue.delete());
                                         updates.put("timestamp", FieldValue.delete());
                                         updates.put("userID", FieldValue.delete());
                                         doc.update(updates);
                                         doc.delete();
                                         //arrayAdapter.notifyDataSetChanged();
-                                        setCurrentTree();
+                                        Toast.makeText(CuratorActivity.this, "Accepted!", Toast.LENGTH_SHORT).show();
+                                        penTrees.remove(0);
+                                        //arrayAdapter.notifyDataSetChanged();
+                                        if(penTrees.size()>0) {
+                                            //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                                            setCurrentTree();
+                                            setView();
+                                        }
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -793,17 +793,19 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             }
         }
 
-        Map<Object, Object> stringPics = (Map<Object, Object>) document.get("images");
-        ArrayList<Object> pics;
-        //String[] pics = stringPics.split("\n?\t.*: ");
-        for(Object key : stringPics.keySet()){
-            pics = (ArrayList<Object>) stringPics.get(key);
-            for(Object pic : pics){
-                if(pic != null){
-                    tree.addPics((String)key, pic);
-                }
-            }
-        }
+        HashMap<String, ArrayList<String>> stringPics = (HashMap<String, ArrayList<String>>) document.get("images");
+        tree.setTreePhotos(stringPics);
+//        ArrayList<Object> pics;
+//        //String[] pics = stringPics.split("\n?\t.*: ");
+//        for(Object key : stringPics.keySet()){
+//            pics = (ArrayList<Object>) stringPics.get(key);
+//            for(Object pic : pics){
+//                if(pic != null){
+//                    tree.addPics((String)key, pic);
+//                }
+//            }
+//        }
+
         TreeLocation location = new TreeLocation(Double.valueOf(document.get("latitude").toString()), Double.valueOf(document.get("longitude").toString()));
         tree.setLocation(location);
         return tree;
@@ -987,10 +989,32 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //                    dBmpList.add(dBmp);
 ////                    imageModel.setImage_drawable(dBmp);
 ////                    picList.add(imageModel);
+//                    i++;
 //                }
-//                i++;
+//
 //            }
 //        }
+
+        HashMap<String, ArrayList<String>> picMap = currentTree.getTreePhotos();
+        ArrayList<String> picList;
+        for(String key : picMap.keySet()){
+            picList = picMap.get(key);
+            for(String pic : picList){
+                if(!pic.equals("")) {
+                    byte[] encodeByte = Base64.decode(pic, Base64.DEFAULT);
+                    InputStream is = new ByteArrayInputStream(encodeByte);
+
+//                    InputStream is = new ByteArrayInputStream(pics[i].getBytes());
+                    Bitmap bmp = BitmapFactory.decodeStream(is);
+//                    ImageModel imageModel = new ImageModel();
+                    BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
+                    dBmpList.add(dBmp);
+//                    imageModel.setImage_drawable(dBmp);
+//                    picList.add(imageModel);
+                }
+            }
+        }
+
 
         return dBmpList;
     }

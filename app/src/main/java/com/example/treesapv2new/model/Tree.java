@@ -188,10 +188,10 @@ public class Tree {
             for(Object pic : treePics.get(key)){
                 out += ": " + pic + "\n";
             }
-            out = out.substring(0, out.length()-1);
+//            out = out.substring(0, out.length()-1);
         }
 
-//        if (out.length() > 0) out = out.substring(0, out.length()-1);
+        if (out.length() > 0) out = out.substring(0, out.length()-1);
         return out;
     }
 
