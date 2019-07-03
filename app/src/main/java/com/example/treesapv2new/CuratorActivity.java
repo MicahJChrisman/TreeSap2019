@@ -189,11 +189,11 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             ft.commit();
         }
 
-        fm.beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                .hide(mapFragment)
-//                .addToBackStack(null)
-                .commit();
+//        fm.beginTransaction()
+//                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+//                .hide(mapFragment)
+////                .addToBackStack(null)
+//                .commit();
         directionsButton = findViewById(R.id.directions_button);
         directionsButton.setVisibility(View.GONE);
         directionsButton.setOnClickListener(new View.OnClickListener() {
@@ -269,6 +269,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                                 updates.put("images", FieldValue.delete());
                                                 updates.put("latitude", FieldValue.delete());
                                                 updates.put("longitude", FieldValue.delete());
+                                                updates.put("notes", FieldValue.delete());
                                                 updates.put("otherInfo", FieldValue.delete());
                                                 updates.put("scientificName", FieldValue.delete());
                                                 updates.put("timestamp", FieldValue.delete());
@@ -312,6 +313,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         FragmentManager fm = getSupportFragmentManager();
                         if(mapFragment.isVisible()){
                             hideMap();
+                            directionsButton.setVisibility(View.GONE);
                         }else {
                             coordinates = new LatLng(currentTree.getLocation().getLatitude(), currentTree.getLocation().getLongitude());
                             fm.beginTransaction()

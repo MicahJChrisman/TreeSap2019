@@ -25,12 +25,6 @@
             android:textStyle="bold"
             android:visibility="visible" />
 
-        <FrameLayout
-            android:id="@+id/placeholder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
@@ -99,10 +93,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:gravity="center"
+                            android:text="Common name:  "
                             android:textColor="#000000"
                             android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:text="Common name:  " />
+                            android:textStyle="bold" />
 
                         <!--tools:text="Common name:  "-->
 
@@ -216,43 +210,48 @@
 
         </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right|top"
-            android:orientation="vertical"
-            tools:visibility="visible">
+    </FrameLayout>
 
-            <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-                android:id="@+id/directions_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Directions"
-                app:fabColor="#1a73e8"
-                app:fabIconPosition="start"
-                app:fabText="Directions" />
-
-        </LinearLayout>
+    <FrameLayout
+        android:id="@+id/placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|top"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/directions_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Directions"
+            android:visibility="gone"
+            app:fabColor="#1a73e8"
+            app:fabIconPosition="start"
+            app:fabText="Directions" />
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:background="@color/new_invented_color"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/curator_menu"
-        app:itemIconTint="@color/white"
-        app:itemIconSize="30dp"
-        app:labelVisibilityMode="labeled"
-        />
+        app:menu="@menu/curator_menu" />
 
 </android.support.constraint.ConstraintLayout>
