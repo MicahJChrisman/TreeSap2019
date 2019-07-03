@@ -286,7 +286,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                         public boolean onLongClick(View v) {
                                             if(selectedViews.contains(view)){
                                                 selectedViews.remove(view);
-                                                view.setBackgroundColor(getResources().getColor(R.color.appBackground));
+                                                view.setBackgroundColor(getResources().getColor(R.color.white));
                                                 String documentIds = db.collection("notifications").document(documentSnapshot.getId()).toString();
                                                 notList.remove(documentIds);
                                                 if(selectedViews.size() == 0){
@@ -296,7 +296,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                                 String documentIds = db.collection("notifications").document(documentSnapshot.getId()).toString();
                                                 notList.add(documentIds);
                                                 findViewById(R.id.trash_notifications).setVisibility(View.VISIBLE);
-                                                view.setBackgroundColor(getResources().getColor(R.color.white));
+                                                view.setBackgroundColor(getResources().getColor(R.color.highlight));
                                                 selectedViews.add(view);
                                             }
 
