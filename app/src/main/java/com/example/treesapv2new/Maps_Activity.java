@@ -171,15 +171,25 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
-            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
-                //user is curator
-                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
-            } else {
-                //user is not curator
-            }
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (QueryDocumentSnapshot doc : task.getResult()){
+                        String userDI = user.getUid();
+                        String docID = doc.getId();
+                        if (user.getUid().equals(doc.getId())) {
+                            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(true);
+                            break;
+                        }
+                    }
+                }
+            });
+
         }else{
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
     }
@@ -290,8 +300,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
                         hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-                        hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+                        hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    case R.id.nav_add_curator:
+                        Intent intent7 = new Intent(Maps_Activity.this, AddCurator.class);
+                        startActivity(intent7);
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.maps_container);

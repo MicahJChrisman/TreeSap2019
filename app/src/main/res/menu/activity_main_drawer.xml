@@ -22,11 +22,7 @@
             android:title="Settings"
             android:icon="@drawable/sett_button"
             />
-        <item
-            android:id="@+id/nav_curator"
-            android:icon="@drawable/icons8_tick_box_filled_50"
-            android:title="Curate Trees"
-            android:visible="false"/>
+
         <item
             android:id="@+id/nav_send"
             android:icon="@drawable/ic_menu_send"
@@ -36,6 +32,22 @@
             android:title="More Information"
             android:icon="@drawable/info_icon"/>
     </group>
+
+    <item
+        android:id="@+id/nav_curator_group"
+        android:title="Curator Options"
+        android:visible="false">
+        <menu>
+            <item
+                android:id="@+id/nav_curator"
+                android:icon="@drawable/icons8_tick_box_filled_50"
+                android:title="Curate Trees" />
+            <item
+                android:id="@+id/nav_add_curator"
+                android:icon="@drawable/icons8_plus_math_30"
+                android:title="Add a Curator" />
+        </menu>
+    </item>
 
     <group
         android:id="@+id/menu_bottom"

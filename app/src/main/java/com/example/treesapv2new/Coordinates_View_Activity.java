@@ -50,8 +50,13 @@ import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
 import com.google.android.gms.common.util.NumberUtils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashSet;
 import java.util.List;
@@ -83,15 +88,25 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
-            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
-                //user is curator
-                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
-            } else {
-                //user is not curator
-            }
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (QueryDocumentSnapshot doc : task.getResult()){
+                        String userDI = user.getUid();
+                        String docID = doc.getId();
+                        if (user.getUid().equals(doc.getId())) {
+                            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(true);
+                            break;
+                        }
+                    }
+                }
+            });
+
         }else{
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
     }
@@ -188,8 +203,11 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
                         hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-                        hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+                        hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    case R.id.nav_add_curator:
+                        Intent intent7 = new Intent(Coordinates_View_Activity.this, AddCurator.class);
+                        startActivity(intent7);
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.coord_container);

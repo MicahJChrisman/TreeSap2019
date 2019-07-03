@@ -70,8 +70,13 @@ import com.example.treesapv2new.model.TreeLocation;
 import com.example.treesapv2new.view.BulletedWebView;
 import com.example.treesapv2new.view.MapsActivity;
 import com.example.treesapv2new.view.UserViewAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.io.File;
@@ -112,15 +117,25 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
-            if (user.getUid().equals("q3jUaSAMuxZPbB8erxuuifEty6t2")) {
-                //user is curator
-                hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(true);
-            } else {
-                //user is not curator
-            }
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (QueryDocumentSnapshot doc : task.getResult()){
+                        String userDI = user.getUid();
+                        String docID = doc.getId();
+                        if (user.getUid().equals(doc.getId())) {
+                            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(true);
+                            break;
+                        }
+                    }
+                }
+            });
+
         }else{
+            hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-            hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+            hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
     }
@@ -217,8 +232,11 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
                         hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
-                        hamMenu.getMenu().findItem(R.id.nav_curator).setVisible(false);
+                        hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                    case R.id.nav_add_curator:
+                        Intent intent7 = new Intent(Big_Red_Button.this, AddCurator.class);
+                        startActivity(intent7);
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.brb_container);

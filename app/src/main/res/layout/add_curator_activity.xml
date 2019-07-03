@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/login_container"
+        android:background="@color/appBackground"
+        android:gravity="center"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_height="wrap_content"
+            android:text="Enter the email of a user that you would like to make into a curator."
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textColor="@color/accent_gray"/>
+
+        <EditText
+            android:id="@+id/add_curator_email"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_border"
+            android:hint="Email"
+            android:inputType="textWebEmailAddress" />
+
+        <Button
+            android:id="@+id/add_curator_submit"
+            android:layout_width="190dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#ffffff"
+            android:text="Submit"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icons8_multiply_30"
+        android:id="@+id/add_curator_close"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
+
+</RelativeLayout>

@@ -21,6 +21,12 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -159,9 +165,18 @@ public class Login_Activity extends AppCompatActivity {
                             toast.show();
                         }
                     }else {
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
                         FirebaseUser user = mAuth.getCurrentUser();
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(((EditText) findViewById(R.id.edittext_displayname_reg)).getText().toString()).build();
                         user.updateProfile(profileChangeRequest);
+
+
+                        HashMap<String, String> tempHash = new HashMap<String, String>();
+                        tempHash.put("userID", mAuth.getUid().toString());
+                        tempHash.put("email",email);
+                        db.collection("users").document().set(tempHash);
+//                        emailToUID.document().set(tempHash);
+
                     }
 
                 }

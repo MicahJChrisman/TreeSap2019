@@ -251,7 +251,11 @@ public class AllUsersDataSource extends DataSource {
                     treeReturn.setDBHArray(tree.getDBHArray());
                     treeReturn.setNotesArray(tree.getNotesArray());
                     treeReturn.setTreePhotos(tree.getTreePhotos());
-                    treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                    try {
+                        treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                    }catch (Exception e){
+
+                    }
 
                     treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());

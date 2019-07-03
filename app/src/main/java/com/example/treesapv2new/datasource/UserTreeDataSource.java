@@ -213,7 +213,11 @@ public class UserTreeDataSource extends DataSource {
                             treeReturn.setLocation(locOfTree);
 //                                tree.setCurrentDBH(Double.parseDouble(document.getData().get("dbh").toString()));
                             treeReturn.setDBHArray(tree.getDBHArray());
-                            treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                            try {
+                                treeReturn.setCurrentDBH(tree.getCurrentDBH());
+                            }catch (Exception e){
+
+                            }
 
                             treeReturn.setIsClosest(true);
 //                                tree.addInfo("Source", document.getData().get("userID").toString());
