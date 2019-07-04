@@ -54,8 +54,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 //                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
 //
 //                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
-
+                TextView index = v.findViewById(R.id.index);
                 Intent intent = new Intent(mContext, CuratorActivity.class);
+                intent.putExtra("index", Integer.parseInt(index.getText().toString())-1);
 //                Intent intent = new Intent(mContext, Curator_Swipe_Activity.class);
 //                intent.putExtra("image_url", mImages.get(position));
 //                intent.putExtra("image_name", mImageNames.get(position));
@@ -102,6 +103,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         holder.imageName.setText(mImageNames.get(position));
+        holder.index.setText(String.valueOf(position+1));
+
 //                        ImageView image = (ImageView) findViewById(R.id.set_image_curator);
 //                        image.setImageBitmap(bitmap);
 
@@ -142,12 +145,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView imageName;
+        TextView index;
         ConstraintLayout parentLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.tree_image_recycler);
             imageName = itemView.findViewById(R.id.image_name);
+            index = itemView.findViewById(R.id.index);
             parentLayout = itemView.findViewById(R.id.curator_constraint_layout);
         }
     }

@@ -125,7 +125,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private LocationRequest locationRequest;
 
-
+    int index;
     List<Tree> penTrees;
     //ArrayList<DocumentSnapshot> treeSnaps;
     FirebaseFirestore db;
@@ -153,7 +153,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        getIntent().getExtras();
+        index = (Integer) getIntent().getExtras().get("index");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.curate_activity);
 
@@ -257,11 +257,11 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //                        hideMap();
                         rejectTree();
                         Toast.makeText(CuratorActivity.this, "Rejected!", Toast.LENGTH_SHORT).show();
-                        penTrees.remove(0);
+                        penTrees.remove(index);
 //                        arrayAdapter.notifyDataSetChanged();
                         if(penTrees.size()>0) {
 //                            arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                            setCurrentTree();
+                            setCurrentTree(index);
                             setView();
                         }
                         hideMap();
@@ -292,12 +292,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                                 doc.delete();
                                             }
                                         }
-                                        penTrees.add(0, makeTree(document.getDoc()));
+                                        penTrees.add(index, makeTree(document.getDoc()));
                                         //penTrees.get(0).setID(docum.getId());
                                         //arrayAdapter.notifyDataSetChanged();
                                         //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
 
-                                        setCurrentTree();
+                                        setCurrentTree(index);
 
                                         CollectionReference notifications = db.collection("notifications");
                                         Map<String, Object> dataMap = new HashMap<String,Object>();
@@ -319,11 +319,11 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                 });
 
                             }else{
-                                penTrees.add(0, makeTree(document.getDoc()));
+                                penTrees.add(index, makeTree(document.getDoc()));
         //                        penTrees.get(0).setID(docum.getId());
                                 //arrayAdapter.notifyDataSetChanged();
                                 //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                setCurrentTree();
+                                setCurrentTree(index);
                                 setView();
                             }
                             hideMap();
@@ -359,10 +359,10 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                     DocumentSnapshot documentSnapshot = task.getResult();
                                     DocSnap docSnap = new DocSnap(false, documentSnapshot.getId(), documentSnapshot, false);
                                     previousTrees.push(docSnap);
-                                    penTrees.remove(0);
+                                    penTrees.remove(index);
                                    // arrayAdapter.notifyDataSetChanged();
                                     //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                    setCurrentTree();
+                                    setCurrentTree(index);
                                     setView();
                                     Toast.makeText(CuratorActivity.this, "Skipped!", Toast.LENGTH_SHORT).show();
                                     hideMap();
@@ -562,7 +562,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             TextView noPicsMessage = findViewById(R.id.no_pics_message);
             if (dBmpList.size() == 0) {
                 //noPicsMessage.setVisibility(View.VISIBLE);
-                viewPager.setBackgroundResource(R.drawable.new_logo);
+                viewPager.setBackgroundResource(R.drawable.dark_logo);
 
             } else {
                 //noPicsMessage.setVisibility(View.GONE);
@@ -619,9 +619,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
 
-    public void setCurrentTree(){
-        if(penTrees.size() > 0) {
-            currentTree = penTrees.get(0);
+    public void setCurrentTree(int index){
+        if(penTrees.size() > 0 && index < penTrees.size()) {
+            currentTree = penTrees.get(index);
             //currentSnap = treeSnaps.get(0);
         }
     }
@@ -781,11 +781,11 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         doc.delete();
                                         //arrayAdapter.notifyDataSetChanged();
                                         Toast.makeText(CuratorActivity.this, "Accepted!", Toast.LENGTH_SHORT).show();
-                                        penTrees.remove(0);
+                                        penTrees.remove(index);
                                         //arrayAdapter.notifyDataSetChanged();
                                         if(penTrees.size()>0) {
                                             //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                            setCurrentTree();
+                                            setCurrentTree(index);
                                             setView();
                                         }
                                     }
@@ -1110,7 +1110,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                             penTrees.add(tree);
 //                            treeSnaps.add(document);
                         }
-                        setCurrentTree();
+                        setCurrentTree(index);
                         setView();
                     } else {
                         Toast toast = Toast.makeText(CuratorActivity.this, "Unable to load trees.", Toast.LENGTH_LONG);
