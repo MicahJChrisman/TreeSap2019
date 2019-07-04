@@ -4,13 +4,21 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent">
+    tools:context=".CuratorActivity"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foregroundGravity="bottom"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="56dp"
+        android:foregroundGravity="top"
         android:measureAllChildren="true"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:foregroundGravity="bottom">
 
         <TextView
@@ -30,169 +38,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:elevation="2dp"
-            app:cardBackgroundColor="@color/new_invented_color">
+            android:elevation="2dp">
             <!--android:cardCornerRadius="4dp"-->
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#EBFFFFFF"
-                    android:orientation="vertical">
-
-                    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-                    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-                    <!--xmlns:tools="http://schemas.android.com/tools"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="394dp"-->
-                    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-                    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-                    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-                    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
-                    <!--tools:context="com.exampledemo.parsaniahardik.imagesliderdemonuts.MainActivity">-->
-
-                    <!--<RelativeLayout-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content">-->
-
-                    <!--<android.support.v4.view.ViewPager-->
-                    <!--android:id="@+id/pager"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="fill_parent"-->
-                    <!--android:layout_alignParentTop="true" />-->
-
-                    <!--<com.viewpagerindicator.CirclePageIndicator-->
-                    <!--android:id="@+id/indicator"-->
-                    <!--android:layout_width="fill_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:gravity="bottom"-->
-                    <!--android:padding="10dip"-->
-                    <!--app:centered="true"-->
-                    <!--app:fillColor="#df0623"-->
-                    <!--app:pageColor="#fff"-->
-                    <!--app:snap="false" />-->
-                    <!--</RelativeLayout>-->
-                    <!--</RelativeLayout>-->
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/label0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:gravity="center"
-                            android:text="Common name:  "
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <!--tools:text="Common name:  "-->
-
-                        <TextView
-                            android:id="@+id/common_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="1"
-                            android:textColor="#FF000000"
-                            android:textSize="20sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:text="Scientific name:  "
-                            android:textColor="#000000"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            tools:text="Scientific name:  " />
-
-                        <TextView
-                            android:id="@+id/scientific_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="1"
-                            android:text="TextView"
-                            android:textColor="#FF000000"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/textView13"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:text="DBHs:  "
-                            android:textColor="#FF000000"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/dbh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="1"
-                            android:text="TextView"
-                            android:textColor="#FF000000"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="Notes:  "
-                        android:textColor="#FF000000"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/notes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="TextView"
-                        android:textColor="#FF000000"
-                        android:textSize="20sp"
-                        tools:layout_marginBottom="8dp" />
-
-                    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/pager"
-                        android:layout_width="wrap_content"
-                        android:layout_height="449dp" />
-
-                </LinearLayout>
+                android:layout_gravity="center">
 
                 <TextView
                     android:id="@+id/no_pics_message"
@@ -205,6 +57,170 @@
                     android:textStyle="bold"
                     android:visibility="gone"
                     tools:text="There are no pictures available for this tree" />
+
+                <!--<ScrollView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:fillViewport="true">-->
+
+                <!--</ScrollView>-->
+
+                <android.support.v4.widget.NestedScrollView
+                    android:id="@+id/nested_scrolll_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    android:isScrollContainer="true">
+
+                    <LinearLayout
+                        android:id="@+id/nested_scroll_child"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:background="#EBFFFFFF"
+                        android:orientation="vertical">
+
+                        <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                        <!--xmlns:tools="http://schemas.android.com/tools"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="394dp"-->
+                        <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+                        <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+                        <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+                        <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+                        <!--tools:context="com.exampledemo.parsaniahardik.imagesliderdemonuts.MainActivity">-->
+
+                        <!--<RelativeLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content">-->
+
+                        <!--<android.support.v4.view.ViewPager-->
+                        <!--android:id="@+id/pager"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:layout_alignParentTop="true" />-->
+
+                        <!--<com.viewpagerindicator.CirclePageIndicator-->
+                        <!--android:id="@+id/indicator"-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentBottom="true"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:gravity="bottom"-->
+                        <!--android:padding="10dip"-->
+                        <!--app:centered="true"-->
+                        <!--app:fillColor="#df0623"-->
+                        <!--app:pageColor="#fff"-->
+                        <!--app:snap="false" />-->
+                        <!--</RelativeLayout>-->
+                        <!--</RelativeLayout>-->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/label0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="Common name:  "
+                                android:textColor="#000000"
+                                android:textSize="20dp"
+                                android:textStyle="bold" />
+
+                            <!--tools:text="Common name:  "-->
+
+                            <TextView
+                                android:id="@+id/common_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FF000000"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Scientific name:  "
+                                android:textColor="#000000"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:text="Scientific name:  " />
+
+                            <TextView
+                                android:id="@+id/scientific_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FF000000"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView13"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DBHs:  "
+                                android:textColor="#FF000000"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/dbh"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="#FF000000"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notes:  "
+                            android:textColor="#FF000000"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/notes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:textColor="#FF000000"
+                            android:textSize="20dp" />
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="500dp"
+                            android:backgroundTint="@color/image_pager_background" />
+                            <!--android:outlineAmbientShadowColor="@color/image_pager_background" />-->
+
+
+                    </LinearLayout>
+                </android.support.v4.widget.NestedScrollView>
 
             </FrameLayout>
 
@@ -226,18 +242,27 @@
         android:orientation="vertical"
         tools:visibility="visible">
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/directions_button"
+            android:layout_width="224dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/directions_button1" />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/difficult_to_format"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginLeft="8dp"
+            android:layout_gravity="right"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:drawableRight="@drawable/directions_button"
+            android:gravity="center|start|center_horizontal"
             android:text="Directions"
             android:visibility="gone"
             app:fabColor="#1a73e8"
-            app:fabIconPosition="start"
-            app:fabText="Directions" />
+            app:fabText="Directions"
+            app:fabTextAllCaps="true" />
 
     </LinearLayout>
 

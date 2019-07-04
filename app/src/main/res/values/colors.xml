@@ -19,8 +19,10 @@
     <color name = "accent_gray">#353333</color>
     <color name="black">#000000</color>
     <color name="new_invented_color">#58883F</color>
-    <color name="highlight">#7DB162</color>
+    <color name="old_background">#7DB162</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="new_invented_color_translucent">#DA58883F</color>
+    <color name="image_pager_background">#D8BEF8A3</color>
+
 
 </resources>

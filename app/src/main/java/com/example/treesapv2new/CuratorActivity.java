@@ -8,6 +8,9 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -25,6 +28,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +37,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +111,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
     Marker mCurrLocationMarker;
     float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
+    Marker currentTreeMarker;
     LatLng coordinates;
 
     float zoom = 16;
@@ -126,6 +134,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     SwipeFlingAdapterView flingContainer;
     Tree currentTree;
     //DocumentSnapshot currentSnap;
+    NestedScrollView nestedScrollView;
+    LinearLayout nestedScrollChild;
     TextView commonName;
     TextView scientificName;
     TextView dbhs;
@@ -133,12 +143,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     ArrayList<BitmapDrawable> dBmpList;
     ViewPager viewPager;
     Stack<DocSnap> previousTrees;
-    FloatingActionButton undoButton;
-    FloatingActionButton skipButton;
-    FloatingActionButton rejectButton;
-    FloatingActionButton acceptButton;
-    FloatingActionButton mapButton;
-    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton directionsButton;
+    ImageButton directionsButton;
+//    FloatingActionButton undoButton;
+//    FloatingActionButton skipButton;
+//    FloatingActionButton rejectButton;
+//    FloatingActionButton acceptButton;
+//    FloatingActionButton mapButton;
+//    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton directionsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -169,7 +180,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-
+//        nestedScrollView = findViewById(R.id.nested_scrolll_view);
         commonName = findViewById(R.id.common_name);
         scientificName = findViewById(R.id.scientific_name);
         dbhs = findViewById(R.id.dbh);
@@ -179,8 +190,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         googleApiClient.connect();
 
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        NestedScrollView scrollView = (NestedScrollView) findViewById (R.id.nested_scrolll_view);
-        scrollView.setFillViewport (true);
+        NestedScrollView nestedScrollView = (NestedScrollView) findViewById (R.id.nested_scrolll_view);
+        nestedScrollView.setFillViewport (true);
+        nestedScrollChild = findViewById(R.id.nested_scroll_child);
 
         FragmentManager fm = getSupportFragmentManager();
         if(mapFragment == null){
@@ -284,7 +296,17 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         //penTrees.get(0).setID(docum.getId());
                                         //arrayAdapter.notifyDataSetChanged();
                                         //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+
                                         setCurrentTree();
+
+                                        CollectionReference notifications = db.collection("notifications");
+                                        Map<String, Object> dataMap = new HashMap<String,Object>();
+                                        dataMap.put("treeData", FieldValue.delete());
+                                        dataMap.put("accepted", FieldValue.delete());
+                                        dataMap.put("message", FieldValue.delete());
+                                        dataMap.put("read", FieldValue.delete());
+                                        dataMap.put("timestamp", FieldValue.delete());
+                                        notifications.document(document.getId()).update(dataMap);
                                         setView();
                                     }
 
@@ -295,6 +317,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         Log.w("error", "Error writing document. Tree file has been pushed back on stack of previous trees", e);
                                     }
                                 });
+
                             }else{
                                 penTrees.add(0, makeTree(document.getDoc()));
         //                        penTrees.get(0).setID(docum.getId());
@@ -314,8 +337,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         //                mapButton.setClickable(false);
                         FragmentManager fm = getSupportFragmentManager();
                         if(mapFragment.isVisible()){
-                            hideMap();
                             directionsButton.setVisibility(View.GONE);
+                            hideMap();
                         }else {
                             coordinates = new LatLng(currentTree.getLocation().getLatitude(), currentTree.getLocation().getLongitude());
                             fm.beginTransaction()
@@ -323,7 +346,6 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                     .show(mapFragment)
                                     .addToBackStack(null)
                                     .commit();
-                            directionsButton.setVisibility(View.VISIBLE);
                             //mapFragment.getView().setVisibility(View.VISIBLE);
                             mapFragment.getMapAsync(CuratorActivity.this::onMapReady);
                         }
@@ -536,6 +558,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
+
             TextView noPicsMessage = findViewById(R.id.no_pics_message);
             if (dBmpList.size() == 0) {
                 //noPicsMessage.setVisibility(View.VISIBLE);
@@ -543,9 +566,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
             } else {
                 //noPicsMessage.setVisibility(View.GONE);
-                viewPager.setBackground(null);
+                viewPager.setBackgroundColor(ContextCompat.getColor(this, R.color.image_pager_background));
             }
-
             //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
             String cName = (String) currentTree.getCommonName();
             if (cName != null && cName != "") {
@@ -589,6 +611,10 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             } else {
                 notes.setText("N/A");
             }
+//            ViewGroup.LayoutParams params = nestedScrollChild.getLayoutParams();
+//            params.height += viewPager.getHeight();
+//            nestedScrollChild.setLayoutParams(params);
+//            findViewById(R.id.nested_scroll_view).setFillViewport (true);
         }
     }
 
@@ -621,6 +647,22 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
+                        CollectionReference notifications = db.collection("notifications");
+                        Map<String, Object> dataMap = new HashMap<String,Object>();
+//                        for(DocumentSnapshot docs : document){
+//
+//                        }
+                        Map<String, Object> documentData = document.getData();
+                        dataMap.put("treeData", documentData);
+                        dataMap.put("accepted", false);
+                        dataMap.put("message", "");
+                        dataMap.put("read", false);
+                        Date date = new Date();
+                        Timestamp ts = new Timestamp(date.getTime());
+                        dataMap.put("timestamp", ts);
+                        notifications.document(doc.getId()).set(dataMap);
+
+
                         previousTrees.push(new DocSnap(false, doc.getId(), document, true));
                         Map<String, Object> updates = new HashMap<>();
                         updates.put("commonName", FieldValue.delete());
@@ -714,9 +756,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         Date date = new Date();
                         Timestamp ts = new Timestamp(date.getTime());
                         dataMap.put("timestamp", ts);
-                        notifications.document().set(dataMap);
+                        notifications.document(currentTree.getID()).set(dataMap);
 
-                        db.collection("acceptedTrees").document(currentTree.getID()).set(document.getData())
+                        db.collection("acceptedTrees").document(doc.getId()).set(document.getData())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -878,10 +920,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if(currentTreeMarker!=null){
+            currentTreeMarker.remove();
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
-        mMap.addMarker(new MarkerOptions().position(coordinates).title((String) currentTree.getCommonName()).snippet(coordinates.toString()).icon(icon));
+        currentTreeMarker = mMap.addMarker(new MarkerOptions().position(coordinates).title((String) currentTree.getCommonName()).snippet(coordinates.toString()).icon(icon));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
         mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
             @Override
@@ -959,6 +1004,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             uiSettings.setMapToolbarEnabled(true);
             uiSettings.setTiltGesturesEnabled(true);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom));
+            directionsButton.setVisibility(View.VISIBLE);
         }
 
     }
@@ -1020,6 +1066,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                     Bitmap bmp = BitmapFactory.decodeStream(is);
 //                    ImageModel imageModel = new ImageModel();
                     BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
+//                    dBmp.setBounds((dBmp.getIntrinsicHeight()/2, );
                     dBmpList.add(dBmp);
 //                    imageModel.setImage_drawable(dBmp);
 //                    picList.add(imageModel);
@@ -1029,6 +1076,25 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         return dBmpList;
+    }
+
+    public Bitmap BITMAP_RESIZER(Bitmap bitmap,int newWidth,int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
+
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {

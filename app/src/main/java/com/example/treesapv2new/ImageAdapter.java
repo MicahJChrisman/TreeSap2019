@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,16 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageDrawable((BitmapDrawable) dBmpList[position]);
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         //imageView.getDrawable().setBounds(0,0,-1242, 1242);
        // imageView.getDrawable().setColorFilter(Color.CYAN, PorterDuff.Mode.ADD);
         BitmapDrawable dBmp = (BitmapDrawable) dBmpList[position];
         //dBmp.setBounds(0,0,-1242,1242);
 //        imageView.setVisibility(View.VISIBLE);
         container.addView(imageView);
+//        container.setBackgroundColor(ContextCompat.getColor(context, R.color.highlight));
+//        container.setBackgroundColor(Color.parseColor("#7DB162"));
 //        container.setVisibility(View.VISIBLE);
 //        container.setBackgroundColor(Color.YELLOW);
 
