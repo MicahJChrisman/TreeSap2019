@@ -53,6 +53,12 @@ public class ImageAdapter extends PagerAdapter {
 //        container.setBackgroundColor(Color.parseColor("#7DB162"));
 //        container.setVisibility(View.VISIBLE);
 //        container.setBackgroundColor(Color.YELLOW);
+//        container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
        setPrimaryItem(container, position, imageView);
 

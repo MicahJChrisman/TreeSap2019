@@ -2,6 +2,7 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -26,11 +27,13 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -47,6 +50,7 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
+import com.example.treesapv2new.view.CuratorMessage;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -96,6 +100,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     private ImageAdapter imageAdapter;
     private int i;
     GoogleMap mMap;
+//    SupportMapFragment mapFragment;
     SupportMapFragment mapFragment;
     private final String[] PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -198,6 +203,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         if(mapFragment == null){
             fm = getSupportFragmentManager();
             mapFragment = SupportMapFragment.newInstance();
+//            mapFragment = new CuratorMap();
+//            mapFragment = new CuratorMap().newInstance();
+//            mapFragment.
+//            addContentView(mapFragment.getView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));//onCreateView(getLayoutInflater(), new ViewGroup(CuratorActivity.this) {
+//                @Override
+//                protected void onLayout(boolean changed, int l, int t, int r, int b) { }
+//            }, null), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.placeholder, mapFragment);
             ft.hide(mapFragment);
@@ -211,6 +223,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //                .commit();
         directionsButton = findViewById(R.id.directions_button);
         directionsButton.setVisibility(View.GONE);
+//        directionsButton = mapFragment.getView().findViewById(R.id.directions_button);
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,16 +268,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 ////                            arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
 //                        }
 //                        hideMap();
-                        rejectTree();
-                        Toast.makeText(CuratorActivity.this, "Rejected!", Toast.LENGTH_SHORT).show();
-                        penTrees.remove(index);
-//                        arrayAdapter.notifyDataSetChanged();
-                        if(penTrees.size()>0) {
-//                            arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                            setCurrentTree(index);
-                            setView();
-                        }
-                        hideMap();
+                       showMessageDialogue(false);
         //                penTrees.remove(0);
                         break;
                     case R.id.undo_button:
@@ -336,6 +340,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                 index--;
                                 setCurrentTree(index);
                                 setView();
+                                hideMap();
                             }
                         }
                         break;
@@ -380,9 +385,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         }
                         break;
                     case R.id.accept_button:
-                        acceptTree();
-
-                        hideMap();
+                        showMessageDialogue(true);
         //                penTrees.remove(0);
                         break;
                 }
@@ -535,6 +538,58 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //            }
 //        });
     }
+    public void showMessageDialogue(boolean accepted) {
+        final AlertDialog.Builder a_builder = new AlertDialog.Builder(CuratorActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        a_builder.setMessage("Would you like to send a message to the user who submitted this tree?").setCancelable(true)
+                .setPositiveButton("Add message", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(CuratorActivity.this, CuratorMessage.class);
+                        if(accepted == true) {
+                            intent.putExtra("accepted", true);
+                        }else{
+                            intent.putExtra("accepted",false);
+                        }
+                        startActivity(intent);
+                        //TODO add message
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        if(accepted == true){
+                a_builder.setNegativeButton("Accept without message", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    acceptTree();
+                    hideMap();
+                }
+            });
+        }else{
+            a_builder.setNegativeButton("Reject without message", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    acceptTree();
+                    hideMap();
+                }
+            });
+        }
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("Add message?");
+        alert.show();
+    }
+
+    @Override
+    public void onBackPressed(){
+            directionsButton.setVisibility(View.GONE);
+            super.onBackPressed();
+    }
 
     public void hideMap(){
         FragmentManager fm = getSupportFragmentManager();
@@ -565,6 +620,14 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
+            viewPager.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewPager.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+                    viewPager.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    viewPager.bringToFront();
+                }
+            });
 
             TextView noPicsMessage = findViewById(R.id.no_pics_message);
             if (dBmpList.size() == 0) {

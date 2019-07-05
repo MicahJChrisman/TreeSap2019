@@ -249,20 +249,20 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/directions_button1" />
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-            android:id="@+id/difficult_to_format"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:drawableRight="@drawable/directions_button"
-            android:gravity="center|start|center_horizontal"
-            android:text="Directions"
-            android:visibility="gone"
-            app:fabColor="#1a73e8"
-            app:fabText="Directions"
-            app:fabTextAllCaps="true" />
+        <!--<com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton-->
+            <!--android:id="@+id/difficult_to_format"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:drawableRight="@drawable/directions_button"-->
+            <!--android:gravity="center|start|center_horizontal"-->
+            <!--android:text="Directions"-->
+            <!--android:visibility="gone"-->
+            <!--app:fabColor="#1a73e8"-->
+            <!--app:fabText="Directions"-->
+            <!--app:fabTextAllCaps="true" />-->
 
     </LinearLayout>
 
