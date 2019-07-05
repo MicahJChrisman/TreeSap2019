@@ -59,17 +59,39 @@ public class CuratorApproveActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        ArrayList<String> pic = (ArrayList<String>) ((Map<Object, Object>) document.getData().get("images")).get("full");
+                        Map<Object, Object> picMap = (Map<Object, Object>) document.getData().get("images");
+                        ArrayList<String> pics = (ArrayList<String>) picMap.get("full");
                         try{
-                            String b = "";
-                            for(String a : pic){
-                                if(a!=null){
-                                    b = a;
-                                }else{
-                                    b = "";
+                            int i = 0;
+                            String pic = "";
+                            String finalPic = "";
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
+                                }
+//                                else{
+//                                    finalPic = "";
+//                                }
+                            }
+                            pics = (ArrayList<String>) picMap.get("leaf");
+                            i = 0;
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
                                 }
                             }
-                            mImageUrls.add(b);
+
+                            pics = (ArrayList<String>) picMap.get("bark");
+                            i = 0;
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
+                                }
+                            }
+                            mImageUrls.add(finalPic);
                         }catch(Exception e){
                             e.getMessage();
                             mImageUrls.add("");

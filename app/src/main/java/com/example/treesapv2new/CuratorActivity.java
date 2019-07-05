@@ -329,7 +329,14 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                             hideMap();
                             Toast.makeText(CuratorActivity.this, "Undone", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(CuratorActivity.this, "No previous trees", Toast.LENGTH_SHORT).show();
+                            if(penTrees.isEmpty() || index == 0){
+                                Toast.makeText(CuratorActivity.this, "No previous trees", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                index--;
+                                setCurrentTree(index);
+                                setView();
+                            }
                         }
                         break;
                     case R.id.map_button:
