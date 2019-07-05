@@ -44,10 +44,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="12dp"
         android:gravity="center|center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
@@ -55,17 +52,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginBottom="12dp"-->
 
-        <android.support.v7.widget.CardView
-            android:layout_width="390dp"
-            android:layout_height="630dp"
-            android:layout_gravity=""
-            app:cardCornerRadius="12dp"
-            app:cardElevation="12dp">
+        <!--<Space-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" />-->
+
+        <!--<android.support.v7.widget.CardView-->
+            <!--android:layout_width="390dp"-->
+            <!--android:layout_height="630dp"-->
+            <!--android:layout_gravity=""-->
+            <!--app:cardCornerRadius="12dp"-->
+            <!--app:cardElevation="12dp">-->
 
             <fragment
                 android:id="@+id/map"
@@ -74,12 +75,12 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 tools:context=".view.MapsActivity" />
-        </android.support.v7.widget.CardView>
+        <!--</android.support.v7.widget.CardView>-->
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+        <!--<Space-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" />-->
     </LinearLayout>
 
 
