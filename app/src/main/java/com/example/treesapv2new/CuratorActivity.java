@@ -551,7 +551,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         }else{
                             intent.putExtra("accepted",false);
                         }
-                        startActivity(intent);
+                        startActivityForResult(intent, 0);
                         //TODO add message
                     }
                 })
@@ -566,7 +566,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    acceptTree();
+                    acceptTree("");
                     hideMap();
                 }
             });
@@ -575,7 +575,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    acceptTree();
+                    acceptTree("");
                     hideMap();
                 }
             });
@@ -583,6 +583,20 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         AlertDialog alert = a_builder.create();
         alert.setTitle("Add message?");
         alert.show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_CANCELED && data != null){
+            String message = (String) data.getExtras().get("message");
+            if((boolean) data.getExtras().get("accepted") == true){
+                acceptTree(message);
+            }else{
+                rejectTree(message);
+            }
+        }
     }
 
     @Override
@@ -696,7 +710,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    public void rejectTree(){
+    public void rejectTree(String message){
         DocumentReference doc = treesRef.document(currentTree.getID());
 //        previousTrees.push(new DocSnap(false, doc.getId(), currentSnap, true));
 //        Map<String, Object> updates = new HashMap<>();
@@ -725,7 +739,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         Map<String, Object> documentData = document.getData();
                         dataMap.put("treeData", documentData);
                         dataMap.put("accepted", false);
-                        dataMap.put("message", "");
+                        dataMap.put("message", message);
                         dataMap.put("read", false);
                         Date date = new Date();
                         Timestamp ts = new Timestamp(date.getTime());
@@ -759,7 +773,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         });
     }
 
-    public void acceptTree(){
+    public void acceptTree(String message){
         DocumentReference doc = treesRef.document(currentTree.getID());
 //        CollectionReference notifications = db.collection("notifications");
 //        Map<String, Object> dataMap = new HashMap<String,Object>();
@@ -821,7 +835,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         Map<String, Object> documentData = document.getData();
                         dataMap.put("treeData", documentData);
                         dataMap.put("accepted", true);
-                        dataMap.put("message", "");
+                        dataMap.put("message", message);
                         dataMap.put("read", false);
                         Date date = new Date();
                         Timestamp ts = new Timestamp(date.getTime());

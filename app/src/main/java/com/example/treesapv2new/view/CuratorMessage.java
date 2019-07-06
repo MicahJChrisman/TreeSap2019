@@ -16,10 +16,12 @@ public class CuratorMessage extends AppCompatActivity {
     Button cancelButton;
     Button saveButton;
     EditText messageBox;
+    boolean wasAccepted;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        wasAccepted = (boolean) getIntent().getExtras().get("accepted");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.curator_message);
 
@@ -46,12 +48,17 @@ public class CuratorMessage extends AppCompatActivity {
                                 dialog.dismiss();
                             }
                         });
-                if(((boolean) getIntent().getExtras().get("accepted")) == true ){
+                if(wasAccepted){
                     a_builder.setMessage("This tree will be added to the online database for everyone to see.")
                     .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            Intent intent = new Intent();
+                            intent.putExtra("message", messageBox.getText().toString());
+                            intent.putExtra("accepted", wasAccepted);
+                            setResult(RESULT_OK, intent);
+                            onBackPressed();
                             //TODO accept tree
                         }
                     });
@@ -64,6 +71,11 @@ public class CuratorMessage extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    Intent intent = new Intent();
+                                    intent.putExtra("message", messageBox.getText().toString());
+                                    intent.putExtra("accepted", wasAccepted);
+                                    setResult(RESULT_OK, intent);
+                                    onBackPressed();
                                     //TODO rejectTree
                                 }
                             });
@@ -75,4 +87,11 @@ public class CuratorMessage extends AppCompatActivity {
         });
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(CuratorMessage.this, CuratorActivity.class);
+//        intent.putExtra("accepted", wasAccepted);
+//        setResult(RESULT_CANCELED, null);
+//        super.onBackPressed();
+//    }
 }
