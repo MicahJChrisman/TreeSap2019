@@ -575,7 +575,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    acceptTree("");
+                    rejectTree("");
                     hideMap();
                 }
             });
@@ -760,6 +760,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         updates.put("userID", FieldValue.delete());
                         doc.update(updates);
                         doc.delete();
+                        penTrees.remove(index);
+                        //arrayAdapter.notifyDataSetChanged();
+                        if(penTrees.size()>0) {
+                            //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                            setCurrentTree(index);
+                            setView();
+                        }
 //                        arrayAdapter.notifyDataSetChanged();
                     } else {
                         Log.d("problem:", "No such document in rejectTree()");
