@@ -145,8 +145,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     TextView scientificName;
     TextView dbhs;
     TextView notes;
-    ArrayList<BitmapDrawable> dBmpList;
-    ViewPager viewPager;
+    static ArrayList<BitmapDrawable> dBmpList;
+    ClickableViewPager viewPager;
     Stack<DocSnap> previousTrees;
     ImageButton directionsButton;
 //    FloatingActionButton undoButton;
@@ -590,11 +590,16 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode != RESULT_CANCELED && data != null){
-            String message = (String) data.getExtras().get("message");
-            if((boolean) data.getExtras().get("accepted") == true){
-                acceptTree(message);
-            }else{
-                rejectTree(message);
+            if(requestCode == 0){
+                String message = (String) data.getExtras().get("message");
+                if((boolean) data.getExtras().get("accepted") == true){
+                    acceptTree(message);
+                }else{
+                    rejectTree(message);
+                }
+            }
+            else if(requestCode == 1){
+                viewPager.setCurrentItem((int) data.getExtras().get("position"));
             }
         }
     }
@@ -615,6 +620,10 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         directionsButton.setVisibility(View.GONE);
     }
 
+    public ArrayList<BitmapDrawable> getDbmpList(){
+        return dBmpList;
+    }
+
     public void setView(){
         if(penTrees.isEmpty()){
             findViewById(R.id.empty_message).setVisibility(View.VISIBLE);
@@ -629,17 +638,22 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        else{
 //            this.convertView = convertView;
 //        }
-            viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager = (ClickableViewPager) findViewById(R.id.pager);
 
             ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
-            viewPager.setOnClickListener(new View.OnClickListener() {
+            viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    viewPager.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-                    viewPager.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-                    viewPager.bringToFront();
+                public void onItemClick(int position) {
+//                    viewPager.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                    viewPager.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+//                    viewPager.bringToFront();
+                    if(!dBmpList.isEmpty()) {
+                        Intent intent = new Intent(CuratorActivity.this, FullScreenViewPager.class);
+                        intent.putExtra("position", position);
+                        startActivityForResult(intent, 1);
+                    }
                 }
             });
 
