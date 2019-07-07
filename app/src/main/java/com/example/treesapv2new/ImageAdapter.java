@@ -3,6 +3,7 @@ package com.example.treesapv2new;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -17,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 
 public class ImageAdapter extends PagerAdapter {
     private Context context;
@@ -44,6 +47,7 @@ public class ImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView;
         if(context instanceof FullScreenViewPager){
+//            imageView = new ImageViewTouch(context, );
             imageView = new TouchImageView(context);
         }else{
             imageView = new ImageView(context);

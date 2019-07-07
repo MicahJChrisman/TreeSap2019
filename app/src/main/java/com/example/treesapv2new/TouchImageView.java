@@ -6,10 +6,12 @@ import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class TouchImageView extends android.support.v7.widget.AppCompatImageView {
 
@@ -41,6 +43,7 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
     public TouchImageView(Context context) {
         super(context);
         sharedConstructing(context);
+        this.context = context;
     }
 
     public TouchImageView(Context context, AttributeSet attrs) {
@@ -57,7 +60,26 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
         setImageMatrix(matrix);
         setScaleType(ScaleType.MATRIX);
 
+
+
+        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                Log.d("TEST", "onDoubleTap");
+                Toast.makeText(context, "Double tap", Toast.LENGTH_SHORT).show();
+                return super.onDoubleTap(e);
+            }
+        });
+
+
         setOnTouchListener(new OnTouchListener() {
+            public GestureDetector getGestureDetector() {
+                return gestureDetector;
+            }
+
+            public void setGestureDetector(GestureDetector gestureDetector) {
+                gestureDetector = gestureDetector;
+            }
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -96,6 +118,7 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
                     case MotionEvent.ACTION_POINTER_UP:
                         mode = NONE;
                         break;
+
                 }
 
                 setImageMatrix(matrix);

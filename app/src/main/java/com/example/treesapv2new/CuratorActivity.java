@@ -363,7 +363,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         }
                         break;
                     case R.id.skip_button:
-                        if (penTrees.size() > 1){
+                        if (penTrees.size() > 1 && index < (penTrees.size()-1)){
                             DocumentReference doc = treesRef.document(currentTree.getID());
                             doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -374,9 +374,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                     penTrees.remove(index);
                                    // arrayAdapter.notifyDataSetChanged();
                                     //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+//                                    if(index >= penTrees.size()){
+//                                        index--;
+//                                    }
                                     setCurrentTree(index);
                                     setView();
-                                    Toast.makeText(CuratorActivity.this, "Skipped!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CuratorActivity.this, "Skipped", Toast.LENGTH_SHORT).show();
                                     hideMap();
                                 }
                             });
