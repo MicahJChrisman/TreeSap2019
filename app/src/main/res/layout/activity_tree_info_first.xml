@@ -5,8 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/parent_constraint"
-    android:background="@mipmap/tree_background">
+    android:id="@+id/parent_constraint">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/tree_background"
+        android:id="@+id/tree_info_first_background"
+        android:scaleType="centerCrop"/>
 
 
     <!--<LinearLayout-->
@@ -36,6 +42,7 @@
 
     <!--android:background="#D9000000"-->
     <!--android:background="#E66F6F6F"-->
+
 
 
     <LinearLayout

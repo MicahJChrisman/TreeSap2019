@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -212,6 +213,16 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
         if (commonName != null) {
             commonNameText.setText(commonName);
+            commonName = commonName.replaceAll("\\s","_");
+            commonName = commonName.toLowerCase();
+            try{
+                int id = this.getResources().getIdentifier(commonName, "mipmap", Tree_Info_First_NearbyTree.this.getPackageName());
+                Drawable d = getDrawable(id);
+                ((ImageView) findViewById(R.id.tree_info_first_background)).setImageDrawable(d);
+            }catch (Exception e){
+
+            }
+
         } else {
             //commonNameText.setText("Common name: " + "Unavailable");
             commonNameText.setVisibility(View.GONE);

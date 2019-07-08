@@ -6,11 +6,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +31,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -234,21 +239,31 @@ public class Tree_Info_First extends AppCompatActivity {
 
     public void updateTree() {
 
-        if (MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
-            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
-            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
-            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
-        }
-        if (MainActivity.banana.getPics("User pic") != null) {
-            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("User pic").toString(), Base64.DEFAULT);
-            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
-            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
-        }
+//        if (MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
+//            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
+//            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
+//            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
+//        }
+//        if (MainActivity.banana.getPics("User pic") != null) {
+//            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("User pic").toString(), Base64.DEFAULT);
+//            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
+//            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
+//        }
 
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
         if (commonName != null) {
             commonNameText.setText(commonName);
+            commonName = commonName.replaceAll("\\s","_");
+            commonName = commonName.toLowerCase();
+            try{
+                int id = this.getResources().getIdentifier(commonName, "mipmap", Tree_Info_First.this.getPackageName());
+                Drawable d = getDrawable(id);
+                ((ImageView) findViewById(R.id.tree_info_first_background)).setImageDrawable(d);
+            }catch (Exception e){
+
+            }
+
         } else {
             //commonNameText.setText("Common name: " + "Unavailable");
             commonNameText.setVisibility(View.GONE);

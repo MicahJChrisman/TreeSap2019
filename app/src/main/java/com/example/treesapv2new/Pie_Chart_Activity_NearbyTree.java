@@ -597,6 +597,19 @@ public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
         String line;
         if(tree.getCommonName() != null) {
             commonName = Transform.ChangeName(tree.getCommonName());
+            if (commonName != null) {
+                commonName = commonName.replaceAll("\\s","_");
+                commonName = commonName.toLowerCase();
+                try{
+                    int id = this.getResources().getIdentifier(commonName, "mipmap", Pie_Chart_Activity_NearbyTree.this.getPackageName());
+                    Drawable d = getDrawable(id);
+                    ((ImageView) findViewById(R.id.pie_chart_background)).setImageDrawable(d);
+                }catch (Exception e){
+
+                }
+            } else {
+                //commonNameText.setText("Common name: " + "Unavailable");
+            }
         }else{
             commonName = "tree";
         }

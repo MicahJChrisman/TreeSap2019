@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/masterLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/tree_background">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/tree_background"
+        android:id="@+id/pie_chart_background"
+        android:scaleType="centerCrop"/>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

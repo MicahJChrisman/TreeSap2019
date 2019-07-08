@@ -597,6 +597,19 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         String line;
         if(tree.getCommonName() != null) {
             commonName = Transform.ChangeName(tree.getCommonName());
+            if (commonName != null) {
+                String commonNameImage = commonName.replaceAll("\\s","_");
+                commonNameImage = commonNameImage.toLowerCase();
+                try{
+                    int id = this.getResources().getIdentifier(commonNameImage, "mipmap", Pie_Chart_Activity.this.getPackageName());
+                    Drawable d = getDrawable(id);
+                    ((ImageView) findViewById(R.id.pie_chart_background)).setImageDrawable(d);
+                }catch (Exception e){
+
+                }
+            } else {
+                //commonNameText.setText("Common name: " + "Unavailable");
+            }
         }else{
             commonName = "tree";
         }
