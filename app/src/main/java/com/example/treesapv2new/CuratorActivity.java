@@ -2,11 +2,16 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -22,22 +27,30 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
+import com.example.treesapv2new.view.CuratorMessage;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -87,6 +100,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     private ImageAdapter imageAdapter;
     private int i;
     GoogleMap mMap;
+//    SupportMapFragment mapFragment;
     SupportMapFragment mapFragment;
     private final String[] PERMS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -102,6 +116,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
     Marker mCurrLocationMarker;
     float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
+    Marker currentTreeMarker;
     LatLng coordinates;
 
     float zoom = 16;
@@ -115,7 +130,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private LocationRequest locationRequest;
 
-
+    int index;
     List<Tree> penTrees;
     //ArrayList<DocumentSnapshot> treeSnaps;
     FirebaseFirestore db;
@@ -124,23 +139,26 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     SwipeFlingAdapterView flingContainer;
     Tree currentTree;
     //DocumentSnapshot currentSnap;
+    NestedScrollView nestedScrollView;
+    LinearLayout nestedScrollChild;
     TextView commonName;
     TextView scientificName;
     TextView dbhs;
     TextView notes;
-    ArrayList<BitmapDrawable> dBmpList;
-    ViewPager viewPager;
+    static ArrayList<BitmapDrawable> dBmpList;
+    ClickableViewPager viewPager;
     Stack<DocSnap> previousTrees;
-    FloatingActionButton undoButton;
-    FloatingActionButton skipButton;
-    FloatingActionButton rejectButton;
-    FloatingActionButton acceptButton;
-    FloatingActionButton mapButton;
-    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton directionsButton;
+    ImageButton directionsButton;
+//    FloatingActionButton undoButton;
+//    FloatingActionButton skipButton;
+//    FloatingActionButton rejectButton;
+//    FloatingActionButton acceptButton;
+//    FloatingActionButton mapButton;
+//    com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton directionsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
-        getIntent().getExtras();
+        index = (Integer) getIntent().getExtras().get("index");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.curate_activity);
 
@@ -167,7 +185,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-
+//        nestedScrollView = findViewById(R.id.nested_scrolll_view);
         commonName = findViewById(R.id.common_name);
         scientificName = findViewById(R.id.scientific_name);
         dbhs = findViewById(R.id.dbh);
@@ -177,12 +195,21 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         googleApiClient.connect();
 
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
+        NestedScrollView nestedScrollView = (NestedScrollView) findViewById (R.id.nested_scrolll_view);
+        nestedScrollView.setFillViewport (true);
+        nestedScrollChild = findViewById(R.id.nested_scroll_child);
 
         FragmentManager fm = getSupportFragmentManager();
         if(mapFragment == null){
             fm = getSupportFragmentManager();
             mapFragment = SupportMapFragment.newInstance();
+//            mapFragment = new CuratorMap();
+//            mapFragment = new CuratorMap().newInstance();
+//            mapFragment.
+//            addContentView(mapFragment.getView(), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));//onCreateView(getLayoutInflater(), new ViewGroup(CuratorActivity.this) {
+//                @Override
+//                protected void onLayout(boolean changed, int l, int t, int r, int b) { }
+//            }, null), new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.placeholder, mapFragment);
             ft.hide(mapFragment);
@@ -196,6 +223,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //                .commit();
         directionsButton = findViewById(R.id.directions_button);
         directionsButton.setVisibility(View.GONE);
+//        directionsButton = mapFragment.getView().findViewById(R.id.directions_button);
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,16 +268,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 ////                            arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
 //                        }
 //                        hideMap();
-                        rejectTree();
-                        Toast.makeText(CuratorActivity.this, "Rejected!", Toast.LENGTH_SHORT).show();
-                        penTrees.remove(0);
-//                        arrayAdapter.notifyDataSetChanged();
-                        if(penTrees.size()>0) {
-//                            arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                            setCurrentTree();
-                            setView();
-                        }
-                        hideMap();
+                       showMessageDialogue(false);
         //                penTrees.remove(0);
                         break;
                     case R.id.undo_button:
@@ -277,11 +296,21 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                                 doc.delete();
                                             }
                                         }
-                                        penTrees.add(0, makeTree(document.getDoc()));
+                                        penTrees.add(index, makeTree(document.getDoc()));
                                         //penTrees.get(0).setID(docum.getId());
                                         //arrayAdapter.notifyDataSetChanged();
                                         //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                        setCurrentTree();
+
+                                        setCurrentTree(index);
+
+                                        CollectionReference notifications = db.collection("notifications");
+                                        Map<String, Object> dataMap = new HashMap<String,Object>();
+                                        dataMap.put("treeData", FieldValue.delete());
+                                        dataMap.put("accepted", FieldValue.delete());
+                                        dataMap.put("message", FieldValue.delete());
+                                        dataMap.put("read", FieldValue.delete());
+                                        dataMap.put("timestamp", FieldValue.delete());
+                                        notifications.document(document.getId()).update(dataMap);
                                         setView();
                                     }
 
@@ -292,18 +321,27 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         Log.w("error", "Error writing document. Tree file has been pushed back on stack of previous trees", e);
                                     }
                                 });
+
                             }else{
-                                penTrees.add(0, makeTree(document.getDoc()));
+                                penTrees.add(index, makeTree(document.getDoc()));
         //                        penTrees.get(0).setID(docum.getId());
                                 //arrayAdapter.notifyDataSetChanged();
                                 //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                setCurrentTree();
+                                setCurrentTree(index);
                                 setView();
                             }
                             hideMap();
                             Toast.makeText(CuratorActivity.this, "Undone", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(CuratorActivity.this, "No previous trees", Toast.LENGTH_SHORT).show();
+                            if(penTrees.isEmpty() || index == 0){
+                                Toast.makeText(CuratorActivity.this, "No previous trees", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                index--;
+                                setCurrentTree(index);
+                                setView();
+                                hideMap();
+                            }
                         }
                         break;
                     case R.id.map_button:
@@ -311,8 +349,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         //                mapButton.setClickable(false);
                         FragmentManager fm = getSupportFragmentManager();
                         if(mapFragment.isVisible()){
-                            hideMap();
                             directionsButton.setVisibility(View.GONE);
+                            hideMap();
                         }else {
                             coordinates = new LatLng(currentTree.getLocation().getLatitude(), currentTree.getLocation().getLongitude());
                             fm.beginTransaction()
@@ -320,13 +358,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                     .show(mapFragment)
                                     .addToBackStack(null)
                                     .commit();
-                            directionsButton.setVisibility(View.VISIBLE);
                             //mapFragment.getView().setVisibility(View.VISIBLE);
                             mapFragment.getMapAsync(CuratorActivity.this::onMapReady);
                         }
                         break;
                     case R.id.skip_button:
-                        if (penTrees.size() > 1){
+                        if (penTrees.size() > 1 && index < (penTrees.size()-1)){
                             DocumentReference doc = treesRef.document(currentTree.getID());
                             doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
@@ -334,12 +371,15 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                     DocumentSnapshot documentSnapshot = task.getResult();
                                     DocSnap docSnap = new DocSnap(false, documentSnapshot.getId(), documentSnapshot, false);
                                     previousTrees.push(docSnap);
-                                    penTrees.remove(0);
+                                    penTrees.remove(index);
                                    // arrayAdapter.notifyDataSetChanged();
                                     //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                    setCurrentTree();
+//                                    if(index >= penTrees.size()){
+//                                        index--;
+//                                    }
+                                    setCurrentTree(index);
                                     setView();
-                                    Toast.makeText(CuratorActivity.this, "Skipped!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CuratorActivity.this, "Skipped", Toast.LENGTH_SHORT).show();
                                     hideMap();
                                 }
                             });
@@ -348,9 +388,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         }
                         break;
                     case R.id.accept_button:
-                        acceptTree();
-
-                        hideMap();
+                        showMessageDialogue(true);
         //                penTrees.remove(0);
                         break;
                 }
@@ -358,7 +396,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             }
         };
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        navView.setSelectedItemId(R.id.nav_view);
+//        navView.setSelectedItemId(R.id.nav_view)
+//        navView.setLabelVisibilityMode(View.GONE);
+       // TODO make all labels white navView.setItemTextColor(new ColorStateList());
 //        rejectButton = findViewById(R.id.reject_button);
 //        rejectButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -501,6 +541,77 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //            }
 //        });
     }
+    public void showMessageDialogue(boolean accepted) {
+        final AlertDialog.Builder a_builder = new AlertDialog.Builder(CuratorActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        a_builder.setMessage("Would you like to send a message to the user who submitted this tree?").setCancelable(true)
+                .setPositiveButton("Add message", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(CuratorActivity.this, CuratorMessage.class);
+                        if(accepted == true) {
+                            intent.putExtra("accepted", true);
+                        }else{
+                            intent.putExtra("accepted",false);
+                        }
+                        startActivityForResult(intent, 0);
+                        //TODO add message
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        if(accepted == true){
+                a_builder.setNegativeButton("Accept without message", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    acceptTree("");
+                    hideMap();
+                }
+            });
+        }else{
+            a_builder.setNegativeButton("Reject without message", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    rejectTree("");
+                    hideMap();
+                }
+            });
+        }
+        AlertDialog alert = a_builder.create();
+        alert.setTitle("Add message?");
+        alert.show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_CANCELED && data != null){
+            if(requestCode == 0){
+                String message = (String) data.getExtras().get("message");
+                if((boolean) data.getExtras().get("accepted") == true){
+                    acceptTree(message);
+                }else{
+                    rejectTree(message);
+                }
+            }
+            else if(requestCode == 1){
+                viewPager.setCurrentItem((int) data.getExtras().get("position"));
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+            directionsButton.setVisibility(View.GONE);
+            super.onBackPressed();
+    }
 
     public void hideMap(){
         FragmentManager fm = getSupportFragmentManager();
@@ -512,8 +623,17 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         directionsButton.setVisibility(View.GONE);
     }
 
+    public ArrayList<BitmapDrawable> getDbmpList(){
+        return dBmpList;
+    }
+
     public void setView(){
-        dBmpList = populateList();
+        if(penTrees.isEmpty()){
+            findViewById(R.id.empty_message).setVisibility(View.VISIBLE);
+            findViewById(R.id.cardView).setVisibility(View.GONE);
+
+        }else {
+            dBmpList = populateList();
 //        if(convertView == null) {
 //            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
 //            this.convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
@@ -521,75 +641,93 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        else{
 //            this.convertView = convertView;
 //        }
-        viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager = (ClickableViewPager) findViewById(R.id.pager);
 
-        ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(dBmpList.size()-1);
-        TextView noPicsMessage = findViewById(R.id.no_pics_message);
-        if(dBmpList.size()==0) {
-            //noPicsMessage.setVisibility(View.VISIBLE);
-            viewPager.setBackgroundResource(R.drawable.new_logo);
-
-        }else{
-            //noPicsMessage.setVisibility(View.GONE);
-            viewPager.setBackground(null);
-        }
-
-        //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
-        String cName = (String) currentTree.getCommonName();
-        if(cName != null && cName != ""){
-            commonName.setText(cName);
-        }else{
-            commonName.setText("N/A");
-        }
-        String sName = (String) currentTree.getScientificName();
-        if(cName != null && cName != ""){
-            scientificName.setText(sName);
-        }else{
-            scientificName.setText("N/A");
-        }
-        ArrayList<Double> dbhList = currentTree.getAllDBHs();
-        String dbhText = "";
-        if(dbhList != null && !dbhList.isEmpty()){
-            dbhText += dbhList.get(0);
-            if(dbhList.size() > 1){
-                for(int i = 1; i<dbhList.size(); i++){
-                    dbhText += "\n" + dbhList.get(i);
+            ImageAdapter adapter = new ImageAdapter(CuratorActivity.this, dBmpList, new ArrayAdapter(CuratorActivity.this, R.layout.curate_activity));
+            viewPager.setAdapter(adapter);
+            viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
+            viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+//                    viewPager.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+//                    viewPager.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+//                    viewPager.bringToFront();
+                    if(!dBmpList.isEmpty()) {
+                        Intent intent = new Intent(CuratorActivity.this, FullScreenViewPager.class);
+                        intent.putExtra("position", position);
+                        startActivityForResult(intent, 1);
+                    }
                 }
-            }
-            dbhs.setText(dbhText);
-        }else{
-            dbhs.setText("N/A");
-        }
+            });
 
-        ArrayList<String> notesList = (ArrayList<String>) currentTree.getNotesArray();
-        if(notesList != null && !notesList.isEmpty()){
-            String finalNote = notesList.get(0);
-            if(notesList.size() > 1){
-                for(int i = 1; i<notesList.size(); i++){
-                    finalNote += "\n" + notesList.get(i);
-                }
+            TextView noPicsMessage = findViewById(R.id.no_pics_message);
+            if (dBmpList.size() == 0) {
+                //noPicsMessage.setVisibility(View.VISIBLE);
+                viewPager.setBackgroundResource(R.drawable.dark_logo);
+
+            } else {
+                //noPicsMessage.setVisibility(View.GONE);
+                viewPager.setBackgroundColor(ContextCompat.getColor(this, R.color.image_pager_background));
             }
-            if(!finalNote.equals("")){
-                notes.setText(finalNote);
-            }else{
+            //ImageView fullPic = (ImageView) convertView.findViewById(R.id.full_pic);
+            String cName = (String) currentTree.getCommonName();
+            if (cName != null && cName != "") {
+                commonName.setText(cName);
+            } else {
+                commonName.setText("N/A");
+            }
+            String sName = (String) currentTree.getScientificName();
+            if (cName != null && cName != "") {
+                scientificName.setText(sName);
+            } else {
+                scientificName.setText("N/A");
+            }
+            ArrayList<Object> dbhList = currentTree.getDBHArray();
+            String dbhText = "";
+            if (dbhList != null && !dbhList.isEmpty()) {
+                dbhText += dbhList.get(0);
+                if (dbhList.size() > 1) {
+                    for (int i = 1; i < dbhList.size(); i++) {
+                        dbhText += "\n" + dbhList.get(i);
+                    }
+                }
+                dbhs.setText(dbhText);
+            } else {
+                dbhs.setText("N/A");
+            }
+
+            ArrayList<String> notesList = (ArrayList<String>) currentTree.getNotesArray();
+            if (notesList != null && !notesList.isEmpty()) {
+                String finalNote = notesList.get(0);
+                if (notesList.size() > 1) {
+                    for (int i = 1; i < notesList.size(); i++) {
+                        finalNote += "\n" + notesList.get(i);
+                    }
+                }
+                if (!finalNote.equals("")) {
+                    notes.setText(finalNote);
+                } else {
+                    notes.setText("N/A");
+                }
+            } else {
                 notes.setText("N/A");
             }
-        }else{
-            notes.setText("N/A");
+//            ViewGroup.LayoutParams params = nestedScrollChild.getLayoutParams();
+//            params.height += viewPager.getHeight();
+//            nestedScrollChild.setLayoutParams(params);
+//            findViewById(R.id.nested_scroll_view).setFillViewport (true);
         }
     }
 
 
-    public void setCurrentTree(){
-        if(penTrees.size() > 0) {
-            currentTree = penTrees.get(0);
+    public void setCurrentTree(int index){
+        if(penTrees.size() > 0 && index < penTrees.size()) {
+            currentTree = penTrees.get(index);
             //currentSnap = treeSnaps.get(0);
         }
     }
 
-    public void rejectTree(){
+    public void rejectTree(String message){
         DocumentReference doc = treesRef.document(currentTree.getID());
 //        previousTrees.push(new DocSnap(false, doc.getId(), currentSnap, true));
 //        Map<String, Object> updates = new HashMap<>();
@@ -610,6 +748,22 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
+                        CollectionReference notifications = db.collection("notifications");
+                        Map<String, Object> dataMap = new HashMap<String,Object>();
+//                        for(DocumentSnapshot docs : document){
+//
+//                        }
+                        Map<String, Object> documentData = document.getData();
+                        dataMap.put("treeData", documentData);
+                        dataMap.put("accepted", false);
+                        dataMap.put("message", message);
+                        dataMap.put("read", false);
+                        Date date = new Date();
+                        Timestamp ts = new Timestamp(date.getTime());
+                        dataMap.put("timestamp", ts);
+                        notifications.document(doc.getId()).set(dataMap);
+
+
                         previousTrees.push(new DocSnap(false, doc.getId(), document, true));
                         Map<String, Object> updates = new HashMap<>();
                         updates.put("commonName", FieldValue.delete());
@@ -623,6 +777,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         updates.put("userID", FieldValue.delete());
                         doc.update(updates);
                         doc.delete();
+                        penTrees.remove(index);
+                        //arrayAdapter.notifyDataSetChanged();
+                        if(penTrees.size()>0) {
+                            //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
+                            setCurrentTree(index);
+                            setView();
+                        }
 //                        arrayAdapter.notifyDataSetChanged();
                     } else {
                         Log.d("problem:", "No such document in rejectTree()");
@@ -636,7 +797,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         });
     }
 
-    public void acceptTree(){
+    public void acceptTree(String message){
         DocumentReference doc = treesRef.document(currentTree.getID());
 //        CollectionReference notifications = db.collection("notifications");
 //        Map<String, Object> dataMap = new HashMap<String,Object>();
@@ -698,14 +859,14 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         Map<String, Object> documentData = document.getData();
                         dataMap.put("treeData", documentData);
                         dataMap.put("accepted", true);
-                        dataMap.put("message", "");
+                        dataMap.put("message", message);
                         dataMap.put("read", false);
                         Date date = new Date();
                         Timestamp ts = new Timestamp(date.getTime());
                         dataMap.put("timestamp", ts);
-                        notifications.document().set(dataMap);
+                        notifications.document(currentTree.getID()).set(dataMap);
 
-                        db.collection("acceptedTrees").document(currentTree.getID()).set(document.getData())
+                        db.collection("acceptedTrees").document(doc.getId()).set(document.getData())
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -728,11 +889,11 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         doc.delete();
                                         //arrayAdapter.notifyDataSetChanged();
                                         Toast.makeText(CuratorActivity.this, "Accepted!", Toast.LENGTH_SHORT).show();
-                                        penTrees.remove(0);
+                                        penTrees.remove(index);
                                         //arrayAdapter.notifyDataSetChanged();
                                         if(penTrees.size()>0) {
                                             //arrayAdapter.getView(0, flingContainer.getSelectedView(), null);
-                                            setCurrentTree();
+                                            setCurrentTree(index);
                                             setView();
                                         }
                                     }
@@ -767,31 +928,32 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         }else {
             tree.setScientificName(scientificName);
         }
-        ArrayList<Number> dbhList = ((ArrayList<Number>) document.get("dbhArray"));
+        ArrayList<Object> dbhList = (ArrayList<Object>) document.get("dbhArray");
 //                            Number dbh = ((ArrayList<Number>) document.get("dbhArray")).get(0);
-        if(dbhList == null || dbhList.isEmpty()){
-            tree.setCurrentDBH(0.0);
-        }else{
+        if(dbhList != null && !dbhList.isEmpty()){
+            tree.setDBHArray(dbhList);
 //                                tree.setCurrentDBHetCurrentDBH(new Double(dbh));
 //                                tree.setCurrentDBH(dbh);
-            tree.setCurrentDBH(dbhList.get(0).doubleValue());
+//            tree.setCurrentDBH(dbhList.get(0).doubleValue());
+
         }
         tree.setID(document.getId());
         ArrayList<String> notes = (ArrayList<String>) document.get("notes");
-        if(notes != null && !notes.isEmpty()) {
-            String finalNote = "";
-            for (String note : notes) {
-                finalNote += note + "\n";
-            }
-            //String note = otherInfo.get("Notes");
-//          while(i>=0) {
-//          String notes = (String) tree.getInfo("Notes");
-//          notes = notes + "/n" + otherInfo[i];
-//          }
-            if (!finalNote.equals("")) {
-                tree.addInfo("Notes", finalNote);
-            }
-        }
+        tree.setNotesArray(notes);
+//        if(notes != null && !notes.isEmpty()) {
+//            String finalNote = "";
+//            for (String note : notes) {
+//                finalNote += note + "\n";
+//            }
+//            //String note = otherInfo.get("Notes");
+////          while(i>=0) {
+////          String notes = (String) tree.getInfo("Notes");
+////          notes = notes + "/n" + otherInfo[i];
+////          }
+//            if (!finalNote.equals("")) {
+//                tree.addInfo("Notes", finalNote.substring(0, finalNote.length()-1));
+//            }
+//        }
 
         HashMap<String, ArrayList<String>> stringPics = (HashMap<String, ArrayList<String>>) document.get("images");
         tree.setTreePhotos(stringPics);
@@ -866,10 +1028,13 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        if(currentTreeMarker!=null){
+            currentTreeMarker.remove();
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
-        mMap.addMarker(new MarkerOptions().position(coordinates).title((String) currentTree.getCommonName()).snippet(coordinates.toString()).icon(icon));
+        currentTreeMarker = mMap.addMarker(new MarkerOptions().position(coordinates).title((String) currentTree.getCommonName()).snippet(coordinates.toString()).icon(icon));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates));
         mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener(){
             @Override
@@ -947,6 +1112,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             uiSettings.setMapToolbarEnabled(true);
             uiSettings.setTiltGesturesEnabled(true);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, zoom));
+            directionsButton.setVisibility(View.VISIBLE);
         }
 
     }
@@ -1008,6 +1174,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                     Bitmap bmp = BitmapFactory.decodeStream(is);
 //                    ImageModel imageModel = new ImageModel();
                     BitmapDrawable dBmp = new BitmapDrawable(getResources(), bmp);
+//                    dBmp.setBounds((dBmp.getIntrinsicHeight()/2, );
                     dBmpList.add(dBmp);
 //                    imageModel.setImage_drawable(dBmp);
 //                    picList.add(imageModel);
@@ -1017,6 +1184,25 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         return dBmpList;
+    }
+
+    public Bitmap BITMAP_RESIZER(Bitmap bitmap,int newWidth,int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
+
     }
 
     private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
@@ -1032,7 +1218,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                             penTrees.add(tree);
 //                            treeSnaps.add(document);
                         }
-                        setCurrentTree();
+                        setCurrentTree(index);
                         setView();
                     } else {
                         Toast toast = Toast.makeText(CuratorActivity.this, "Unable to load trees.", Toast.LENGTH_LONG);

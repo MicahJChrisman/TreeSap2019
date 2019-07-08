@@ -105,6 +105,8 @@ dependencies {
 
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     implementation 'com.robertlevonyan.view:CustomFloatingActionButton:2.1.1'
+    implementation 'it.sephiroth.android.library.imagezoom:imagezoom:+'
+
 
 }
 

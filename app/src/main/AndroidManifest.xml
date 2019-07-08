@@ -170,6 +170,17 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:label="TreeSapV2new"/>
+        <activity
+            android:name=".view.CuratorMessage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label="TreeSapV2New" />
+        <activity
+            android:name=".FullScreenViewPager"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label="TreeSapV2New" />
+
     </application>
 
 </manifest>

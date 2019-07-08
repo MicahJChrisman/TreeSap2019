@@ -58,7 +58,7 @@
             tools:visibility="visible">
 
             <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-                android:id="@+id/directions_button"
+                android:id="@+id/difficult_to_format"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"

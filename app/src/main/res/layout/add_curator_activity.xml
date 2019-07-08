@@ -45,11 +45,10 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/add_curator_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icons8_multiply_30"
-        android:id="@+id/add_curator_close"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"/>
+        android:padding="8dp"
+        android:src="@drawable/icons8_multiply_30" />
 
 </RelativeLayout>

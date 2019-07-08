@@ -296,7 +296,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                                 String documentIds = db.collection("notifications").document(documentSnapshot.getId()).toString();
                                                 notList.add(documentIds);
                                                 findViewById(R.id.trash_notifications).setVisibility(View.VISIBLE);
-                                                view.setBackgroundColor(getResources().getColor(R.color.highlight));
+                                                view.setBackgroundColor(getResources().getColor(R.color.old_background));
                                                 selectedViews.add(view);
                                             }
 

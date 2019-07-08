@@ -34,6 +34,7 @@ public class CuratorApproveActivity extends AppCompatActivity {
 
     private ArrayList<String> mNames = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
+    private int index = 0;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
@@ -58,21 +59,43 @@ public class CuratorApproveActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-//                        ArrayList<String> pic = (ArrayList<String>) ((Map<Object, Object>) document.getData().get("images")).get("full");
-//                        try{
-//                            String b = "";
-//                            for(String a : pic){
-//                                if(a!=null){
-//                                    b = a;
-//                                }else{
-//                                    b = "";
+                        Map<Object, Object> picMap = (Map<Object, Object>) document.getData().get("images");
+                        ArrayList<String> pics = (ArrayList<String>) picMap.get("full");
+                        try{
+                            int i = 0;
+                            String pic = "";
+                            String finalPic = "";
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
+                                }
+//                                else{
+//                                    finalPic = "";
 //                                }
-//                            }
-//                            mImageUrls.add(b);
-//                        }catch(Exception e){
-//                            e.getMessage();
-//                            mImageUrls.add("");
-//                        }
+                            }
+                            pics = (ArrayList<String>) picMap.get("leaf");
+                            i = 0;
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
+                                }
+                            }
+
+                            pics = (ArrayList<String>) picMap.get("bark");
+                            i = 0;
+                            while(finalPic.equals("") && i < pics.size()){
+                                pic = pics.get(i);
+                                if(pic != null){
+                                    finalPic = pic;
+                                }
+                            }
+                            mImageUrls.add(finalPic);
+                        }catch(Exception e){
+                            e.getMessage();
+                            mImageUrls.add("");
+                        }
                         mNames.add((String) document.getData().get("commonName"));
                     }
                     initRecyclerView();
