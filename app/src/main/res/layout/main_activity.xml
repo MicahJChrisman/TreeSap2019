@@ -54,6 +54,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/unread_notification"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/circle"
+            android:visibility="gone" />
+
         <ImageButton
             android:id="@+id/add_tree_button_0"
             android:layout_width="wrap_content"

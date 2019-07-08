@@ -78,6 +78,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -172,6 +173,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    int notificationCount = 0;
+                    if (task.isSuccessful()) {
+
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            if(!(Boolean)documentSnapshot.get("read")){
+                                notificationCount++;
+                                findViewById(R.id.unread_notification).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                    if(notificationCount == 0){
+                        findViewById(R.id.unread_notification).setVisibility(View.GONE);
+                    }
+                }
+            });
+
             db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -198,6 +219,28 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(null);
         MainActivity.banana=null;
         setContentView(R.layout.map_drawer);
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    int notificationCount = 0;
+                    if (task.isSuccessful()) {
+
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            if (!(Boolean) documentSnapshot.get("read")) {
+                                notificationCount++;
+                                findViewById(R.id.unread_notification).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                    if (notificationCount == 0) {
+                        findViewById(R.id.unread_notification).setVisibility(View.GONE);
+                    }
+                }
+            });
+        }
         MainActivity.treesNearby.clear();
 
 //        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
