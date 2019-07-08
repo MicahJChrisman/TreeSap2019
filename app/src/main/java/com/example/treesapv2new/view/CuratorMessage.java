@@ -14,7 +14,7 @@ import com.example.treesapv2new.R;
 
 public class CuratorMessage extends AppCompatActivity {
     Button cancelButton;
-    Button saveButton;
+    Button sendButton;
     EditText messageBox;
     boolean wasAccepted;
 
@@ -26,7 +26,7 @@ public class CuratorMessage extends AppCompatActivity {
         setContentView(R.layout.curator_message);
 
         cancelButton = findViewById(R.id.cancel_button);
-        saveButton = findViewById(R.id.submit_button);
+        sendButton = findViewById(R.id.send_button);
         messageBox = findViewById(R.id.message_box);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +37,7 @@ public class CuratorMessage extends AppCompatActivity {
         });
 
         String title = "";
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder a_builder = new AlertDialog.Builder(CuratorMessage.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
