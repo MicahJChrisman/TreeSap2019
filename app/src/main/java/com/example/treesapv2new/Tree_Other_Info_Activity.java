@@ -73,6 +73,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
     Timestamp timestamp;
 
 
+
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.add_tree_other_info);
@@ -249,11 +250,68 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         });
 
         String[] treeTypes = getResources().getStringArray(R.array.known_trees);
+        String[] scientificTypes = getResources().getStringArray(R.array.scientific_names);
         //String[] treeTypes = getResources().getStringArray(R.array.known_trees_full);
 
         AutoCompleteTextView editTrees = findViewById(R.id.common_name);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,treeTypes);
         editTrees.setAdapter(adapter);
+
+//        nameMap.get(((AutoCompleteTextView) findViewById(R.id.scientific_name)).getText().toString());
+
+        AutoCompleteTextView scientificNameAutoComplete = findViewById(R.id.scientific_name);
+        ArrayAdapter<String> scientificNameAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,scientificTypes);
+        scientificNameAutoComplete.setAdapter(scientificNameAdapter);
+
+
+        ((AutoCompleteTextView) findViewById(R.id.scientific_name)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(((AutoCompleteTextView) findViewById(R.id.scientific_name)).hasFocus()) {
+                    for (int i = 0; i < scientificTypes.length; i++) {
+                        String a = scientificTypes[i];
+                        if (s.toString().equals(a)) {
+                            ((AutoCompleteTextView) findViewById(R.id.common_name)).setText(treeTypes[i]);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        ((AutoCompleteTextView) findViewById(R.id.common_name)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(((AutoCompleteTextView) findViewById(R.id.common_name)).hasFocus()) {
+                    for (int i = 0; i < treeTypes.length; i++) {
+                        String a = treeTypes[i];
+                        if (s.toString().equals(a)) {
+                            ((AutoCompleteTextView) findViewById(R.id.scientific_name)).setText(scientificTypes[i]);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         ((EditText) findViewById(R.id.dbh_edit)).addTextChangedListener(new TextWatcher() {
             @Override

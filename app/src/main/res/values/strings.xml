@@ -33,8 +33,10 @@
         <item>	American beech	</item>
         <item>	American chestnut	</item>
         <item>	American elm	</item>
+        <item>  American sweetgum </item>
         <item>	American sycamore	</item>
         <item>	Austrian pine	</item>
+        <item>  Autumn blaze maple</item>
         <item>	Balsam fir	</item>
         <item>	Bitternut hickory	</item>
         <item>	Black ash	</item>
@@ -52,7 +54,10 @@
         <item>	Callery pear	</item>
         <item>	Cherry plum	</item>
         <item>	Chinese privet	</item>
+        <item>  Colorado blue spruce</item>
         <item>	Common chokecherry	</item>
+        <item>  Common juniper  </item>
+        <item>  Crimson king maple</item>
         <item>	Dawn redwood	</item>
         <item>	Eastern red cedar	</item>
         <item>	Eastern redbud	</item>
@@ -80,10 +85,15 @@
         <item>	Northern red oak	</item>
         <item>	Norway maple	</item>
         <item>	Norway spruce	</item>
+        <item>  Ohio buckeye  </item>
         <item>	Paper birch	</item>
         <item>	Pawpaw	</item>
         <item>	Pin oak	</item>
+        <item>  Planetree maple</item>
+        <item>  Red birch</item>
         <item>	Red maple	</item>
+        <item>  Red oak</item>
+        <item>  Red pine</item>
         <item>	River birch	</item>
         <item>	Rock elm	</item>
         <item>	Rose-of-sharon	</item>
@@ -106,8 +116,105 @@
         <item>	White oak	</item>
         <item>	White spruce	</item>
         <item>	Wych elm	</item>
-
+        <item>  Yellow poplar  </item>
+        <item>  Yew  </item>
     </string-array>
+
+
+    <string-array name = "scientific_names">
+        <item>	Tilia americana	</item>
+        <item>	Fagus grandifolia	</item>
+        <item>	Castanea dentata	</item>
+        <item>	Ulmus americana	</item>
+        <item>	Liquidambar styraciflua	</item>
+        <item>	Platanus occidentalis	</item>
+        <item>	Pinus nigra	</item>
+        <item>	Acer x freemanii	</item>
+        <item>	Abies balsamea	</item>
+        <item>	Carya cordiformis	</item>
+        <item>	Fraxinus nigra	</item>
+        <item>	Betula lenta	</item>
+        <item>	Robinia pseudoacacia	</item>
+        <item>	Acer nigrum	</item>
+        <item>	Populus nigra	</item>
+        <item>	Nyssa sylvatica	</item>
+        <item>	Juglans nigra	</item>
+        <item>	Salix nigra	</item>
+        <item>	Picea pungens	</item>
+        <item>	Acer negundo	</item>
+        <item>	Quercus macrocarpa	</item>
+        <item>	Juglans cinerea	</item>
+        <item>	Pyrus calleryana	</item>
+        <item>	Prunus cerasifera	</item>
+        <item>	Ligustrum sinense	</item>
+        <item>	Picea pungens	</item>
+        <item>	Prunus virginiana	</item>
+        <item>	Juniperus communis	</item>
+        <item>	Acer platanoides	</item>
+        <item>	Metasequoia glyptostroboides	</item>
+        <item>	Juniperus virginiana	</item>
+        <item>	Cercis canadensis	</item>
+        <item>	Pinus strobus	</item>
+        <item>	Alnus glutinosa	</item>
+        <item>	Fagus sylvatica	</item>
+        <item>	Carpinus betulus	</item>
+        <item>	Cornus florida	</item>
+        <item>	Acer freemanii	</item>
+        <item>	Ginkgo biloba	</item>
+        <item>	Fraxinus pennsylvanica	</item>
+        <item>	Acer campestre	</item>
+        <item>	Gleditsia triacanthos	</item>
+        <item>	Malus floribunda	</item>
+        <item>	Prunus serrulata	</item>
+        <item>	Acer palmatum	</item>
+        <item>	Syringa reticulata	</item>
+        <item>	Zelkova serrata	</item>
+        <item>	Cercidiphyllum japonicum	</item>
+        <item>	Tilia cordata	</item>
+        <item>	Platanus x acerifolia	</item>
+        <item>	Acer spicatum	</item>
+        <item>	Halesia tetraptera	</item>
+        <item>	Celtis occidentalis	</item>
+        <item>	Quercus rubra	</item>
+        <item>	Acer platanoides	</item>
+        <item>	Picea abies	</item>
+        <item>	Aesculus glabra	</item>
+        <item>	Betula papyrifera	</item>
+        <item>	Asimina triloba	</item>
+        <item>	Quercus palustris	</item>
+        <item>	Acer pseudoplatanus	</item>
+        <item>	Betula occidentalis	</item>
+        <item>	Acer rubrum	</item>
+        <item>	Quercus rubra	</item>
+        <item>	Pinus resinosa	</item>
+        <item>	Betula nigra	</item>
+        <item>	Ulmus thomasii	</item>
+        <item>	Hibiscus syriacus	</item>
+        <item>	Pinus sylvestris	</item>
+        <item>	Ulmus pumila	</item>
+        <item>	Tilia tomentosa	</item>
+        <item>	Acer saccharinum	</item>
+        <item>	Ulmus rubra	</item>
+        <item>	Catalpa bignonioides	</item>
+        <item>	Rhus typhina	</item>
+        <item>	Acer pensylvanicum	</item>
+        <item>	Acer saccharum	</item>
+        <item>	Quercus bicolor	</item>
+        <item>	Prunus avium	</item>
+        <item>	Malus coronaria	</item>
+        <item>	Liquidambar styraciflua	</item>
+        <item>	Acer pseudoplatanus	</item>
+        <item>	Liriodendron tulipifera	</item>
+        <item>	Fraxinus americana	</item>
+        <item>	Quercus alba	</item>
+        <item>	Picea glauca	</item>
+        <item>	Ulmus glabra	</item>
+        <item>	Liriodendron tulipifera	</item>
+        <item>	Taxus baccata	</item>
+    </string-array>
+
+
+
     <string-array name="known_trees_full">
         <item>	Abies Amabilis	</item>
         <item>	Abies Balsamea	</item>

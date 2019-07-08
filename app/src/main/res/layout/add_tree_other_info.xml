@@ -103,7 +103,7 @@
                     android:textColor="@color/accent_gray"
                     android:textSize="18sp" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/scientific_name"
                     android:layout_width="0dp"
                     android:layout_height="55dp"
