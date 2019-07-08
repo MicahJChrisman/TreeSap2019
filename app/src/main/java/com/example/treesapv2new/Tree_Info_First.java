@@ -456,7 +456,7 @@ public class Tree_Info_First extends AppCompatActivity {
             ds = MainActivity.userTreeDataSourceGlobal;
         }
         ds.initialize(Tree_Info_First.this,null);
-        MainActivity.treesNearby.clear();
+//        MainActivity.treesNearby.clear();
         Tree tree = ds.search(MainActivity.banana.getLocation());
         if(tree != null && tree.isFound()){
             ds.patchData(tree);
@@ -655,13 +655,13 @@ public class Tree_Info_First extends AppCompatActivity {
             if(event2.getX()>event1.getX()){
                 //left to right swipe
                 Intent intent2 = new Intent(Tree_Info_First.this, Pie_Chart_Activity.class);
-                finish();
+//                finish();
                 startActivity(intent2);
 
             }else if(event2.getX()<event1.getX()){
                 //right to left swipe
                 Intent intent1 = new Intent(Tree_Info_First.this, Cereal_Box_Activity.class);
-                finish();
+//                finish();
                 startActivity(intent1);
             }
             return true;
