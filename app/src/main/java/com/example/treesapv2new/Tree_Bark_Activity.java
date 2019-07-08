@@ -263,9 +263,14 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 slider.setIndicatorsSize(0);
 
             findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
+            ((Button) findViewById(R.id.add_bark_pic)).setText("Take another picture");
             if(imagesString.size() > 1){
                 findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
             }
+            if(imagesString.size() == 5){
+                ((Button) findViewById(R.id.add_bark_pic)).setVisibility(View.GONE);
+            }
+
 //            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
         }
     }

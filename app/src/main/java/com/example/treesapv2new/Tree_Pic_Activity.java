@@ -247,9 +247,12 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             }
 
             slider.setIndicatorsSize(0);
-
+            ((Button) findViewById(R.id.add_full_pic)).setText("Take another picture");
             if(imagesString.size() > 1){
                 findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
+            }
+            if(imagesString.size() == 5){
+                ((Button) findViewById(R.id.add_full_pic)).setVisibility(View.GONE);
             }
         }
     }

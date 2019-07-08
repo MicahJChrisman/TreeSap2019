@@ -235,6 +235,7 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
 
 
 
+
             if(imagesString.size() ==1) {
                 slider = (ImageSlider) findViewById(R.id.pager);
                 slider.setAdapter(mSectionsPagerAdapter);
@@ -242,8 +243,12 @@ public class Tree_Leaf_Activity extends AppCompatActivity {
 
             slider.setIndicatorsSize(0);
 
+            ((Button) findViewById(R.id.add_leaf_pic)).setText("Take another picture");
             if(imagesString.size() > 1){
                 findViewById(R.id.swipe_for_pics).setVisibility(View.VISIBLE);
+            }
+            if(imagesString.size() == 5){
+                ((Button) findViewById(R.id.add_leaf_pic)).setVisibility(View.GONE);
             }
         }
     }
