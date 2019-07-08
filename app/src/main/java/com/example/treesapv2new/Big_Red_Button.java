@@ -135,6 +135,9 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     }
                     if(notificationCount == 0){
                         findViewById(R.id.unread_notification).setVisibility(View.GONE);
+                        hamMenu.getMenu().findItem(R.id.nav_notifications).setTitle("Notifications");
+                    }else{
+                        hamMenu.getMenu().findItem(R.id.nav_notifications).setTitle("Notifications (" + Integer.valueOf(notificationCount) + ")");
                     }
                 }
             });
