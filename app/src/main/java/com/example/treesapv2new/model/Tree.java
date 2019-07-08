@@ -18,6 +18,7 @@ public class Tree {
     String treeID;
     Boolean found = false;
     Boolean closest = false;
+    boolean isNearbyTree = false;
     public static final int TREE_ID = 0;
     public static final int NAME = 2;
     public static final int LATITUDE = 4;
@@ -244,6 +245,14 @@ public class Tree {
 
     public void clearInfo(){
         otherInfo.clear();
+    }
+
+    public void setIsNearbyTree(boolean isNearbyTree){
+        this.isNearbyTree = isNearbyTree;
+    }
+
+    public boolean getIsNearbyTree(){
+        return isNearbyTree;
     }
 
     public void setClosest(float distanceTo){

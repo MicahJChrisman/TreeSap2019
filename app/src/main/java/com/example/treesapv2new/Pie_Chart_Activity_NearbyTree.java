@@ -70,7 +70,7 @@ import java.util.ArrayList;
 
 import static android.graphics.Paint.Align.CENTER;
 
-public class Pie_Chart_Activity extends AppCompatActivity {
+public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
 
     private GestureDetectorCompat gestureObject;
 
@@ -116,7 +116,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             Color.rgb(55, 55, 200),
     };
     private PopupWindow popupWindow;
-    private String commonName = MainActivity.banana.getCommonName();
+    private String commonName = Tree_Info_First.nearTree.getCommonName();
     private String allInfo;
     private PieChart pieChart;
     private PieDataSet dataset;
@@ -158,23 +158,23 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
-                        Intent intent1 = new Intent(Pie_Chart_Activity.this, Big_Red_Button.class);
+                        Intent intent1 = new Intent(Pie_Chart_Activity_NearbyTree.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
-                        Intent intent2 = new Intent(Pie_Chart_Activity.this, MainActivity.class);
+                        Intent intent2 = new Intent(Pie_Chart_Activity_NearbyTree.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
-                        Intent intent3 = new Intent(Pie_Chart_Activity.this, Coordinates_View_Activity.class);
+                        Intent intent3 = new Intent(Pie_Chart_Activity_NearbyTree.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
-                        Intent intent4 = new Intent(Pie_Chart_Activity.this, Maps_Activity.class);
+                        Intent intent4 = new Intent(Pie_Chart_Activity_NearbyTree.this, Maps_Activity.class);
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
-                        Intent intent5 = new Intent(Pie_Chart_Activity.this, QR_Code_Activity.class);
+                        Intent intent5 = new Intent(Pie_Chart_Activity_NearbyTree.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
                 }
@@ -186,14 +186,14 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
-        tree = MainActivity.banana;
+        tree = Tree_Info_First.nearTree;
         String dsOrig = tree.getDataSource();
 
         if(!tree.getDataSource().equals("ExtendedCoH")){
 //            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
             if(bestMatchTree == null){
 
             }else {
@@ -486,7 +486,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //
 //        }
 //        else {
-            pieChart.animateY(2000);
+        pieChart.animateY(2000);
 //        }
 
 
@@ -557,12 +557,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
             if (event2.getX() > event1.getX()) {
                 //left to right swipe
-                Intent intent1 = new Intent(Pie_Chart_Activity.this, Cereal_Box_Activity.class);
+                Intent intent1 = new Intent(Pie_Chart_Activity_NearbyTree.this, Cereal_Box_Activity_NearbyTree.class);
                 finish();
                 startActivity(intent1);
             } else if (event2.getX() < event1.getX()) {
                 //right to left swipe
-                Intent intent2 = new Intent(Pie_Chart_Activity.this, Tree_Info_First.class);
+                Intent intent2 = new Intent(Pie_Chart_Activity_NearbyTree.this, Tree_Info_First_NearbyTree.class);
                 finish();
                 startActivity(intent2);
             }
@@ -573,7 +573,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        MainActivity.banana.setIsNearbyTree(false);
+        Tree_Info_First.nearTree.setIsNearbyTree(false);
     }
 
     private class AddNotesEvent implements View.OnClickListener{
@@ -749,7 +749,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_pie);
             //image.setImageBitmap(bmp);
-            MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
+            Tree_Info_First.nearTree.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
             myDialog.dismiss();
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
         }

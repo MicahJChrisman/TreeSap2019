@@ -71,8 +71,8 @@ import static com.example.treesapv2new.Pie_Chart_Activity.TOTAL;
 import static com.example.treesapv2new.Pie_Chart_Activity.WATER_GAL;
 
 
-public class Cereal_Box_Activity extends AppCompatActivity {
-//    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
+public class Cereal_Box_Activity_NearbyTree extends AppCompatActivity {
+    //    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
     String sentString;
     Dialog myDialog;
     private static final int REQUEST_IMGAGE_CAPTURE = 101;
@@ -131,14 +131,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                         if(Math.abs(deltaX)>100 && Math.abs(deltaX) > Math.abs(deltaY)){
                             if(deltaX<=0){
 
-                                Intent intent1 = new Intent(Cereal_Box_Activity.this, Tree_Info_First.class);
+                                Intent intent1 = new Intent(Cereal_Box_Activity_NearbyTree.this, Tree_Info_First_NearbyTree.class);
                                 finish();
                                 startActivity(intent1);
 
                                 return true;
                             }else{
                                 //right to left swipe
-                                Intent intent2 = new Intent(Cereal_Box_Activity.this, Pie_Chart_Activity.class);
+                                Intent intent2 = new Intent(Cereal_Box_Activity_NearbyTree.this, Pie_Chart_Activity_NearbyTree.class);
                                 finish();
                                 startActivity(intent2);
                                 return  true;
@@ -172,23 +172,23 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
-                        Intent intent1 = new Intent(Cereal_Box_Activity.this, Big_Red_Button.class);
+                        Intent intent1 = new Intent(Cereal_Box_Activity_NearbyTree.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
-                        Intent intent2 = new Intent(Cereal_Box_Activity.this, MainActivity.class);
+                        Intent intent2 = new Intent(Cereal_Box_Activity_NearbyTree.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
-                        Intent intent3 = new Intent(Cereal_Box_Activity.this, Coordinates_View_Activity.class);
+                        Intent intent3 = new Intent(Cereal_Box_Activity_NearbyTree.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
-                        Intent intent4 = new Intent(Cereal_Box_Activity.this, Maps_Activity.class);
+                        Intent intent4 = new Intent(Cereal_Box_Activity_NearbyTree.this, Maps_Activity.class);
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
-                        Intent intent5 = new Intent(Cereal_Box_Activity.this, QR_Code_Activity.class);
+                        Intent intent5 = new Intent(Cereal_Box_Activity_NearbyTree.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
                 }
@@ -197,13 +197,13 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         };
 
 //        TextView eventer = (TextView) findViewById(R.id.treeNamePlease);
-//        eventer.setText(MainActivity.banana.getCommonName());
+//        eventer.setText(Tree_Info_First.nearTree.getCommonName());
 //
 //        TextView eventer1 = (TextView) findViewById(R.id.latitudetree);
-//        eventer1.setText(String.valueOf(MainActivity.banana.getLocation().getLatitude()));
+//        eventer1.setText(String.valueOf(Tree_Info_First.nearTree.getLocation().getLatitude()));
 //
 //        TextView eventer2= (TextView) findViewById(R.id.longitudetree);
-//        eventer2.setText(String.valueOf(MainActivity.banana.getLocation().getLongitude()));
+//        eventer2.setText(String.valueOf(Tree_Info_First.nearTree.getLocation().getLongitude()));
 
 
         myDialog = new Dialog(this);
@@ -211,7 +211,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         if(sources.size()>0) {
             //patchTreeData();
-            display(MainActivity.banana);
+            display(Tree_Info_First.nearTree);
         }else{
             finish();
             Toast.makeText(getBaseContext(), "Select a database!", Toast.LENGTH_LONG).show();
@@ -265,7 +265,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
             if(bestMatchTree == null){
 
             }else {
@@ -288,195 +288,195 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
 
 //        if(tree.getDataSource().equals("ExtendedCoH")) {
+        try {
+            COMMON_NAME = allInfo.split(",")[benefits_columns_enum.commonNameIndex()];
+            ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
+        } catch (Exception e) {
             try {
-                COMMON_NAME = allInfo.split(",")[benefits_columns_enum.commonNameIndex()];
-                ((TextView) findViewById(R.id.common_name_cereal)).setText(COMMON_NAME);
-            } catch (Exception e) {
-                try {
-                    ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
-                } catch (Exception i) {
-                    ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
-                }
+                ((TextView) findViewById(R.id.common_name_cereal)).setText(tree.getCommonName());
+            } catch (Exception i) {
+                ((TextView) findViewById(R.id.common_name_cereal)).setText("Tree Type Unknown");
             }
+        }
 
-            try {
-                SCIENTIFIC_NAME = allInfo.split(",")[benefits_columns_enum.scientificNameIndex()];
-                ((TextView) findViewById(R.id.scientific_name_cereal)).setText(SCIENTIFIC_NAME);
-            } catch (Exception e) {
-                ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
-            }
+        try {
+            SCIENTIFIC_NAME = allInfo.split(",")[benefits_columns_enum.scientificNameIndex()];
+            ((TextView) findViewById(R.id.scientific_name_cereal)).setText(SCIENTIFIC_NAME);
+        } catch (Exception e) {
+            ((TextView) findViewById(R.id.scientific_name_cereal)).setVisibility(View.GONE);
+        }
 
-            try {
-                DBH = allInfo.split(",")[benefits_columns_enum.dbhIndex()];
-                ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
-            }
+        try {
+            DBH = allInfo.split(",")[benefits_columns_enum.dbhIndex()];
+            ((TextView) findViewById(R.id.dbh_meas_cereal)).setText(DBH + "in.");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.dbh_linear_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                NATIVE = allInfo.split(",")[benefits_columns_enum.nativeIndex()];
-                ((TextView) findViewById(R.id.native_yn_cereal)).setText(NATIVE);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.native_linear_layout)).setVisibility(View.GONE);
-            }
+        try {
+            NATIVE = allInfo.split(",")[benefits_columns_enum.nativeIndex()];
+            ((TextView) findViewById(R.id.native_yn_cereal)).setText(NATIVE);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.native_linear_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
-                if(ANNUAL_BENEFITS.length() < 4){
-                    ANNUAL_BENEFITS += "0";
-                }
-                ((TextView) findViewById(R.id.annual_benefits_val)).setText("$" + ANNUAL_BENEFITS);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
-                ((ImageView) findViewById(R.id.thick_bar_2)).setVisibility(View.GONE);
+        try {
+            ANNUAL_BENEFITS = allInfo.split(",")[benefits_columns_enum.totalAnnualBenefitsDollarsIndex()];
+            if(ANNUAL_BENEFITS.length() < 4){
+                ANNUAL_BENEFITS += "0";
             }
+            ((TextView) findViewById(R.id.annual_benefits_val)).setText("$" + ANNUAL_BENEFITS);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.annual_linear_layout)).setVisibility(View.GONE);
+            ((ImageView) findViewById(R.id.thick_bar_2)).setVisibility(View.GONE);
+        }
 
-            try {
-                CO2_SEQUESTERED_$ = allInfo.split(",")[benefits_columns_enum.carbonSequestrationDollarsIndex()];
-                ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText("$" + CO2_SEQUESTERED_$);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.carbon_dioxide_sequestered)).setVisibility(View.GONE);
-            }
+        try {
+            CO2_SEQUESTERED_$ = allInfo.split(",")[benefits_columns_enum.carbonSequestrationDollarsIndex()];
+            ((TextView) findViewById(R.id.carbon_dioxide_sequestered_val)).setText("$" + CO2_SEQUESTERED_$);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.carbon_dioxide_sequestered)).setVisibility(View.GONE);
+        }
 
-            try {
-                CO2_SEQUESTERED_lbs = allInfo.split(",")[benefits_columns_enum.carbonSequestrationPoundsIndex()];
-                ((TextView) findViewById(R.id.annual_co2_val)).setText(CO2_SEQUESTERED_lbs + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.annual_co2_layout)).setVisibility(View.GONE);
-            }
+        try {
+            CO2_SEQUESTERED_lbs = allInfo.split(",")[benefits_columns_enum.carbonSequestrationPoundsIndex()];
+            ((TextView) findViewById(R.id.annual_co2_val)).setText(CO2_SEQUESTERED_lbs + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.annual_co2_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                STORM_WATER_RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffDollarsIndex()];
-                ((TextView) findViewById(R.id.storm_water_runoff_val)).setText("$" + STORM_WATER_RUNOFF_AVOIDED);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.water_runnoff_avoided)).setVisibility(View.GONE);
-            }
+        try {
+            STORM_WATER_RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffDollarsIndex()];
+            ((TextView) findViewById(R.id.storm_water_runoff_val)).setText("$" + STORM_WATER_RUNOFF_AVOIDED);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.water_runnoff_avoided)).setVisibility(View.GONE);
+        }
 
-            try {
-                RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffCubicFeetIndex()];
-                ((TextView) findViewById(R.id.runoff_val)).setText(RUNOFF_AVOIDED + " gal");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.runoff_layout)).setVisibility(View.GONE);
-            }
+        try {
+            RUNOFF_AVOIDED = allInfo.split(",")[benefits_columns_enum.aintedRunoffCubicFeetIndex()];
+            ((TextView) findViewById(R.id.runoff_val)).setText(RUNOFF_AVOIDED + " gal");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.runoff_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                RAINFALL_INTERCEPTED = allInfo.split(",")[benefits_columns_enum.waterInterceptedCubicFeetIndex()];
-                ((TextView) findViewById(R.id.rainfall_val)).setText(RAINFALL_INTERCEPTED + " gal");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.rainfall_layout)).setVisibility(View.GONE);
-            }
+        try {
+            RAINFALL_INTERCEPTED = allInfo.split(",")[benefits_columns_enum.waterInterceptedCubicFeetIndex()];
+            ((TextView) findViewById(R.id.rainfall_val)).setText(RAINFALL_INTERCEPTED + " gal");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.rainfall_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                AIR_POLLUTION_ANNUAL = allInfo.split(",")[benefits_columns_enum.pollutionRemovalDollarsIndex()];
-                ((TextView) findViewById(R.id.air_pollution_val)).setText("$" + AIR_POLLUTION_ANNUAL);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.air_pollution_removed)).setVisibility(View.GONE);
-            }
+        try {
+            AIR_POLLUTION_ANNUAL = allInfo.split(",")[benefits_columns_enum.pollutionRemovalDollarsIndex()];
+            ((TextView) findViewById(R.id.air_pollution_val)).setText("$" + AIR_POLLUTION_ANNUAL);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.air_pollution_removed)).setVisibility(View.GONE);
+        }
 
-            try {
-                CARBON_MONOXIDE = allInfo.split(",")[benefits_columns_enum.coOuncesIndex()];
-                ((TextView) findViewById(R.id.carbon_monoxide_val)).setText(CARBON_MONOXIDE + " oz");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.co_layout)).setVisibility(View.GONE);
-            }
+        try {
+            CARBON_MONOXIDE = allInfo.split(",")[benefits_columns_enum.coOuncesIndex()];
+            ((TextView) findViewById(R.id.carbon_monoxide_val)).setText(CARBON_MONOXIDE + " oz");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.co_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                OZONE = allInfo.split(",")[benefits_columns_enum.o3OuncesIndex()];
-                ((TextView) findViewById(R.id.ozone_val)).setText(OZONE + " oz");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.ozone_layout)).setVisibility(View.GONE);
-            }
+        try {
+            OZONE = allInfo.split(",")[benefits_columns_enum.o3OuncesIndex()];
+            ((TextView) findViewById(R.id.ozone_val)).setText(OZONE + " oz");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.ozone_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                NITROGEN_DIOXIDE = allInfo.split(",")[benefits_columns_enum.no2OuncesIndex()];
-                ((TextView) findViewById(R.id.nitrogen_dioxide_val)).setText(NITROGEN_DIOXIDE + " oz");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.no2_layout)).setVisibility(View.GONE);
-            }
+        try {
+            NITROGEN_DIOXIDE = allInfo.split(",")[benefits_columns_enum.no2OuncesIndex()];
+            ((TextView) findViewById(R.id.nitrogen_dioxide_val)).setText(NITROGEN_DIOXIDE + " oz");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.no2_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                SULFUR_DIOXIDE = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
-                ((TextView) findViewById(R.id.sulfur_dioxide_val)).setText(SULFUR_DIOXIDE + " oz");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.so2_layout)).setVisibility(View.GONE);
-            }
+        try {
+            SULFUR_DIOXIDE = allInfo.split(",")[benefits_columns_enum.so2OuncesIndex()];
+            ((TextView) findViewById(R.id.sulfur_dioxide_val)).setText(SULFUR_DIOXIDE + " oz");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.so2_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                PARTICULATE_MATTER = allInfo.split(",")[benefits_columns_enum.pm25OuncesIndex()];
-                ((TextView) findViewById(R.id.particulate_matter_val)).setText(PARTICULATE_MATTER + " oz");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.pm_layout)).setVisibility(View.GONE);
-            }
+        try {
+            PARTICULATE_MATTER = allInfo.split(",")[benefits_columns_enum.pm25OuncesIndex()];
+            ((TextView) findViewById(R.id.particulate_matter_val)).setText(PARTICULATE_MATTER + " oz");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.pm_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.energySavingsDollarsIndex()];
-                ((TextView) findViewById(R.id.energy_usage_val)).setText("$" + ENERGY_USAGE_ANNUAL);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
-            }
+        try {
+            ENERGY_USAGE_ANNUAL = allInfo.split(",")[benefits_columns_enum.energySavingsDollarsIndex()];
+            ((TextView) findViewById(R.id.energy_usage_val)).setText("$" + ENERGY_USAGE_ANNUAL);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.energy_usage_annual)).setVisibility(View.GONE);
+        }
 
-            try {
-                ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.coolingKWHIndex()];
-                ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
-            }
+        try {
+            ELECTRICITY_SAVINGS = allInfo.split(",")[benefits_columns_enum.coolingKWHIndex()];
+            ((TextView) findViewById(R.id.electricity_savings_val)).setText(ELECTRICITY_SAVINGS + " kWh");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.electricity_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.heatingMBTUIndex()];
-                ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS + " MMBtu");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
-            }
+        try {
+            FUEL_SAVINGS = allInfo.split(",")[benefits_columns_enum.heatingMBTUIndex()];
+            ((TextView) findViewById(R.id.fuel_savings_val)).setText(FUEL_SAVINGS + " MMBtu");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.fuel_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                AVOIDED_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
-                ((TextView) findViewById(R.id.energy_emissions_val)).setText("$" + AVOIDED_EMISSIONS);
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.avoided_energy_emissions)).setVisibility(View.GONE);
-            }
+        try {
+            AVOIDED_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedDollarsIndex()];
+            ((TextView) findViewById(R.id.energy_emissions_val)).setText("$" + AVOIDED_EMISSIONS);
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.avoided_energy_emissions)).setVisibility(View.GONE);
+        }
 
-            try {
-                CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
-                ((TextView) findViewById(R.id.carbon_dioxide_val)).setText(CARBON_DIOXIDE_EMISSIONS + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
-            }
+        try {
+            CARBON_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.carbonAintedPoundsIndex()];
+            ((TextView) findViewById(R.id.carbon_dioxide_val)).setText(CARBON_DIOXIDE_EMISSIONS + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.co2_emissions_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                CARBON_MONOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
-                ((TextView) findViewById(R.id.carbon_monoxide_emissions_val)).setText(CARBON_MONOXIDE_EMISSIONS + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.co_emissions_layout)).setVisibility(View.GONE);
-            }
+        try {
+            CARBON_MONOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+            ((TextView) findViewById(R.id.carbon_monoxide_emissions_val)).setText(CARBON_MONOXIDE_EMISSIONS + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.co_emissions_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                NITROGEN_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
-                ((TextView) findViewById(R.id.nitrogen_dioxide_emissions_val)).setText(NITROGEN_DIOXIDE_EMISSIONS + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.no2_emissions_layout)).setVisibility(View.GONE);
-            }
+        try {
+            NITROGEN_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+            ((TextView) findViewById(R.id.nitrogen_dioxide_emissions_val)).setText(NITROGEN_DIOXIDE_EMISSIONS + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.no2_emissions_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                SULFUR_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
-                ((TextView) findViewById(R.id.sulfur_dioxide_emissions_val)).setText(SULFUR_DIOXIDE_EMISSIONS + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.so2_emissions_layout)).setVisibility(View.GONE);
-            }
-            try {
-                PARTICULATE_MATTER_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
-                ((TextView) findViewById(R.id.particulate_matter_emissions_val)).setText(PARTICULATE_MATTER_EMISSIONS + " lbs");
-            } catch (Exception e) {
-                ((LinearLayout) findViewById(R.id.pm_emissions_layout)).setVisibility(View.GONE);
-            }
+        try {
+            SULFUR_DIOXIDE_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+            ((TextView) findViewById(R.id.sulfur_dioxide_emissions_val)).setText(SULFUR_DIOXIDE_EMISSIONS + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.so2_emissions_layout)).setVisibility(View.GONE);
+        }
+        try {
+            PARTICULATE_MATTER_EMISSIONS = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+            ((TextView) findViewById(R.id.particulate_matter_emissions_val)).setText(PARTICULATE_MATTER_EMISSIONS + " lbs");
+        } catch (Exception e) {
+            ((LinearLayout) findViewById(R.id.pm_emissions_layout)).setVisibility(View.GONE);
+        }
 
-            try {
-                CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
-                ((TextView) findViewById(R.id.co2_total_val)).setText("$" + CO2_TO_DATE);
-            } catch (Exception e) {
-                ((ImageView) findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);
-                ((LinearLayout) findViewById(R.id.co2_stored_to_date)).setVisibility(View.GONE);
-            }
+        try {
+            CO2_TO_DATE = allInfo.split(",")[benefits_columns_enum.thingsThatDoNotExist()];
+            ((TextView) findViewById(R.id.co2_total_val)).setText("$" + CO2_TO_DATE);
+        } catch (Exception e) {
+            ((ImageView) findViewById(R.id.thick_bar_3)).setVisibility(View.GONE);
+            ((LinearLayout) findViewById(R.id.co2_stored_to_date)).setVisibility(View.GONE);
+        }
 //        }else{
 //            if(bestMatchTree != null) {
 //                ((TextView) findViewById(R.id.common_name_cereal)).setText(bestMatchTree.getCommonName());
@@ -509,7 +509,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     public void patchTreeData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(MainActivity.banana.getDataSource());
+        // sources.remove(Tree_Info_First.nearTree.getDataSource());
         for (String source : sources) {
             Log.d("MainActivity", "Searching.  Trying: "+source);
             DataSource ds;
@@ -522,8 +522,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             }else{
                 ds = new ITreeDataSource();
             }
-            ds.initialize(Cereal_Box_Activity.this,null);
-            Tree tree = ds.search(MainActivity.banana.getLocation());
+            ds.initialize(Cereal_Box_Activity_NearbyTree.this,null);
+            Tree tree = ds.search(Tree_Info_First.nearTree.getLocation());
 
             if(tree != null && tree.isFound()){
                 ds.patchData(tree);
@@ -535,14 +535,14 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        MainActivity.banana.setIsNearbyTree(false);
+        Tree_Info_First.nearTree.setIsNearbyTree(false);
     }
 
     public Tree estimateTreeNearest(Double maxDistance, float maxDBHDifference){
         Tree bestTree = new Tree();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(MainActivity.banana.getDataSource());
+        // sources.remove(Tree_Info_First.nearTree.getDataSource());
         for (String source : sources) {
             DataSource ds;
             if(source.equals("HopeCollegeDataSource")){
@@ -1248,13 +1248,13 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
             if(event2.getX()>event1.getX()){
                 //left to right swipe
-//                MainActivity.banana.setIsNearbyTree(false);
-                Intent intent1 = new Intent(Cereal_Box_Activity.this, Tree_Info_First.class);
+//                Tree_Info_First.nearTree.setIsNearbyTree(false);
+                Intent intent1 = new Intent(Cereal_Box_Activity_NearbyTree.this, Tree_Info_First_NearbyTree.class);
                 finish();
                 startActivity(intent1);
             }else if(event2.getX()<event1.getX()){
                 //right to left swipe
-                Intent intent2 = new Intent(Cereal_Box_Activity.this, Pie_Chart_Activity.class);
+                Intent intent2 = new Intent(Cereal_Box_Activity_NearbyTree.this, Pie_Chart_Activity_NearbyTree.class);
                 finish();
                 startActivity(intent2);
             }
@@ -1419,12 +1419,12 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArray = stream.toByteArray();
-         //   picAppear.setImageBitmap(imageBitmap);
+            //   picAppear.setImageBitmap(imageBitmap);
 
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_cereal);
             //image.setImageBitmap(bmp);
-            MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
+            Tree_Info_First.nearTree.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
             myDialog.dismiss();
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
         }

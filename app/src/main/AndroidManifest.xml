@@ -144,6 +144,21 @@
             android:screenOrientation="portrait"
             android:label=".TreeSapV2New"/>
         <activity
+            android:name=".Tree_Info_First_NearbyTree"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label=".TreeSapV2New"/>
+        <activity
+            android:name=".Pie_Chart_Activity_NearbyTree"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label=".TreeSapV2New"/>
+        <activity
+            android:name=".Cereal_Box_Activity_NearbyTree"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label=".TreeSapV2New"/>
+        <activity
             android:name=".NotificationsActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
