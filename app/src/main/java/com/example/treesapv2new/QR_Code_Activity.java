@@ -269,9 +269,11 @@ public class QR_Code_Activity extends AppCompatActivity {
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                        break;
                     case R.id.nav_add_curator:
                         Intent intent7 = new Intent(QR_Code_Activity.this, AddCurator.class);
                         startActivity(intent7);
+                        break;
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.qr_code_container);

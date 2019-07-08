@@ -280,9 +280,11 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                        break;
                     case R.id.nav_add_curator:
                         Intent intent7 = new Intent(Big_Red_Button.this, AddCurator.class);
                         startActivity(intent7);
+                        break;
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.brb_container);

@@ -251,9 +251,11 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                        break;
                     case R.id.nav_add_curator:
                         Intent intent7 = new Intent(Coordinates_View_Activity.this, AddCurator.class);
                         startActivity(intent7);
+                        break;
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.coord_container);

@@ -348,9 +348,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
                         hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
+                        break;
                     case R.id.nav_add_curator:
                         Intent intent7 = new Intent(Maps_Activity.this, AddCurator.class);
                         startActivity(intent7);
+                        break;
 
                 }
                 DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.maps_container);
