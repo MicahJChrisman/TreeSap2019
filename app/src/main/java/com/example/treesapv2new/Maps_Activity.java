@@ -841,9 +841,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                                                    }
 
                                             BitmapDescriptor icon;
+                                            String snippet = "";
                                             String user = (String) document.getData().get("userID");
                                             if(mAuth.getCurrentUser().getUid().equals(user)){
                                                 icon = BitmapDescriptorFactory.fromResource(R.drawable.user_tree_marker1);
+                                                snippet = "Your tree";
                                             }else{
                                                 int iconInt = randomGenerator.nextInt(8);
                                                 switch (iconInt) {
@@ -876,7 +878,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                                         break;
                                                 }
                                             }
-                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("User Submitted").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            if(snippet.equals("")){
+                                                snippet = "User submitted";
+                                            }
+                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(snippet).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                         } catch (ArrayIndexOutOfBoundsException e) {
 
                                         }
