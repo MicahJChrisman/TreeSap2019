@@ -15,6 +15,8 @@ import android.location.Criteria;
 import android.location.Location;
 //import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -80,6 +82,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -152,6 +155,9 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         closestTree = null;
         closest1 =999999999;
 
+        boolean online = isNetworkAvailable();
+
+
         googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
         googleApiClient.connect();
 
@@ -174,7 +180,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            if(!online){
+                Toast toast = Toast.makeText(Maps_Activity.this, "You are not online. Using cached data.", Toast.LENGTH_LONG);
+                toast.show();
+            }
+            Task<QuerySnapshot> query = db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get();
+//            db.getApp().getP;
+//            db.runTransacti;
+                    query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     int notificationCount = 0;
@@ -216,6 +229,13 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(false);
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     public void onCreate(Bundle savedInstanceState){
