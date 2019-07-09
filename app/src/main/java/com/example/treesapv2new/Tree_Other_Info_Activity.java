@@ -323,7 +323,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_edit)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue / 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -350,7 +350,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit4)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_edit4)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue / 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -377,7 +377,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_edit2)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_edit2)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue / 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -405,7 +405,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 if(((EditText) findViewById(R.id.dbh_edit3)).hasFocus()) {
                     String circumString = ((EditText) findViewById(R.id.dbh_edit3)).getText().toString();
                     if (((EditText) findViewById(R.id.dbh_edit3)).hasFocus()) {
-                        if (!circumString.equals("")) {
+                        if (!circumString.equals("") && !circumString.equals(".")) {
                             Double circumValue = Double.valueOf(circumString);
                             Double dbhValue = circumValue / 3.1415;
                             dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -434,7 +434,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                 String circumString = ((EditText) findViewById(R.id.dbh_textView)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_textView)).hasFocus()) {
                     if (!s.equals(circumString)) {
-                        if (!circumString.equals("")) {
+                        if (!circumString.equals("") && !circumString.equals(".")) {
                             Double circumValue = Double.valueOf(circumString);
                             Double dbhValue = circumValue * 3.1415;
                             dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -462,7 +462,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_textView2)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_textView2)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue * 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -489,7 +489,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_textView3)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_textView3)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue * 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
@@ -516,7 +516,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String circumString = ((EditText) findViewById(R.id.dbh_textView4)).getText().toString();
                 if(((EditText) findViewById(R.id.dbh_textView4)).hasFocus()) {
-                    if (!circumString.equals("")) {
+                    if (!circumString.equals("") && !circumString.equals(".")) {
                         Double circumValue = Double.valueOf(circumString);
                         Double dbhValue = circumValue * 3.1415;
                         dbhValue = Math.round(dbhValue * 100.0) / 100.0;
