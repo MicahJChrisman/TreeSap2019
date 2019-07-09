@@ -112,10 +112,14 @@ public class AllUsersDataSource extends DataSource {
 
 
                             ArrayList<Object> dbhArray= (ArrayList) document.getData().get("dbhArray");
-                            if(dbhArray !=null && dbhArray.size() > 0){
-                                tree.setDBHArray(dbhArray);
-                                Double l = (Double) dbhArray.get(0);
-                                tree.setCurrentDBH(l.doubleValue());
+                            try {
+                                if (dbhArray != null && dbhArray.size() > 0) {
+                                    tree.setDBHArray(dbhArray);
+                                    Double l = (Double) dbhArray.get(0);
+                                    tree.setCurrentDBH(l.doubleValue());
+                                }
+                            }catch(Exception e){
+                                
                             }
 
 //                            if(document.getData().get("dbh").toString()!=null) {
@@ -254,7 +258,7 @@ public class AllUsersDataSource extends DataSource {
                     try {
                         treeReturn.setCurrentDBH(tree.getCurrentDBH());
                     }catch (Exception e){
-
+                        continue;
                     }
 
                     treeReturn.setIsClosest(true);

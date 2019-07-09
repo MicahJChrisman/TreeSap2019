@@ -107,22 +107,32 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
+                        Tree_Info_First.oldMainTree = null;
+                        finish();
                         Intent intent1 = new Intent(Tree_Info_First_NearbyTree.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
+                        Tree_Info_First.oldMainTree = null;
+                        finish();
                         Intent intent2 = new Intent(Tree_Info_First_NearbyTree.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
+                        Tree_Info_First.oldMainTree = null;
+                        finish();
                         Intent intent3 = new Intent(Tree_Info_First_NearbyTree.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
+                        Tree_Info_First.oldMainTree = null;
+                        finish();
                         Intent intent4 = new Intent(Tree_Info_First_NearbyTree.this, Maps_Activity.class);
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
+                        Tree_Info_First.oldMainTree = null;
+                        finish();
                         Intent intent5 = new Intent(Tree_Info_First_NearbyTree.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
