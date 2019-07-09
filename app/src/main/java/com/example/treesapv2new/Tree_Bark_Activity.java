@@ -37,6 +37,7 @@ import com.shivam.library.imageslider.ImageSlider.PageAnimation;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Tree_Bark_Activity extends AppCompatActivity {
@@ -135,6 +136,7 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 builder.show();
             }
         });
+
     }
 
 

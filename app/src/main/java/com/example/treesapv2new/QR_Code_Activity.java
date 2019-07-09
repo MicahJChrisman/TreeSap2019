@@ -105,6 +105,25 @@ public class QR_Code_Activity extends AppCompatActivity {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
+
+            boolean isConnectedToFirebase;
+            try{
+                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            }catch(InterruptedException e){
+                isConnectedToFirebase = false;
+            }catch(IOException e){
+                isConnectedToFirebase = false;
+            }
+            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.showOfflineMessage(QR_Code_Activity.this);
+                ConnectionCheck.offlineMessageShown = true;
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.offlineMessageShown = false;
+                ConnectionCheck.offlineCuratorMessageShown = false;
+                ConnectionCheck.offlineAddTreeMessageShown = false;
+                ConnectionCheck.offlineAccountMessageShown = false;
+            }
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override

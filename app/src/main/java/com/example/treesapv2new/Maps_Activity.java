@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 import com.example.treesapv2new.datasource.AllUsersDataSource;
 import com.example.treesapv2new.datasource.UserTreeDataSource;
+//import com.example.treesapv2new.ConnectionCheck;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -88,6 +89,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -178,12 +181,26 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            if(!online){
-                Toast toast = Toast.makeText(Maps_Activity.this, "You are not online. Using cached data.", Toast.LENGTH_LONG);
-                toast.show();
+            boolean isConnectedToFirebase;
+            try{
+                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            }catch(InterruptedException e){
+                isConnectedToFirebase = false;
+            }catch(IOException e){
+                isConnectedToFirebase = false;
             }
+            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.showOfflineMessage(Maps_Activity.this);
+                ConnectionCheck.offlineMessageShown = true;
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.offlineMessageShown = false;
+                ConnectionCheck.offlineCuratorMessageShown = false;
+                ConnectionCheck.offlineAddTreeMessageShown = false;
+                ConnectionCheck.offlineAccountMessageShown = false;
+            }
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             Task<QuerySnapshot> query = db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get();
 //            db.getApp().getP;
 //            db.runTransacti;

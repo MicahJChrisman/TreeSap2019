@@ -81,6 +81,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -118,6 +119,24 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
+
+            boolean isConnectedToFirebase;
+            try{
+                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            }catch(InterruptedException e){
+                isConnectedToFirebase = false;
+            }catch(IOException e){
+                isConnectedToFirebase = false;
+            }
+            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.showOfflineMessage(Big_Red_Button.this);
+                ConnectionCheck.offlineMessageShown = true;
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.offlineMessageShown = false;
+                ConnectionCheck.offlineCuratorMessageShown = false;
+                ConnectionCheck.offlineAddTreeMessageShown = false;
+                ConnectionCheck.offlineAccountMessageShown = false;
+            }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

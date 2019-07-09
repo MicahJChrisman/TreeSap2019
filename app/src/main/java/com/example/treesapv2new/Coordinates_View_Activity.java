@@ -59,6 +59,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -89,6 +90,25 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
+
+            boolean isConnectedToFirebase;
+            try{
+                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            }catch(InterruptedException e){
+                isConnectedToFirebase = false;
+            }catch(IOException e){
+                isConnectedToFirebase = false;
+            }
+            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.showOfflineMessage(Coordinates_View_Activity.this);
+                ConnectionCheck.offlineMessageShown = true;
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.offlineMessageShown = false;
+                ConnectionCheck.offlineCuratorMessageShown = false;
+                ConnectionCheck.offlineAddTreeMessageShown = false;
+                ConnectionCheck.offlineAccountMessageShown = false;
+            }
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
