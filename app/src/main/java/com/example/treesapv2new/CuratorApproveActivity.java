@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
@@ -50,6 +51,23 @@ public class CuratorApproveActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
+        boolean isConnectedToFirebase;
+        try{
+            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        }catch(InterruptedException e){
+            isConnectedToFirebase = false;
+        }catch(IOException e){
+            isConnectedToFirebase = false;
+        }
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
+//            ConnectionCheck.offlineAddTreeMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+//            ConnectionCheck.offlineCuratorMessageShown = false;
+//            ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("pendingTrees");
         //final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");

@@ -177,13 +177,13 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         }catch(IOException e){
             isConnectedToFirebase = false;
         }
-        if(!isConnectedToFirebase && !ConnectionCheck.offlineAddTreeMessageShown){
-            ConnectionCheck.showOfflineAddTreeMessage(Add_Tree_Activity.this);
-            ConnectionCheck.offlineAddTreeMessageShown = true;
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineAddTreeMessage1(Add_Tree_Activity.this);
+//            ConnectionCheck.offlineAddTreeMessageShown = true;
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAddTreeMessageShown = false;
+//            ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
     }

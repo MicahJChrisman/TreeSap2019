@@ -40,6 +40,8 @@ import com.google.common.io.Resources;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.io.IOException;
+
 public class SettingsActivity extends PreferenceActivity {
 
     @Override
@@ -135,7 +137,22 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.distanceFromTreePref)));
-
+        boolean isConnectedToFirebase;
+        try{
+            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        }catch(InterruptedException e){
+            isConnectedToFirebase = false;
+        }catch(IOException e){
+            isConnectedToFirebase = false;
+        }
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineAccountMessage(SettingsActivity.this);
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+//                ConnectionCheck.offlineCuratorMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
+//                ConnectionCheck.offlineAccountMessageShown = false;
+        }
     }
 
     @Override

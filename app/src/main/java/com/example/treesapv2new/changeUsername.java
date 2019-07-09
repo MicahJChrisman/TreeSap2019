@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.io.IOException;
+
 public class changeUsername extends AppCompatActivity {
     public static String newUsername = Login_Activity.mAuth.getCurrentUser().getDisplayName();
 
@@ -27,7 +29,19 @@ public class changeUsername extends AppCompatActivity {
                     UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(((EditText) findViewById(R.id.new_username)).getText().toString()).build();
                     user.updateProfile(profileChangeRequest);
                     newUsername = ((EditText) findViewById(R.id.new_username)).getText().toString();
-                    Toast.makeText( changeUsername.this, "Username updated", Toast.LENGTH_LONG).show();
+                    boolean isConnectedToFirebase;
+                    try{
+                        isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                    }catch(InterruptedException e){
+                        isConnectedToFirebase = false;
+                    }catch(IOException e){
+                        isConnectedToFirebase = false;
+                    }
+                    if(isConnectedToFirebase) {
+                        Toast.makeText(changeUsername.this, "Username updated", Toast.LENGTH_LONG).show();
+                    }else{
+
+                    }
                     finish();
                 } else {
                     Toast.makeText( changeUsername.this, "Old username does not match", Toast.LENGTH_LONG).show();

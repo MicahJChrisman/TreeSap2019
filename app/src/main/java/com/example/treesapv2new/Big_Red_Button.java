@@ -131,10 +131,10 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
                 ConnectionCheck.showOfflineMessage(Big_Red_Button.this);
                 ConnectionCheck.offlineMessageShown = true;
-            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
                 ConnectionCheck.offlineMessageShown = false;
                 ConnectionCheck.offlineCuratorMessageShown = false;
-                ConnectionCheck.offlineAddTreeMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
                 ConnectionCheck.offlineAccountMessageShown = false;
             }
             FirebaseFirestore db = FirebaseFirestore.getInstance();

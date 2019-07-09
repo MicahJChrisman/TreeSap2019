@@ -25,6 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -114,24 +115,51 @@ public class Login_Activity extends AppCompatActivity {
 
     private class login implements View.OnClickListener{
         public void onClick(View v){
-            String email = ((TextView)findViewById(R.id.edittext_username)).getText().toString();
-            String password = ((TextView)findViewById(R.id.edittext_password)).getText().toString();
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Toast toast = Toast.makeText(Login_Activity.this, "You are logged in.", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER,0,0);
-                        toast.show();
-                    }else{
-                        Toast toast = Toast.makeText(Login_Activity.this, "Invalid login.", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0,0);
-                        toast.show();
+            CharSequence emailSeq = ((TextView)findViewById(R.id.edittext_username)).getText();
+            String email = "";
+            if(emailSeq != null){
+                email = emailSeq.toString();
+            }
+            CharSequence passwordSeq = ((TextView)findViewById(R.id.edittext_password)).getText();
+            String password = "";
+            if(passwordSeq != null){
+                password = passwordSeq.toString();
+            }
+            if(!email.equals("") && !password.equals("")) {
+                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast toast = Toast.makeText(Login_Activity.this, "You are logged in.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        } else {
+                            boolean isConnectedToFirebase;
+                            try {
+                                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                            } catch (InterruptedException e) {
+                                isConnectedToFirebase = false;
+                            } catch (IOException e) {
+                                isConnectedToFirebase = false;
+                            }
+                            if (!isConnectedToFirebase) {
+                                Toast toast = Toast.makeText(Login_Activity.this, "No internet, cannot authenticate user", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            } else {
+                                Toast toast = Toast.makeText(Login_Activity.this, "Invalid login.", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+                        }
                     }
-                }
-            });
-
+                });
+            }else{
+                Toast toast = Toast.makeText(Login_Activity.this, "Please enter login credentials", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
         }
     }
 
@@ -161,8 +189,21 @@ public class Login_Activity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0,0);
                             toast.show();
                         } catch(Exception e) {
-                            Toast toast = Toast.makeText(Login_Activity.this, "Registration failed.", Toast.LENGTH_LONG);
-                            toast.show();
+                            boolean isConnectedToFirebase;
+                            try{
+                                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                            }catch(InterruptedException ex){
+                                isConnectedToFirebase = false;
+                            }catch(IOException ex) {
+                                isConnectedToFirebase = false;
+                            }
+                            if(!isConnectedToFirebase){
+                                Toast toast = Toast.makeText(Login_Activity.this, "No internet, registration failed.", Toast.LENGTH_LONG);
+                                toast.show();
+                            }else {
+                                Toast toast = Toast.makeText(Login_Activity.this, "Registration failed.", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
                     }else {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();

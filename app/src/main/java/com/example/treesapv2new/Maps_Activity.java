@@ -193,10 +193,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
                 ConnectionCheck.showOfflineMessage(Maps_Activity.this);
                 ConnectionCheck.offlineMessageShown = true;
-            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
                 ConnectionCheck.offlineMessageShown = false;
                 ConnectionCheck.offlineCuratorMessageShown = false;
-                ConnectionCheck.offlineAddTreeMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
                 ConnectionCheck.offlineAccountMessageShown = false;
             }
 

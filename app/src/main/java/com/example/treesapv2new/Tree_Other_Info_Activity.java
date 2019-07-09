@@ -28,6 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -533,7 +534,23 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 
-
+        boolean isConnectedToFirebase;
+        try{
+            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        }catch(InterruptedException e){
+            isConnectedToFirebase = false;
+        }catch(IOException e){
+            isConnectedToFirebase = false;
+        }
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineAddTreeMessage2(Tree_Other_Info_Activity.this);
+//            ConnectionCheck.offlineAddTreeMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+            ConnectionCheck.offlineCuratorMessageShown = false;
+//            ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
     }
 //
 //    private void initRecyclerView(){
@@ -712,11 +729,6 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
 
 
-
-
-
-
-
                     ArrayList<String> notesArray = new ArrayList<String>();
                     if(notes !=null) {
                         notesArray.add(notes);
@@ -735,20 +747,45 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
                     dialog.dismiss();
 
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
-                    builder1.setCancelable(false);
-                    builder1.setTitle("Success!");
-                    builder1.setMessage("Your tree has been submitted for approval. While you wait, your tree will be available in the \"User Tree\" data set on your device.");
-                    builder1.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this,null);
-                            MainActivity.userTreeDataSourceGlobal.addTree(passedArray);
-                            Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
-                            startActivity(intentA);
-                        }
-                    });
-                    builder1.show();
+                    boolean isConnectedToFirebase;
+                    try{
+                        isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                    }catch(InterruptedException e){
+                        isConnectedToFirebase = false;
+                    }catch(IOException e){
+                        isConnectedToFirebase = false;
+                    }
+                    if(isConnectedToFirebase) {
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
+                        builder1.setCancelable(false);
+                        builder1.setTitle("Success!");
+                        builder1.setMessage("Your tree has been submitted for approval. While you wait, your tree will be available in the \"User Tree\" data set on your device.");
+                        builder1.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this, null);
+                                MainActivity.userTreeDataSourceGlobal.addTree(passedArray);
+                                Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
+                                startActivity(intentA);
+                            }
+                        });
+                        builder1.show();
+                    }else{
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
+                        builder1.setCancelable(false);
+                        builder1.setTitle("New tree pending submission");
+                        builder1.setMessage("While you wait, your tree will be available in the \"User Tree\" data set on your device.\nDo not close the app");
+                        builder1.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MainActivity.userTreeDataSourceGlobal.initialize(Tree_Other_Info_Activity.this, null);
+                                MainActivity.userTreeDataSourceGlobal.addTree(passedArray);
+                                Intent intentA = new Intent(Tree_Other_Info_Activity.this, MainActivity.class);
+                                startActivity(intentA);
+                            }
+                        });
+                        builder1.show();
+                    }
                 }
             });
             builder.show();
