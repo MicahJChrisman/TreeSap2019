@@ -141,7 +141,11 @@ public class Tree {
     }
 
     public Double getCurrentDBH() {
-        return currentDBH.get(0);
+        try {
+            return currentDBH.get(0);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     public ArrayList<Double> getAllDBHs(){return currentDBH;}

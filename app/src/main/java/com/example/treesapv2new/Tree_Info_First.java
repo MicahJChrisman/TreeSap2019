@@ -193,8 +193,8 @@ public class Tree_Info_First extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-        ImageButton button = (ImageButton) findViewById(R.id.add3);
-        button.setOnClickListener(new AddNotesEvent());
+//        ImageButton button = (ImageButton) findViewById(R.id.add3);
+//        button.setOnClickListener(new AddNotesEvent());
 
         Button viewNotes = (Button) findViewById(R.id.view_notes_button);
         Button viewPhotos = (Button) findViewById(R.id.view_photos_button);
@@ -407,21 +407,6 @@ public class Tree_Info_First extends AppCompatActivity {
         }
 
 
-        try {
-            String otherInfo = MainActivity.banana.getAllInfo();
-            TextView otherInfoText = (TextView) findViewById(R.id.otherInfo);
-            if (otherInfo != null) {
-                otherInfoText.setVisibility(View.VISIBLE);
-                otherInfoText.setText(otherInfo);
-            } else {
-                //otherInfoText.setText("Other info: \n" + "\tNo other information");
-                findViewById(R.id.otherTitle).setVisibility(View.GONE);
-                otherInfoText.setVisibility(View.GONE);
-            }
-        }catch (Exception e){
-            findViewById(R.id.otherTitle).setVisibility(View.GONE);
-            ((TextView) findViewById(R.id.otherInfo)).setVisibility(View.GONE);
-        }
 
 //        if(MainActivity.treesNearby !=null){
         if(MainActivity.banana.getNearbyTrees() != null){

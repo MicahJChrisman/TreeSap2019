@@ -193,11 +193,19 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree;
+            Tree bestMatchTree = null;
             if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
-                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) MainActivity.banana.getDBHArray().get(0), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+                try {
+                    bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) MainActivity.banana.getDBHArray().get(0), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+                }catch (Exception e){
+
+                }
             }else{
-                bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+                try {
+                    bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+                }catch (Exception e){
+
+                }
             }
             if(bestMatchTree == null){
 

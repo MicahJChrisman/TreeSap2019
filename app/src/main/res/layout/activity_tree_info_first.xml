@@ -209,32 +209,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/otherLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/otherTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Other info: "
-                android:textColor="@color/accent_gray"
-                android:textSize="20sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/otherInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/accent_gray"
-                android:textSize="20sp"
-                android:visibility="visible" />
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -289,17 +263,17 @@
 
 
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/add3"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/transparent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/icons8_plus_math_30" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/add3"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:layout_marginStart="28dp"-->
+        <!--android:layout_marginTop="28dp"-->
+        <!--android:background="@drawable/transparent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--android:src="@drawable/icons8_plus_math_30" />-->
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/tree_info_first_menu"

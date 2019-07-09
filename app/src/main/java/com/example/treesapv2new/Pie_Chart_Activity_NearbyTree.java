@@ -203,11 +203,19 @@ public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
 //            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree;
+            Tree bestMatchTree = null;
             if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
-                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double)Tree_Info_First.nearTree.getDBHArray().get(0),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+                try {
+                    bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) Tree_Info_First.nearTree.getDBHArray().get(0), Tree_Info_First.nearTree.getLocation(), Tree_Info_First.nearTree.getCommonName());
+                }catch (Exception e){
+
+                }
             }else{
-                bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+                try {
+                    bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(), Tree_Info_First.nearTree.getLocation(), Tree_Info_First.nearTree.getCommonName());
+                }catch (Exception e){
+
+                }
             }
             if(bestMatchTree == null){
 
@@ -610,7 +618,7 @@ public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line;
-        if(tree.getCommonName() != null) {
+        if(tree.getCommonName() != null && !tree.getCommonName().equals("")) {
             commonName = Transform.ChangeName(tree.getCommonName());
             if (commonName != null) {
                 String commonNameImage = commonName.replaceAll("\\s","_");
