@@ -265,7 +265,12 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            Tree bestMatchTree;
+            if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) MainActivity.banana.getDBHArray().get(0), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+            }else{
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+            }
             if(bestMatchTree == null){
 
             }else {

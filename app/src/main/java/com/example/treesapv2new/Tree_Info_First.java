@@ -437,7 +437,8 @@ public class Tree_Info_First extends AppCompatActivity {
             String selectedItem = parent.getItemAtPosition(position).toString();
             int spinPosition = parent.getSelectedItemPosition();
             if(spinPosition > 0) {
-                nearTree = MainActivity.banana.getNearbyTrees().get(spinPosition - 1);
+//                nearTree = MainActivity.banana.getNearbyTrees().get(spinPosition - 1);
+                nearTree = MainActivity.treesNearby.get(spinPosition-1);
 
 ////                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
 //                ImageSlider imageSlider = findViewById(R.id.view_photos_slider);

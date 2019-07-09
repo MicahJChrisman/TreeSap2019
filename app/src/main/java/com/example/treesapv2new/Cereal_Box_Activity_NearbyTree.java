@@ -265,7 +265,13 @@ public class Cereal_Box_Activity_NearbyTree extends AppCompatActivity {
             ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+
+            Tree bestMatchTree;
+            if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) Tree_Info_First.nearTree.getDBHArray().get(0),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+            }else{
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+            }
             if(bestMatchTree == null){
 
             }else {

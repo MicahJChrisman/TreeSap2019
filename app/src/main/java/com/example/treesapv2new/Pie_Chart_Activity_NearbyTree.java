@@ -193,7 +193,12 @@ public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
 //            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+            Tree bestMatchTree;
+            if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double)Tree_Info_First.nearTree.getDBHArray().get(0),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+            }else{
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder(Tree_Info_First.nearTree.getCurrentDBH(),Tree_Info_First.nearTree.getLocation(),Tree_Info_First.nearTree.getCommonName());
+            }
             if(bestMatchTree == null){
 
             }else {
@@ -598,10 +603,10 @@ public class Pie_Chart_Activity_NearbyTree extends AppCompatActivity {
         if(tree.getCommonName() != null) {
             commonName = Transform.ChangeName(tree.getCommonName());
             if (commonName != null) {
-                commonName = commonName.replaceAll("\\s","_");
-                commonName = commonName.toLowerCase();
+                String commonNameImage = commonName.replaceAll("\\s","_");
+                commonNameImage = commonNameImage.toLowerCase();
                 try{
-                    int id = this.getResources().getIdentifier(commonName, "mipmap", Pie_Chart_Activity_NearbyTree.this.getPackageName());
+                    int id = this.getResources().getIdentifier(commonNameImage, "mipmap", Pie_Chart_Activity_NearbyTree.this.getPackageName());
                     Drawable d = getDrawable(id);
                     ((ImageView) findViewById(R.id.pie_chart_background)).setImageDrawable(d);
                 }catch (Exception e){

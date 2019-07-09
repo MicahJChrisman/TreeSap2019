@@ -22,6 +22,8 @@
         android:background="@drawable/tree_info_background_white"
         app:layout_constraintBottom_toTopOf="@id/pie_chart_menu"
         android:layout_marginBottom="80dp">
+
+
     <TextView
         android:id="@+id/pie_chart_benefits"
         android:layout_width="wrap_content"

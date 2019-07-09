@@ -193,7 +193,12 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 //            ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             ExtendedCoHDataSource extendedCoHDataSource = new ExtendedCoHDataSource();
             extendedCoHDataSource.initialize(this, null);
-            Tree bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(),MainActivity.banana.getLocation(),MainActivity.banana.getCommonName());
+            Tree bestMatchTree;
+            if(tree.getDataSource().equals("User") || tree.getDataSource().equals("AllUserDB")) {
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder((Double) MainActivity.banana.getDBHArray().get(0), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+            }else{
+                bestMatchTree = extendedCoHDataSource.bestMatchFinder(MainActivity.banana.getCurrentDBH(), MainActivity.banana.getLocation(), MainActivity.banana.getCommonName());
+            }
             if(bestMatchTree == null){
 
             }else {
@@ -605,10 +610,11 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                     Drawable d = getDrawable(id);
                     ((ImageView) findViewById(R.id.pie_chart_background)).setImageDrawable(d);
                 }catch (Exception e){
-
+                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
                 }
             } else {
                 //commonNameText.setText("Common name: " + "Unavailable");
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
             }
         }else{
             commonName = "tree";
@@ -627,18 +633,22 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         }
         while ((line = reader.readLine()) != null) {
             String treeName = line.split(",")[1];
-            if (treeName.equals(commonName)) {
-                String dbh = line.split(",")[2];
-                Double diameter = Double.parseDouble(dbh);
-                BigDecimal bd1 = new BigDecimal(diameter);
-                if(!tree.getDataSource().equals("ExtendedCoH")) {
-                    bd1 = bd1.setScale(0, RoundingMode.DOWN);
-                }
-                if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
-                if (bd1.doubleValue() == bd.doubleValue()) {
-                    allInfo = line;
-                    hasValues = true;
-                    break;
+            if(!treeName.equals("")) {
+                if (treeName.equals(commonName)) {
+                    String dbh = line.split(",")[2];
+                    Double diameter = Double.parseDouble(dbh);
+                    BigDecimal bd1 = new BigDecimal(diameter);
+                    if (!tree.getDataSource().equals("ExtendedCoH")) {
+                        bd1 = bd1.setScale(0, RoundingMode.DOWN);
+                    }
+                    if (bd1.doubleValue() == 0) {
+                        bd1 = BigDecimal.valueOf(1);
+                    }
+                    if (bd1.doubleValue() == bd.doubleValue()) {
+                        allInfo = line;
+                        hasValues = true;
+                        break;
+                    }
                 }
             }
         }
