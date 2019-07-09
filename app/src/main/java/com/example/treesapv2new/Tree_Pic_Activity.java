@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -337,4 +336,5 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             MainActivity.storedImages.put("full",imagesString);
             startActivityForResult(intentA,REQUEST_EXIT);
         }
-    }}
+    }
+}

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -168,6 +169,23 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             }
         });
 
+        boolean isConnectedToFirebase;
+        try{
+            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        }catch(InterruptedException e){
+            isConnectedToFirebase = false;
+        }catch(IOException e){
+            isConnectedToFirebase = false;
+        }
+        if(!isConnectedToFirebase && !ConnectionCheck.offlineAddTreeMessageShown){
+            ConnectionCheck.showOfflineAddTreeMessage(Add_Tree_Activity.this);
+            ConnectionCheck.offlineAddTreeMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+            ConnectionCheck.offlineCuratorMessageShown = false;
+            ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
     }
 
     public void getLocation(){

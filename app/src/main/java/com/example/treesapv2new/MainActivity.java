@@ -168,6 +168,25 @@ public class MainActivity extends AppCompatActivity {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
+
+            boolean isConnectedToFirebase;
+            try{
+                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            }catch(InterruptedException e){
+                isConnectedToFirebase = false;
+            }catch(IOException e){
+                isConnectedToFirebase = false;
+            }
+            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.showOfflineMessage(MainActivity.this);
+                ConnectionCheck.offlineMessageShown = true;
+            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+                ConnectionCheck.offlineMessageShown = false;
+                ConnectionCheck.offlineCuratorMessageShown = false;
+                ConnectionCheck.offlineAddTreeMessageShown = false;
+                ConnectionCheck.offlineAccountMessageShown = false;
+            }
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
