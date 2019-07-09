@@ -114,11 +114,14 @@ public class Tree_Info_First extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        if (MainActivity.treesNearby != null) {
+        if(oldMainTree !=null){
+            MainActivity.banana = oldMainTree;
+        }
+        if (MainActivity.banana.getNearbyTrees() != null) {
             ((Spinner) findViewById(R.id.nearby_trees_spinner)).setVisibility(View.VISIBLE);
             ArrayList<String> commonNameNearby = new ArrayList<String>();
             commonNameNearby.add("Not the tree you wanted?");
-            for (Tree t : MainActivity.treesNearby) {
+            for (Tree t : MainActivity.banana.getNearbyTrees()) {
                 commonNameNearby.add(t.getCommonName());
             }
             adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, commonNameNearby);
@@ -149,22 +152,32 @@ public class Tree_Info_First extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
+                        oldMainTree = null;
+                        finish();
                         Intent intent1 = new Intent(Tree_Info_First.this, Big_Red_Button.class);
                         startActivity(intent1);
                         break;
                     case R.id.navigation_home:
+                        oldMainTree = null;
+                        finish();
                         Intent intent2 = new Intent(Tree_Info_First.this, MainActivity.class);
                         startActivity(intent2);
                         break;
                     case R.id.navigation_coordinates:
+                        oldMainTree = null;
+                        finish();
                         Intent intent3 = new Intent(Tree_Info_First.this, Coordinates_View_Activity.class);
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
+                        oldMainTree = null;
+                        finish();
                         Intent intent4 = new Intent(Tree_Info_First.this, Maps_Activity.class);
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
+                        oldMainTree = null;
+                        finish();
                         Intent intent5 = new Intent(Tree_Info_First.this, QR_Code_Activity.class);
                         startActivity(intent5);
                         break;
@@ -437,8 +450,8 @@ public class Tree_Info_First extends AppCompatActivity {
             String selectedItem = parent.getItemAtPosition(position).toString();
             int spinPosition = parent.getSelectedItemPosition();
             if(spinPosition > 0) {
-//                nearTree = MainActivity.banana.getNearbyTrees().get(spinPosition - 1);
-                nearTree = MainActivity.treesNearby.get(spinPosition-1);
+//                nearTree = MainActivity.treesNearby.get(spinPosition - 1);
+                nearTree = MainActivity.banana.getNearbyTrees().get(spinPosition-1);
 
 ////                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
 //                ImageSlider imageSlider = findViewById(R.id.view_photos_slider);
@@ -507,6 +520,12 @@ public class Tree_Info_First extends AppCompatActivity {
 //            }
 //        }
 
+    }
+
+    public void onBackPressed(){
+        super.onBackPressed();
+        Tree_Info_First.oldMainTree = null;
+        finish();
     }
 
     public void patchTreeData(){
