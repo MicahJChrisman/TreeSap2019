@@ -10,6 +10,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
     int oldMeasuredWidth, oldMeasuredHeight;
 
     ScaleGestureDetector mScaleDetector;
+    private GestureDetector gestureDetector;
+    final GestureDetector tapGestureDetector = new GestureDetector(getContext(), new TapGestureListener());
 
     Context context;
 
@@ -62,29 +65,46 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
 
 
 
-        GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                Log.d("TEST", "onDoubleTap");
-                Toast.makeText(context, "Double tap", Toast.LENGTH_SHORT).show();
-                return super.onDoubleTap(e);
-            }
-        });
 
 
-        setOnTouchListener(new OnTouchListener() {
-            public GestureDetector getGestureDetector() {
-                return gestureDetector;
-            }
+        OnTouchListener onTouchListener = new OnTouchListener() {
+
+            GestureDetector gestureDetector;// = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+//                @Override
+//                public boolean onSingleTapUp(MotionEvent e){
+//                    Log.d("TEST", "onSingleTap");
+//                    Toast.makeText(context, "Single tap", Toast.LENGTH_SHORT).show();
+//                    return super.onSingleTapUp(e);
+//                }
+//
+//                @Override
+//                public boolean onDoubleTap(MotionEvent e) {
+//                    Log.d("TEST", "onDoubleTap");
+//                    Toast.makeText(context, "Double tap", Toast.LENGTH_SHORT).show();
+//                    return super.onDoubleTap(e);
+//                }
+//            });
 
             public void setGestureDetector(GestureDetector gestureDetector) {
-                gestureDetector = gestureDetector;
+                this.gestureDetector = gestureDetector;
             }
+            //            public GestureDetector getGestureDetector() {
+//                return gestureDetector;
+//            }
+//
+//            public void setGestureDetector(GestureDetector gestureDetector) {
+//                this.gestureDetector = gestureDetector;
+//            }
+
+
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 mScaleDetector.onTouchEvent(event);
                 PointF curr = new PointF(event.getX(), event.getY());
+
+                setGestureDetector(gestureDetector);
+
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -126,8 +146,13 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
                 return true; // indicate event was handled
             }
 
-        });
+        };
+//        ((OnTouchListener) onTouchListener).setGestureDetector(gestureDetector);
+        setOnTouchListener(onTouchListener);
+
     }
+
+
 
     public void setMaxZoom(float x) {
         maxScale = x;
@@ -253,5 +278,34 @@ public class TouchImageView extends android.support.v7.widget.AppCompatImageView
             setImageMatrix(matrix);
         }
         fixTrans();
+    }
+    private class TapGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            if (getContext() instanceof FullScreenViewPager) {
+                int flg = getDisplay().getFlags();
+                boolean flag = false;
+                if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+                    setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                    ((FullScreenViewPager) getContext()).closeButton.setVisibility(VISIBLE);
+                } else {
+                    setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_IMMERSIVE
+                                    // Set the content to appear under the system bars so that the
+                                    // content doesn't resize when the system bars hide and show.
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    // Hide the nav bar and status bar
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                    ((FullScreenViewPager) getContext()).closeButton.setVisibility(GONE);
+                }
+            }
+            return true;
+        }
     }
 }

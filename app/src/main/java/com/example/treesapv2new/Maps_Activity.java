@@ -756,34 +756,44 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                                 String name = document.getData().get("commonName").toString();
                                                 int iconInt = randomGenerator.nextInt(8);
                                                 BitmapDescriptor icon;
-                                                switch (iconInt) {
-                                                    case 0:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                        break;
-                                                    case 1:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
-                                                        break;
-                                                    case 2:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
-                                                        break;
-                                                    case 3:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
-                                                        break;
-                                                    case 4:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
-                                                        break;
-                                                    case 5:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
-                                                        break;
-                                                    case 6:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
-                                                        break;
-                                                    case 7:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
-                                                        break;
-                                                    default:
-                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                        break;
+                                                String user = (String) document.getData().get("userID");
+                                                if(mAuth.getCurrentUser().getUid().equals(user)){
+                                                    //if the current tree document is one the user submitted,  make it blue
+                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.user_tree_marker1);
+                                                }else {
+                                                    switch (iconInt) {
+                                                        // hey whoever works on this app next I would recommend making the icons better.
+                                                        // I couldn't see a way to set both the color and picture of the marker programmatically
+                                                        // so I just made them myself in paint3d and had the computer "randomly" choose one.
+                                                        // If you guys know a better tool or some way of programmatically setting them that would be dope - Josie
+                                                        case 0:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                            break;
+                                                        case 1:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                                            break;
+                                                        case 2:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                                            break;
+                                                        case 3:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                                            break;
+                                                        case 4:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                                            break;
+                                                        case 5:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                                            break;
+                                                        case 6:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                                            break;
+                                                        case 7:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                                            break;
+                                                        default:
+                                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                            break;
+                                                    }
                                                 }
                                                 mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("Your tree").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                             } catch (ArrayIndexOutOfBoundsException e) {
@@ -829,38 +839,49 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 //                                                    if(name == ""){
 //                                                        name = "N/A";
 //                                                    }
-                                            int iconInt = randomGenerator.nextInt(8);
+
                                             BitmapDescriptor icon;
-                                            switch (iconInt) {
-                                                case 0:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                    break;
-                                                case 1:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
-                                                    break;
-                                                case 2:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
-                                                    break;
-                                                case 3:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
-                                                    break;
-                                                case 4:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
-                                                    break;
-                                                case 5:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
-                                                    break;
-                                                case 6:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
-                                                    break;
-                                                case 7:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
-                                                    break;
-                                                default:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                    break;
+                                            String snippet = "";
+                                            String user = (String) document.getData().get("userID");
+                                            if(mAuth.getCurrentUser().getUid().equals(user)){
+                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.user_tree_marker1);
+                                                snippet = "Your tree";
+                                            }else{
+                                                int iconInt = randomGenerator.nextInt(8);
+                                                switch (iconInt) {
+                                                    case 0:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                        break;
+                                                    case 1:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                                        break;
+                                                    case 2:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                                        break;
+                                                    case 3:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                                        break;
+                                                    case 4:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                                        break;
+                                                    case 5:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                                        break;
+                                                    case 6:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                                        break;
+                                                    case 7:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                                        break;
+                                                    default:
+                                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                                        break;
+                                                }
                                             }
-                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet("User Submitted").icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            if(snippet.equals("")){
+                                                snippet = "User submitted";
+                                            }
+                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(snippet).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
                                         } catch (ArrayIndexOutOfBoundsException e) {
 
                                         }

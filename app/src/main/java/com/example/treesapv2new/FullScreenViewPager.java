@@ -5,14 +5,19 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class FullScreenViewPager extends AppCompatActivity {
+public class FullScreenViewPager extends AppCompatActivity implements  GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
 
     ImageButton closeButton;
     ClickableViewPager viewPager;
@@ -44,14 +49,33 @@ public class FullScreenViewPager extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
         viewPager.setCurrentItem((int) getIntent().getExtras().get("position"));
-        viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                //TODO make view go in and out of fullscreen
-//                requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            }
-        });
+        viewPager.setOnItemClickListener(null);
+//        viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                int flg = getWindow().getAttributes().flags;
+//                boolean flag = false;
+//                if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+//                    View decorView = getWindow().getDecorView();
+//                    decorView.setSystemUiVisibility(
+//                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//                }else{
+//                    View decorView = getWindow().getDecorView();
+//                    decorView.setSystemUiVisibility(
+//                            View.SYSTEM_UI_FLAG_IMMERSIVE
+//                                    // Set the content to appear under the system bars so that the
+//                                    // content doesn't resize when the system bars hide and show.
+//                                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                                    // Hide the nav bar and status bar
+//                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                                    | View.SYSTEM_UI_FLAG_FULLSCREEN);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -60,5 +84,98 @@ public class FullScreenViewPager extends AppCompatActivity {
         intent.putExtra("position", viewPager.getCurrentItem());
         setResult(RESULT_OK, intent);
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        int flg = getWindow().getAttributes().flags;
+        boolean flag = false;
+        if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }else{
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_IMMERSIVE
+                            // Set the content to appear under the system bars so that the
+                            // content doesn't resize when the system bars hide and show.
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // Hide the nav bar and status bar
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
+        return onSingleTapUp(e);
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        Log.d("TEST", "onDoubleTap");
+        Toast.makeText(FullScreenViewPager.this, "Double tap", Toast.LENGTH_SHORT).show();
+        return onDoubleTap(e);
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        Log.d("TEST", "onDoubleTap");
+        Toast.makeText(FullScreenViewPager.this, "Double tap", Toast.LENGTH_SHORT).show();
+        return onDoubleTap(e);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        int flg = getWindow().getAttributes().flags;
+        boolean flag = false;
+        if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            closeButton.setVisibility(View.GONE);
+        }else{
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_IMMERSIVE
+                            // Set the content to appear under the system bars so that the
+                            // content doesn't resize when the system bars hide and show.
+                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            // Hide the nav bar and status bar
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN);
+            closeButton.setVisibility(View.VISIBLE);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }

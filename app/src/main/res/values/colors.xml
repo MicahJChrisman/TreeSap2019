@@ -22,7 +22,7 @@
     <color name="old_background">#7DB162</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="new_invented_color_translucent">#DA58883F</color>
-    <color name="image_pager_background">#D8BEF8A3</color>
+    <color name="image_pager_background">#557db162</color>
 
 
 </resources>

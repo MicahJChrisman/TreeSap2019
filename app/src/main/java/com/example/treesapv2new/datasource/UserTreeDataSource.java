@@ -88,6 +88,8 @@ public class UserTreeDataSource extends DataSource {
 
     }
 
+
+
 //    @Override
 //    public Boolean initialize(Context aParent, String initString) {
 //
@@ -329,7 +331,6 @@ public class UserTreeDataSource extends DataSource {
         if (MainActivity.banana.getCommonName() == (null)) {
             MainActivity.banana.setCommonName(tree.getCommonName());
         }
-
         if (MainActivity.banana.getScientificName() == (null)) {
             MainActivity.banana.setScientificName(tree.getScientificName());
         }
