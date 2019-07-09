@@ -144,6 +144,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     TextView commonName;
     TextView scientificName;
     TextView dbhs;
+    TextView latitude;
+    TextView longitude;
     TextView notes;
     static ArrayList<BitmapDrawable> dBmpList;
     ClickableViewPager viewPager;
@@ -188,7 +190,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 //        nestedScrollView = findViewById(R.id.nested_scrolll_view);
         commonName = findViewById(R.id.common_name);
         scientificName = findViewById(R.id.scientific_name);
-        dbhs = findViewById(R.id.dbh);
+        dbhs = findViewById(R.id.dbhs);
+        latitude = findViewById(R.id.latitude);
+        longitude = findViewById(R.id.longitude);
         notes = findViewById(R.id.notes);
 
         googleApiClient = new GoogleApiClient.Builder(CuratorActivity.this).addApi(LocationServices.API).addConnectionCallbacks(CuratorActivity.this).addOnConnectionFailedListener(CuratorActivity.this::onConnectionFailed).build();
@@ -691,11 +695,17 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         dbhText += "\n" + dbhList.get(i);
                     }
                 }
-                dbhs.setText(dbhText);
+                if(dbhText!=null && !dbhText.equals("")) {
+                    dbhs.setText(dbhText);
+                }else{
+                    dbhs.setText("N/A");
+                }
             } else {
                 dbhs.setText("N/A");
             }
-
+            TreeLocation treeLocation = currentTree.getLocation();
+            latitude.setText(Double.toString(treeLocation.getLatitude()));
+            longitude.setText(Double.toString(treeLocation.getLongitude()));
             ArrayList<String> notesList = (ArrayList<String>) currentTree.getNotesArray();
             if (notesList != null && !notesList.isEmpty()) {
                 String finalNote = notesList.get(0);
@@ -921,6 +931,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             tree.setCommonName("N/A");
         }else {
             tree.setCommonName(commonName);
+        }
+        Number latitude = (Number) document.get("latitude");
+        Number longitude = (Number) document.get("longitude");
+        if(latitude != null && !latitude.equals("") && longitude != null && !longitude.equals("")){
+            TreeLocation treeLocation = new TreeLocation(Double.parseDouble(latitude.toString()), Double.parseDouble(longitude.toString()));
+            tree.setLocation(treeLocation);
         }
         String scientificName = (String) document.get("scientificName");
         if(scientificName == null || scientificName.equals("")){
