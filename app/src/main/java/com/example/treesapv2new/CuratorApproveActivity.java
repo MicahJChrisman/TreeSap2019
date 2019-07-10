@@ -48,17 +48,8 @@ public class CuratorApproveActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
 
-    private void initImageBitmaps(){
-        boolean isConnectedToFirebase;
-//        try{
-            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//        }catch(InterruptedException e){
-            isConnectedToFirebase = false;
-//        }catch(IOException e){
-            isConnectedToFirebase = false;
-//        }
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
 //            ConnectionCheck.offlineAddTreeMessageShown = true;
@@ -68,6 +59,9 @@ public class CuratorApproveActivity extends AppCompatActivity {
 //            ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
+    }
+
+    private void initImageBitmaps(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("pendingTrees");
         //final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");
