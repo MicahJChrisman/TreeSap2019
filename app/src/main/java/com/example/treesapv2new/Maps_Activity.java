@@ -1,6 +1,7 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -257,6 +260,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
+
         MainActivity.banana=null;
         setContentView(R.layout.map_drawer);
         FirebaseUser user = mAuth.getCurrentUser();

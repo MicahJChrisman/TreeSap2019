@@ -1,6 +1,7 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.service.autofill.FieldClassification;
@@ -236,6 +238,38 @@ public class QR_Code_Activity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
+                        ProgressDialog progressDialog;
+                        progressDialog = new ProgressDialog(QR_Code_Activity.this);
+                        progressDialog.setMax(100);
+                        progressDialog.setMessage("Please wait...");
+                        progressDialog.setTitle("Loading Map");
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.show();
+                        final Handler handle = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                progressDialog.incrementProgressBy(1);
+                            }
+                        };
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    while (progressDialog.getProgress() <= progressDialog
+                                            .getMax()) {
+                                        Thread.sleep(30);
+                                        handle.sendMessage(handle.obtainMessage());
+                                        if (progressDialog.getProgress() == progressDialog
+                                                .getMax()) {
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                         Intent intent4 = new Intent(QR_Code_Activity.this, Maps_Activity.class);
                         startActivity(intent4);
                         break;
