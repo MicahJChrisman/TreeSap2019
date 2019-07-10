@@ -42,7 +42,7 @@ public class CuratorApproveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_curator_approve);
         initImageBitmaps();
 
-        ((TextView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
+        ((ImageView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
