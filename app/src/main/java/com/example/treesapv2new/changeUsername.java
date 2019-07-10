@@ -20,11 +20,10 @@ public class changeUsername extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.change_username);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
         ((Button) findViewById(R.id.button_change_username)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
                 if(isConnectedToFirebase) {
                     FirebaseUser user = Login_Activity.mAuth.getCurrentUser();
                     String a = (((EditText) findViewById(R.id.old_username)).getText().toString());

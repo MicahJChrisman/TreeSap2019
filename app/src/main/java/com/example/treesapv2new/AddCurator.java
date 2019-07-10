@@ -3,6 +3,7 @@ package com.example.treesapv2new;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,40 +32,51 @@ public class AddCurator extends AppCompatActivity {
         findViewById(R.id.add_curator_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText) findViewById(R.id.add_curator_email)).getText().toString().toLowerCase();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                if(email.equals(document.get("email"))){
-                                    String userID = document.get("userID").toString();
-                                    db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if(task.isSuccessful()){
-                                                for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                                                    String abc = documentSnapshot.getId();
-                                                    if(userID.equals(documentSnapshot.getId())){
-                                                        break;
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                if(isConnectedToFirebase) {
+                    String email = ((EditText) findViewById(R.id.add_curator_email)).getText().toString().toLowerCase();
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if (email.equals(document.get("email"))) {
+                                        String userID = document.get("userID").toString();
+                                        db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                        String abc = documentSnapshot.getId();
+                                                        if (userID.equals(documentSnapshot.getId())) {
+                                                            break;
+                                                        }
                                                     }
-                                                }
-                                                HashMap<Object, Object> tempHash = new HashMap<>();
-                                                db.collection("curators").document(userID).set(tempHash);
-                                                finish();
-                                            }else{
-                                                Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT);
-                                                finish();
+                                                    HashMap<Object, Object> tempHash = new HashMap<>();
+                                                    db.collection("curators").document(userID).set(tempHash);
+                                                    finish();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT);
+                                                    finish();
 
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                    }else{
+                                        Toast toast = Toast.makeText(AddCurator.this, "No user with that email found", Toast.LENGTH_LONG);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                    }
                                 }
                             }
                         }
-                    }
-                });
+                    });
+                }else{
+                    Toast toast = Toast.makeText(AddCurator.this, "No internet, cannot add curator", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
             }
         });
     }
