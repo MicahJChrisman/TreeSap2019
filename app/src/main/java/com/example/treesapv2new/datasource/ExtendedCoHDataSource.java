@@ -298,6 +298,29 @@ public class ExtendedCoHDataSource extends DataSource {
 //        tree.setDataSource("ExtendedCoH");
     }
 
+    public void patchDataMatching(Tree tree){
+        if (MainActivity.banana.getCommonName() == (null)) {
+            MainActivity.banana.setCommonName(tree.getCommonName());
+        }
+
+        if (MainActivity.banana.getScientificName() == (null)) {
+            MainActivity.banana.setScientificName(tree.getScientificName());
+        }
+        if (MainActivity.banana.getLocation() == (null)) {
+            MainActivity.banana.setLocation(tree.getLocation());
+        }
+        if (MainActivity.banana.getID() == (null)) {
+            MainActivity.banana.setID(tree.getID());
+        }
+        if (MainActivity.banana.getCurrentDBH() == (null)) {
+            MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
+        }
+//        if(MainActivity.banana.getDataSource() == null){
+//            MainActivity.banana.setDataSource("ExtendedCoH");
+//        }
+        tree.setDataSource("ExtendedCoH");
+    }
+
     @Override
     public Boolean isDownloadable() {
         return true;
