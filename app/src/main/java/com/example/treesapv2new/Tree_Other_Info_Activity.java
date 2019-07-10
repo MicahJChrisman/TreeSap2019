@@ -534,7 +534,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Tree_Other_Info_Activity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineAddTreeMessage2(Tree_Other_Info_Activity.this);
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
@@ -673,7 +673,7 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     dialog.dismiss();
 
                     boolean isConnectedToFirebase;
-                        isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                        isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Tree_Other_Info_Activity.this);
                     if(isConnectedToFirebase) {
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
                         builder1.setCancelable(false);

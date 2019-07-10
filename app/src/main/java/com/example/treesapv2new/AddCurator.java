@@ -32,11 +32,11 @@ public class AddCurator extends AppCompatActivity {
         findViewById(R.id.add_curator_submit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(AddCurator.this);
                 if(isConnectedToFirebase) {
                     String email = ((EditText) findViewById(R.id.add_curator_email)).getText().toString().toLowerCase();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() { // Gets a list of all the users
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -48,7 +48,6 @@ public class AddCurator extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                                 if (task.isSuccessful()) {
                                                     for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                        String abc = documentSnapshot.getId();
                                                         if (userID.equals(documentSnapshot.getId())) {
                                                             break;
                                                         }
@@ -59,7 +58,6 @@ public class AddCurator extends AppCompatActivity {
                                                 } else {
                                                     Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT);
                                                     finish();
-
                                                 }
                                             }
                                         });
@@ -73,6 +71,7 @@ public class AddCurator extends AppCompatActivity {
                         }
                     });
                 }else{
+                    // Could not find a connection
                     Toast toast = Toast.makeText(AddCurator.this, "No internet, cannot add curator", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();

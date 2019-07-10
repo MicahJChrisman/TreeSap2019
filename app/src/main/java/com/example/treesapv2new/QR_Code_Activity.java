@@ -106,7 +106,7 @@ public class QR_Code_Activity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(QR_Code_Activity.this);
         if (!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown) {
             ConnectionCheck.showOfflineMessage(QR_Code_Activity.this);
             ConnectionCheck.offlineMessageShown = true;

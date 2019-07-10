@@ -177,7 +177,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Maps_Activity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Maps_Activity.this);
             ConnectionCheck.offlineMessageShown = true;

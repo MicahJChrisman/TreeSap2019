@@ -95,7 +95,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
     private GestureDetectorCompat gestureObject;
 
-    public static String sendString = "Big_Red_Button.banana";
+//    public static String sendString = "Big_Red_Button.banana";
 
     Double longitude, latitude;
     LocationManager locationManager;
@@ -117,7 +117,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Big_Red_Button.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Big_Red_Button.this);
             ConnectionCheck.offlineMessageShown = true;
@@ -134,6 +134,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+            // Gets the notifications from the notifications collection whose "userID" field (a subfield of the "treeData" field) matches the name of the current user
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -156,12 +157,11 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }
             });
 
+            // Gets a list of all the curators
             db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     for (QueryDocumentSnapshot doc : task.getResult()){
-                        String userDI = user.getUid();
-                        String docID = doc.getId();
                         if (user.getUid().equals(doc.getId())) {
                             hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(true);
                             break;
@@ -169,8 +169,8 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     }
                 }
             });
-
         }else{
+            // User is not logged in
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(false);
@@ -182,7 +182,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.big_red_button_drawer);
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         MainActivity.treesNearby.clear();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
@@ -192,7 +192,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     int notificationCount = 0;
                     if (task.isSuccessful()) {
-
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             if (!(Boolean) documentSnapshot.get("read")) {
                                 notificationCount++;
@@ -206,8 +205,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                 }
             });
         }
-
-
 
         Button button = (Button) findViewById(R.id.biggreenbutton);
         button.setOnClickListener(new AddEventAction());
@@ -230,8 +227,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_brb:
-//                        Intent intent1 = new Intent(Big_Red_Button.this, Big_Red_Button.class);
-//                        startActivity(intent1);
+                        // Don't want the user to accidentally press this twice, which would mean it would open twice
                         break;
                     case R.id.navigation_home:
                         Intent intent2 = new Intent(Big_Red_Button.this, MainActivity.class);
@@ -344,6 +340,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         navView.setSelectedItemId(R.id.nav_view);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // User has not allowed the app to access their location
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -358,17 +355,19 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         Location location = null;
         boolean isGPSEnabled = locationManager
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
-        boolean isNetworkEnabled = locationManager
-                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//        boolean isNetworkEnabled = locationManager
+//                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         if (isGPSEnabled) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // User has not given permission to access their location
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    // If phone is running on version Marshmallow or higher, request location permissions
                     requestPermissions(PERMS, REQUEST_ID);
                 }
                 return;
             } else {
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
+//                Criteria criteria = new Criteria();
                 Location defaultLocation = new Location("");
                 defaultLocation.setLatitude(42.788002);
                 defaultLocation.setLongitude(-86.105971);
@@ -393,7 +392,8 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             onLocationChanged(location);
 
 
-        } else {
+        }else {
+            // GPS is not enabled
             new android.app.AlertDialog.Builder(this)
                     .setTitle("Location Services are not enabled")
                     .setMessage("The location services on your phone are not enabled.  Please turn on GPS.")
@@ -448,23 +448,23 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         return super.onTouchEvent(event);
     }
 
-    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
-            if(event2.getX()>event1.getX()){
-                //left to right swipe
-                Intent intent1 = new Intent(Big_Red_Button.this, MainActivity.class);
-                finish();
-                startActivity(intent1);
-            }else if(event2.getX()<event1.getX()){
-                //right to left swipe
-                Intent intent2 = new Intent(Big_Red_Button.this, Coordinates_View_Activity.class);
-                finish();
-                startActivity(intent2);
-            }
-            return true;
-        }
-    }
+//    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
+//        @Override
+//        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+//            if(event2.getX()>event1.getX()){
+//                //left to right swipe
+//                Intent intent1 = new Intent(Big_Red_Button.this, MainActivity.class);
+//                finish();
+//                startActivity(intent1);
+//            }else if(event2.getX()<event1.getX()){
+//                //right to left swipe
+//                Intent intent2 = new Intent(Big_Red_Button.this, Coordinates_View_Activity.class);
+//                finish();
+//                startActivity(intent2);
+//            }
+//            return true;
+//        }
+//    }
 
 
     private class AddEventAction implements View.OnClickListener, View.OnTouchListener{

@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(MainActivity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(MainActivity.this);
             ConnectionCheck.offlineMessageShown = true;

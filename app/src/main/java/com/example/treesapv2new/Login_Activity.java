@@ -135,7 +135,7 @@ public class Login_Activity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         } else {
-                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Login_Activity.this);
                             if (!isConnectedToFirebase) {
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, cannot authenticate user", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -182,7 +182,7 @@ public class Login_Activity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0,0);
                             toast.show();
                         } catch(Exception e) {
-                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Login_Activity.this);
                             if(!isConnectedToFirebase){
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, registration failed.", Toast.LENGTH_LONG);
                                 toast.show();

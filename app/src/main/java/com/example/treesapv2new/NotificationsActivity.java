@@ -61,7 +61,7 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.notifications_activity);
 
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(NotificationsActivity.this);
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineNotificationsMessage(NotificationsActivity.this);
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){

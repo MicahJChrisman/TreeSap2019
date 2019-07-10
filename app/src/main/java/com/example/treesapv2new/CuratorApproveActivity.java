@@ -41,7 +41,7 @@ public class CuratorApproveActivity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.activity_curator_approve);
 
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(CuratorApproveActivity.this);
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
 //            ConnectionCheck.offlineAddTreeMessageShown = true;

@@ -48,7 +48,6 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
     private int REQUEST_EXIT = 9000;
     private int RESULT_DONE = 4000;
 
-    FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public void onCreate(Bundle savedInstanceState) {
@@ -61,11 +60,8 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             addTreesMethod();
         }else{
             //user is signed out
-            startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
-
+            startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1); //Result is received in onActivityResult() below
         }
-            //}
-        //};
     }
 
     public void onStop(){
@@ -75,13 +71,9 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUEST_EXIT){
-            if (resultCode == RESULT_DONE) {
-                this.finish();
-
-            }
+        if(requestCode == REQUEST_EXIT && resultCode == RESULT_DONE) {
+            this.finish();
         }
-
         //Authorization Stuff
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null){
@@ -91,7 +83,6 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             //user is signed out
             finish();
         }
-
     }
 
     public void addTreesMethod(){
@@ -106,7 +97,7 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         TextView manualCoordinates = (TextView) findViewById(R.id.manual_coordinates_text);
         manualCoordinates.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { // User has decided they want to manually enter coordinates
                 ((LinearLayout) findViewById(R.id.lat_layout)).setVisibility(View.VISIBLE);
                 ((LinearLayout) findViewById(R.id.long_layout)).setVisibility(View.VISIBLE);
                 findViewById(R.id.man_coords_layout).setVisibility(View.GONE);
@@ -114,6 +105,7 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         });
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // User has not previously agreed to let the app access their location
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -145,7 +137,7 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         });
 
         boolean isConnectedToFirebase;
-            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Add_Tree_Activity.this);
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineAddTreeMessage1(Add_Tree_Activity.this);
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
@@ -167,7 +159,6 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
                 return;
             } else {
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                //Criteria criteria = new Criteria();
                 Location defaultLocation = new Location("");
                 defaultLocation.setLatitude(42.788002);
                 defaultLocation.setLongitude(-86.105971);

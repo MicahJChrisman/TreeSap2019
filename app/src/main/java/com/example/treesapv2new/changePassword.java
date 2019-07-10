@@ -29,7 +29,7 @@ public class changePassword extends AppCompatActivity {
         ((Button) findViewById(R.id.button_change_password)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(changePassword.this);
                 if(isConnectedToFirebase) {
                     FirebaseUser user = Login_Activity.mAuth.getCurrentUser();
                     final String email = user.getEmail();

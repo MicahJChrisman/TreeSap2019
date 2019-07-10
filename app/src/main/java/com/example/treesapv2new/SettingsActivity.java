@@ -109,7 +109,7 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(SettingsActivity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(SettingsActivity.this);
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){

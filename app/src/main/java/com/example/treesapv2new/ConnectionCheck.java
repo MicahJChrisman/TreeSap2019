@@ -2,10 +2,10 @@ package com.example.treesapv2new;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-
-import com.example.treesapv2new.view.CuratorMessage;
 
 import java.io.IOException;
 
@@ -15,16 +15,34 @@ public class ConnectionCheck {
 //    public static boolean offlineAddTreeMessageShown = false;
     public static boolean offlineAccountMessageShown = false;
 
-    public static boolean isConnectedToFirebase(){
-        // Note: Pinging does NOT work on emulators unless you change their settings
-        try {
-            final String command = "ping -c 1 google.com";
-            return Runtime.getRuntime().exec(command).waitFor() == 0;
+    public static boolean isConnectedToFirebase(Context context){
+        String status = null;
+        ConnectivityManager cm = (ConnectivityManager)           context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                status = "Wifi enabled";
+                return true;
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                status = "Mobile data enabled";
+                return true;
+            }
+        } else {
+            status = "No internet is available";
+            return false;
         }
-        catch (IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
-
         return false;
+
+//        public static boolean isConnectedToFirebase(){
+        // Note: Pinging does NOT work on emulators unless you change their settings
+//        try {
+//            final String command = "ping -c 1 google.com";
+//            return Runtime.getRuntime().exec(command).waitFor() == 0;
+//        }
+//        catch (IOException e)          { e.printStackTrace(); }
+//        catch (InterruptedException e) { e.printStackTrace(); }
+
+//        return false;
 
     }
 

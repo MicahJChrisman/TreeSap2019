@@ -89,7 +89,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Coordinates_View_Activity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Coordinates_View_Activity.this);
             ConnectionCheck.offlineMessageShown = true;
