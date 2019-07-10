@@ -85,34 +85,6 @@ public class Tree_Info_First extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     ArrayList<String> images = new ArrayList<String>();
-    //private GestureDetectorCompat gestureObject;
-
-//    public void onResume(){
-//        super.onResume();
-//        if(MainActivity.banana.getIsNearbyTree()){
-//            findViewById(R.id.nearby_trees_spinner).setVisibility(View.GONE);
-//        }else {
-//            if (oldMainTree != null) {
-//                MainActivity.banana = oldMainTree;
-//                if (MainActivity.banana.getNearbyTrees() != null) {
-//                    ((Spinner) findViewById(R.id.nearby_trees_spinner)).setVisibility(View.VISIBLE);
-//                    ArrayList<String> commonNameNearby = new ArrayList<String>();
-//                    commonNameNearby.add("Not the tree you wanted?");
-//                    for (Tree t : MainActivity.banana.getNearbyTrees()) {
-//                        commonNameNearby.add(t.getCommonName());
-//                    }
-//                    adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, commonNameNearby);
-//                    Spinner spinNearbyTrees = (Spinner) findViewById(R.id.nearby_trees_spinner);
-//                    spinNearbyTrees.setAdapter(adapter);
-//
-//                    spinNearbyTrees.setOnItemSelectedListener(new SwitchTreeEvent());
-//                } else {
-//                    findViewById(R.id.nearby_trees_spinner).setVisibility(View.GONE);
-//                }
-//            }
-//        }
-//
-//    }
 
     @Override
     public void onResume(){
@@ -228,9 +200,6 @@ public class Tree_Info_First extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-//        ImageButton button = (ImageButton) findViewById(R.id.add3);
-//        button.setOnClickListener(new AddNotesEvent());
-
         Button viewNotes = (Button) findViewById(R.id.view_notes_button);
         Button viewPhotos = (Button) findViewById(R.id.view_photos_button);
         viewNotes.setOnClickListener(new View.OnClickListener() {
@@ -286,18 +255,6 @@ public class Tree_Info_First extends AppCompatActivity {
     }
 
     public void updateTree() {
-
-//        if (MainActivity.banana.getDataSource() == "User" && MainActivity.banana.getPics("Image Tree") != null) {
-//            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("Image Tree").toString(), Base64.DEFAULT);
-//            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
-//            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
-//        }
-//        if (MainActivity.banana.getPics("User pic") != null) {
-//            byte[] encodeByte = Base64.decode(MainActivity.banana.getPics("User pic").toString(), Base64.DEFAULT);
-//            BitmapDrawable ob = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length));
-//            ((ConstraintLayout) findViewById(R.id.parent_constraint)).setBackground(ob);
-//        }
-
         String commonName = MainActivity.banana.getCommonName();
         TextView commonNameText = (TextView) findViewById(R.id.CommonName);
         if (commonName != null) {
@@ -313,7 +270,6 @@ public class Tree_Info_First extends AppCompatActivity {
             }
 
         } else {
-            //commonNameText.setText("Common name: " + "Unavailable");
             commonNameText.setVisibility(View.GONE);
         }
 
@@ -322,7 +278,6 @@ public class Tree_Info_First extends AppCompatActivity {
         if (scientificName != null && scientificName != "") {
             scientificNameText.setText(MainActivity.banana.getScientificName());
         } else {
-            // scientificNameText.setText("Scientific name: " + "Unavailable");
             scientificNameText.setVisibility(View.GONE);
         }
 
@@ -331,7 +286,6 @@ public class Tree_Info_First extends AppCompatActivity {
         if (treeID != null) {
             treeIdText.setText(treeID);
         } else {
-            //treeIdText.setText("Tree ID: " + "Unavailable");
             findViewById(R.id.idTitle).setVisibility(View.GONE);
             treeIdText.setVisibility(View.GONE);
         }
@@ -346,9 +300,7 @@ public class Tree_Info_First extends AppCompatActivity {
                 dbhList = dbhList.substring(0, dbhList.length() - 1);
                 ((TextView) findViewById(R.id.dbh)).setText(dbhList);
             } else {
-                //dbhText.setText("DBH: " + "Unavailable");
                 findViewById(R.id.dbhLayout).setVisibility(View.GONE);
-                //            dbhText.setVisibility(View.GONE);
             }
         }else {
             try{
@@ -357,9 +309,7 @@ public class Tree_Info_First extends AppCompatActivity {
                 if (dbh != null) {
                     dbhText.setText(dbh + "\"");
                 } else {
-                    //dbhText.setText("DBH: " + "Unavailable");
                     findViewById(R.id.dbhLayout).setVisibility(View.GONE);
-//            dbhText.setVisibility(View.GONE);
                 }
             }catch (Exception e){
                 findViewById(R.id.dbhLayout).setVisibility(View.GONE);
@@ -372,7 +322,6 @@ public class Tree_Info_First extends AppCompatActivity {
         if(latitude != null) {
             latitudeText.setText(latitude.toString());
         }else{
-            //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.latitudeTitle).setVisibility(View.GONE);
             latitudeText.setVisibility(View.GONE);
         }
@@ -382,20 +331,9 @@ public class Tree_Info_First extends AppCompatActivity {
         if(latitude != null) {
             longitudeText.setText(longitude.toString());
         }else{
-            //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.longitudeTitle).setVisibility(View.GONE);
             longitudeText.setVisibility(View.GONE);
         }
-
-////        Object assetValue = MainActivity.banana.getInfo("Tree asset value");
-//        TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
-////        if(assetValue != null) {
-////            assetValueText.setText(assetValue+"");
-////        }else{
-////            //assetValueText.setText("Asset value: " + "Unavailable");
-//            findViewById(R.id.assetTitle).setVisibility(View.GONE);
-//            assetValueText.setVisibility(View.GONE);
-////        }
 
 
         ArrayList<String> notesArray = MainActivity.banana.getNotesArray();
@@ -473,15 +411,6 @@ public class Tree_Info_First extends AppCompatActivity {
 //                nearTree = MainActivity.treesNearby.get(spinPosition - 1);
                 nearTree = MainActivity.banana.getNearbyTrees().get(spinPosition-1);
 
-////                startActivity(new Intent(parent.getContext(), Tree_Info_First.class));
-//                ImageSlider imageSlider = findViewById(R.id.view_photos_slider);
-//                SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-////                Object a = new Object();
-//////                mSectionsPagerAdapter.destroyItem(view,0, mSectionsPagerAdapter.getItem(0));
-//                imageSlider.setAdapter(mSectionsPagerAdapter);
-//                patchTreeDataSwitch();
-//                updateTree();
-//                finish();
                 oldMainTree = MainActivity.banana;
 
                 startActivity(new Intent(Tree_Info_First.this, Tree_Info_First_NearbyTree.class));
@@ -504,7 +433,6 @@ public class Tree_Info_First extends AppCompatActivity {
     public void patchTreeData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-       // sources.remove(MainActivity.banana.getDataSource());
         DataSource ds;
         if(MainActivity.banana.getDataSource() == "ExtendedCoH"){
             ds = new ExtendedCoHDataSource();
@@ -524,35 +452,10 @@ public class Tree_Info_First extends AppCompatActivity {
         if(tree != null && tree.isFound()){
             ds.patchData(tree);
         }
-
-//        for (String source : sources) {
-//            Log.d("MainActivity", "Searching.  Trying: "+source);
-//            DataSource ds;
-//            if(source.equals("HopeCollegeDataSource")){
-//                ds = new HopeCollegeDataSource();
-//            }else if(source.equals("CityOfHollandDataSource")) {
-//                ds = new CityOfHollandDataSource();
-//            }else if(source.equals("ExtendedCoHDataSource")){
-//                ds = new ExtendedCoHDataSource();
-//            }else if (source.equals("UserTreeDataSource")) {
-//                ds = MainActivity.userTreeDataSourceGlobal;
-//            }else{
-//                ds = new ITreeDataSource();
-//            }
-//            ds.initialize(Tree_Info_First.this,null);
-//            Tree tree = ds.search(MainActivity.banana.getLocation());
-//
-//            if(tree != null && tree.isFound()){
-//                ds.patchData(tree);
-//            }
-//        }
-
     }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
-//            startActivity(intentA);
             ShowPopup(v);
         }
     }
@@ -649,9 +552,6 @@ public class Tree_Info_First extends AppCompatActivity {
         public static NotificationsActivity.PlaceholderFragment newInstance(byte[] pic) {
 
             NotificationsActivity.PlaceholderFragment fragment = new NotificationsActivity.PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt("index", pic);
-//            fragment.setArguments(args);
 
             Bundle args1 = new Bundle();
             args1.putByteArray("index",pic);
@@ -668,7 +568,6 @@ public class Tree_Info_First extends AppCompatActivity {
             int index = args.getInt("index", 0);
             byte[] index1 = args.getByteArray("index");
             ImageView imageView=(ImageView)rootView.findViewById(R.id.image);
-//            imageView.setImageResource(index1);
             Bitmap bitmap = BitmapFactory.decodeByteArray(index1,0,index1.length);
 
             imageView.setImageBitmap(bitmap);
@@ -686,7 +585,6 @@ public class Tree_Info_First extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-//            String byteConvert = images.get(position);
             byte [] encodeByte=Base64.decode(images.get(position),Base64.DEFAULT);
             return NotificationsActivity.PlaceholderFragment.newInstance(encodeByte);
         }

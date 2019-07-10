@@ -113,7 +113,6 @@ public class QR_Code_Activity extends AppCompatActivity {
         } else if (isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown) {
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
         if (user != null) {
@@ -270,8 +269,6 @@ public class QR_Code_Activity extends AppCompatActivity {
                         startActivity(intent4);
                         break;
                     case R.id.navigation_qr:
-//                        Intent intent5 = new Intent(QR_Code_Activity.this, QR_Code_Activity.class);   **Stops the qr code activity from being opened multiple times. if it is, we can get multiple pop ups after scanning
-//                        startActivity(intent5);
                         break;
                 }
                 return false;
@@ -370,11 +367,6 @@ public class QR_Code_Activity extends AppCompatActivity {
             }
         });
 
-        //final SparseArray<Barcode> qrCodes = barcodeDetector.getDetectedItems();
-//        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-//        final SparseArray<Barcode> qrCodes = barcodeDetector.detect(frame);
-//        barcodeDetector.processReceivedDetections();
-
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
@@ -420,19 +412,6 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                 source = list.get(i);
                                             }
                                         }
-
-
-//                                        Pattern pattern = Pattern.compile("([0-9]+[.][0-9]+)");
-//                                        Matcher matcher = pattern.matcher(q);
-//                                        while (matcher.find()) {
-//                                            listBuffer.add(matcher.group());
-//                                        }
-//<<<<<<< HEAD
-//                                        if (listBuffer.size() == 2) {
-//                                            String lat = listBuffer.get(0);
-//                                            String longit = listBuffer.get(1);
-//                                            latD = Double.parseDouble(lat);
-//                                            longD = Double.parseDouble(longit);
                                         if (list.size() == 3) {
                                             try {
                                                 String lat = latD.toString();
@@ -440,9 +419,6 @@ public class QR_Code_Activity extends AppCompatActivity {
 
                                                 Handler handler = new Handler(Looper.getMainLooper());
                                                 if ((Math.abs(latD) > 90) || (Math.abs(longD) > 180)) {
-//=======180
-
-//>>>>>>> 2ea43db266a4dbd736a68782920a855d7dbdd697
                                                     txtResult.setText("Invalid QR code for this app.");
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
                                                     builder.setCancelable(true);
@@ -557,26 +533,6 @@ public class QR_Code_Activity extends AppCompatActivity {
                                                                 startActivity(intentA);
                                                             } else {
                                                                 txtResult.setText("Invalid QR code for this app.");
-//                                                                AlertDialog.Builder builder = new AlertDialog.Builder(QR_Code_Activity.this);
-//                                                                builder.setCancelable(true);
-//                                                                builder.setTitle("Location is not in any database");
-//                                                                builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-//                                                                    @Override
-//                                                                    public void onClick(DialogInterface dialog, int which) {
-//                                                                        dialog.cancel();
-//                                                                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                                                                            Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
-//                                                                            return;
-//                                                                        }
-//                                                                        try {
-//                                                                            cameraSource.start(cameraPreview.getHolder());
-//                                                                        } catch (IOException e) {
-//                                                                            Log.i("Camera failed", "did not work exception");
-//                                                                            e.printStackTrace();
-//                                                                        }
-//                                                                    }
-//                                                                });
-//                                                                builder.show();
                                                             }
                                                         }
                                                     });
@@ -635,8 +591,6 @@ public class QR_Code_Activity extends AppCompatActivity {
                     }
                 });
             }
-
-
         });
     }
 
@@ -652,8 +606,6 @@ public class QR_Code_Activity extends AppCompatActivity {
     private class AddSettingsEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-//            Intent intentA = new Intent(QR_Code_Activity.this, SettingsActivity.class);
-//            startActivity(intentA);
             DrawerLayout mDrawerLayout = findViewById(R.id.qr_code_container);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -695,5 +647,4 @@ public class QR_Code_Activity extends AppCompatActivity {
             return true;
         }
     }
-
 }

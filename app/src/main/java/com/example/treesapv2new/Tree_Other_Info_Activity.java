@@ -544,13 +544,6 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
         }
 
     }
-//
-//    private void initRecyclerView(){
-//        RecyclerView recyclerView = findViewById(R.id.recycler_view_tree_other_info);
-//        RecyclerViewTreeOtherInfo adapter = new RecyclerViewTreeOtherInfo(this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
 
     public void onStop(){
         super.onStop();
@@ -647,72 +640,17 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     Map<String, Object> user = new HashMap<>();
                     user.put("commonName",commonName);
                     user.put("scientificName", scientificName);
-//                    user.put("dbh", dbh);
-//                    user.put("otherInfo", notes);
                     user.put("timestamp", timestamp);
 
                     ArrayList<String> picArray = new ArrayList<String>();
-//                    if(!barkPic.equals("")) {
-//                        picArray.add(barkPic);
-//                    }
-//                    if(!leafPic.equals("")) {
-//                        picArray.add(leafPic);
-//                    }
-//                    if(!fullPic.equals("")) {
-//                        picArray.add(fullPic);
-//                    }
 
 
                     Bundle extras = getIntent().getExtras();
                     if (extras != null) {
                         Double lat_value = Double.valueOf(extras.getString("lat_value"));
                         Double long_value = Double.valueOf(extras.getString("long_value"));
-//                        TextView kevin = (TextView) findViewById(R.id.lat_thing);
-//                        //kevin.setText(lat_value);
-//                        TextView carl = (TextView) findViewById(R.id.long_thing);
-//                        //carl.setText(long_value);
-//
-//                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-//                        if(byteArray != null) {
-//                            for(String byter: byteArray) {
-//                                byte[] byter1 = byter.getBytes();
-//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-//                                ImageView image = (ImageView) findViewById(R.id.show_bark_pic);
-//                                //image.setImageBitmap(bmp);
-//                                barkPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-//                                passedArray[7] = barkPic;
-//                                picArray.add(byter);
-//                            }
-//                        }
-//                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-//                        if(byteArrayLeaf != null) {
-//                            for(String byter: byteArrayLeaf) {
-//                                byte[] byter1 = byter.getBytes();
-//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-//                                ImageView image = (ImageView) findViewById(R.id.show_leaf_pic);
-//                                //image.setImageBitmap(bmp);
-//                                leafPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-//                                passedArray[8] = leafPic;
-//                                picArray.add(byter);
-//                            }
-//                        }
-//                        ArrayList<String> byteArrayFull = extras.getStringArrayList("full_pic_byte_array");
-//                        if(byteArrayFull != null) {
-//                            for(String byter: byteArrayFull) {
-//                                byte[] byter1 = byter.getBytes();
-//                                Bitmap bmp = BitmapFactory.decodeByteArray(byter1, 0, byter1.length);
-//                                ImageView image = (ImageView) findViewById(R.id.show_tree_pic);
-//                                //image.setImageBitmap(bmp);
-//                                fullPic = Base64.encodeToString(byter1, Base64.DEFAULT);
-//                                passedArray[9] = fullPic;
-//                                picArray.add(byter);
-//                            }
-//                        }
                         lat = lat_value;
                         longit = long_value;
-//            passedArray[4] = lat_value;
-//            passedArray[5] = long_value;
-//                        user.put("images", picArray);
                     }
                     user.put("latitude", lat);
                     user.put("longitude",longit);
@@ -729,24 +667,13 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
 
                     user.put("userID", userID);
 
-
-
-
-//                    users.document(lat + ", " + longit + ", " + commonName).set(user);
-
                     users.document().set(user);
 
 
                     dialog.dismiss();
 
                     boolean isConnectedToFirebase;
-//                    try{
                         isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//                    }catch(InterruptedException e){
-//                        isConnectedToFirebase = false;
-//                    }catch(IOException e){
-//                        isConnectedToFirebase = false;
-//                    }
                     if(isConnectedToFirebase) {
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
                         builder1.setCancelable(false);

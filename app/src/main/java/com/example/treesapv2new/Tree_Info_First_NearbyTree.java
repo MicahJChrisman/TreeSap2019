@@ -81,7 +81,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
 
     ArrayAdapter<String> adapter;
     ArrayList<String> images = new ArrayList<String>();
-    //private GestureDetectorCompat gestureObject;
 
     public void onResume(){
         super.onResume();
@@ -183,9 +182,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
 
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
-//        ImageButton button = (ImageButton) findViewById(R.id.add3);
-//        button.setOnClickListener(new AddNotesEvent());
-
         Button viewNotes = (Button) findViewById(R.id.view_notes_button);
         Button viewPhotos = (Button) findViewById(R.id.view_photos_button);
         viewNotes.setOnClickListener(new View.OnClickListener() {
@@ -269,7 +265,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
             }
 
         } else {
-            //commonNameText.setText("Common name: " + "Unavailable");
             commonNameText.setVisibility(View.GONE);
         }
 
@@ -278,7 +273,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if (scientificName != null && scientificName != "") {
             scientificNameText.setText(Tree_Info_First.nearTree.getScientificName());
         } else {
-            // scientificNameText.setText("Scientific name: " + "Unavailable");
             scientificNameText.setVisibility(View.GONE);
         }
 
@@ -287,7 +281,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if (treeID != null) {
             treeIdText.setText(treeID);
         } else {
-            //treeIdText.setText("Tree ID: " + "Unavailable");
             findViewById(R.id.idTitle).setVisibility(View.GONE);
             treeIdText.setVisibility(View.GONE);
         }
@@ -302,9 +295,7 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
                 dbhList = dbhList.substring(0, dbhList.length() - 1);
                 ((TextView) findViewById(R.id.dbh)).setText(dbhList);
             } else {
-                //dbhText.setText("DBH: " + "Unavailable");
                 findViewById(R.id.dbhLayout).setVisibility(View.GONE);
-                //            dbhText.setVisibility(View.GONE);
             }
         }else {
             try {
@@ -313,9 +304,7 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
                 if (dbh != null) {
                     dbhText.setText(dbh + "\"");
                 } else {
-                    //dbhText.setText("DBH: " + "Unavailable");
                     findViewById(R.id.dbhLayout).setVisibility(View.GONE);
-//            dbhText.setVisibility(View.GONE);
                 }
             }catch (Exception e ){
                 findViewById(R.id.dbhLayout).setVisibility(View.GONE);
@@ -328,7 +317,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if(latitude != null) {
             latitudeText.setText(latitude.toString());
         }else{
-            //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.latitudeTitle).setVisibility(View.GONE);
             latitudeText.setVisibility(View.GONE);
         }
@@ -338,20 +326,9 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if(latitude != null) {
             longitudeText.setText(longitude.toString());
         }else{
-            //gpsLocationText.setText("GPS location: " + "Unavailable");
             findViewById(R.id.longitudeTitle).setVisibility(View.GONE);
             longitudeText.setVisibility(View.GONE);
         }
-
-////        Object assetValue = Tree_Info_First.nearTree.getInfo("Tree asset value");
-//        TextView assetValueText = (TextView) findViewById(R.id.treeAssetValue);
-////        if(assetValue != null) {
-////            assetValueText.setText(assetValue+"");
-////        }else{
-////            //assetValueText.setText("Asset value: " + "Unavailable");
-//            findViewById(R.id.assetTitle).setVisibility(View.GONE);
-//            assetValueText.setVisibility(View.GONE);
-////        }
 
 
         ArrayList<String> notesArray = Tree_Info_First.nearTree.getNotesArray();
@@ -404,7 +381,6 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
     public void patchTreeDataSwitch(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(Tree_Info_First.nearTree.getDataSource());
         DataSource ds;
         if(Tree_Info_First.nearTree.getDataSource() == "ExtendedCoH"){
             ds = new ExtendedCoHDataSource();
@@ -424,36 +400,11 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if(tree != null && tree.isFound()){
             ds.patchData(tree);
         }
-
-
-//        for (String source : sources) {
-//            Log.d("MainActivity", "Searching.  Trying: "+source);
-//            DataSource ds;
-//            if(source.equals("HopeCollegeDataSource")){
-//                ds = new HopeCollegeDataSource();
-//            }else if(source.equals("CityOfHollandDataSource")) {
-//                ds = new CityOfHollandDataSource();
-//            }else if(source.equals("ExtendedCoHDataSource")){
-//                ds = new ExtendedCoHDataSource();
-//            }else if (source.equals("UserTreeDataSource")) {
-//                ds = MainActivity.userTreeDataSourceGlobal;
-//            }else{
-//                ds = new ITreeDataSource();
-//            }
-//            ds.initialize(Tree_Info_First.this,null);
-//            Tree tree = ds.search(Tree_Info_First.nearTree.getLocation());
-//
-//            if(tree != null && tree.isFound()){
-//                ds.patchData(tree);
-//            }
-//        }
-
     }
 
     public void patchTreeData(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(Tree_Info_First.nearTree.getDataSource());
         DataSource ds;
         if(Tree_Info_First.nearTree.getDataSource() == "ExtendedCoH"){
             ds = new ExtendedCoHDataSource();
@@ -473,36 +424,10 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
         if(tree != null && tree.isFound()){
             ds.patchData(tree);
         }
-
-
-//        for (String source : sources) {
-//            Log.d("MainActivity", "Searching.  Trying: "+source);
-//            DataSource ds;
-//            if(source.equals("HopeCollegeDataSource")){
-//                ds = new HopeCollegeDataSource();
-//            }else if(source.equals("CityOfHollandDataSource")) {
-//                ds = new CityOfHollandDataSource();
-//            }else if(source.equals("ExtendedCoHDataSource")){
-//                ds = new ExtendedCoHDataSource();
-//            }else if (source.equals("UserTreeDataSource")) {
-//                ds = MainActivity.userTreeDataSourceGlobal;
-//            }else{
-//                ds = new ITreeDataSource();
-//            }
-//            ds.initialize(Tree_Info_First.this,null);
-//            Tree tree = ds.search(Tree_Info_First.nearTree.getLocation());
-//
-//            if(tree != null && tree.isFound()){
-//                ds.patchData(tree);
-//            }
-//        }
-
     }
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
-//            startActivity(intentA);
             ShowPopup(v);
         }
     }
@@ -590,42 +515,39 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
 //        finish();
     }
 
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-
-        }
-
-        public static NotificationsActivity.PlaceholderFragment newInstance(byte[] pic) {
-
-            NotificationsActivity.PlaceholderFragment fragment = new NotificationsActivity.PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt("index", pic);
-//            fragment.setArguments(args);
-
-            Bundle args1 = new Bundle();
-            args1.putByteArray("index",pic);
-            fragment.setArguments(args1);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            View rootView = inflater.inflate(R.layout.fragment_main3, container, false);
-            Bundle args = getArguments();
-            int index = args.getInt("index", 0);
-            byte[] index1 = args.getByteArray("index");
-            ImageView imageView=(ImageView)rootView.findViewById(R.id.image);
-//            imageView.setImageResource(index1);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(index1,0,index1.length);
-
-            imageView.setImageBitmap(bitmap);
-
-            return rootView;
-        }
-    }
+//    public static class PlaceholderFragment extends Fragment {
+//
+//        public PlaceholderFragment() {
+//
+//        }
+//
+//        public static NotificationsActivity.PlaceholderFragment newInstance(byte[] pic) {
+//
+//            NotificationsActivity.PlaceholderFragment fragment = new NotificationsActivity.PlaceholderFragment();
+//
+//            Bundle args1 = new Bundle();
+//            args1.putByteArray("index",pic);
+//            fragment.setArguments(args1);
+//            return fragment;
+//        }
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                                 Bundle savedInstanceState) {
+//
+//            View rootView = inflater.inflate(R.layout.fragment_main3, container, false);
+//            Bundle args = getArguments();
+//            int index = args.getInt("index", 0);
+//            byte[] index1 = args.getByteArray("index");
+//            ImageView imageView=(ImageView)rootView.findViewById(R.id.image);
+////            imageView.setImageResource(index1);
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(index1,0,index1.length);
+//
+//            imageView.setImageBitmap(bitmap);
+//
+//            return rootView;
+//        }
+//    }
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {   // adapter to set in ImageSlider

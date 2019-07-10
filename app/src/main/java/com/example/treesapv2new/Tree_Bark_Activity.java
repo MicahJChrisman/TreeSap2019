@@ -98,17 +98,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             }
         });
 
-//        ((TextView) findViewById(R.id.camera_disappear)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                findViewById(R.id.camera_disappear).setVisibility(View.GONE);
-//                findViewById(R.id.camera_appear).setVisibility(View.GONE);
-//                findViewById(R.id.next_pic_bark).setVisibility(View.GONE);
-//                byteArray = null;
-//                findViewById(R.id.skip_bark_tree).setVisibility(View.VISIBLE);
-//            }
-//        });
-
         ImageView txtclose = (ImageView) findViewById(R.id.bark_pic_close);
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -202,9 +191,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
     private class addImageEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            mimagesView = findViewById(R.id.camera_appear);
-//            findViewById(R.id.camera_appear).setVisibility(View.VISIBLE);
-            //findViewById(R.id.next_pic_bark).setVisibility(View.VISIBLE);
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(PERMS, REQUEST_ID);
@@ -272,8 +258,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
             if(imagesString.size() == 5){
                 ((Button) findViewById(R.id.add_bark_pic)).setVisibility(View.GONE);
             }
-
-//            findViewById(R.id.camera_disappear).setVisibility(View.VISIBLE);
         }
     }
 
@@ -328,7 +312,6 @@ public class Tree_Bark_Activity extends AppCompatActivity {
                 intentA.putExtra("long_value", long_value);
 
             }
-//            startActivity(intentA);
             MainActivity.storedImages.put("bark",imagesString);
             startActivityForResult(intentA,REQUEST_EXIT);
         }

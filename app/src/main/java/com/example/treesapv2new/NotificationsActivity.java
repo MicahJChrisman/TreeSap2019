@@ -61,18 +61,17 @@ public class NotificationsActivity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.notifications_activity);
 
-        linearLayout = ((LinearLayout) findViewById(R.id.notifications_linear_layout));
-        inflater = LayoutInflater.from(this);
-
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-        if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
-            ConnectionCheck.showOfflineMessage(NotificationsActivity.this);
-            ConnectionCheck.offlineMessageShown = true;
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineNotificationsMessage(NotificationsActivity.this);
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
+
+        linearLayout = ((LinearLayout) findViewById(R.id.notifications_linear_layout));
+        inflater = LayoutInflater.from(this);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {

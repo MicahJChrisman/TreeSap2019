@@ -52,7 +52,6 @@ public class SettingsActivity extends PreferenceActivity {
         if(userNamePref !=null) {
             userNamePref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    //changeUsername(getListView());
                     startActivity(new Intent(SettingsActivity.this, changeUsername.class));
                     return true;
                 }
@@ -62,7 +61,6 @@ public class SettingsActivity extends PreferenceActivity {
         if(passwordPref !=null) {
             passwordPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    //changeUsername(getListView());
                     startActivity(new Intent(SettingsActivity.this, changePassword.class));
                     return true;
                 }
@@ -70,15 +68,11 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         if(Login_Activity.mAuth.getCurrentUser() !=null) {
-//            if(findPreference("change_username") !=null) {
-//                ((Preference) findPreference("change_username")).setSummary(getPreferenceScreen().getSharedPreferences().getString("change_username", changeUsername.newUsername));
-//            }
             if(findPreference("account_info") != null){
                 ((Preference) findPreference("account_info")).setTitle(Login_Activity.mAuth.getCurrentUser().getDisplayName());
                 ((Preference) findPreference("account_info")).setSummary(Login_Activity.mAuth.getCurrentUser().getEmail());
             }
         }
-
     }
 
     public static Activity activity;
@@ -121,7 +115,6 @@ public class SettingsActivity extends PreferenceActivity {
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
         if(Login_Activity.mAuth.getCurrentUser()!=null) {
@@ -134,9 +127,6 @@ public class SettingsActivity extends PreferenceActivity {
 
 
         }else{
-//            PreferenceScreen a = (PreferenceScreen) findPreference("account_screen");
-//            PreferenceCategory b = (PreferenceCategory) findPreference("not_logged_in_account");
-//            b.removePreference(a);
             PreferenceCategory b = (PreferenceCategory) findPreference("account");
             b.removePreference(findPreference("change_username"));
             b.removePreference(findPreference("change_password"));
@@ -159,7 +149,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     public void logOut(){
         Login_Activity.mAuth.signOut();
-//        SharedPreferences sp = getPreferenceScreen().getSharedPreferences();
         ((Preference) findPreference("change_username")).setSummary( getPreferenceScreen().getSharedPreferences().getString("change_username", "No user logged in"));
         Toast toast = Toast.makeText(SettingsActivity.this, "You have been logged out.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0,0);
@@ -192,9 +181,7 @@ public class SettingsActivity extends PreferenceActivity {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             String stringValue = newValue.toString();
-
             if (preference instanceof ListPreference) {
-
                 MultiSelectListPreference multiSelectListPreference = (MultiSelectListPreference) preference;
                 int index = multiSelectListPreference.findIndexOfValue(stringValue);
                 preference.setSummary(index>= 0 ? multiSelectListPreference.getEntries()[index] : null);

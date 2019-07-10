@@ -52,9 +52,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         super.onCreate(null);
         setContentView(R.layout.camera_full_tree);
 
-
-
-
         Button b = (Button) findViewById(R.id.next_pic_full);
         b.setOnClickListener(new NextEvent());
 
@@ -73,18 +70,9 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                 if (extras != null) {
                     String lat_value = extras.getString("lat_value");
                     String long_value = extras.getString("long_value");
-//                    byte[] byteArray = extras.getByteArray("bark_pic_byte_array");
-//                    if (byteArray != null) {
-//                        intentA.putExtra("bark_pic_byte_array", byteArray);
-//                    }
-//                    byte[] byteArrayLeaf = extras.getByteArray("leaf_pic_byte_array");
-//                    if (byteArrayLeaf != null) {
-//                        intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-//                    }
                     intentA.putExtra("lat_value", lat_value);
                     intentA.putExtra("long_value", long_value);
                 }
-//                    startActivity(intentA);
                 startActivityForResult(intentA,REQUEST_EXIT);
             }
         });
@@ -118,8 +106,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-//                        Intent intentA = new Intent(Tree_Pic_Activity.this, MainActivity.class);
-//                        startActivity(intentA);
                         setResult(RESULT_DONE,null);
                         finish();
                     }
@@ -139,9 +125,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         public static PlaceholderFragment newInstance(byte[] pic) {
 
             PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt("index", pic);
-//            fragment.setArguments(args);
 
             Bundle args1 = new Bundle();
             args1.putByteArray("index",pic);
@@ -194,8 +177,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             mimagesView = findViewById(R.id.camera_appear_full);
-//            findViewById(R.id.camera_appear_full).setVisibility(View.VISIBLE);
-            //findViewById(R.id.next_pic_full).setVisibility(View.VISIBLE);
             if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(PERMS, REQUEST_ID);
@@ -278,18 +259,9 @@ public class Tree_Pic_Activity extends AppCompatActivity {
                     if (extras != null) {
                         String lat_value = extras.getString("lat_value");
                         String long_value = extras.getString("long_value");
-//                        ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-//                        if (byteArray != null) {
-//                            intentA.putExtra("bark_pic_byte_array", byteArray);
-//                        }
-//                        ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-//                        if (byteArrayLeaf != null) {
-//                            intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-//                        }
                         intentA.putExtra("lat_value", lat_value);
                         intentA.putExtra("long_value", long_value);
                     }
-//                    startActivity(intentA);
                     MainActivity.storedImages.put("full", imagesString);
                     startActivityForResult(intentA,REQUEST_EXIT);
                 }
@@ -314,21 +286,6 @@ public class Tree_Pic_Activity extends AppCompatActivity {
             if (extras != null) {
                 String lat_value = extras.getString("lat_value");
                 String long_value = extras.getString("long_value");
-//                ArrayList<String> byteArray = extras.getStringArrayList("bark_pic_byte_array");
-//                if (byteArray != null) {
-//                    intentA.putExtra("bark_pic_byte_array", byteArray);
-//                }
-//                ArrayList<String> byteArrayLeaf = extras.getStringArrayList("leaf_pic_byte_array");
-//                if (byteArrayLeaf != null) {
-//                    intentA.putExtra("leaf_pic_byte_array", byteArrayLeaf);
-//                }
-//                ArrayList<String> images_to_String = new ArrayList<String>();
-//                for(byte[] image : images){
-//                    String temp= Base64.encodeToString(image, Base64.DEFAULT);
-//                    images_to_String.add(temp);
-////                    images_to_String.add(new String(image));
-//                }
-//                intentA.putExtra("full_pic_byte_array", images_to_String);
                 intentA.putExtra("lat_value", lat_value);
                 intentA.putExtra("long_value", long_value);
             }

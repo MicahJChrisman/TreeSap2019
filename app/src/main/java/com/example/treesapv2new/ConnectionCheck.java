@@ -18,7 +18,7 @@ public class ConnectionCheck {
     public static boolean isConnectedToFirebase(){
         // Note: Pinging does NOT work on emulators unless you change their settings
         try {
-            final String command = "ping -c 1 firebase.google.com";
+            final String command = "ping -c 1 google.com";
             return Runtime.getRuntime().exec(command).waitFor() == 0;
         }
         catch (IOException e)          { e.printStackTrace(); }
@@ -76,6 +76,18 @@ public class ConnectionCheck {
                         dialog.dismiss();
                     }
                 }).setTitle("Reminder:");
+        a_builder.show();
+    }
+
+    public static void showOfflineNotificationsMessage(Context context){
+        final AlertDialog.Builder a_builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+        a_builder.setMessage(("You cannot access notifications while offline.")).setCancelable(false)
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setTitle("No database connection, please check your internet connection");
         a_builder.show();
     }
 
