@@ -428,14 +428,13 @@ public class MainActivity extends AppCompatActivity {
             dbs.add("HopeCollegeDataSource");
             dbs.add("CityOfHollandDataSource");
             dbs.add("ExtendedCoHDataSource");
-            dbs.add("ITreeDataSource");
             dbs.add("UserTreeDataSource");
             dbs.add("AllUsersDataSource");
             editor.putStringSet("databasesUsedSelector", dbs);
             editor.apply();
         }
         if(prefs.getString("distanceFromTreePref", "") .equals("")){
-            editor.putString("distanceFromTreePref", "100,000");
+            editor.putString("distanceFromTreePref", "100");
         }
 
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
