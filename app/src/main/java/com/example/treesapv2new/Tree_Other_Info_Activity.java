@@ -534,23 +534,15 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
             }
         });
 
-        boolean isConnectedToFirebase;
-        try{
-            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-        }catch(InterruptedException e){
-            isConnectedToFirebase = false;
-        }catch(IOException e){
-            isConnectedToFirebase = false;
-        }
-        if(!isConnectedToFirebase){
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineAddTreeMessage2(Tree_Other_Info_Activity.this);
-//            ConnectionCheck.offlineAddTreeMessageShown = true;
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//            ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
+
     }
 //
 //    private void initRecyclerView(){
@@ -748,13 +740,13 @@ public class Tree_Other_Info_Activity extends AppCompatActivity {
                     dialog.dismiss();
 
                     boolean isConnectedToFirebase;
-                    try{
+//                    try{
                         isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-                    }catch(InterruptedException e){
-                        isConnectedToFirebase = false;
-                    }catch(IOException e){
-                        isConnectedToFirebase = false;
-                    }
+//                    }catch(InterruptedException e){
+//                        isConnectedToFirebase = false;
+//                    }catch(IOException e){
+//                        isConnectedToFirebase = false;
+//                    }
                     if(isConnectedToFirebase) {
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(Tree_Other_Info_Activity.this);
                         builder1.setCancelable(false);

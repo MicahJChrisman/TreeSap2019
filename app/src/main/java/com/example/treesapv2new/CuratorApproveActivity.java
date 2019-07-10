@@ -52,13 +52,13 @@ public class CuratorApproveActivity extends AppCompatActivity {
 
     private void initImageBitmaps(){
         boolean isConnectedToFirebase;
-        try{
+//        try{
             isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-        }catch(InterruptedException e){
+//        }catch(InterruptedException e){
             isConnectedToFirebase = false;
-        }catch(IOException e){
+//        }catch(IOException e){
             isConnectedToFirebase = false;
-        }
+//        }
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
 //            ConnectionCheck.offlineAddTreeMessageShown = true;

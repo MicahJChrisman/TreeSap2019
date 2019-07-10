@@ -64,6 +64,16 @@ public class NotificationsActivity extends AppCompatActivity {
         linearLayout = ((LinearLayout) findViewById(R.id.notifications_linear_layout));
         inflater = LayoutInflater.from(this);
 
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+            ConnectionCheck.showOfflineMessage(NotificationsActivity.this);
+            ConnectionCheck.offlineMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+            ConnectionCheck.offlineCuratorMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {

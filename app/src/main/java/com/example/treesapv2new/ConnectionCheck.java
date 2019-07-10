@@ -15,9 +15,23 @@ public class ConnectionCheck {
 //    public static boolean offlineAddTreeMessageShown = false;
     public static boolean offlineAccountMessageShown = false;
 
-    public static boolean isConnectedToFirebase() throws InterruptedException, IOException {
-        final String command = "ping -c 1 firebase.google.com";
-        return Runtime.getRuntime().exec(command).waitFor() == 0;
+    public static boolean isConnectedToFirebase(){ //throws InterruptedException, IOException {
+        // Note: Pinging does NOT work on emulators unless you change their settings
+        try {
+            final String command = "ping -c 1 firebase.google.com";
+            return Runtime.getRuntime().exec(command).waitFor() == 0;
+        }
+//            Runtime runtime = Runtime.getRuntime();
+//            try {
+//                Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+//                int     exitValue = ipProcess.waitFor();
+//                return (exitValue == 0);
+//            }
+        catch (IOException e)          { e.printStackTrace(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        return false;
+
     }
 
     public static void showOfflineMessage(Context context){
