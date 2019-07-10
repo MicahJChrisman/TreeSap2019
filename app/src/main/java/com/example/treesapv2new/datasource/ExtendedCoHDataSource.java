@@ -292,10 +292,10 @@ public class ExtendedCoHDataSource extends DataSource {
         if (MainActivity.banana.getCurrentDBH() == (null)) {
             MainActivity.banana.setCurrentDBH(tree.getCurrentDBH());
         }
-//        if(MainActivity.banana.getDataSource() == null){
-//            MainActivity.banana.setDataSource("ExtendedCoH");
-//        }
-        tree.setDataSource("ExtendedCoH");
+        if(MainActivity.banana.getDataSource() == null){
+            MainActivity.banana.setDataSource("ExtendedCoH");
+        }
+//        tree.setDataSource("ExtendedCoH");
     }
 
     @Override

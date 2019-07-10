@@ -378,6 +378,8 @@ public class QR_Code_Activity extends AppCompatActivity {
 //        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
 //        final SparseArray<Barcode> qrCodes = barcodeDetector.detect(frame);
 //        barcodeDetector.processReceivedDetections();
+
+
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {

@@ -152,7 +152,7 @@ public class NotificationsActivity extends AppCompatActivity {
                                         public void onClick(View v) {
                                                 setContentView(R.layout.notification_information);
                                                 db.collection("notifications").document(documentSnapshot.getId()).update("read", true);
-                                                ((TextView) findViewById(R.id.notification_specific_close)).setOnClickListener(new View.OnClickListener() {
+                                                ((ImageView) findViewById(R.id.notification_specific_close)).setOnClickListener(new View.OnClickListener() {
                                                     @Override
                                                     public void onClick(View v) {
                                                         finish();

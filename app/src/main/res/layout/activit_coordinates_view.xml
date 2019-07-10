@@ -97,7 +97,7 @@
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edittext_border"
-                    android:hint="Latitude:"
+                    android:hint="Latitude"
                     android:inputType="numberSigned|numberDecimal"
                     android:textColor="@color/accent_gray"
                     android:textSize="20sp" />
