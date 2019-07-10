@@ -136,13 +136,13 @@ public class Login_Activity extends AppCompatActivity {
                             toast.show();
                         } else {
                             boolean isConnectedToFirebase;
-                            try {
+//                            try {
                                 isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-                            } catch (InterruptedException e) {
-                                isConnectedToFirebase = false;
-                            } catch (IOException e) {
-                                isConnectedToFirebase = false;
-                            }
+//                            } catch (InterruptedException e) {
+//                                isConnectedToFirebase = false;
+//                            } catch (IOException e) {
+//                                isConnectedToFirebase = false;
+//                            }
                             if (!isConnectedToFirebase) {
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, cannot authenticate user", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -190,13 +190,13 @@ public class Login_Activity extends AppCompatActivity {
                             toast.show();
                         } catch(Exception e) {
                             boolean isConnectedToFirebase;
-                            try{
+//                            try{
                                 isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-                            }catch(InterruptedException ex){
-                                isConnectedToFirebase = false;
-                            }catch(IOException ex) {
-                                isConnectedToFirebase = false;
-                            }
+//                            }catch(InterruptedException ex){
+//                                isConnectedToFirebase = false;
+//                            }catch(IOException ex) {
+//                                isConnectedToFirebase = false;
+//                            }
                             if(!isConnectedToFirebase){
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, registration failed.", Toast.LENGTH_LONG);
                                 toast.show();

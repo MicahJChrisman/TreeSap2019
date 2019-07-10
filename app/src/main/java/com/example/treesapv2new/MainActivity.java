@@ -162,30 +162,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
+
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+            ConnectionCheck.showOfflineMessage(MainActivity.this);
+            ConnectionCheck.offlineMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+            ConnectionCheck.offlineCuratorMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
         if(user != null) {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
             hamMenu.getMenu().findItem(R.id.nav_notifications).setVisible(true);
             hamMenu.getMenu().findItem(R.id.nav_logout).setVisible(true);
-
-            boolean isConnectedToFirebase;
-            try{
-                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-            }catch(InterruptedException e){
-                isConnectedToFirebase = false;
-            }catch(IOException e){
-                isConnectedToFirebase = false;
-            }
-            if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
-                ConnectionCheck.showOfflineMessage(MainActivity.this);
-                ConnectionCheck.offlineMessageShown = true;
-            }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
-                ConnectionCheck.offlineMessageShown = false;
-                ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
-                ConnectionCheck.offlineAccountMessageShown = false;
-            }
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 

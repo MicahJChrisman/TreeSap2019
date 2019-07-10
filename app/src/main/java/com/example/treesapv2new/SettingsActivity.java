@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.treesapv2new.view.Settings;
 import com.google.common.io.Resources;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -114,7 +115,15 @@ public class SettingsActivity extends PreferenceActivity {
             }
         });
 
-
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
+            ConnectionCheck.showOfflineMessage(SettingsActivity.this);
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+            ConnectionCheck.offlineCuratorMessageShown = false;
+//                ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
         if(Login_Activity.mAuth.getCurrentUser()!=null) {
             PreferenceCategory b = (PreferenceCategory) findPreference("account");
             b.removePreference(findPreference("login_pref"));
@@ -137,22 +146,7 @@ public class SettingsActivity extends PreferenceActivity {
         }
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.distanceFromTreePref)));
-        boolean isConnectedToFirebase;
-        try{
-            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-        }catch(InterruptedException e){
-            isConnectedToFirebase = false;
-        }catch(IOException e){
-            isConnectedToFirebase = false;
-        }
-        if(!isConnectedToFirebase){
-            ConnectionCheck.showOfflineAccountMessage(SettingsActivity.this);
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
-            ConnectionCheck.offlineMessageShown = false;
-//                ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
-//                ConnectionCheck.offlineAccountMessageShown = false;
-        }
+
     }
 
     @Override
