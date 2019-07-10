@@ -71,7 +71,6 @@ public class NotificationsActivity extends AppCompatActivity {
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
 
@@ -154,8 +153,6 @@ public class NotificationsActivity extends AppCompatActivity {
                                         message.setText("Your tree was removed from the database");
                                     }
                                 }
-//                                String messageNotif = documentSnapshot.getData().get("message").toString();
-//                                message.setText(messageNotif);
                                 linearLayout.addView(view);
                                     view.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -313,7 +310,6 @@ public class NotificationsActivity extends AppCompatActivity {
                                             return true;
                                         }
                                     });
-//                                    view.setOnClickListener(new notificationSelected());
                             }catch (Exception e){
 
                             }
@@ -345,9 +341,6 @@ public class NotificationsActivity extends AppCompatActivity {
         public static PlaceholderFragment newInstance(byte[] pic) {
 
             PlaceholderFragment fragment = new PlaceholderFragment();
-//            Bundle args = new Bundle();
-//            args.putInt("index", pic);
-//            fragment.setArguments(args);
 
             Bundle args1 = new Bundle();
             args1.putByteArray("index",pic);
@@ -382,7 +375,6 @@ public class NotificationsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-//            String byteConvert = images.get(position);
             byte [] encodeByte=Base64.decode(images.get(position),Base64.DEFAULT);
             return PlaceholderFragment.newInstance(encodeByte);
         }

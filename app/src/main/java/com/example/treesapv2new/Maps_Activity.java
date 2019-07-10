@@ -123,7 +123,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     Marker mCurrLocationMarker;
     Context parent;
     float personalMarker = BitmapDescriptorFactory.HUE_VIOLET;
-    float treeMarker = BitmapDescriptorFactory.HUE_GREEN;
 
     Random randomGenerator;
     float zoom = 16;
@@ -139,11 +138,11 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private LocationListener locationListener;
     private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
     // lists for permissions
-    private ArrayList<String> permissionsToRequest;
-    private ArrayList<String> permissionsRejected = new ArrayList<>();
-    private ArrayList<String> permissions = new ArrayList<>();
+//    private ArrayList<String> permissionsToRequest;
+//    private ArrayList<String> permissionsRejected = new ArrayList<>();
+//    private ArrayList<String> permissions = new ArrayList<>();
     // integer for permissions results request
-    private static final int ALL_PERMISSIONS_RESULT = 1011;
+//    private static final int ALL_PERMISSIONS_RESULT = 1011;
 
     Bitmap.Config conf = Bitmap.Config.ARGB_8888;
     Bitmap bmp = Bitmap.createBitmap(80, 80, conf);
@@ -160,8 +159,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         MainActivity.banana = null;
         closestTree = null;
         closest1 =999999999;
-
-        boolean online = isNetworkAvailable();
 
 
         googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
@@ -187,7 +184,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
         if(user != null) {
@@ -199,8 +195,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             Task<QuerySnapshot> query = db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get();
-//            db.getApp().getP;
-//            db.runTransacti;
                     query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -227,8 +221,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     for (QueryDocumentSnapshot doc : task.getResult()){
-                        String userDI = user.getUid();
-                        String docID = doc.getId();
+//                        String userDI = user.getUid();
+//                        String docID = doc.getId();
                         if (user.getUid().equals(doc.getId())) {
                             hamMenu.getMenu().findItem(R.id.nav_curator_group).setVisible(true);
                             break;
@@ -280,11 +274,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             });
         }
         MainActivity.treesNearby.clear();
-
-//        ViewPager pageRight = (ViewPager) findViewById(R.id.pageRight);
-//        pageRight.setOnTouchListener(new pageRight.);
-
-
 
         randomGenerator = new Random();
 
@@ -399,32 +388,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
-
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
-//
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.map);
-//        GoogleMapOptions options = new GoogleMapOptions();
-//        options.mapType(GoogleMap.MAP_TYPE_NORMAL).tiltGesturesEnabled(false);
-//        MapFragment.newInstance(options);
-//        mapFragment.getMapAsync(this);
-//        parent = (Context) getIntent().getSerializableExtra("parent");
-
-
-//
-//        // paint defines the text color, stroke width and size
-//        Paint color = new Paint();
-//        color.setTextSize(35);
-//        color.setColor(Color.GREEN);
-//
-//        // modify canvas
-//        canvas1.drawCircle(30,30,30,color);
-//        color.setColor(Color.WHITE);
-//        canvas1.drawBitmap(BitmapFactory.decodeResource(getResources(),
-//                R.drawable.icons8_evergreen_30), 0,0, color);
-
-
     }
 
 
@@ -438,10 +401,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             } else {
                 finish();
             }
-
             return false;
         }
-
         return true;
     }
 
@@ -456,10 +417,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
 
         // Permissions ok, we get last location
         location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-//        if (location != null) {
-//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
-//        }
 
         startLocationUpdates();
     }
@@ -488,13 +445,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
-
-//    @Override
-//    public void onLocationChanged(Location location) {
-//        if (location != null) {
-//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
-//        }
-//    }
 
 
     @Override
@@ -564,16 +514,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         } else{
                             ds = new ITreeDataSource();
                         }
-//                        ds.initialize(Maps_Activity.this, null);
-//                        MainActivity.banana = ds.search(testing);
-//
-//                        float closest1 =999999999;
-//                        if (MainActivity.banana != null) {
-//                            if(MainActivity.banana.getClosestDist() < closest1) {
-//                                closest1 = MainActivity.banana.getClosestDist();
-//                                closestTree = MainActivity.banana;
-//                            }
-//                        }
                         ds.initialize(Maps_Activity.this, null);
                         MainActivity.treesNearby.clear();
                         Tree newTree = ds.search(new TreeLocation(marker.getPosition().latitude, marker.getPosition().longitude));
@@ -586,7 +526,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         }
                     }
                 }
-//                String snippet = marker.getSnippet();
                 if(marker.getSnippet().equals("Holland, MI")){
                     DataSource ds = new CityOfHollandDataSource();
                     ds.initialize(Maps_Activity.this, null);
@@ -651,7 +590,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             MainActivity.banana = closestTree;
                         }
                         Intent intentA = new Intent(Maps_Activity.this, Tree_Info_First.class);
-//                        finish();
                         mMap.clear();
                         startActivity(intentA);
                     }
@@ -675,27 +613,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-
-//        if(MainActivity.getSelectedDataSources().isEmpty()) {
-//            android.support.v7.app.AlertDialog.Builder builder;
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                builder = new android.support.v7.app.AlertDialog.Builder(Maps_Activity.this, android.R.style.Theme_Material_Light_Dialog_Alert);
-//            } else {
-//                builder = new android.support.v7.app.AlertDialog.Builder(Maps_Activity.this);
-//            }
-//            builder.setTitle("No Data Sources")
-//                    .setMessage("You must select a data source to view trees near you!")
-//                    .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            startActivity(new Intent(Maps_Activity.this, MainActivity.class));
-//                        }
-//                    })
-//                    .setIcon(android.R.drawable.ic_dialog_alert)
-//                    .show();
-//        }
-
-       // String location42 = "";
-
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         Iterator<String> it = sources.iterator();
         for (String source : sources) {
@@ -714,15 +631,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             }else{
                 ds = new ITreeDataSource();
             }
-//        HopeCollegeDataSource ds = new HopeCollegeDataSource();
-//        ds.initialize(Maps_Activity.this, null);
-//        Iterable<CSVRecord> stuff = null;
-//        int treeField = 0;
-
-//        stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/HCTreeData.csv");
-//        treeField = 2;
-//        location = "Hope College Pine Grove";
-//        whichSource = true;
 
             ds.initialize(Maps_Activity.this, null);
             MainActivity.treesNearby.clear();
@@ -751,10 +659,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                 location42= "Holland, MI";
                 whichSource = false;
             } else if (ds instanceof UserTreeDataSource){
-//                stuff = ds.getCoordinates(Maps_Activity.this, "/data/user/0/com.example.treesapv2new/files/user_tree_database.csv");
-//                treeField = 1;
-//                location42 = "N/A";
-//                whichSource = false;
                 stuff = null;
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -777,30 +681,22 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                         Double latitude = Double.valueOf(document.getData().get("latitude").toString());
                                         Double longitude = Double.valueOf(document.getData().get("longitude").toString());
                                         if (latitude != null && longitude != null) {
-                                            // if (!latitude.equals("")) {
-
-                                            //if (!longitude.equals("")) {
                                             LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
                                             if (ds.getClass().equals(CityOfHollandDataSource.class)) {
-//                                                    location42 = record.get("Park");
                                             }
                                             try {
-//                                                    String name = Transform.ChangeName(record.get(treeField));
-
-//                                                String name = "Tree";
                                                 String name = document.getData().get("commonName").toString();
                                                 int iconInt = randomGenerator.nextInt(8);
                                                 BitmapDescriptor icon;
                                                 String user = (String) document.getData().get("userID");
                                                 if(mAuth.getCurrentUser().getUid().equals(user)){
-                                                    //if the current tree document is one the user submitted,  make it blue
                                                     icon = BitmapDescriptorFactory.fromResource(R.drawable.user_tree_marker1);
                                                 }else {
                                                     switch (iconInt) {
-                                                        // hey whoever works on this app next I would recommend making the icons better.
-                                                        // I couldn't see a way to set both the color and picture of the marker programmatically
-                                                        // so I just made them myself in paint3d and had the computer "randomly" choose one.
-                                                        // If you guys know a better tool or some way of programmatically setting them that would be dope - Josie
+                                                        // Hey whoever works on this app next I would recommend making the icons better.
+                                                        // I couldn't see a way to set both the color and picture of the marker programmatically,
+                                                        // so I just made them myself in Paint3d and had the computer "randomly" choose one.
+                                                        // If you guys know how to make them better or some way of programmatically setting them that would be dope - Josie
                                                         case 0:
                                                             icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
                                                             break;
@@ -842,6 +738,7 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                             }
                         } else {
                             Toast toast = Toast.makeText(parent, "Unable to load trees.", Toast.LENGTH_LONG);
+                            toast.show();
                         }
                     }
                 });
@@ -856,32 +753,18 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ArrayList<String> pic = (ArrayList<String>) document.getData().get("pictures");
-
                                 try {
                                     Double latitude = Double.valueOf(document.getData().get("latitude").toString());
                                     Double longitude = Double.valueOf(document.getData().get("longitude").toString());
                                     if (latitude != null && longitude != null) {
-                                        // if (!latitude.equals("")) {
-
-                                        //if (!longitude.equals("")) {
                                         LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
-                                        if (ds.getClass().equals(CityOfHollandDataSource.class)) {
-//                                                    location42 = record.get("Park");
-                                        }
                                         try {
-//                                                    String name = Transform.ChangeName(record.get(treeField));
-                                            String name = document.getData().get("commonName").toString();
-//                                                    if(name == ""){
-//                                                        name = "N/A";
-//                                                    }
-
-                                            BitmapDescriptor icon;
-                                            String snippet = "";
                                             String user = (String) document.getData().get("userID");
-                                            if(mAuth.getCurrentUser().getUid().equals(user)){
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.user_tree_marker1);
-                                                snippet = "Your tree";
-                                            }else{
+                                            if(!mAuth.getCurrentUser().getUid().equals(user)) {
+                                                String name = document.getData().get("commonName").toString();
+
+                                                BitmapDescriptor icon;
+                                                String snippet = "";
                                                 int iconInt = randomGenerator.nextInt(8);
                                                 switch (iconInt) {
                                                     case 0:
@@ -912,15 +795,14 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                                         icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
                                                         break;
                                                 }
-                                            }
-                                            if(snippet.equals("")){
-                                                snippet = "User submitted";
-                                            }
-                                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                                            if(user != firebaseUser.getUid()) {
+
+                                                if (snippet.equals("")) {
+                                                    snippet = "User submitted";
+                                                }
                                                 mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(snippet).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+
                                             }
-                                        } catch (ArrayIndexOutOfBoundsException e) {
+                                        }catch (ArrayIndexOutOfBoundsException e) {
 
                                         }
                                     }
@@ -959,68 +841,61 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                     longitude = record.get(Tree.LONGITUDE);
                 }
                 if (latitude != null && longitude != null) {
-                   // if (!latitude.equals("")) {
-                        if (latitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
-
-                            //if (!longitude.equals("")) {
-                                if (longitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
-                                    LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
-                                    if (ds.getClass().equals(CityOfHollandDataSource.class)) {
-                                        location42 = record.get("Park");
-                                    }
-                                    try {
-                                        String name = Transform.ChangeName(record.get(treeField));
-                                        if(name == ""){
-                                            name = "N/A";
-                                        }
-                                        int iconInt = randomGenerator.nextInt(8);
-                                        BitmapDescriptor icon;
-                                        switch (iconInt){
-                                            case 0:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                break;
-                                            case 1:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
-                                                break;
-                                            case 2:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
-                                                break;
-                                            case 3:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
-                                                break;
-                                            case 4:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
-                                                break;
-                                            case 5:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
-                                                break;
-                                            case 6:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
-                                                break;
-                                            case 7:
-                                                icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
-                                                break;
-                                                default:
-                                                    icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
-                                                    break;
-                                        }
-                                        mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
-                                    }catch(ArrayIndexOutOfBoundsException e) {
-
-                                    }
-
+                    if (latitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
+                        if (longitude.matches("^-?[0-9]\\d*(\\.\\d+)?$")) {
+                            LatLng coords = new LatLng(Double.valueOf(latitude), Double.valueOf(longitude));
+                            if (ds.getClass().equals(CityOfHollandDataSource.class)) {
+                                location42 = record.get("Park");
+                            }
+                            try {
+                                String name = Transform.ChangeName(record.get(treeField));
+                                if(name == ""){
+                                    name = "N/A";
                                 }
-                            //}
+                                int iconInt = randomGenerator.nextInt(8);
+                                BitmapDescriptor icon;
+                                switch (iconInt){
+                                    case 0:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                        break;
+                                    case 1:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker_1);
+                                        break;
+                                    case 2:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker2);
+                                        break;
+                                    case 3:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker3);
+                                        break;
+                                    case 4:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker4);
+                                        break;
+                                    case 5:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker5);
+                                        break;
+                                    case 6:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker6);
+                                        break;
+                                    case 7:
+                                        icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker7);
+                                        break;
+                                        default:
+                                            icon = BitmapDescriptorFactory.fromResource(R.drawable.tree_marker0);
+                                            break;
+                                }
+                                mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(location42).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                            }catch(ArrayIndexOutOfBoundsException e) {
+
+                            }
+
                         }
-                    //}
+                    }
                 }
             }
             it.next();
         }
 
         LatLng hope = new LatLng(42.788002, -86.105971);
-
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1041,13 +916,8 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
             defaultLocation.setLongitude(-86.105971);
             List<String> provs = locationManager.getAllProviders();
 
-
-
-            //LocationListener locationListenerGps = new LocationListener();
-            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0, this);
             String a = LocationManager.GPS_PROVIDER;
             location1 = locationManager.getLastKnownLocation(a);
-            //locationManager.removeUpdates(this);
             Location location2 = location;
             for(String prov : provs) {
                 if (locationManager.getLastKnownLocation(prov) != null) {
@@ -1097,8 +967,6 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
-        //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         if(locMarker == true) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -1113,26 +981,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
 
     }
-//    @Override
-//    public void onStatusChanged(String s, int i, Bundle bundle) {
-//
-//    }
-//
-//    @Override
-//    public void onProviderEnabled(String s) {
-//
-//    }
-//
-//    @Override
-//    public void onProviderDisabled(String s) {
-//
-//    }
 
     private class AddTreeEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-//            getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
-//            finish();
             mMap.clear();
             Intent intentA = new Intent(Maps_Activity.this, Add_Tree_Activity.class);
             startActivity(intentA);
@@ -1142,33 +994,12 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            getSupportFragmentManager().beginTransaction().remove(mapFragment).commitAllowingStateLoss();
-//            finish();
             mMap.clear();
-//            Intent intentA = new Intent(Maps_Activity.this, SettingsActivity.class);
-//            startActivity(intentA);
             DrawerLayout mDrawerLayout = findViewById(R.id.maps_container);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             getSupportFragmentManager();
         }
     }
-
-//    private class AddEventAction implements View.OnClickListener{
-//        @Override
-//        public void onClick(View v){
-//
-//
-//            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-//            ds.initialize(Big_Red_Button.this,null);
-//            MainActivity.banana = ds.search(testing);
-//
-//            Intent intentA = new Intent(Big_Red_Button.this, Cereal_Box_Activity.class);
-////            intentA.putExtra("treeClass", MainActivity.banana);
-//            startActivity(intentA);
-//
-////            startActivity(new Intent(Big_Red_Button.this, Cereal_Box_Activity.class));
-//        }
-//    }
 }
 

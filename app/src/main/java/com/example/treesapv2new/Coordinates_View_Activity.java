@@ -337,8 +337,6 @@ public class Coordinates_View_Activity extends AppCompatActivity {
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(Coordinates_View_Activity.this, SettingsActivity.class);
-//            startActivity(intentA);
             DrawerLayout mDrawerLayout = findViewById(R.id.coord_container);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);

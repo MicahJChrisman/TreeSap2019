@@ -51,15 +51,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
-//
-//                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
                 TextView index = v.findViewById(R.id.index);
                 Intent intent = new Intent(mContext, CuratorActivity.class);
                 intent.putExtra("index", Integer.parseInt(index.getText().toString())-1);
-//                Intent intent = new Intent(mContext, Curator_Swipe_Activity.class);
-//                intent.putExtra("image_url", mImages.get(position));
-//                intent.putExtra("image_name", mImageNames.get(position));
                 mContext.startActivity(intent);
 
             }
@@ -69,16 +63,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         return holder;
     }
-
-//    public class Glider extends AppGlideModule{
-//        @GlideModule
-//        public void gliderMove(ViewHolder holder, final int position){
-//            Glide.with(mContext)
-//                    .asBitmap()
-//                    .load(mImages.get(position))
-//                    .into(holder.image);
-//        }
-//    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
@@ -104,36 +88,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.imageName.setText(mImageNames.get(position));
         holder.index.setText(String.valueOf(position+1));
-
-//                        ImageView image = (ImageView) findViewById(R.id.set_image_curator);
-//                        image.setImageBitmap(bitmap);
-
-
-
-
-
-
-
-//        Glide.with(mContext)
-//                .asBitmap()
-//                .load(mImages.get(position))
-//                .into(holder.image);
-
-
-
-//        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d(TAG, "onClick: clicked on: " + mImageNames.get(position));
-//
-//                Toast.makeText(mContext, mImageNames.get(position), Toast.LENGTH_LONG).show();
-//
-//                Intent intent = new Intent(mContext, GalleryActivity.class);
-//                intent.putExtra("image_url", mImages.get(position));
-//                intent.putExtra("image_name", mImageNames.get(position));
-//                mContext.startActivity(intent);
-//            }
-//        });
     }
 
     @Override

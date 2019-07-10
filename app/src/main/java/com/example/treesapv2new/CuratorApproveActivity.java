@@ -40,6 +40,17 @@ public class CuratorApproveActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_curator_approve);
+
+        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
+        if(!isConnectedToFirebase){
+            ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
+//            ConnectionCheck.offlineAddTreeMessageShown = true;
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineAccountMessageShown){
+            ConnectionCheck.offlineMessageShown = false;
+//            ConnectionCheck.offlineCuratorMessageShown = false;
+//            ConnectionCheck.offlineAddTreeMessageShown = false;
+            ConnectionCheck.offlineAccountMessageShown = false;
+        }
         initImageBitmaps();
 
         ((ImageView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
@@ -51,23 +62,6 @@ public class CuratorApproveActivity extends AppCompatActivity {
     }
 
     private void initImageBitmaps(){
-        boolean isConnectedToFirebase;
-//        try{
-            isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//        }catch(InterruptedException e){
-            isConnectedToFirebase = false;
-//        }catch(IOException e){
-            isConnectedToFirebase = false;
-//        }
-        if(!isConnectedToFirebase){
-            ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
-//            ConnectionCheck.offlineAddTreeMessageShown = true;
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineAccountMessageShown){
-            ConnectionCheck.offlineMessageShown = false;
-//            ConnectionCheck.offlineCuratorMessageShown = false;
-//            ConnectionCheck.offlineAddTreeMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
-        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference users = db.collection("pendingTrees");
         //final DocumentReference docRef = db.collection("Pending Trees").document("Black locust");

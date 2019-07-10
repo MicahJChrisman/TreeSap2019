@@ -50,32 +50,6 @@ public class FullScreenViewPager extends AppCompatActivity implements  GestureDe
         viewPager.setOffscreenPageLimit(dBmpList.size() - 1);
         viewPager.setCurrentItem((int) getIntent().getExtras().get("position"));
         viewPager.setOnItemClickListener(null);
-//        viewPager.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                int flg = getWindow().getAttributes().flags;
-//                boolean flag = false;
-//                if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-//                    View decorView = getWindow().getDecorView();
-//                    decorView.setSystemUiVisibility(
-//                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//                }else{
-//                    View decorView = getWindow().getDecorView();
-//                    decorView.setSystemUiVisibility(
-//                            View.SYSTEM_UI_FLAG_IMMERSIVE
-//                                    // Set the content to appear under the system bars so that the
-//                                    // content doesn't resize when the system bars hide and show.
-//                                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                                    // Hide the nav bar and status bar
-//                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                                    | View.SYSTEM_UI_FLAG_FULLSCREEN);
-//                }
-//            }
-//        });
     }
 
     @Override

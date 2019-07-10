@@ -48,31 +48,32 @@ public class ClickableViewPager extends ViewPager {
         public boolean onSingleTapConfirmed(MotionEvent e) {
             if(mOnItemClickListener != null) {
                 mOnItemClickListener.onItemClick(getCurrentItem());
-            }else {
-                if (getContext() instanceof FullScreenViewPager) {
-                    int flg = getDisplay().getFlags();
-                    boolean flag = false;
-                    if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-                        setSystemUiVisibility(
-                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-                        ((FullScreenViewPager) getContext()).closeButton.setVisibility(VISIBLE);
-                    } else {
-                        setSystemUiVisibility(
-                                View.SYSTEM_UI_FLAG_IMMERSIVE
-                                        // Set the content to appear under the system bars so that the
-                                        // content doesn't resize when the system bars hide and show.
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                        // Hide the nav bar and status bar
-                                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
-                        ((FullScreenViewPager) getContext()).closeButton.setVisibility(GONE);
-                    }
-                }
             }
+//            else {
+//                if (getContext() instanceof FullScreenViewPager) {
+//                    int flg = getDisplay().getFlags();
+//                    boolean flag = false;
+//                    if ((flg & WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+//                        setSystemUiVisibility(
+//                                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//                        ((FullScreenViewPager) getContext()).closeButton.setVisibility(VISIBLE);
+//                    } else {
+//                        setSystemUiVisibility(
+//                                View.SYSTEM_UI_FLAG_IMMERSIVE
+//                                        // Set the content to appear under the system bars so that the
+//                                        // content doesn't resize when the system bars hide and show.
+//                                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                                        // Hide the nav bar and status bar
+//                                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+//                        ((FullScreenViewPager) getContext()).closeButton.setVisibility(GONE);
+//                    }
+//                }
+//            }
             return true;
         }
     }
