@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
         FirebaseUser user = mAuth.getCurrentUser();
@@ -266,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
         }
         MainActivity.treesNearby.clear();
 
-//        AllUsersDataSource allUsersDataSource = new AllUsersDataSource();
         if(!allUsersDataSource.finishedBoolean) {
             allUsersDataSource.initialize(this, null);
         }
@@ -355,12 +353,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
-//        prefs.edit().putString("HopeCollegeDataSource", "");
-//        prefs.edit().putString("CityOfHollandDataSource", "");
-//        prefs.edit().putString("ExtendedCoHDataSource", "");
-//        prefs.edit().putString("ITreeDataSource", "");
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
@@ -416,9 +408,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        //sharedPreferences = getSharedPreferences("com.example.treesapv2new", MODE_PRIVATE);
-        //checkFirstRun();
-
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
@@ -437,59 +426,14 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("distanceFromTreePref", "100");
         }
 
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//        boolean firstStart = prefs.getBoolean("firstStart", true);         **Meant to detect when the app is open for the first time, but when I implement this, adding the databases suddenly doesn't work.**
-//        if(firstStart){                                                    **Commented out to fiz later**
-//            setDatabases();
-//        }
     }
 
-//    public void setDatabases(){
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//        SharedPreferences.Editor editor = prefs.edit();
-//        HashSet<String> dbs = new HashSet<String>();
-//        dbs.add("HopeCollegeDataSource");
-//        dbs.add("CityOfHollandDataSource");
-//        dbs.add("ExtendedCoHDataSource");
-//        dbs.add("ITreeDataSource");
-//        editor.putStringSet("dataBasesUsedSelector", dbs);
-//        editor.apply();
-//        editor.putBoolean("firstStart", false);
-//        editor.apply();
-//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-//
-//    }
     private class SettingsEvent implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-//            Intent intentA = new Intent(MainActivity.this, SettingsActivity.class);
-//            startActivity(intentA);
             DrawerLayout mDrawerLayout = findViewById(R.id.container);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-
-//            mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-//                @Override
-//                public void onDrawerSlide(@NonNull View view, float v) {
-//
-//                }
-//
-//                @Override
-//                public void onDrawerOpened(@NonNull View view) {
-//
-//                }
-//
-//                @Override
-//                public void onDrawerClosed(@NonNull View view) {
-//                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//                }
-//
-//                @Override
-//                public void onDrawerStateChanged(int i) {
-//
-//                }
-//            });
-
         }
     }
 
@@ -636,168 +580,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private View setupRecyclerView() {
-//        LayoutInflater inflater = (LayoutInflater) parent.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.treeid_view, null);
-//        RecyclerView rv = (RecyclerView) ll.findViewById(R.id.treeid_element_view);
-//        LinearLayoutManager lm = new LinearLayoutManager(this);
-//        rv.setLayoutManager(lm);
-//
-//        ArrayList<BulletedListItem> items = generateIDItems();
-//        idMethodsAdapter = new CardViewListAdapter(this, items);
-//        rv.setAdapter(idMethodsAdapter);
-//
-//        //final BoxSwipeController swipeController = new BoxSwipeController();
-//        final BoxSwipeController swipeController = new BoxSwipeController(new SwipeControllerActions() {
-//            @Override
-//            public void onRightClicked(int position) {
-//                ArrayList<BulletedListItem> items = generateIDItems();
-//                if (position == 0) {
-//                    selectedIDMethod = null;
-//                    PrefManager.putInteger("lastIDMethod", -1);
-//                } else if (position < items.size()-1) {
-//                    position--;
-//                    if(PrefManager.getString("lastDataSources", "").equals("")){
-//
-//                    }
-//                    else {
-//                        if (!selectedDataSources.isEmpty()) {
-//                            selectedDataSources.remove(position);
-//                            String lastDataSources = PrefManager.getString("lastDataSources", "");
-//                            String[] dsources = lastDataSources.split(",");
-//                            lastDataSources = "";
-//                            for (int i = 0; i < dsources.length; i++) {
-//                                if (i < position) {
-//                                    if (i > 0) lastDataSources += ",";
-//                                    lastDataSources += "" + i;
-//                                } else if (i > position) {
-//                                    if (i > 0) lastDataSources += ",";
-//                                    lastDataSources += "" + (i - 1);
-//                                }
-//                            }
-//                            if (lastDataSources.length() == 2) {
-//                                lastDataSources = lastDataSources.replaceAll(",", "");
-//                            }
-//                            PrefManager.putString("lastDataSources", lastDataSources);
-//                        }
-//                    }
-//                } else {
-//                    selectedDisplayMethod = null;
-//                    PrefManager.putInteger("lastDisplayMethod", -1);
-//                }
-//                items = generateIDItems();
-//                idMethodsAdapter.setItems(items);
-//                idMethodsAdapter.notifyDataSetChanged();
-//                adapter.notifyDataSetChanged();
-//                //idMethodsAdapter.notifyItemRemoved(position);
-//                //idMethodsAdapter.notifyItemRangeChanged(position, idMethodsAdapter.getItemCount());
-//            }
-//        });
-//
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(), lm.getOrientation());
-//        rv.addItemDecoration(dividerItemDecoration);
-//        rv.addItemDecoration(new RecyclerView.ItemDecoration() {
-//            @Override
-//            public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-//                swipeController.onDraw(c);
-//            }
-//        });
-//
-//        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeController);
-//        itemTouchhelper.attachToRecyclerView(rv);
-//
-//        return ll;
-//    }
-
-//    private void createTreeIDConfigBox(boolean add) {
-//        String methods;
-//
-//        idItems = new BoxItem(this);
-//        idItems.setTitle("Tree Identification");
-//        idItems.setSubtitle("This is how trees are identified.  You need an ID method, data sources, and a display method.");
-//
-//        // Setup a change button
-//        ImageButton change = new ImageButton(this);
-//        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.edit);
-//        change.setImageBitmap(bm);
-//        change.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-//        change.setOnClickListener(new ChangeMethodsAction(this));
-//        idItems.setButton(change);
-//
-//        idItems.setContent(setupRecyclerView());
-//
-//        if (add) adapter.addBoxItem(idItems);
-//    }
-//
-//    private void createConnectionsBox() {
-//        BoxItem bi = new BoxItem(this);
-//        bi.setTitle("Connections");
-//        bi.setSubtitle("These are connections to Web sites about tree benefits and tree measurements.");
-//
-//        ArrayList<BulletedListItem> items = new ArrayList<BulletedListItem>();
-//        items.add(new BulletedListItem("iTree Web Tools", "http://itreetools.org"));
-//        items.add(new BulletedListItem("National Tree Benefit Calculator", "http://www.treebenefits.com/calculator"));
-//        items.add(new BulletedListItem("iNaturalist", "https://www.inaturalist.org/"));
-//        items.add(new BulletedListItem("The TreeSap App Page", "http://www.treesap.info"));
-//        connectionsWebView = new BulletedWebView(this, items);
-//        connectionsWebView.setItems(items);
-//        bi.setContent(connectionsWebView);
-//        adapter.addBoxItem(bi);
-//    }
-//
-//    private void createITreeAcknowledgement() {
-//        BoxItem bi = new BoxItem(this);
-//        bi.setTitle("Acknowledgement");
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        final View view = inflater.inflate(R.layout.itree_box, null);
-//        bi.setContent(view);
-//        adapter.addBoxItem(bi);
-//    }
-//
-//    private void createTipsTricksBox() {
-//        String str;
-//        int background = R.color.colorPrimary;
-//
-//        int color = ResourcesCompat.getColor(getResources(), background, null);
-//        String hex = Integer.toHexString(color).substring(2);
-//        String tipsString = "<html><style>body {background-color: #"+hex+";} li {font-size: 24px;}</style><body>";
-//
-//        try {
-//            URL url = new URL("http://treesap.info/tipsandtricks.html");
-//            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-//
-//            while ((str = in.readLine()) != null) {
-//                tipsString += str;
-//            }
-//
-//            in.close();
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//            return;
-//        } catch (IOException e) {
-//            return;
-//        }
-//
-//        if (tipsString.length() == 0) return;
-//
-//        BoxItem bi = new BoxItem(this);
-//        bi.setTitle("Tips and Tricks");
-//        WebView tv = new WebView(this);
-//        tv.loadData(tipsString, "text/html", null);
-//        bi.setContent(tv);
-//        adapter.addBoxItem(bi);
-//    }
-//
-//    private void createAcknowledgementsBox() {
-//        BoxItem bi = new BoxItem(this);
-//        bi.setTitle("About");
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        final View view = inflater.inflate(R.layout.about_box, null);
-////        TextView tv = new TextView(this);
-////        tv.setText("This software is (C) Hope College, 2018. It was written by Mike Jipping, Louis Kopp, and Caleb Tallquist.  All rights are reserved.");
-//        bi.setContent(view);
-//        adapter.addBoxItem(bi);
-//    }
 
     @Override
     public void onBackPressed() {
@@ -854,89 +636,6 @@ public class MainActivity extends AppCompatActivity {
         this.sendBroadcast(mediaScanIntent);
     }
 
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-//            StrictMode.setVmPolicy(builder.build());
-//            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                File photoFile = null;
-//                try {
-//                    photoFile = createImageFile();
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//                if (photoFile != null) {
-//                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-//                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//                }
-//            }
-//
-//        } else if(id==R.id.nav_suggest){
-//            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-//                    "mailto",emailAddress, null));
-//            intent.putExtra(Intent.EXTRA_SUBJECT, "App Suggestion");
-//            startActivity(Intent.createChooser(intent, "Send Email"));
-//
-//        } else if (id == R.id.nav_share) {
-//            Intent intent = new Intent(Intent.ACTION_SEND);
-//            intent.setType("text/html");
-//            intent.putExtra(Intent.EXTRA_SUBJECT, "Treesap Link");
-//            intent.putExtra(Intent.EXTRA_TEXT, sharingLink);
-//            startActivity(Intent.createChooser(intent, "Send Email"));
-//        } else if (id == R.id.nav_send) {
-//            try {
-//                Process process = Runtime.getRuntime().exec("logcat -d");
-//                BufferedReader bufferedReader = new BufferedReader(
-//                        new InputStreamReader(process.getInputStream()));
-//
-//                StringBuilder log=new StringBuilder();
-//                String line = "";
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    log.append(line);
-//                }
-//                newLog = log.toString();
-//                final AlertDialog.Builder a_builder = new AlertDialog.Builder(MainActivity.this, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
-//                a_builder.setMessage("").setCancelable(false)
-//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-//                                        "mailto",emailAddress, null));
-//                                intent.putExtra(Intent.EXTRA_SUBJECT, "Treesap Logcat");
-//                                intent.putExtra(Intent.EXTRA_TEXT, newLog);
-//                                startActivity(Intent.createChooser(intent, "Send Email"));
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//
-//                            }
-//
-//                        });
-//                AlertDialog alert = a_builder.create();
-//                alert.setTitle("Would you like to send information to the developer?");
-//                alert.show();}
-//            catch (IOException e) {}
-//
-//        }
-//        else if (id == R.id.nav_settings) {
-//            startActivity(new Intent(MainActivity.this, Settings.class));
-//        }
-//
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -959,9 +658,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            //Bundle extras = data.getExtras();
-            //Bitmap imageBitmap = (Bitmap) extras.get("data");
-            //mImageView.setImageBitmap(imageBitmap);
             galleryAddPic();
         }
 
@@ -1086,7 +782,6 @@ public class MainActivity extends AppCompatActivity {
             if (tree == null) {
                 // flag a tree not found
                 Log.i("MainActivity", "No tree was found at "+treeLocation.toString());
-                //Toast.makeText(parent, "No tree was found at"+treeLocation.toString(), Toast.LENGTH_LONG).show();
                 AlertDialog.Builder builder;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     builder = new AlertDialog.Builder(parent, android.R.style.Theme_Material_Light_Dialog_Alert);
@@ -1109,35 +804,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        if (sharedPreferences.getBoolean("firstRun", false)) {
-//            //You can perform anything over here. This will call only first time
-//            editor = sharedPreferences.edit();
-//            editor.putBoolean("firstRun", false);
-//            editor.commit();
-//
-//        }
-//    }
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//        if (prefs.getBoolean("firstrun", false)) {
-//        }
-//        else{
-//            HashSet<String> dbs = new HashSet<String>();
-//            dbs.add("HopeCollegeDataSource");
-//            dbs.add("CityOfHollandDataSource");
-//            dbs.add("ExtendedCoHDataSource");
-//            dbs.add("ITreeDataSource");
-//            //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//            prefs.edit().putStringSet("dataBasesUsedSelector", dbs);
-//            prefs.edit().putBoolean("firstrun", false).commit();
-//        }
-//    }
-
 
 }
