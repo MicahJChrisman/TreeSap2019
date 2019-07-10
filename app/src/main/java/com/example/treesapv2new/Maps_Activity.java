@@ -916,7 +916,10 @@ public class Maps_Activity extends AppCompatActivity implements OnMapReadyCallba
                                             if(snippet.equals("")){
                                                 snippet = "User submitted";
                                             }
-                                            mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(snippet).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                                            if(user != firebaseUser.getUid()) {
+                                                mMap.addMarker(new MarkerOptions().position(coords).title(name).snippet(snippet).icon(icon));//BitmapDescriptorFactory.fromBitmap(bmp)));
+                                            }
                                         } catch (ArrayIndexOutOfBoundsException e) {
 
                                         }
