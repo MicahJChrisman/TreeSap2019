@@ -135,14 +135,7 @@ public class Login_Activity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
                         } else {
-                            boolean isConnectedToFirebase;
-//                            try {
-                                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//                            } catch (InterruptedException e) {
-//                                isConnectedToFirebase = false;
-//                            } catch (IOException e) {
-//                                isConnectedToFirebase = false;
-//                            }
+                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
                             if (!isConnectedToFirebase) {
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, cannot authenticate user", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -189,14 +182,7 @@ public class Login_Activity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0,0);
                             toast.show();
                         } catch(Exception e) {
-                            boolean isConnectedToFirebase;
-//                            try{
-                                isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//                            }catch(InterruptedException ex){
-//                                isConnectedToFirebase = false;
-//                            }catch(IOException ex) {
-//                                isConnectedToFirebase = false;
-//                            }
+                            boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
                             if(!isConnectedToFirebase){
                                 Toast toast = Toast.makeText(Login_Activity.this, "No internet, registration failed.", Toast.LENGTH_LONG);
                                 toast.show();
@@ -216,7 +202,6 @@ public class Login_Activity extends AppCompatActivity {
                         tempHash.put("userID", mAuth.getUid().toString());
                         tempHash.put("email",email);
                         db.collection("users").document().set(tempHash);
-//                        emailToUID.document().set(tempHash);
 
                     }
 

@@ -92,13 +92,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             Color.parseColor("#DE7A22"), //Energy, orange
             Color.parseColor("#20948B"), //Air quality, dark turquoise
             Color.parseColor("#6AB187"), //CO2, sea green
-
-
-
-
-
-
-
             //purplething
             //Color.rgb(193, 37, 82),
             //orange
@@ -118,7 +111,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
 
             Color.rgb(55, 55, 200),
     };
-    private PopupWindow popupWindow;
+//    private PopupWindow popupWindow;
     private String commonName = MainActivity.banana.getCommonName();
     private String allInfo;
     private PieChart pieChart;
@@ -147,12 +140,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.activity_pie_chart);
-//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
-
-//        ImageButton button = (ImageButton) findViewById(R.id.add2);
-//        button.setOnClickListener(new AddNotesEvent());
-
-
 
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -263,10 +250,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         button.setOnClickListener(new AddNotesEvent());
 
         pieChart = (PieChart) customView.findViewById(R.id.chart);
-        //PieChartDisplay pieChartDisplay = new PieChartDisplay(getApplicationContext());
-        //pieChartDisplay.display(tree);
-        //noData = (TextView) customView.findViewById(R.id.no_data);
-        //noData.setVisibility(View.GONE);
 
         ArrayList<PieEntry> entries = new ArrayList<>();
         if(tree.getDataSource().equals("ExtendedCoH")){
@@ -317,11 +300,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 stormWater = 5f;
             }
-            //entries.add(new PieEntry(stormWater, "Storm Water"));
             float electricity;
-            //if(hasValues) { electricity = Float.valueOf(allInfo.split(",")[14]); }
-            //else{electricity = 2.54f;}
-            //entries.add(new PieEntry(2.54f, "Energy"));
             final float pollution;
             if (hasValues) {
                 pollution = Float.valueOf(allInfo.split(",")[POLLUTION]);
@@ -330,9 +309,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 pollution = 5;
             }
-//            entries.add(new PieEntry(pollution, "Air Quality"));
-            //entries.add(new PieEntry(1.23f, "Property Value"));
-            //entries.add(new PieEntry(0.45f, "Natural Gas"));
             float co2;
             if (hasValues) {
                 co2 = Float.valueOf(allInfo.split(",")[CO2]);
@@ -341,7 +317,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             } else {
                 co2 = 5f;
             }
-//            entries.add(new PieEntry(co2, "CO2"));
         }
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
@@ -530,12 +505,7 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setYOffset(30f);
         pieChart.getLegend().setWordWrapEnabled(true);
-//        if ( PrefManager.getInteger("lastIDMethod", -1)==3) {
-//
-//        }
-//        else {
-            pieChart.animateY(2000);
-//        }
+        pieChart.animateY(2000);
 
 
         setContentView(customView);
@@ -552,35 +522,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.not_exact_text)).setVisibility(View.VISIBLE);
             }
         }
-        //customView/setContentView();
-
-
-
-
-
-
-
-
-//        if (popupWindow != null) {
-//            popupWindow.dismiss();
-//        }
-//        popupWindow = new PopupWindow(
-//                customView,
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                ViewGroup.LayoutParams.MATCH_PARENT
-//        );
-//
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            popupWindow.setElevation(5.0f);
-//        }
-//        final View rootView = this.getWindow().getDecorView().findViewById(R.id.masterLayout);
-//        rootView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 400);
-//
-//            }
-//        });
 
         BottomNavigationView navView = findViewById(R.id.pie_chart_menu);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -627,8 +568,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
     private class AddNotesEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(Cereal_Box_Activity.this, AddNotesActivity.class);
-//            startActivity(intentA);
             ShowPopup(v);
         }
     }
@@ -656,7 +595,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
                     Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
                 }
             } else {
-                //commonNameText.setText("Common name: " + "Unavailable");
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT);
             }
         }else{
@@ -698,54 +636,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         if (allInfo.equals("")) {
             allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
         }
-//        total = 0.0;
-//        hasValues = false;
-//        //InputStream inputStream = parent.getResources().openRawResource(R.raw.individual_tree_tenefits_18july18);
-//        InputStream input;
-//        if(tree.getDataSource().equals("ExtendedCoH")) {
-//            input = getResources().openRawResource(R.raw.katelyns_database);
-//        }else{
-//            input = getResources().openRawResource(R.raw.individual_tree_benefits_18july18);
-//        }
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-//        String line;
-//        commonName = Transform.ChangeName(tree.getCommonName());
-//        allInfo = "";
-//        hasValues = false;
-//        double treeDbh = tree.getCurrentDBH();
-//        BigDecimal bd = new BigDecimal(treeDbh);
-//        //bd = bd.setScale(0, RoundingMode.DOWN);
-//        int treeID= Integer.parseInt(tree.getID());
-//        while ((line = reader.readLine()) != null) {
-//            String treeName = line.split(",")[1];
-//            if (treeName.equals(commonName)) {
-////
-////                String tID = line.split(",")[0];
-////                int trees = Integer.parseInt(tID);
-////                if(trees == treeID){
-////                    allInfo = line;
-////                    hasValues = true;
-////                    break;
-////                }
-//
-//
-//
-//
-//                String dbh = line.split(",")[2];
-//                Double diameter = Double.parseDouble(dbh);
-//                BigDecimal bd1 = new BigDecimal(diameter);
-//                //bd1 = bd1.setScale(0, RoundingMode.DOWN);
-//                if(bd1.doubleValue()==0){bd1 = BigDecimal.valueOf(1);}
-//                if (bd1.doubleValue() == bd.doubleValue()) {
-//                    allInfo = line;
-//                    hasValues = true;
-//                    break;
-//                }
-//            }
-//        }
-//        if (allInfo.equals("")) {
-//            allInfo = "N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A";
-//        }
     }
     public void ShowPopup(View v){
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
@@ -757,8 +647,6 @@ public class Pie_Chart_Activity extends AppCompatActivity {
         txtclose = (TextView) myDialog.findViewById(R.id.txtclose);
         buttonSubmit = (Button) myDialog.findViewById(R.id.add_notes_button);
         imageButton.setOnClickListener(new addImageEvent());
-        //        ImageButton button = (ImageButton) findViewById(R.id.add_notes);
-//        button.setOnClickListener(new AddNotesEvent());
         txtclose.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -810,11 +698,9 @@ public class Pie_Chart_Activity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             byteArray = stream.toByteArray();
-            //   picAppear.setImageBitmap(imageBitmap);
 
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             ImageView image = (ImageView) findViewById(R.id.user_add_tree_pic_appear_pie);
-            //image.setImageBitmap(bmp);
             MainActivity.banana.addPics("User pic", Base64.encodeToString(byteArray, Base64.DEFAULT));
             myDialog.dismiss();
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();

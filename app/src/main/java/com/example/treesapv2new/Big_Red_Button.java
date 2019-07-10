@@ -95,7 +95,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 
     private GestureDetectorCompat gestureObject;
 
-//    public static Tree banana = null;
     public static String sendString = "Big_Red_Button.banana";
 
     Double longitude, latitude;
@@ -125,7 +124,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//                ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
         if(user != null) {
@@ -437,8 +435,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
     private class AddSettingsEvent implements View.OnClickListener{
         @Override
         public void onClick(View v){
-//            Intent intentA = new Intent(Big_Red_Button.this, SettingsActivity.class);
-//            startActivity(intentA);
             DrawerLayout mDrawerLayout = findViewById(R.id.brb_container);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
@@ -517,34 +513,13 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     }
                 }
             }
-//            checkTree(sources);
-
-//            HopeCollegeDataSource ds = new HopeCollegeDataSource();
-//            ds.initialize(Big_Red_Button.this,null);
-//            MainActivity.banana = ds.search(testing);
             if(closestTree != null) {
                 MainActivity.banana = closestTree;
             }
-//            button.layout(67, 117, 67, 47);
             if(MainActivity.banana != null){
                 Intent intentA = new Intent(Big_Red_Button.this, Tree_Info_First.class);
-//            intentA.putExtra("treeClass", MainActivity.banana);
                 startActivity(intentA);
             }else{
-//                AlertDialog.Builder builder;
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                    builder = new AlertDialog.Builder(getBaseContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
-//                } else {
-//                    builder = new AlertDialog.Builder(getBaseContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
-//                }
-//                builder.setTitle("No Tree was Found!")
-//                        .setMessage("No tree was found at the GPS coordinates that you gave using the data sources that you specified.")
-//                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                            }
-//                        })
-//                        .setIcon(android.R.drawable.ic_dialog_alert)
-//                        .show();
                 Toast.makeText(getBaseContext(), "There are no trees near enough!", Toast.LENGTH_LONG).show();
             }
         }
@@ -572,98 +547,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             }
             return false;
         }
-
-
-//        private void checkTree(Set<String> sources){
-//            if(MainActivity.banana != null){
-//                if(MainActivity.banana.getCommonName().equals(null)){
-//                    for (String source : sources) {
-//                        for(String sourceUsed : MainActivity.banana.getDbsUsed()){
-//                            Log.d("MainActivity", "Searching.  Trying: "+source);
-//                            DataSource ds;
-//                            if(source.equals(sourceUsed)) {
-//                            }else if(source.equals("HopeCollegeDataSource")){
-//                                ds = new HopeCollegeDataSource();
-//                            }else if(source.equals("CityOfHollandDataSource")) {
-//                                ds = new CityOfHollandDataSource();
-//                            }else if(source.equals("ExtendedCoHDataSource"))){
-//                                ds = new ExtendedCoHDataSource();
-//                            }else{
-//                                ds = new ITreeDataSource();
-//                            }
-//                            ds.initialize(Big_Red_Button.this,null);
-//                            Tree tree = ds.search(MainActivity.banana.getLocation());
-//                            MainActivity.banana.addDb(source);
-//                            if(!tree.getCommonName().equals(null)){
-//                                MainActivity.banana.setCommonName(tree.getCommonName());
-//                            }
-//                        }
-//                    }
-//                }if(MainActivity.banana.getScientificName().equals(null)){
-//                    for (String source : sources){
-//                        for (String sourceUsed : MainActivity.banana.getDbsUsed()) {
-//                            Log.d("MainActivity", "Searching.  Trying: " + source);
-//                            DataSource ds;
-//                            if (source.equals(sourceUsed)) {
-//                            } else if (source.equals("HopeCollegeDataSource")) {
-//                                ds = new HopeCollegeDataSource();
-//                            } else if (source.equals("CityOfHollandDataSource")) {
-//                                ds = new CityOfHollandDataSource();
-//                            } else if (source.equals("ExtendedCoHDataSource")) {
-//                                ds = new ExtendedCoHDataSource();
-//                            } else {
-//                                ds = new ITreeDataSource();
-//                            }
-//                            ds.initialize(Big_Red_Button.this, null);
-//                            Tree tree = ds.search(MainActivity.banana.getLocation());
-//                            MainActivity.banana.addDb(source);
-//                            if (!tree.getScientificName().equals(null)) {
-//                                MainActivity.banana.setScientificName(tree.getScientificName());
-//                            }
-//                        }
-//                    }
-//                }if(MainActivity.banana.getID().equals(null)){
-//                    for (String source : sources){
-//                        for (String sourceUsed : MainActivity.banana.getDbsUsed()) {
-//                            Log.d("MainActivity", "Searching.  Trying: " + source);
-//                            DataSource ds;
-//                            if (source.equals(sourceUsed)) {
-//                            } else if (source.equals("HopeCollegeDataSource")) {
-//                                ds = new HopeCollegeDataSource();
-//                            } else if (source.equals("CityOfHollandDataSource")) {
-//                                ds = new CityOfHollandDataSource();
-//                            } else if (source.equals("ExtendedCoHDataSource")) {
-//                                ds = new ExtendedCoHDataSource();
-//                            } else {
-//                                ds = new ITreeDataSource();
-//                            }
-//                            ds.initialize(Big_Red_Button.this, null);
-//                            Tree tree = ds.search(MainActivity.banana.getLocation());
-//                            MainActivity.banana.addDb(source);
-//                            if (!tree.getID().equals(null)) {
-//                                MainActivity.banana.setID(tree.getID());
-//                            }
-//                            if(!MainActivity.banana.getID().equals(null)){
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
-
-//    private Tree treeToSend;
-//    private Bundle bundleToSend;
-//
-//    @Override
-//    public int describeContents(){
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel out, int flags){
-//        out.writeBundle(banana);
-//    }
 
 }

@@ -58,10 +58,6 @@ public class RecyclerViewTreeOtherInfo extends RecyclerView.Adapter<RecyclerView
             }
         });
 
-
-//        Button sumbitButton = (Button) view.findViewById(R.id.add_tree_submit);
-//        sumbitButton.setOnClickListener(new SubmitEvent());
-
         ImageButton circumButton = (ImageButton) view.findViewById(R.id.circum_info_button);
         circumButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -79,39 +75,9 @@ public class RecyclerViewTreeOtherInfo extends RecyclerView.Adapter<RecyclerView
             }
         });
 
-//        TextView txtclose = (TextView) view.findViewById(R.id.other_info_close);
-//        txtclose.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//                builder.setCancelable(true);
-//                builder.setTitle("Discard your tree?");
-//                builder.setMessage("This will get rid of the data you entered.");
-//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                builder.setPositiveButton("Discard Tree", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        Intent intentA = new Intent(mContext, MainActivity.class);
-//                        mContext.startActivity(intentA);
-//                        //finish();
-//                    }
-//                });
-//                builder.show();
-//            }
-//        });
-
         String[] treeTypes = view.getResources().getStringArray(R.array.known_trees);
-        //String[] treeTypes = getResources().getStringArray(R.array.known_trees_full);
 
         AutoCompleteTextView editTrees = view.findViewById(R.id.common_name);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,treeTypes);
-//        editTrees.setAdapter(adapter);
 
         ((EditText) view.findViewById(R.id.dbh_edit)).addTextChangedListener(new TextWatcher() {
             @Override

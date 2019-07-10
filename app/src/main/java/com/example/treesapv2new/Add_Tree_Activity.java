@@ -51,42 +51,19 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
     FirebaseAuth.AuthStateListener mAuthListener;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(null);
-//
-//        //Authorization Stuff
-//        mAuthListener = new FirebaseAuth.AuthStateListener(){
-//            @Override
-//            public void onAuthStateChanged(@Nonnull FirebaseAuth firebaseAuth1){
-//                FirebaseUser user = firebaseAuth1.getCurrentUser();
-//                if(user!=null){
-//                    //user is signed in
-//                    addTreesMethod();
-//                }else{
-//                    //user is signed out
-//                    startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
-//
-//                }
-//            }
-//        };
-//    }
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
 
         //Authorization Stuff
-//        mAuthListener = new FirebaseAuth.AuthStateListener(){
-//            @Override
-//            public void onAuthStateChanged(@Nonnull FirebaseAuth firebaseAuth1){
-                FirebaseUser user = mAuth.getCurrentUser();
-                if(user!=null){
-                    //user is signed in
-                    addTreesMethod();
-                }else{
-                    //user is signed out
-                    startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            //user is signed in
+            addTreesMethod();
+        }else{
+            //user is signed out
+            startActivityForResult(new Intent(getBaseContext(), Login_Activity.class), 1);
 
-                }
+        }
             //}
         //};
     }
@@ -160,8 +137,6 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-//                        Intent intentA = new Intent(Add_Tree_Activity.this, MainActivity.class);
-//                        startActivity(intentA);
                         finish();
                     }
                 });
@@ -170,20 +145,12 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
         });
 
         boolean isConnectedToFirebase;
-//        try{
             isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
-//        }catch(InterruptedException e){
-//            isConnectedToFirebase = false;
-//        }catch(IOException e){
-//            isConnectedToFirebase = false;
-//        }
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineAddTreeMessage1(Add_Tree_Activity.this);
-//            ConnectionCheck.offlineAddTreeMessageShown = true;
         }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-//            ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
     }
@@ -200,7 +167,7 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
                 return;
             } else {
                 LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
+                //Criteria criteria = new Criteria();
                 Location defaultLocation = new Location("");
                 defaultLocation.setLatitude(42.788002);
                 defaultLocation.setLongitude(-86.105971);

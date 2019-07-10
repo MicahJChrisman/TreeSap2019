@@ -40,14 +40,6 @@ public class CuratorApproveActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(null);
         setContentView(R.layout.activity_curator_approve);
-        initImageBitmaps();
-
-        ((ImageView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
         if(!isConnectedToFirebase){
@@ -59,6 +51,14 @@ public class CuratorApproveActivity extends AppCompatActivity {
 //            ConnectionCheck.offlineAddTreeMessageShown = false;
             ConnectionCheck.offlineAccountMessageShown = false;
         }
+        initImageBitmaps();
+
+        ((ImageView) findViewById(R.id.curator_approve_close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void initImageBitmaps(){

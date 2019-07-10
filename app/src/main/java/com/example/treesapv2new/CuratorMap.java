@@ -24,19 +24,6 @@ public class CuratorMap extends Fragment {//implements OnMapReadyCallback {
         super.onCreate(null);
     }
 
-////    @Override
-//    public void onCreate(){
-//
-//    }
-//    @Override
-//    public static CuratorMap newInstance() {
-//
-//        Bundle args = new Bundle();
-//
-//        CuratorMap fragment = new CuratorMap();
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,19 +41,4 @@ public class CuratorMap extends Fragment {//implements OnMapReadyCallback {
     public ImageButton getDirectionsButton(){
         return directionsButton;
     }
-
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        SupportMapFragment smf = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map));
-//
-//        smf.getMapAsync(this);
-//    }
-//
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//
-//    }
 }
