@@ -250,7 +250,11 @@ public class UserTreeDataSource extends DataSource {
         }
 //        userTrees.clear();
         for(Tree tree1 : MainActivity.treesNearby) {
-            treeReturn.addNearbyTrees(tree1);
+            try {
+                treeReturn.addNearbyTrees(tree1);
+            }catch (Exception e){
+
+            }
         }
         return treeReturn;
     }

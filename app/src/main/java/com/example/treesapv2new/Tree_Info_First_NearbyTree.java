@@ -2,6 +2,7 @@ package com.example.treesapv2new;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -125,6 +128,38 @@ public class Tree_Info_First_NearbyTree extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
+                        ProgressDialog progressDialog;
+                        progressDialog = new ProgressDialog(Tree_Info_First_NearbyTree.this);
+                        progressDialog.setMax(100);
+                        progressDialog.setMessage("Please wait...");
+                        progressDialog.setTitle("Loading Map");
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progressDialog.show();
+                        final Handler handle = new Handler() {
+                            @Override
+                            public void handleMessage(Message msg) {
+                                super.handleMessage(msg);
+                                progressDialog.incrementProgressBy(1);
+                            }
+                        };
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    while (progressDialog.getProgress() <= progressDialog
+                                            .getMax()) {
+                                        Thread.sleep(30);
+                                        handle.sendMessage(handle.obtainMessage());
+                                        if (progressDialog.getProgress() == progressDialog
+                                                .getMax()) {
+                                            progressDialog.dismiss();
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                         Tree_Info_First.oldMainTree = null;
                         finish();
                         Intent intent4 = new Intent(Tree_Info_First_NearbyTree.this, Maps_Activity.class);
