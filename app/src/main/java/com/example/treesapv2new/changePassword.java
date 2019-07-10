@@ -26,10 +26,10 @@ public class changePassword extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(null);
         setContentView(R.layout.change_password);
-        boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
         ((Button) findViewById(R.id.button_change_password)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase();
                 if(isConnectedToFirebase) {
                     FirebaseUser user = Login_Activity.mAuth.getCurrentUser();
                     final String email = user.getEmail();
