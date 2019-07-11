@@ -148,8 +148,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
         penTrees = new ArrayList<Tree>();
         db = FirebaseFirestore.getInstance();
-        treesRef = db.collection("pendingTrees");
-        apprRef = db.collection("acceptedTrees");
+        treesRef = db.collection("pendingTrees"); // Store all pending trees
+        apprRef = db.collection("acceptedTrees"); // Store all accepted trees
 
         previousTrees = new Stack<>();
         new CuratorActivity.DownloadFilesTask().execute();
@@ -182,6 +182,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get directions to the tree
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 boolean locMarker = prefs.getBoolean("locationMarkerSwitch",true);
                 if(locMarker == true){
@@ -205,6 +206,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             requestPermissions(PERMS, REQUEST_ID);
         }
 
+        // A navigation menu is used here for the curator to select what they want to do with the current tree
+        // Those are really supposed to be used to navigate through apps I guess, but there was a time constraint, and this works
         BottomNavigationView navView = findViewById(R.id.nav_view);
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -212,17 +215,20 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.reject_button:
-                       showMessageDialogue(false);
+                       showMessageDialogue(false); // Ask the curator if they want to add a message
                         break;
                     case R.id.undo_button:
                         if (!previousTrees.isEmpty()) {
-                            DocSnap document = previousTrees.pop();
+                            DocSnap document = previousTrees.pop(); //  The curator wants to undo what they just did, so get the previous tree from the stack
                             if(document.wasDeleted()) {
+                                // If the document was deleted from pending trees (was accepted or rejected),
+                                // then make and return a document in pending trees whose ID matches that of the tree that was just popped
                                 DocumentReference docum = db.collection("pendingTrees").document(document.getId());
                                 docum.set(document.getDoc().getData()).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         if (document.wasApproved()) {
+                                            // If the tree had been approved, delete it from accepted trees
                                             DocumentReference doc = apprRef.document(document.getId());
                                             if (doc != null) {
                                                 Map<String, Object> updates = new HashMap<>();
@@ -242,7 +248,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                         penTrees.add(index, makeTree(document.getDoc()));
 
                                         setCurrentTree(index);
-
+                                        // Delete the tree from notifications
                                         CollectionReference notifications = db.collection("notifications");
                                         Map<String, Object> dataMap = new HashMap<String,Object>();
                                         dataMap.put("treeData", FieldValue.delete());
@@ -263,6 +269,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                                 });
 
                             }else{
+                                // Add tree back to the stored pending trees ArrayList, and set it as the currently viewed tree
                                 penTrees.add(index, makeTree(document.getDoc()));
                                 setCurrentTree(index);
                                 setView();
@@ -291,17 +298,18 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                             fm.beginTransaction()
                                     .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                                     .show(mapFragment)
-                                    .addToBackStack(null)
+                                    .addToBackStack(null) // Add to back stack makes it so when the user presses back, the fragment goes away
                                     .commit();
                             mapFragment.getMapAsync(CuratorActivity.this::onMapReady);
                         }
                         break;
                     case R.id.skip_button:
-                        if (penTrees.size() > 1 && index < (penTrees.size()-1)){
+                        if (penTrees.size() > 1 && index < (penTrees.size()-1)){ // If there are more trees in penTrees after this one
                             DocumentReference doc = treesRef.document(currentTree.getID());
                             doc.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    // Skip the tree and add it to the stack of previous trees
                                     DocumentSnapshot documentSnapshot = task.getResult();
                                     DocSnap docSnap = new DocSnap(false, documentSnapshot.getId(), documentSnapshot, false);
                                     previousTrees.push(docSnap);
@@ -317,7 +325,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         }
                         break;
                     case R.id.accept_button:
-                        showMessageDialogue(true);
+                        showMessageDialogue(true); // Ask curator if they want to add a message
                         break;
                 }
                 return false;
@@ -334,12 +342,12 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                         dialog.dismiss();
                         Intent intent = new Intent(CuratorActivity.this, CuratorMessage.class);
                         if(accepted == true) {
-                            intent.putExtra("accepted", true);
+                            intent.putExtra("accepted", true); // Tell the next activity that the tree was accepted
                         }else{
-                            intent.putExtra("accepted",false);
+                            intent.putExtra("accepted",false); // Tell the next activity that the tree was NOT accepted, it was rejected
                         }
+                        // Start the activity for the curator to write their message, and get the result in onActivityResult() below
                         startActivityForResult(intent, 0);
-                        //TODO add message
                     }
                 })
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -386,6 +394,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 }
             }
             else if(requestCode == 1){
+                // If the received result is from the fullscreen viewpager, set this activity's viewpager to the index the fullscreen activity left off on
                 viewPager.setCurrentItem((int) data.getExtras().get("position"));
             }
         }
@@ -393,6 +402,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onBackPressed(){
+        // Unfortunately did not have time to figure out how to make the directions button part of the map fragment,
+        // so I needed to specifically say to make the directions button disappear if the back button is pressed
             directionsButton.setVisibility(View.GONE);
             super.onBackPressed();
     }
@@ -404,11 +415,8 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 .hide(mapFragment)
                 .commit();
         fm.popBackStack();
+        // Pop backstack so that the curator does not need to press back multiple times to exit the activity 8if they have opened the map
         directionsButton.setVisibility(View.GONE);
-    }
-
-    public ArrayList<BitmapDrawable> getDbmpList(){
-        return dBmpList;
     }
 
     public void setView(){
@@ -434,7 +442,6 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 }
             });
 
-            TextView noPicsMessage = findViewById(R.id.no_pics_message);
             if (dBmpList.size() == 0) {
                 viewPager.setBackgroundResource(R.drawable.dark_logo);
 
@@ -447,12 +454,14 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             } else {
                 commonName.setText("N/A");
             }
+
             String sName = (String) currentTree.getScientificName();
             if (cName != null && cName != "") {
                 scientificName.setText(sName);
             } else {
                 scientificName.setText("N/A");
             }
+
             ArrayList<Object> dbhList = currentTree.getDBHArray();
             String dbhText = "";
             if (dbhList != null && !dbhList.isEmpty()) {
@@ -470,6 +479,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
             } else {
                 dbhs.setText("N/A");
             }
+
             TreeLocation treeLocation = currentTree.getLocation();
             latitude.setText(Double.toString(treeLocation.getLatitude()));
             longitude.setText(Double.toString(treeLocation.getLongitude()));
@@ -497,6 +507,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
         if(penTrees.size() > 0 && index >= penTrees.size()){
             index = index-1;
         }
+
         if(penTrees.size() > 0 && index < penTrees.size()) {
             currentTree = penTrees.get(index);
         }
@@ -510,11 +521,9 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
+                        // Add rejected tree to
                         CollectionReference notifications = db.collection("notifications");
                         Map<String, Object> dataMap = new HashMap<String,Object>();
-//                        for(DocumentSnapshot docs : document){
-//
-//                        }
                         Map<String, Object> documentData = document.getData();
                         dataMap.put("treeData", documentData);
                         dataMap.put("accepted", false);
