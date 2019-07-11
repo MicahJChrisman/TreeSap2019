@@ -52,6 +52,7 @@ import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.datasource.UserTreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
+import com.example.treesapv2new.view.FrogActivity;
 import com.google.android.gms.common.util.NumberUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,7 +69,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Coordinates_View_Activity extends AppCompatActivity {
-    private GestureDetectorCompat gestureObject;
+//    private GestureDetectorCompat gestureObject;
     Double longitude, latitude;
     LocationManager locationManager;
     final long LOCATION_REFRESH_TIME = 1;     // 1 minute
@@ -93,11 +94,11 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Coordinates_View_Activity.this);
             ConnectionCheck.offlineMessageShown = true;
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
 //                ConnectionCheck.offlineAddTreeMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         if(user != null) {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
@@ -177,7 +178,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
         }
         MainActivity.treesNearby.clear();
 
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(PERMS, REQUEST_ID);
@@ -345,7 +346,7 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        this.gestureObject.onTouchEvent(event);
+//        this.gestureObject.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
@@ -376,6 +377,14 @@ public class Coordinates_View_Activity extends AppCompatActivity {
             try{
                 latitude = Double.parseDouble(lat_val.getText().toString());
                 longitude = Double.parseDouble(long_val.getText().toString());
+
+//                boolean frogLat = latitude == ("42.788211256535");
+//                boolean frogLong = longitude.equals("-86.105942862237");
+//                boolean frogTrue = frogLat && frogLong;
+                if(lat_val.getText().toString().equals("42.788211256535") && long_val.getText().toString().equals("-86.105942862237")){
+                    Intent intent = new Intent(Coordinates_View_Activity.this, FrogActivity.class);
+                    startActivity(intent);
+                }
 
                 TreeLocation testing = new TreeLocation(latitude,longitude);
 
