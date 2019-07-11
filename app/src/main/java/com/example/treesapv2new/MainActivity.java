@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart(){
         super.onStart();
 
+        //Gives an error dialog if app is not connected to internet
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(MainActivity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(MainActivity.this);
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
+            //Gets the notifications for when a tree was approved or rejected
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -212,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+            //Checks if current user is a curator
             db.collection("curators").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -244,6 +245,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+            //Gets the notifications for when a tree was approved or rejected
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -263,8 +265,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+        //Trees nearby must be cleared in order for Tree_Info_First to work correctly
         MainActivity.treesNearby.clear();
 
+        //Initializes the data source so that the search does not have async problems
         if(!allUsersDataSource.finishedBoolean) {
             allUsersDataSource.initialize(this, null);
         }
@@ -289,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton addTreeButton = (ImageButton) findViewById(R.id.add_tree_button_0);
         addTreeButton.setOnClickListener(new AddTreeEvent());
 
-
+        //Bottom Nav bar listener
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -309,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.navigation_map:
+                        //Creates loading circle when waiting for map to load
                         ProgressDialog progressDialog;
                         progressDialog = new ProgressDialog(MainActivity.this);
                         progressDialog.setMax(100);
@@ -357,6 +362,7 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navView.setSelectedItemId(R.id.nav_view);
 
+        //Listener for the drawer menu
         NavigationView hamburgerView = findViewById(R.id.hamburger_menu);
         hamburgerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -409,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Sets the default settings for when app is first downloaded
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
         SharedPreferences.Editor editor = prefs.edit();
@@ -445,12 +452,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Probably not needed anymore
     @Override
     public boolean onTouchEvent(MotionEvent event){
         this.gestureObject.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
+    //Swipe is no longer active, so this is not needed
     class LearnGesture extends GestureDetector.SimpleOnGestureListener{
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
@@ -467,6 +476,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Requests for gps, camera, and storage permissions
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         // If request is cancelled, the result arrays are empty.
         if (grantResults.length == 0) {
@@ -527,6 +537,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private ArrayList<BulletedListItem> generateIDItems() {
 
         String methods;
@@ -580,7 +591,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //Prevents app from crashing when back is pressed on the home screen
     @Override
     public void onBackPressed() {
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -615,6 +626,7 @@ public class MainActivity extends AppCompatActivity {
 
     String mCurrentPhotoPath;
 
+    //Unsure if any of the following methods are currently used in the app
     private File createImageFile() throws IOException {
         File storageDir = Environment.getExternalStorageDirectory();
         int now = (int) System.currentTimeMillis();

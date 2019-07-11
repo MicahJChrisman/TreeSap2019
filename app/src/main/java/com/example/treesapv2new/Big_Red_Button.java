@@ -117,6 +117,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);
+        //Creates error dialog if user is not connected to internet
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Big_Red_Button.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Big_Red_Button.this);
