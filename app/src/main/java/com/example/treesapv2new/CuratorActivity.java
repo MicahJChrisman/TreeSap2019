@@ -96,8 +96,6 @@ import java.util.concurrent.TimeUnit;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
 
 public class CuratorActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-//    private NewArrayAdapter arrayAdapter;
-//    private ImageAdapter imageAdapter;
     GoogleMap mMap;
     SupportMapFragment mapFragment;
     private final String[] PERMS = {
@@ -118,11 +116,10 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     LatLng coordinates;
 
     float zoom = 16;
-//    boolean whichSource = false;
 
     private Location location;
     private GoogleApiClient googleApiClient;
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+//    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private LocationRequest locationRequest;
 
     int index;
@@ -130,9 +127,7 @@ public class CuratorActivity extends AppCompatActivity implements OnMapReadyCall
     FirebaseFirestore db;
     CollectionReference treesRef;
     CollectionReference apprRef;
-//    SwipeFlingAdapterView flingContainer;
     Tree currentTree;
-//    NestedScrollView nestedScrollView;
     LinearLayout nestedScrollChild;
     TextView commonName;
     TextView scientificName;

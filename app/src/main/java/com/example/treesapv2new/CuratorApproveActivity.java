@@ -45,11 +45,11 @@ public class CuratorApproveActivity extends AppCompatActivity {
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineCuratorMessage(CuratorApproveActivity.this);
 //            ConnectionCheck.offlineAddTreeMessageShown = true;
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
 //            ConnectionCheck.offlineCuratorMessageShown = false;
 //            ConnectionCheck.offlineAddTreeMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         initImageBitmaps();
 

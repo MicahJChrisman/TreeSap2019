@@ -112,10 +112,10 @@ public class SettingsActivity extends PreferenceActivity {
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(SettingsActivity.this);
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(SettingsActivity.this);
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         if(Login_Activity.mAuth.getCurrentUser()!=null) {
             PreferenceCategory b = (PreferenceCategory) findPreference("account");

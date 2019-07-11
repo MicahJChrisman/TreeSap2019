@@ -114,7 +114,7 @@
             android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>
         <activity
-            android:name=".Curator_Swipe_Activity"
+            android:name=".view.FrogActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:label="TreeSapV2New"/>

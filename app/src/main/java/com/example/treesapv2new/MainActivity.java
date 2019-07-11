@@ -170,10 +170,10 @@ public class MainActivity extends AppCompatActivity {
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(MainActivity.this);
             ConnectionCheck.offlineMessageShown = true;
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         FirebaseUser user = mAuth.getCurrentUser();
         NavigationView hamMenu = findViewById(R.id.hamburger_menu);

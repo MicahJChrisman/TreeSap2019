@@ -36,8 +36,8 @@ public class changePassword extends AppCompatActivity {
                     String oldpass = ((EditText) findViewById(R.id.old_password)).getText().toString();
                     String newPass = ((EditText) findViewById(R.id.new_password)).getText().toString();
                     if (newPass.equals(((EditText) findViewById(R.id.confirm_new_password)).getText().toString())) {
-                        AuthCredential credential = EmailAuthProvider.getCredential(email, oldpass);
-                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        AuthCredential credential = EmailAuthProvider.getCredential(email, oldpass); // Represents a credential that the Firebase Authentication server can use to authenticate a user.
+                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() { //Reauthenticates the user with the given credential.
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {

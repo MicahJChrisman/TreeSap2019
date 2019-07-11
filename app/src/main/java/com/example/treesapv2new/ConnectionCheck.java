@@ -13,11 +13,12 @@ public class ConnectionCheck {
     public static boolean offlineMessageShown = false;
     public static boolean offlineCuratorMessageShown = false;
 //    public static boolean offlineAddTreeMessageShown = false;
-    public static boolean offlineAccountMessageShown = false;
+//    public static boolean offlineAccountMessageShown = false;
+    public static boolean offlineNotificationsMessageShown = false;
 
     public static boolean isConnectedToFirebase(Context context){
         String status = null;
-        ConnectivityManager cm = (ConnectivityManager)           context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null) {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
@@ -99,7 +100,7 @@ public class ConnectionCheck {
 
     public static void showOfflineNotificationsMessage(Context context){
         final AlertDialog.Builder a_builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
-        a_builder.setMessage(("You cannot access notifications while offline.")).setCancelable(false)
+        a_builder.setMessage(("You cannot access new notifications while offline.")).setCancelable(false)
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -109,16 +110,16 @@ public class ConnectionCheck {
         a_builder.show();
     }
 
-    public static void showOfflineAccountMessage(Context context){
-        final AlertDialog.Builder a_builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
-        a_builder.setMessage(("Changing your account information while offline may slow down the app." +
-                "\nIf you change your account information, please do not close the app until connection has been restored, so TreeSap can update its database.")).setCancelable(false)
-                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).setTitle("No database connection, please check your internet connection");
-        a_builder.show();
-    }
+//    public static void showOfflineAccountMessage(Context context){
+//        final AlertDialog.Builder a_builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+//        a_builder.setMessage(("Changing your account information while offline may slow down the app." +
+//                "\nIf you change your account information, please do not close the app until connection has been restored, so TreeSap can update its database.")).setCancelable(false)
+//                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                }).setTitle("No database connection, please check your internet connection");
+//        a_builder.show();
+//    }
 }

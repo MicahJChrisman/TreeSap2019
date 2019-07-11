@@ -29,8 +29,9 @@ public class changeUsername extends AppCompatActivity {
                     String a = (((EditText) findViewById(R.id.old_username)).getText().toString());
                     String b = user.getDisplayName().toString();
                     if (a.equals(b)) {
+                        // Request used to update user profile information
                         UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(((EditText) findViewById(R.id.new_username)).getText().toString()).build();
-                        user.updateProfile(profileChangeRequest);
+                        user.updateProfile(profileChangeRequest); // Updates the user profile information
                         newUsername = ((EditText) findViewById(R.id.new_username)).getText().toString();
                         Toast.makeText(changeUsername.this, "Username updated", Toast.LENGTH_LONG).show();
                         finish();

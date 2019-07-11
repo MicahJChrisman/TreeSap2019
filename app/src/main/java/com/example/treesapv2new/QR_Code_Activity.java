@@ -110,10 +110,10 @@ public class QR_Code_Activity extends AppCompatActivity {
         if (!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown) {
             ConnectionCheck.showOfflineMessage(QR_Code_Activity.this);
             ConnectionCheck.offlineMessageShown = true;
-        } else if (isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown) {
+        } else if (isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineNotificationsMessageShown) {
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         if (user != null) {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);

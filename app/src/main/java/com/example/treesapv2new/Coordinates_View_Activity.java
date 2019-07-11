@@ -107,12 +107,12 @@ public class Coordinates_View_Activity extends AppCompatActivity {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+            // Gets the notifications from the notifications collection whose "userID" field (a subfield of the "treeData" field) matches the name of the current user
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     int notificationCount = 0;
                     if (task.isSuccessful()) {
-
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             if(!(Boolean)documentSnapshot.get("read")){
                                 notificationCount++;
@@ -378,9 +378,6 @@ public class Coordinates_View_Activity extends AppCompatActivity {
                 latitude = Double.parseDouble(lat_val.getText().toString());
                 longitude = Double.parseDouble(long_val.getText().toString());
 
-//                boolean frogLat = latitude == ("42.788211256535");
-//                boolean frogLong = longitude.equals("-86.105942862237");
-//                boolean frogTrue = frogLat && frogLong;
                 if(lat_val.getText().toString().equals("42.788211256535") && long_val.getText().toString().equals("-86.105942862237")){
                     Intent intent = new Intent(Coordinates_View_Activity.this, FrogActivity.class);
                     startActivity(intent);

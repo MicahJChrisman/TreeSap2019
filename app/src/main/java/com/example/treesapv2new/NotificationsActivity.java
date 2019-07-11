@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,10 +65,10 @@ public class NotificationsActivity extends AppCompatActivity {
         boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(NotificationsActivity.this);
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineNotificationsMessage(NotificationsActivity.this);
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
 
         linearLayout = ((LinearLayout) findViewById(R.id.notifications_linear_layout));
@@ -92,23 +93,30 @@ public class NotificationsActivity extends AppCompatActivity {
         findViewById(R.id.trash_notifications).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(View views : selectedViews) {
-                    linearLayout.removeView(views);
-                    db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                    try {
-                                        if(notList.contains(db.collection("notifications").document(documentSnapshot.getId()).toString())){
-                                            db.collection("notifications").document(documentSnapshot.getId()).delete();
+                boolean isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(NotificationsActivity.this);
+                if (isConnectedToFirebase){
+                    for (View views : selectedViews) {
+                        linearLayout.removeView(views);
+                        db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                        try {
+                                            if (notList.contains(db.collection("notifications").document(documentSnapshot.getId()).toString())) {
+                                                db.collection("notifications").document(documentSnapshot.getId()).delete();
+                                            }
+                                        } catch (Exception e) {
                                         }
-                                    } catch (Exception e) {
                                     }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
+                }else{
+                    Toast toast = Toast.makeText(NotificationsActivity.this, "No internet, cannot delete notifications", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
                 if(selectedViews.size() == 0){
                     findViewById(R.id.trash_notifications).setVisibility(View.GONE);
@@ -120,6 +128,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
 //        String v = user.getUid();
         if(user != null) {
+            // Gets the notifications from the notifications collection whose "userID" field (a subfield of the "treeData" field) matches the name of the current user
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData","userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {

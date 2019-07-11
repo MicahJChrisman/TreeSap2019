@@ -140,10 +140,10 @@ public class Add_Tree_Activity extends AppCompatActivity implements LocationList
             isConnectedToFirebase = ConnectionCheck.isConnectedToFirebase(Add_Tree_Activity.this);
         if(!isConnectedToFirebase){
             ConnectionCheck.showOfflineAddTreeMessage1(Add_Tree_Activity.this);
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
     }
 

@@ -93,7 +93,7 @@ import java.util.Set;
 
 public class Big_Red_Button extends AppCompatActivity implements LocationListener {
 
-    private GestureDetectorCompat gestureObject;
+//    private GestureDetectorCompat gestureObject;
 
 //    public static String sendString = "Big_Red_Button.banana";
 
@@ -121,10 +121,10 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         if(!isConnectedToFirebase && !ConnectionCheck.offlineMessageShown){
             ConnectionCheck.showOfflineMessage(Big_Red_Button.this);
             ConnectionCheck.offlineMessageShown = true;
-        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineAccountMessageShown){
+        }else if(isConnectedToFirebase && ConnectionCheck.offlineMessageShown || ConnectionCheck.offlineCuratorMessageShown || ConnectionCheck.offlineNotificationsMessageShown){
             ConnectionCheck.offlineMessageShown = false;
             ConnectionCheck.offlineCuratorMessageShown = false;
-            ConnectionCheck.offlineAccountMessageShown = false;
+            ConnectionCheck.offlineNotificationsMessageShown = false;
         }
         if(user != null) {
             hamMenu.getMenu().findItem(R.id.nav_login).setVisible(false);
@@ -186,6 +186,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
         MainActivity.treesNearby.clear();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) {
+            // Goes to the "notifications" collection on Firebase and retrieves all the notifications that have a "userID" field (stored in the "treeData" field) that matches the current user
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("notifications").whereEqualTo(FieldPath.of("treeData", "userID"), user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -194,6 +195,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                             if (!(Boolean) documentSnapshot.get("read")) {
+                                // Looks at the "read" field. If the user has not read even one notification, it is made visible, and the notifications count is incremented
                                 notificationCount++;
                                 findViewById(R.id.unread_notification).setVisibility(View.VISIBLE);
                             }
@@ -399,6 +401,7 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     .setMessage("The location services on your phone are not enabled.  Please turn on GPS.")
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
+                            dialog.dismiss();
                         }
                     }).show();
         }
@@ -442,12 +445,14 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        this.gestureObject.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event){
+//        this.gestureObject.onTouchEvent(event);
+//        return super.onTouchEvent(event);
+//    }
 
+
+//For swiping to get to the next activity
 //    class LearnGesture extends GestureDetector.SimpleOnGestureListener{
 //        @Override
 //        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
@@ -467,14 +472,14 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
 //    }
 
 
-    private class AddEventAction implements View.OnClickListener, View.OnTouchListener{
+    private class AddEventAction implements View.OnClickListener{//}, View.OnTouchListener{
         @Override
         public void onClick(View v){
             getLocation();
             TreeLocation testing = new TreeLocation(latitude,longitude);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+            Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>()); // Gets the databases the user wants, stored in preferences
             Tree closestTree = null;
             float closest1 =999999999;
             for (String source : sources) {
@@ -505,7 +510,6 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
                     MainActivity.banana = ds.search(testing);
                 }
 
-
                 if (MainActivity.banana != null) {
                     if(MainActivity.banana.getClosestDist() < closest1) {
                         closest1 = MainActivity.banana.getClosestDist();
@@ -524,29 +528,29 @@ public class Big_Red_Button extends AppCompatActivity implements LocationListene
             }
         }
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            Button button = findViewById(R.id.biggreenbutton);
-            if (event.getAction() == MotionEvent.ACTION_DOWN){
-                float x = (float) .75;
-                float y = (float) .75;
-
-                button.setScaleX(x);
-                button.setScaleY(y);
-            button.setBackground(Drawable.createFromPath("@drawable/smaller_ripple"));
-            }
-            else if(event.getAction() == MotionEvent.ACTION_UP)
-            {
-                float x = 1;
-                float y = 1;
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            Button button = findViewById(R.id.biggreenbutton);
+//            if (event.getAction() == MotionEvent.ACTION_DOWN){
+//                float x = (float) .75;
+//                float y = (float) .75;
 //
-                button.setScaleX(x);
-                button.setScaleY(y);
-                button.setBackground(Drawable.createFromPath("@drawable/ripple_overlay"));
-
-            }
-            return false;
-        }
+//                button.setScaleX(x);
+//                button.setScaleY(y);
+//                button.setBackground(Drawable.createFromPath("@drawable/smaller_ripple"));
+//            }
+//            else if(event.getAction() == MotionEvent.ACTION_UP)
+//            {
+//                float x = 1;
+//                float y = 1;
+////
+//                button.setScaleX(x);
+//                button.setScaleY(y);
+//                button.setBackground(Drawable.createFromPath("@drawable/ripple_overlay"));
+//
+//            }
+//            return false;
+//        }
     }
 
 }

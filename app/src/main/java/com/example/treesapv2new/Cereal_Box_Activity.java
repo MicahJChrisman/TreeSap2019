@@ -75,10 +75,9 @@ import static com.example.treesapv2new.Pie_Chart_Activity.WATER_GAL;
 
 
 public class Cereal_Box_Activity extends AppCompatActivity {
-//    TreeLocation testing = new TreeLocation(42.7878,-86.1057);
-    String sentString;
+//    String sentString;
     Dialog myDialog;
-    private static final int REQUEST_IMGAGE_CAPTURE = 101;
+    private static final int REQUEST_IMAGE_CAPTURE = 101;
     private byte[] byteArray;
     ImageView picAppear;
 
@@ -91,14 +90,13 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     private static final int[] PERMISSION_ALL = new int[0];
 
 
-    private GestureDetectorCompat gestureObject;
+//    private GestureDetectorCompat gestureObject;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cereal_box_new);
-
 
         ScrollView scrollView = (ScrollView)findViewById(R.id.scrollView1);
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -137,7 +135,6 @@ public class Cereal_Box_Activity extends AppCompatActivity {
                         }
                     }
                 }
-
                 return false;
             }
 
@@ -209,7 +206,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
 
         myDialog = new Dialog(this);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>()); // Gets the databases selected by the user, stored in preferences
         if(sources.size()>0) {
             display(MainActivity.banana);
         }else{
@@ -486,31 +483,31 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             }
     }
 
-    public void patchTreeData(){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(MainActivity.banana.getDataSource());
-        for (String source : sources) {
-            Log.d("MainActivity", "Searching.  Trying: "+source);
-            DataSource ds;
-            if(source.equals("HopeCollegeDataSource")){
-                ds = new HopeCollegeDataSource();
-            }else if(source.equals("CityOfHollandDataSource")) {
-                ds = new CityOfHollandDataSource();
-            }else if(source.equals("ExtendedCoHDataSource")){
-                ds = new ExtendedCoHDataSource();
-            }else{
-                ds = new ITreeDataSource();
-            }
-            ds.initialize(Cereal_Box_Activity.this,null);
-            Tree tree = ds.search(MainActivity.banana.getLocation());
-
-            if(tree != null && tree.isFound()){
-                ds.patchData(tree);
-            }
-        }
-
-    }
+//    public void patchTreeData(){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+//        // sources.remove(MainActivity.banana.getDataSource());
+//        for (String source : sources) {
+//            Log.d("MainActivity", "Searching.  Trying: "+source);
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//            ds.initialize(Cereal_Box_Activity.this,null);
+//            Tree tree = ds.search(MainActivity.banana.getLocation());
+//
+//            if(tree != null && tree.isFound()){
+//                ds.patchData(tree);
+//            }
+//        }
+//
+//    }
 
     @Override
     public void onBackPressed(){
@@ -518,26 +515,26 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         MainActivity.banana.setIsNearbyTree(false);
     }
 
-    public Tree estimateTreeNearest(Double maxDistance, float maxDBHDifference){
-        Tree bestTree = new Tree();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
-        // sources.remove(MainActivity.banana.getDataSource());
-        for (String source : sources) {
-            DataSource ds;
-            if(source.equals("HopeCollegeDataSource")){
-                ds = new HopeCollegeDataSource();
-            }else if(source.equals("CityOfHollandDataSource")) {
-                ds = new CityOfHollandDataSource();
-            }else if(source.equals("ExtendedCoHDataSource")){
-                ds = new ExtendedCoHDataSource();
-            }else{
-                ds = new ITreeDataSource();
-            }
-
-        }
-        return bestTree;
-    }
+//    public Tree estimateTreeNearest(Double maxDistance, float maxDBHDifference){
+//        Tree bestTree = new Tree();
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//        Set<String> sources = prefs.getStringSet("databasesUsedSelector",new HashSet<String>());
+//        // sources.remove(MainActivity.banana.getDataSource());
+//        for (String source : sources) {
+//            DataSource ds;
+//            if(source.equals("HopeCollegeDataSource")){
+//                ds = new HopeCollegeDataSource();
+//            }else if(source.equals("CityOfHollandDataSource")) {
+//                ds = new CityOfHollandDataSource();
+//            }else if(source.equals("ExtendedCoHDataSource")){
+//                ds = new ExtendedCoHDataSource();
+//            }else{
+//                ds = new ITreeDataSource();
+//            }
+//
+//        }
+//        return bestTree;
+//    }
 
     private String allInfo;
     private String commonName;
@@ -660,7 +657,7 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     }
 
     public void ShowPopup(View v){
-        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
+//        gestureObject = new GestureDetectorCompat(this, new LearnGesture());
         TextView txtclose;
         Button buttonSubmit;
         ImageButton imageButton;
@@ -704,7 +701,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             Intent imageTakeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (imageTakeIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(imageTakeIntent, REQUEST_IMGAGE_CAPTURE);
+                // Start the activity to take a picture, expecting to get data back (the picture)
+                startActivityForResult(imageTakeIntent, REQUEST_IMAGE_CAPTURE);
             }
         }else{
             Toast.makeText(getBaseContext(), "Permissions are not right", Toast.LENGTH_SHORT).show();
@@ -714,7 +712,8 @@ public class Cereal_Box_Activity extends AppCompatActivity {
     public static Bitmap bmp;
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == REQUEST_IMGAGE_CAPTURE && resultCode==RESULT_OK) {
+        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode==RESULT_OK) {
+            // If everything is in order, get the picture from the Intent that was passed
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -728,6 +727,4 @@ public class Cereal_Box_Activity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Photo added. ", Toast.LENGTH_LONG).show();
         }
     }
-
-
 }
