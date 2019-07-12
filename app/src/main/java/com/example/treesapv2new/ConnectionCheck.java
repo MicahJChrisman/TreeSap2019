@@ -35,14 +35,14 @@ public class ConnectionCheck {
         return false;
 
 //        public static boolean isConnectedToFirebase(){
-        // Note: Pinging does NOT work on emulators unless you change their settings
+//         Note: Pinging does NOT work on emulators unless you change their settings
 //        try {
 //            final String command = "ping -c 1 google.com";
 //            return Runtime.getRuntime().exec(command).waitFor() == 0;
 //        }
 //        catch (IOException e)          { e.printStackTrace(); }
 //        catch (InterruptedException e) { e.printStackTrace(); }
-
+//
 //        return false;
 
     }
