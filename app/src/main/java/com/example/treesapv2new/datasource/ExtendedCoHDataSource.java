@@ -29,7 +29,7 @@ import java.net.URL;
 
 public class ExtendedCoHDataSource extends DataSource {
 
-    String internetFileName = "katelyn.csv";
+    String internetFileName = "itree-august2019.csv";
     String localFileName = "ECOHdata.csv";
 
     Reader in;

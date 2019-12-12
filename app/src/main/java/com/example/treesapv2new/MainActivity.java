@@ -421,8 +421,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         if(sources.size()==0) {
             HashSet<String> dbs = new HashSet<String>();
-            dbs.add("HopeCollegeDataSource");
-            dbs.add("CityOfHollandDataSource");
+//            dbs.add("HopeCollegeDataSource");
+//            dbs.add("CityOfHollandDataSource");
             dbs.add("ExtendedCoHDataSource");
             dbs.add("UserTreeDataSource");
             dbs.add("AllUsersDataSource");

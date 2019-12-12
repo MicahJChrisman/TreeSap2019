@@ -50,15 +50,13 @@
                 </Preference>
 
                 <Preference
-                    android:key="change_username"
-                    android:title="Change Username">
-                </Preference>
-
-                <Preference
                     android:key="change_password"
                     android:title="Change Password">
                 </Preference>
 
+                <Preference
+                    android:key="change_username"
+                    android:title="Change Username"></Preference>
                 <Preference
                     android:key="login_pref"
                     android:title="Login">

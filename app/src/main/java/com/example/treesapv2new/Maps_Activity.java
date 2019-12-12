@@ -1,17 +1,13 @@
 package com.example.treesapv2new;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.location.Criteria;
 import android.location.Location;
 //import android.location.LocationListener;
@@ -19,11 +15,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -33,7 +26,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -57,7 +49,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import com.example.treesapv2new.control.PrefManager;
 import com.example.treesapv2new.control.Transform;
 import com.example.treesapv2new.datasource.CityOfHollandDataSource;
 import com.example.treesapv2new.datasource.DataSource;
@@ -66,8 +57,6 @@ import com.example.treesapv2new.datasource.HopeCollegeDataSource;
 import com.example.treesapv2new.datasource.ITreeDataSource;
 import com.example.treesapv2new.model.Tree;
 import com.example.treesapv2new.model.TreeLocation;
-import com.example.treesapv2new.view.MapsActivity;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -86,21 +75,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.defaultMarker;
 
