@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TreeSap 2.0"
+            android:text="TreeSap 2.1"
             android:textColor="@color/black"
             android:layout_marginBottom="5dp"
             android:textSize="24sp"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:paddingEnd="40dp"
             android:paddingStart="40dp"
-            android:text="Copyright of Hope College 2019. Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
+            android:text="Copyright of Hope College 2020. Created by Mike Jipping, Louis Kopp, Caleb Tallquist, Micah Chrisman, and Josie Crane."
             android:textSize="18sp"
             android:layout_marginBottom="5dp"
             android:textColor="@color/black"
